@@ -10,7 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
-public class ItemView extends View {
+public class ItemView{
 	
 	private GridPane map = null;
 	private PickUpCommand pickUp= null;

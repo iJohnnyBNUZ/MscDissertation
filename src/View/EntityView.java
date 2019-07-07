@@ -11,11 +11,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
-public class EntityView extends View {
+public class EntityView{
 	
-	private GridPane map = null;
+	private AnchorPane mapView = null;
 	private ProgressBar energy = null;
 	private Label coin = null;
 	private CommunicationCommand communication= null;
@@ -25,10 +26,10 @@ public class EntityView extends View {
 	private double image_h = 16.0;
 	private double image_w =16.0;
 	
-	public EntityView() {
-		map= super.getMap();
-		energy = super.getEnergy();
-		coin = super.getCoin();
+	public EntityView(View view) {
+		mapView= view.getMapView();
+		energy = view.getEnergy();
+		coin = view.getCoin();
 		
 	}
 	
@@ -41,7 +42,7 @@ public class EntityView extends View {
 				URL url = this.getClass().getResource("/images/" + name + ".png");
 				final Image image = new Image(url.toString(), image_h, image_w, false, false);
 				imagView.setImage(image);
-				map.add(imagView, npcs.get(name).getxPostion(), npcs.get(name).getyPosition());
+				//map.add(imagView, npcs.get(name).getxPostion(), npcs.get(name).getyPosition());
 			}
 		}else {
 			System.out.println("Wrong tiles size");
@@ -58,7 +59,7 @@ public class EntityView extends View {
 				URL url = this.getClass().getResource("/images/" + name + ".png");
 				final Image image = new Image(url.toString(), image_h, image_w, false, false);
 				imagView.setImage(image);
-				map.add(imagView, users.get(name).getxPostion(), users.get(name).getyPosition());
+				//map.add(imagView, users.get(name).getxPostion(), users.get(name).getyPosition());
 			}
 		}else {
 			System.out.println("Wrong tiles size");
@@ -75,7 +76,7 @@ public class EntityView extends View {
 				URL url = this.getClass().getResource("/images/" + name + ".png");
 				final Image image = new Image(url.toString(), image_h, image_w, false, false);
 				imagView.setImage(image);
-				map.add(imagView, stores.get(name).getxPostion(), stores.get(name).getyPosition());
+				//map.add(imagView, stores.get(name).getxPostion(), stores.get(name).getyPosition());
 			}
 		}else {
 			System.out.println("Wrong tiles size");

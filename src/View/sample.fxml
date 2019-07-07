@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:id="page" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.View">
+<AnchorPane fx:id="page" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.View">
     <children>
         <MenuBar fx:id="menu" layoutY="1.0" prefHeight="22.0" prefWidth="600.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0">
             <menus>
@@ -43,7 +43,8 @@
                 -->
             </menus>
         </MenuBar>
-      <GridPane fx:id="map" prefHeight="460.0" prefWidth="586.0" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="35.0">
+      <AnchorPane fx:id="mapView" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="40.0" />
+      <GridPane fx:id="map" maxHeight="460.0" maxWidth="586.0" minHeight="16.0" minWidth="16.0" prefHeight="460.0" prefWidth="460.0" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="40.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -70,9 +71,9 @@
         </rowConstraints>
       </GridPane>
       <ImageView fx:id="userImage" fitHeight="55.0" fitWidth="55.0" layoutX="65.0" layoutY="433.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="65.0" />
-      <ProgressBar fx:id="energy" layoutX="168.0" layoutY="453.0" prefWidth="200.0" progress="0.0" />
-      <ImageView fx:id="coinIcon" fitHeight="20.0" fitWidth="20.0" layoutX="405.0" layoutY="453.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="27.0" />
-      <Label fx:id="coin" layoutX="443.0" layoutY="455.0" />
+      <ProgressBar fx:id="energy" layoutX="168.0" layoutY="453.0" prefWidth="200.0" progress="0.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="150.0" />
+      <ImageView fx:id="coinIcon" fitHeight="20.0" fitWidth="20.0" layoutX="405.0" layoutY="453.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="380.0" />
+      <Label fx:id="coin" layoutX="443.0" layoutY="455.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="400.0" />
       <TitledPane fx:id="bagView" animated="false" layoutY="30.0" prefHeight="272.0" prefWidth="258.0" text="Bag" visible="false" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="35.0">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
