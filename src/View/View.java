@@ -63,6 +63,7 @@ public class View {
     	BagView bag = new BagView(this);
     	ChatView chat = new ChatView(this);
     	EntityView entity = new EntityView(this);
+    	ItemView item = new ItemView(this);
     	NPCView nps = new NPCView(this);
     	TransactionView tansaction = new TransactionView(this);
     }
