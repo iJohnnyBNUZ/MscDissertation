@@ -22,11 +22,12 @@ public class Main extends Application {
         primaryStage.setTitle("University of Edinburgh Dissertation");
         primaryStage.setScene(new Scene(root, 900, 720));
         
-        //The controller specified in the fxml file is LocationView,
-        //I know it should be View, but if I do that the super.getMap() can not take effect.
-        //May be in the future I can find some appropriate solutions.
         View view = (View) fxmlLoader.getController();
+        //Used for get the screen size and set to canvas.
+        //Test is written in that method either.
+        view.bindScene(primaryStage.getScene()); 
         primaryStage.show();
+        
         
         System.out.println("Finished Loading");
     }

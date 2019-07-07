@@ -7,16 +7,15 @@ import Controller.Command.Command;
 import Controller.Command.CommunicationCommand;
 import Controller.Command.MoveCommand;
 import Model.Location.Coordinate;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 
 public class EntityView{
 	
-	private AnchorPane mapView = null;
+	private Canvas mapView = null;
 	private ProgressBar energy = null;
 	private Label coin = null;
 	private CommunicationCommand communication= null;

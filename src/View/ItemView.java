@@ -6,14 +6,12 @@ import java.util.Map;
 import Controller.Command.Command;
 import Controller.Command.PickUpCommand;
 import Model.Location.Coordinate;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-
 public class ItemView{
 	
-	private AnchorPane mapView = null;
+	private Canvas mapView = null;
 	private PickUpCommand pickUp= null;
 	private int row=10;
 	private int column=10;

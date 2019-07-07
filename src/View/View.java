@@ -1,6 +1,8 @@
 package View;
 
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -15,7 +17,7 @@ public class View {
     private AnchorPane page;
 	
 	@FXML
-    private AnchorPane mapView;
+    private Canvas mapView;
 	
 	@FXML
 	private GridPane map;
@@ -48,24 +50,31 @@ public class View {
     @FXML
     private Button close;
     
-    private int tmp = 70;
+    private LocationView location = null;
     
-    public int getTmp() {
-    	return tmp;
-    }
+    private BagView bag = null;
     
+    private ChatView chat = null;
+
+    private EntityView entity = null;
+    
+    private ItemView item = null;
+    
+    private NPCView nps = null;
+    
+    private TransactionView tansaction = null;
     
     // This method is automatically invoked by the FXMLLoader - it's magic
     // This method must be public
     public void initialize() {
     	System.out.println("initializeeeeeeeeeeeeeeeeeeee!!!!!!");
-    	LocationView location = new LocationView(this);
-    	BagView bag = new BagView(this);
-    	ChatView chat = new ChatView(this);
-    	EntityView entity = new EntityView(this);
-    	ItemView item = new ItemView(this);
-    	NPCView nps = new NPCView(this);
-    	TransactionView tansaction = new TransactionView(this);
+    	location = new LocationView(this);
+    	bag = new BagView(this);
+    	chat = new ChatView(this);
+    	entity = new EntityView(this);
+    	item = new ItemView(this);
+    	nps = new NPCView(this);
+    	tansaction = new TransactionView(this);
     }
     
     
@@ -73,7 +82,7 @@ public class View {
 		return page;
 	}
     
-	public AnchorPane getMapView() {
+	public Canvas getMapView() {
 		return mapView;
 	}
 
@@ -125,4 +134,14 @@ public class View {
     public void saveGame() {
     	System.out.println("saveeeeeeeeeeeeeeeeeeeeeeeeeee!");
     }
+
+
+	public void bindScene(Scene scene) {
+		// TODO Auto-generated method stub
+		mapView.heightProperty().bind(scene.heightProperty().subtract(100));
+		mapView.widthProperty().bind(scene.widthProperty().subtract(10));
+		System.out.println(scene.getHeight());
+		System.out.println(mapView.getHeight());
+		location.test();
+	}
 }
