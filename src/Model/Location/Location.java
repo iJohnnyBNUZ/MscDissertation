@@ -1,7 +1,9 @@
 package Model.Location;
 
+import Model.Entity.User;
 import Model.Item.Item;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,6 +12,39 @@ public class Location {
     private HashMap<Coordinate, Tile> Tiles = new HashMap<Coordinate, Tile>();
     private HashMap<Coordinate, Item> Items = new HashMap<Coordinate, Item>();
     private Map<String, Coordinate> Entities = new HashMap<String, Coordinate>();
+    private ArrayList<User> users = new ArrayList<User>();
+
+    public HashMap<Coordinate, Tile> getTiles() {
+        return Tiles;
+    }
+
+    public void setTiles(HashMap<Coordinate, Tile> tiles) {
+        Tiles = tiles;
+    }
+
+    public HashMap<Coordinate, Item> getItems() {
+        return Items;
+    }
+
+    public void setItems(HashMap<Coordinate, Item> items) {
+        Items = items;
+    }
+
+    public Map<String, Coordinate> getEntities() {
+        return Entities;
+    }
+
+    public void setEntities(Map<String, Coordinate> entities) {
+        Entities = entities;
+    }
+
+    public ArrayList<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(ArrayList<User> users) {
+        this.users = users;
+    }
 
     public Location(String id) {
         this.locationID = id;
@@ -45,5 +80,13 @@ public class Location {
 
     public void setLocationID(String locationID) {
         this.locationID = locationID;
+    }
+
+    public void addUser(User user){
+        users.add(user);
+    }
+
+    public void removeUser(User user){
+        users.remove(user);
     }
 }
