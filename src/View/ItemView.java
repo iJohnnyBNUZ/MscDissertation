@@ -6,21 +6,20 @@ import java.util.Map;
 import Controller.Command.Command;
 import Controller.Command.PickUpCommand;
 import Model.Location.Coordinate;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-
-public class ItemView extends View {
+public class ItemView{
 	
-	private GridPane map = null;
+	private Canvas mapView = null;
 	private PickUpCommand pickUp= null;
 	private int row=10;
 	private int column=10;
 	private double image_h = 16.0;
 	private double image_w =16.0;
 	
-	public ItemView() {
-		map= super.getMap();
+	public ItemView(View view) {
+		mapView= view.getMapView();
 	}
 	
 	public void update(Map<String,Coordinate> items) {
@@ -32,7 +31,7 @@ public class ItemView extends View {
 				URL url = this.getClass().getResource("/images/" + name + ".png");
 				final Image image = new Image(url.toString(), image_h, image_w, false, false);
 				imagView.setImage(image);
-				map.add(imagView, items.get(name).getxPostion(), items.get(name).getyPosition());
+				//map.add(imagView, items.get(name).getxPostion(), items.get(name).getyPosition());
 			}
 		}else {
 			System.out.println("Wrong tiles size");
