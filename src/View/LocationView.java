@@ -2,7 +2,6 @@ package View;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import Controller.Command.Command;
 import Controller.Command.OpenDoorCommand;
@@ -22,6 +21,8 @@ public class LocationView{
 	private int column=10;
 	private double image_h = 32.0;
 	private double image_w = 32.0;
+	private double tileWidth= 0;
+	private double tileHeight = 0;
 
 	
 	public LocationView(View view) {
@@ -51,8 +52,15 @@ public class LocationView{
 		System.out.println("tiles size"+ tmp.size());
 		update(tmp);
 	}
-
 	
+	
+
+	/** If the parameter can be a matrix, it will be easy to implemented!
+	 *  E.g. use the number to represent the tiles.
+	 *  	 use the String(specific Id) to represent the tiles.
+	 *  Picture need to be refined after the functions are implemented.
+	 * */
+	 
 	public void update(Map<String,Coordinate> tiles) {
 
 		
@@ -63,18 +71,17 @@ public class LocationView{
 		gContext.clearRect(0, 0, mapView.getWidth(), mapView.getHeight());
 
 		gContext.setStroke(Color.BLACK);
-		double tileWidth=mapView.getWidth()/10;
-		double tileHeight = mapView.getHeight()/10;
-		System.out.println(mapView.getWidth()/10);
+		tileWidth=mapView.getWidth()/10;
+		tileHeight = mapView.getHeight()/10;
+		System.out.println("tile width: "+mapView.getWidth()/10);
+		
 		if(tiles.size() == 100) {
 			for(String name: tiles.keySet()) {
 				String filename = name.substring(0,5);
 				
-				//create ImageView to each of the items
-				ImageView imagView = new ImageView();
+				//create Image to each of the items
 				URL url = this.getClass().getResource("/images/" + filename + ".png");
 				Image image = new Image(url.toString(), image_h, image_w, false, false);
-				imagView.setImage(image);
 				
 				gContext.drawImage(image,0, 0,image_h,image_w, tiles.get(name).getyPosition()*tileWidth,
 						 tiles.get(name).getxPostion()*tileHeight,tileWidth,tileHeight);
@@ -84,15 +91,8 @@ public class LocationView{
 			System.out.println("Wrong tiles size");
 		}
 		
-		ImageView imagView = new ImageView();
-		URL url = this.getClass().getResource("/images/" + "door" + ".png");
-		Image image = new Image(url.toString(), image_h, image_w, false, false);
-		imagView.setImage(image);
 		
-		gContext.drawImage(image,0, 0,image_h,image_w, 0*tileWidth,
-				 0*tileHeight,tileWidth,tileHeight);
 	}
-	
 	
 	
 	

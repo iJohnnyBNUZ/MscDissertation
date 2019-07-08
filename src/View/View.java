@@ -1,5 +1,7 @@
 package View;
 
+import java.net.URL;
+
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -7,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TitledPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -18,9 +21,6 @@ public class View {
 	
 	@FXML
     private Canvas mapView;
-	
-	@FXML
-	private GridPane map;
 	
 
     @FXML
@@ -68,6 +68,7 @@ public class View {
     // This method must be public
     public void initialize() {
     	System.out.println("initializeeeeeeeeeeeeeeeeeeee!!!!!!");
+    	setCoinImage();
     	location = new LocationView(this);
     	bag = new BagView(this);
     	chat = new ChatView(this);
@@ -86,10 +87,6 @@ public class View {
 		return mapView;
 	}
 
-
-	public GridPane getMap() {
-		return map;
-	}
 
 	public ImageView getUserImage() {
 		return userImage;
@@ -143,5 +140,15 @@ public class View {
 		System.out.println(scene.getHeight());
 		System.out.println(mapView.getHeight());
 		location.test();
+		item.test();
+		entity.testStore();
+		entity.testNPC();
+		entity.testUsers();
+	}
+	
+	public void setCoinImage() {
+		URL url = this.getClass().getResource("/images/coin.png");
+		Image image = new Image(url.toString(), coinIcon.getFitWidth(), coinIcon.getFitHeight() , false, false);
+		coinIcon.setImage(image);
 	}
 }
