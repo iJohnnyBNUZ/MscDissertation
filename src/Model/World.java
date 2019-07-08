@@ -15,6 +15,44 @@ public class World {
 
 	private List<Location> Locations = new ArrayList<Location>();
 	private List<Entity> Entities = new ArrayList<Entity>();
+	private Location currentLocation;
+
+	public World(int i){
+
+	}
+
+	public static World getOurInstance() {
+		return ourInstance;
+	}
+
+	public static void setOurInstance(World ourInstance) {
+		World.ourInstance = ourInstance;
+	}
+
+	public List<Location> getLocations() {
+		return Locations;
+	}
+
+	public void setLocations(List<Location> locations) {
+		Locations = locations;
+	}
+
+	public List<Entity> getEntities() {
+		return Entities;
+	}
+
+	public void setEntities(List<Entity> entities) {
+		Entities = entities;
+	}
+
+	public Location getCurrentLocation() {
+		return currentLocation;
+	}
+
+	public void setCurrentLocation(Location currentLocation) {
+		this.currentLocation = currentLocation;
+	}
+
 
 	private World() {
 	}
