@@ -1,20 +1,20 @@
 package Model.Location;
 
 public class Coordinate {
-    private int xPostion;
+    private int xPosition;
     private int yPosition;
 
     public Coordinate(int x, int y) {
-        this.xPostion = x;
+        this.xPosition = x;
         this.yPosition = y;
     }
 
     public int getxPostion() {
-        return xPostion;
+        return xPosition;
     }
 
-    public void setxPostion(int xPostion) {
-        this.xPostion = xPostion;
+    public void setxPostion(int xPosition) {
+        this.xPosition = xPosition;
     }
 
     public int getyPosition() {
