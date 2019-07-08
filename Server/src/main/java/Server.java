@@ -26,12 +26,11 @@ public class Server extends JFrame implements Runnable{
     }
 
     //receive the thread when clients connected in
-    @Override
     public void run() {
         try{
             while(true){
                 s = ss.accept(); //wait for client connect
-                ChatThread ct = new ChatThread(s); //creat new ChatThread for user
+                ChatThread ct = new ChatThread(s); //create new ChatThread for user
                 clients.add(ct); //add new Thread to List
                 ct.start(); //start the new Thread to implement communicate
             }

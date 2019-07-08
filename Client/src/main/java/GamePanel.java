@@ -76,7 +76,6 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
         }
     }
 
-    @Override
     public void run() {
         try{
             while(canRun){
@@ -180,7 +179,6 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
     public void keyPressed(KeyEvent e){
         keyDirection = e.getKeyChar();
         String direction = String.valueOf(keyDirection).toLowerCase();
-        //System.out.println(direction+"in key");
         try{
             energy-=1;
             MoveCommand mc = new MoveCommand(world);
@@ -191,6 +189,7 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
             returnMsg+=lbMove.getText();
             lbMove.setText(returnMsg);
             checkFail();
+            System.out.println("Meme");
         }catch(Exception ex){
             ex.printStackTrace();
             javax.swing.JOptionPane.showMessageDialog(this,"Game exit exception! ");
@@ -198,12 +197,10 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
         }
     }
 
-    @Override
     public void keyTyped(KeyEvent e) {
 
     }
 
-    @Override
     public void keyReleased(KeyEvent e) {
 
     }

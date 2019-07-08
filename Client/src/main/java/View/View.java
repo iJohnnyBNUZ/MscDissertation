@@ -52,6 +52,7 @@ public class View {
     
     private LocationView location = null;
     
+    @FXML
     private BagView bag = null;
     
     private ChatView chat = null;
@@ -67,7 +68,7 @@ public class View {
     // This method is automatically invoked by the FXMLLoader - it's magic
     // This method must be public
     public void initialize() {
-    	System.out.println("initializeeeeeeeeeeeeeeeeeeee!!!!!!");
+    	System.out.println("Initializing View");
     	location = new LocationView(this);
     	bag = new BagView(this);
     	chat = new ChatView(this);
@@ -132,7 +133,7 @@ public class View {
     }
     
     public void saveGame() {
-    	System.out.println("saveeeeeeeeeeeeeeeeeeeeeeeeeee!");
+    	System.out.println("Save");
     }
 
 

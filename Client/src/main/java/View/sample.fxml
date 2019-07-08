@@ -25,7 +25,7 @@
                     </items>
                 </Menu>
                 -->
-                <Menu fx:id="bag" mnemonicParsing="false" text="Bag">
+                <Menu fx:id="Bag" mnemonicParsing="false" text="Bag">
                     <items>
                         <MenuItem fx:id="openBag" mnemonicParsing="false" onAction="#showBag" text="Open the bag" />
                     </items>
