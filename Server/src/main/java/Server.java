@@ -21,7 +21,7 @@ public class Server extends JFrame implements Runnable{
 
     private Coordinate initCoordinate = null;
     private World world = null;
-    private int energy = 15;
+    private int energy = 100;
     private String userName = " ";
 
     public Server() throws Exception{
