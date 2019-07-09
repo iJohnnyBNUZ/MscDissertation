@@ -72,6 +72,7 @@
             </AnchorPane>
         </content>
       </TitledPane>
+      <AnchorPane fx:id="forImage" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="40.0" />
         <!--
         <fx:include fx:id="bagView" source="bag.fxml" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="50.0" />
         -->

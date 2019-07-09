@@ -1,31 +1,23 @@
 package View;
 
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
 import Controller.Command.Command;
 import Controller.Command.PickUpCommand;
 import Model.Location.Coordinate;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
+import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 public class ItemView{
 	
-	private Canvas mapView = null;
+	private View view = null;
 	private PickUpCommand pickUp= null;
-	private GraphicsContext gContext= null;
 	private int row=10;
 	private int column=10;
-	private double image_h = 32.0;
-	private double image_w =32.0;
-	private double tileWidth= 0;
-	private double tileHeight = 0;
 	
 	public ItemView(View view) {
-		mapView= view.getMapView();
-		gContext = mapView.getGraphicsContext2D();
+		this.view= view;
 	}
 	
 	public void test() {
@@ -49,28 +41,34 @@ public class ItemView{
 	}
 	
 	public void update(Map<String,Coordinate> items) {
-		tileWidth=mapView.getWidth()/10;
-		tileHeight = mapView.getHeight()/10;
-		System.out.println("tile width: "+mapView.getWidth()/10);
 		
-		//something wrong, may be need another Gridpane.
 		if(items.size() <= 100) {
 			for(String name: items.keySet()) {
 				// only the item's name consisted by 5 characters can be used by this method.
-				String filename = name.substring(0,5);
+				final String fileName = name.substring(0,5);
+				ImageView imgView = view.drawClickable(fileName, items.get(name), true);
+				
+				imgView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+					public void handle(MouseEvent m) {
+						// TODO Auto-generated method stub
+						System.out.println(fileName);
+					}
+					
+				});
 				
 				//create ImageView to each of the items
-				URL url = this.getClass().getResource("/images/" + filename + ".png");
+				/*URL url = this.getClass().getResource("/images/" + filename + ".png");
 				final Image image = new Image(url.toString(), image_h, image_w, false, false);
 				
 				
 				gContext.drawImage(image,0, 0,image_h,image_w, items.get(name).getyPosition()*tileWidth,
-						 items.get(name).getxPostion()*tileHeight,image_h,image_w);
+						 items.get(name).getxPostion()*tileHeight,image_h,image_w);*/
 			}
 		}else {
 			System.out.println("Wrong tiles size");
 		}
-		
+		System.out.println("for Image +   " + view.getForImage().getChildren().size());
 	}
 	
 	public void setPickUpCommand(Command command) {
