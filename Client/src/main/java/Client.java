@@ -1,3 +1,5 @@
+import Model.World;
+
 import javax.swing.*;
 
 public class Client extends JFrame {
@@ -16,6 +18,8 @@ public class Client extends JFrame {
         this.setSize(gp.getWidth(),gp.getHeight());
         this.setResizable(true);
         this.setVisible(true);
+
+        World.getInstance();
     }
 
     public static void main(String[] args){

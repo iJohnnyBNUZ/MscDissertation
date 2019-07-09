@@ -1,6 +1,7 @@
 package Model.Entity;
 
 import Model.Item.Item;
+import Model.Location.Location;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ public abstract class Entity {
     private String entityID;
     private int Energy;
     private int Coin;
+    private Location currentLocation;
     private List<Item> Bag = new ArrayList<Item>();
 
     public Entity(String id) {
@@ -49,5 +51,13 @@ public abstract class Entity {
                 this.Bag.remove(item);
             }
         }
+    }
+
+    public Location getCurrentLocation() {
+        return currentLocation;
+    }
+
+    public void setCurrentLocation(Location currentLocation) {
+        this.currentLocation = currentLocation;
     }
 }

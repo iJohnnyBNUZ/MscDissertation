@@ -15,7 +15,6 @@ public class World {
 
 	private List<Location> Locations = new ArrayList<Location>();
 	private List<Entity> Entities = new ArrayList<Entity>();
-	private Location currentLocation;
 
 	public World(int i){
 
@@ -44,15 +43,6 @@ public class World {
 	public void setEntities(List<Entity> entities) {
 		Entities = entities;
 	}
-
-	public Location getCurrentLocation() {
-		return currentLocation;
-	}
-
-	public void setCurrentLocation(Location currentLocation) {
-		this.currentLocation = currentLocation;
-	}
-
 
 	private World() {
 	}

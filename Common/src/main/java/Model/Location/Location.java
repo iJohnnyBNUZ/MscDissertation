@@ -89,4 +89,8 @@ public class Location {
     public void removeUser(User user){
         users.remove(user);
     }
+
+    public void changeUserLocation(String userID, Coordinate coordinate) {
+        Entities.put(userID, coordinate);
+    }
 }
