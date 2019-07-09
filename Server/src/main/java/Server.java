@@ -76,40 +76,6 @@ public class Server extends JFrame implements Runnable{
         l1.addTile(c9,t9);
     }
 
-    public void findNewCoordinate(String d) {
-        Iterator<Map.Entry<Coordinate, Tile>> iterator = this.world.getCurrentLocation().getTiles().entrySet().iterator();
-
-        if (d.equals("a")) {
-            while (iterator.hasNext()) {
-                Map.Entry<Coordinate, Tile> entry = iterator.next();
-                if (entry.getKey().getxPostion() == initCoordinate.getxPostion() - 1 && entry.getKey().getyPosition() == initCoordinate.getyPosition()) {
-                    initCoordinate = entry.getKey();
-                }
-            }
-        }else if(d.equals("d")){
-            while (iterator.hasNext()) {
-                Map.Entry<Coordinate, Tile> entry = iterator.next();
-                if (entry.getKey().getxPostion() == initCoordinate.getxPostion() + 1 && entry.getKey().getyPosition() == initCoordinate.getyPosition()) {
-                    initCoordinate = entry.getKey();
-                }
-            }
-        } else if(d.equals("w")){
-            while (iterator.hasNext()) {
-                Map.Entry<Coordinate, Tile> entry = iterator.next();
-                if (entry.getKey().getxPostion() == initCoordinate.getxPostion() && entry.getKey().getyPosition() == initCoordinate.getyPosition()-1) {
-                    initCoordinate = entry.getKey();
-                }
-            }
-        } else if(d.equals("d")){
-            while (iterator.hasNext()) {
-                Map.Entry<Coordinate, Tile> entry = iterator.next();
-                if (entry.getKey().getxPostion() == initCoordinate.getxPostion() && entry.getKey().getyPosition() == initCoordinate.getyPosition()+1) {
-                    initCoordinate = entry.getKey();
-                }
-            }
-        }
-    }
-
     //receive the thread when clients connected in
     public void run() {
         try{
@@ -146,6 +112,8 @@ public class Server extends JFrame implements Runnable{
             try{
                 while(canRun){
                     String input = in.nextLine();
+                    System.out.println(input);
+                    findNewCoordinate(input);
                     sendMessage(input);
                 }
             }catch (Exception ex){
@@ -158,6 +126,40 @@ public class Server extends JFrame implements Runnable{
             for(ChatThread ct:clients) {
                 ct.out.println("Update World");
                 System.out.println("Responding to client");
+            }
+        }
+
+        public void findNewCoordinate(String d) {
+            Iterator<Map.Entry<Coordinate, Tile>> iterator = World.getInstance().getCurrentLocation().getTiles().entrySet().iterator();
+
+            if (d.equals("a")) {
+                while (iterator.hasNext()) {
+                    Map.Entry<Coordinate, Tile> entry = iterator.next();
+                    if (entry.getKey().getxPostion() == initCoordinate.getxPostion() - 1 && entry.getKey().getyPosition() == initCoordinate.getyPosition()) {
+                        initCoordinate = entry.getKey();
+                    }
+                }
+            }else if(d.equals("d")){
+                while (iterator.hasNext()) {
+                    Map.Entry<Coordinate, Tile> entry = iterator.next();
+                    if (entry.getKey().getxPostion() == initCoordinate.getxPostion() + 1 && entry.getKey().getyPosition() == initCoordinate.getyPosition()) {
+                        initCoordinate = entry.getKey();
+                    }
+                }
+            } else if(d.equals("w")){
+                while (iterator.hasNext()) {
+                    Map.Entry<Coordinate, Tile> entry = iterator.next();
+                    if (entry.getKey().getxPostion() == initCoordinate.getxPostion() && entry.getKey().getyPosition() == initCoordinate.getyPosition()-1) {
+                        initCoordinate = entry.getKey();
+                    }
+                }
+            } else if(d.equals("d")){
+                while (iterator.hasNext()) {
+                    Map.Entry<Coordinate, Tile> entry = iterator.next();
+                    if (entry.getKey().getxPostion() == initCoordinate.getxPostion() && entry.getKey().getyPosition() == initCoordinate.getyPosition()+1) {
+                        initCoordinate = entry.getKey();
+                    }
+                }
             }
         }
 

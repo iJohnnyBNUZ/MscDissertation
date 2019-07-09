@@ -96,7 +96,8 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
         keyDirection = e.getKeyChar();
         String direction = String.valueOf(keyDirection).toLowerCase();
         try{
-            String returnMsg = "Moved";
+            String returnMsg = direction;
+            System.out.println(direction);
             ps.println(returnMsg);
             returnMsg+="\n";
             returnMsg+=lbMove.getText();
