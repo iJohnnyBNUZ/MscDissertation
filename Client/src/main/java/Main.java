@@ -1,4 +1,4 @@
-import View.View;
+//import View.View;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
@@ -21,10 +21,10 @@ public class Main extends Application {
         primaryStage.setTitle("University of Edinburgh Dissertation");
         primaryStage.setScene(new Scene(root, 900, 720));
         
-        View view = (View) fxmlLoader.getController();
+//        View view = (View) fxmlLoader.getController();
         //Used for get the screen size and set to canvas.
         //Test is written in that method either.
-        view.bindScene(primaryStage.getScene()); 
+//        view.bindScene(primaryStage.getScene());
         primaryStage.show();
         
         
