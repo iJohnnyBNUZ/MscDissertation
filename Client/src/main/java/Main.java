@@ -1,4 +1,5 @@
 //import View.View;
+import Controller.CommunicationController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
@@ -15,7 +16,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
     	
-    	URL location = getClass().getResource("View/sample.fxml");
+    	URL location = getClass().getResource("view/sample.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(location);
         fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
@@ -28,7 +29,6 @@ public class Main extends Application {
         //Test is written in that method either.
         view.bindScene(primaryStage.getScene());
         primaryStage.show();
-        
         
         System.out.println("Finished Loading");
     }

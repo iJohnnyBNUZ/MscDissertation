@@ -2,14 +2,17 @@ package Model.Item;
 
 import java.io.Serializable;
 
-public abstract class Item implements Serializable {
+public class Item implements Serializable {
     private String itemID;
     private int coinValue = 0;
     private boolean isEdible = false;
     private boolean isCollectible = true;
+    private String type = null;
 
-    public Item(String id) {
+    public Item(String id,int coinValue,String type) {
         this.itemID = id;
+        this.coinValue = coinValue;
+        this.type = type;
     }
 
     public String getItemID() {
@@ -43,4 +46,8 @@ public abstract class Item implements Serializable {
     public void setCollectible(boolean collectible) {
         isCollectible = collectible;
     }
+
+    public void setType(String type) { this.type = type; }
+
+    public String getType() { return type; }
 }
