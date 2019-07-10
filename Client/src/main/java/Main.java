@@ -1,4 +1,5 @@
-//import View.View;
+/*
+import View.View;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
@@ -38,3 +39,4 @@ public class Main extends Application {
         Application.launch(args);
     }
 }
+*/

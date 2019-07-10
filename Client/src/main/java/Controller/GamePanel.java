@@ -14,30 +14,47 @@ import java.util.ResourceBundle;
 import java.util.Scanner;
 
 public class GamePanel extends JPanel implements KeyListener,Runnable {
+	private char keyDirection;
+	private JLabel lbEnergy = new JLabel(); //show energy
 	private JLabel lbMove = new JLabel();
+	private Socket s;
 	private Scanner in;
+	private PrintStream ps;
 	private ObjectOutputStream objectOutputStream;
 	private ObjectInputStream objectInputStream;
 
+	private ResourceBundle rb = ResourceBundle.getBundle("config");
+	private String IP = "127.0.0.1";
+	private Integer PORT = 7777;
+
 	private boolean canRun = true;
-	private String userName;
+	private String userName = null;
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
 	public GamePanel(String userName) throws IOException, ClassNotFoundException {
 
-		this.userName = userName;
+		this.setUserName(userName);
 
 		//set whole panel
 		this.setLayout(null);
 		this.setBackground(Color.DARK_GRAY);
 		this.setSize(1000,800);
 
-		JLabel lbEnergy = new JLabel();
+		//set energy label
 		this.add(lbEnergy);
 		lbEnergy.setFont(new Font("Arial",Font.BOLD,40));
 		lbEnergy.setBackground(Color.YELLOW);
 		lbEnergy.setForeground(Color.PINK);
 		lbEnergy.setBounds(0,0,this.getWidth(),20);
 
+		//set move label
 		this.add(lbMove);
 		lbMove.setFont(new Font("Arial",Font.BOLD,20));
 		lbMove.setBackground(Color.black);
@@ -46,22 +63,22 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 
 		this.addKeyListener(this);
 
-		String IP = "";
-		int PORT = 0;
+		// Get IP and port from resources
 		try{
-			ResourceBundle rb = ResourceBundle.getBundle("config");
 			IP = rb.getString("ip");
-			PORT = Integer.parseInt(rb.getString("port"));
+			PORT = Integer.valueOf(rb.getString("port"));
 		}
 		catch (MissingResourceException e) {
 			e.printStackTrace();
 		}
 
+		// connect to Server
 		try{
-			Socket s = new Socket(IP, PORT);
+			s = new Socket(IP, PORT);
 			JOptionPane.showMessageDialog(this,"Success connected");
 			in = new Scanner(s.getInputStream());
 			OutputStream os = s.getOutputStream();
+			ps = new PrintStream(os);
 			this.objectOutputStream = new ObjectOutputStream(os);
 			this.objectInputStream = new ObjectInputStream((s.getInputStream()));
 			createUser();
@@ -72,7 +89,7 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 			javax.swing.JOptionPane.showMessageDialog(this,"Game exit exception! ");
 			System.exit(0);
 		}
-
+		World w = World.getInstance();
 		lbEnergy.setText("Current energy: " + World.getInstance().getEntity(userName).getEnergy());
 	}
 
@@ -92,21 +109,21 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 
 	public void run() {
 		try{
-			while(canRun) {
+			while(canRun){
 				String str = in.nextLine();
 				System.out.println(str);
 				lbMove.setText(str);
 				checkFail();
 			}
-		} catch(Exception ex) {
+		}catch (Exception ex){
 			canRun = false;
-			javax.swing.JOptionPane.showMessageDialog(this,"Game exit exception");
+			javax.swing.JOptionPane.showMessageDialog(this,"Game exit exception! ");
 			System.exit(0);
 		}
 	}
 
 
-	private void checkFail(){
+	public void checkFail(){
 //        if(energy<=0){
 //            javax.swing.JOptionPane.showMessageDialog(this,"Energy is exhausted, the game is over!");
 //            System.exit(0);
@@ -119,12 +136,12 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 	}
 
 	public void keyPressed(KeyEvent e){
-		char keyDirection = e.getKeyChar();
+		keyDirection = e.getKeyChar();
 		String direction = String.valueOf(keyDirection).toLowerCase();
 		try{
 			String returnMsg = direction;
 			System.out.println(direction);
-			objectOutputStream.writeObject(returnMsg);
+			ps.println(returnMsg);
 			returnMsg+="\n";
 			returnMsg+=lbMove.getText();
 			lbMove.setText(returnMsg);

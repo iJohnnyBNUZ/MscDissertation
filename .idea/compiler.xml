@@ -16,10 +16,10 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Client" target="1.11" />
-      <module name="Common" target="1.11" />
-      <module name="MscDissertation" target="1.11" />
-      <module name="Server" target="1.11" />
+      <module name="Client" target="11" />
+      <module name="Common" target="11" />
+      <module name="MscDissertation" target="11" />
+      <module name="Server" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
