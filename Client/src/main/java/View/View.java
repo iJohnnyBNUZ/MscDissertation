@@ -2,9 +2,11 @@ package View;
 
 import java.net.URL;
 
+import Model.Location.Coordinate;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -13,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 
 public class View {
 	
@@ -22,7 +25,9 @@ public class View {
 	@FXML
     private Canvas mapView;
 	
-
+	@FXML
+    private AnchorPane forImage;
+	
     @FXML
     private ImageView userImage;
 
@@ -64,6 +69,15 @@ public class View {
     
     private TransactionView tansaction = null;
     
+    private double tileWidth = 0;
+    
+    private double tileHeight = 0;
+    
+    private double image_h = 64.0;
+    
+	private double image_w = 64.0;
+	
+    
     // This method is automatically invoked by the FXMLLoader - it's magic
     // This method must be public
     public void initialize() {
@@ -85,6 +99,12 @@ public class View {
     
 	public Canvas getMapView() {
 		return mapView;
+	}
+
+	
+
+	public AnchorPane getForImage() {
+		return forImage;
 	}
 
 
@@ -150,5 +170,52 @@ public class View {
 		URL url = this.getClass().getResource("/images/coin.png");
 		Image image = new Image(url.toString(), coinIcon.getFitWidth(), coinIcon.getFitHeight() , false, false);
 		coinIcon.setImage(image);
+	}
+	
+	public void draw(String fileName, Coordinate position) {
+		GraphicsContext gContext = mapView.getGraphicsContext2D();
+		tileWidth=mapView.getWidth()/10;
+		tileHeight = mapView.getHeight()/10;
+		//create Image to each of the items
+		URL url = this.getClass().getResource("/images/" + fileName + ".png");
+		Image image = new Image(url.toString(), image_h, image_w, false, false);
+		gContext.drawImage(image,0, 0,image_h,image_w, position.getyPosition()*tileWidth,
+				position.getxPostion()*tileHeight,tileWidth,tileHeight);
+		
+	}
+	
+	public ImageView drawClickable(String fileName, Coordinate position, Boolean isItemTile) {
+		tileWidth=mapView.getWidth()/10;
+		tileHeight = mapView.getHeight()/10;
+		
+		//create ImageView  to each of the items
+		ImageView imgView = new ImageView();
+		URL url = this.getClass().getResource("/images/" + fileName + ".png");
+		Image image = new Image(url.toString(), image_h, image_w, false, false);
+		if(!isItemTile) {
+			image = new Image(url.toString(), image_h, image_w, false, false);
+		}else {
+			image = new Image(url.toString(), image_h/2, image_w/2, false, false);
+
+		}
+		imgView.setImage(image);
+		imgView.setLayoutX(position.getyPosition()*tileWidth);
+		imgView.setLayoutY(position.getxPostion()*tileHeight);
+		forImage.getChildren().add(imgView);
+		return imgView;
+	}
+	
+	public void initialCancas() {
+		GraphicsContext gContext = mapView.getGraphicsContext2D();
+		
+		gContext.save();
+
+		gContext.setFill(Color.WHITE);
+
+		gContext.clearRect(0, 0, mapView.getWidth(), mapView.getHeight());
+
+		gContext.setStroke(Color.BLACK);
+		
+		
 	}
 }
