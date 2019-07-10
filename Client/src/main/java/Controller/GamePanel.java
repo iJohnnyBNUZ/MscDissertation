@@ -12,6 +12,8 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
 public class GamePanel extends JPanel implements KeyListener,Runnable {
@@ -22,6 +24,10 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 	private Scanner in;
 	private PrintStream ps = null;
 	private ObjectOutputStream objectOutputStream = null;
+
+	private ResourceBundle rb = ResourceBundle.getBundle("config");
+	private String IP = "";
+	private Integer PORT = 0;
 
 	private boolean canRun = true;
 	private String userName = null;
@@ -56,8 +62,18 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 
 		this.addKeyListener(this);
 
+		// Get IP and port from resources
 		try{
-			s = new Socket("127.0.0.1",7777);
+			IP = rb.getString("ip");
+			PORT = Integer.valueOf(rb.getString("port"));
+		}
+		catch (MissingResourceException e) {
+			e.printStackTrace();
+		}
+
+		// connect to Server
+		try{
+			s = new Socket(IP, PORT);
 			JOptionPane.showMessageDialog(this,"Success connected");
 			in = new Scanner(s.getInputStream());
 			OutputStream os = s.getOutputStream();
