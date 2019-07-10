@@ -7,32 +7,25 @@ import Model.World;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
 
 public class ClientThread extends Thread implements Runnable {
-	private Socket socket;
-	Server server;
-	private ObjectInputStream in;
+	private Server server;
+	private ObjectInputStream objectInput;
+	private ObjectOutputStream objectOutput;
 	private boolean canRun = true;
-	ObjectOutputStream objectOutput;
-	private PrintWriter out;
 
-	public ClientThread(Socket socket, Server server) throws Exception{
-		//create input and output channels for this Thread
-		this.socket = socket;
+	ClientThread(Socket socket, Server server) throws Exception{
 		this.server = server;
-		in = new ObjectInputStream(socket.getInputStream());
-//		in = new Scanner(new InputStreamReader(this.socket.getInputStream()));
+		objectInput = new ObjectInputStream(socket.getInputStream());
 		objectOutput = new ObjectOutputStream(socket.getOutputStream());
 	}
 
-	//share the messages from other users
 	@Override
 	public void run() {
 		try{
-			while(canRun){
-				Object input = (Object) in.readObject();
+			while(canRun) {
+				Object input = (Object) objectInput.readObject();
 				System.out.println(input);
 				if(input instanceof Entity) {
 					handleEntity((User) input);
@@ -45,20 +38,24 @@ public class ClientThread extends Thread implements Runnable {
 		}catch (Exception ex){
 			canRun = false;
 			server.removeClient(this);
-
+			ex.printStackTrace();
 		}
 	}
 
-	public void sendMessage(String msg){
-		out.println(msg);
+	void sendMessage(String msg) {
+		try {
+			objectOutput.writeObject(msg);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
-	public void handleEntity(User user) {
+	private void handleEntity(User user) {
 		System.out.println(user.getEntityID());
 		World.getInstance().addEntity(user);
 	}
 
-	public void handleString(String d) {
+	private void handleString(String d) {
 
 		switch (d) {
 			case "a":
