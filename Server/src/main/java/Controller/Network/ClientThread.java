@@ -4,64 +4,61 @@ import Model.Entity.Entity;
 import Model.Entity.User;
 import Model.World;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class ClientThread extends Thread implements Runnable {
-	private Socket socket;
-	Server server;
+	private Server server;
+	private ObjectInputStream objectInput;
+	private ObjectOutputStream objectOutput;
 	private boolean canRun = true;
-	ObjectOutputStream objectOutput;
-	private Scanner in;
-	private PrintWriter out;
+	private String userName;
 
-	public ClientThread(Socket socket, Server server) throws Exception{
-		//create input and output channels for this Thread
-		this.socket = socket;
+	ClientThread(Socket socket, Server server) throws Exception{
 		this.server = server;
-		in = new Scanner(new InputStreamReader(this.socket.getInputStream()));
-		out = new PrintWriter(this.socket.getOutputStream(),true);
+		objectInput = new ObjectInputStream(socket.getInputStream());
+		objectOutput = new ObjectOutputStream(socket.getOutputStream());
 	}
 
-	//share the messages from other users
 	@Override
 	public void run() {
 		try{
-			while(canRun){
-				/*Object input = (Object) in.readObject();
-				System.out.println(input);
+			while(canRun) {
+				Object input = (Object) objectInput.readObject();
+
 				if(input instanceof Entity) {
 					handleEntity((User) input);
 				}
 				else {
-					//handleString((String) input);
+					handleString((String) input);
 					sendMessage((String) input);
-				}*/
-				while(canRun){
-					String input = in.nextLine();
-					//System.out.println(input+"=====+++++++");
-					sendMessage(input);
 				}
 			}
 		}catch (Exception ex){
 			canRun = false;
 			server.removeClient(this);
-
+			ex.printStackTrace();
 		}
 	}
 
-	public void sendMessage(String msg){
-		out.println(msg);
+	void sendMessage(String msg) {
+		try {
+			objectOutput.writeObject(msg);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
-	public void handleEntity(User user) {
+	private void handleEntity(User user) {
 		System.out.println(user.getEntityID());
 		World.getInstance().addEntity(user);
+		userName = user.getEntityID();
 	}
 
-	/*public void handleString(String d) {
-
+	private void handleString(String d) {
+		System.out.println("Username ->" + userName);
 		switch (d) {
 			case "a":
 				System.out.println("A");
@@ -85,6 +82,12 @@ public class ClientThread extends Thread implements Runnable {
 				}
 				break;
 		}
-	}*/
+
+		try {
+			server.updateClients();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
 
