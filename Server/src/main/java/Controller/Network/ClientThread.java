@@ -54,6 +54,7 @@ public class ClientThread extends Thread implements Runnable {
 	}
 
 	public void handleEntity(User user) {
+		System.out.println(user.getEntityID());
 		World.getInstance().addEntity(user);
 	}
 
@@ -73,6 +74,7 @@ public class ClientThread extends Thread implements Runnable {
 				System.out.println("S");
 				break;
 			case "getWorld":
+				System.out.println("Getting world");
 				try {
 					objectOutput.writeObject(World.getInstance());
 					System.out.println("Sending world");
