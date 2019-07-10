@@ -1,39 +1,57 @@
 package Controller;
 
 import Model.Location.Coordinate;
+import Model.Location.Location;
+import Model.World;
+
+import java.util.Iterator;
+import java.util.Map;
 
 public class LocationController {
 
     public LocationController(){}
 
-    public String moveTo(String userid, Coordinate c, String direction){
+    public void moveTo(String userid, String direction){
+        for(Location location:World.getInstance().getLocations()) {
+            Coordinate coordinate = null;
+            Iterator<Map.Entry<String, Coordinate>> iterator = location.getEntities().entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<String, Coordinate> entry = iterator.next();
+                if (entry.getKey().equals(userid)) {
+                    coordinate = entry.getValue();
+                    break;
+                }
+            }
+            //can not find user
+            if (coordinate == null)
+                return;
 
-        String steam = "";
+            if(direction == "a"){
+                changeUserCoordinate(coordinate.getxPostion()-1,coordinate.getyPosition(),userid,location);
+            }else if(direction == "d"){
+                changeUserCoordinate(coordinate.getxPostion()+1,coordinate.getyPosition(),userid,location);
+            }else if(direction == "w"){
+                changeUserCoordinate(coordinate.getxPostion(),coordinate.getyPosition()-1,userid,location);
+            }else if(direction == "s"){
+                changeUserCoordinate(coordinate.getxPostion(),coordinate.getyPosition()+1,userid,location);
+            }else
+                return;
 
-//        if(tiles.containsKey(c)){
-//            System.out.println(direction+"kan fangxiang");
-//            if(direction.equals("a")){
-//                steam = "User "+ userid + " moves left"+changeDetails(c.getxPostion()-1,c.getyPosition(),userid)+",";
-//            } else if(direction.equals("d")){
-//                steam = "User "+ userid + " moves right"+changeDetails(c.getxPostion()+1,c.getyPosition(),userid)+",";
-//            }else if(direction.equals("w")){
-//                steam = "User "+ userid + " moves up"+changeDetails(c.getxPostion(),c.getyPosition()-1,userid)+",";
-//            }else if(direction.equals("s")){
-//                steam = "User "+ userid + " moves down"+changeDetails(c.getxPostion(),c.getyPosition()+1,userid)+",";
-//            }else{
-//                steam = "User "+ userid+ " Press a wrong direction! can not move! ";
-//            }
-//        }
-
-        return steam;
+        }
     }
 
-    public String changeDetails(int positionx,int positiony,String userid){
-        String output = "";
+    public void changeUserCoordinate(int positionx,int positiony,String userid,Location location){
+        Coordinate coordinate;
+        Iterator<Map.Entry<String, Coordinate>> iterator = location.getEntities().entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<String, Coordinate> entry = iterator.next();
+            if (entry.getValue().getxPostion()==positionx && entry.getValue().getyPosition() == positiony) {
+                coordinate = entry.getValue();
+                location.changeUserLocation(userid, coordinate);
+                return;
+            }
+        }
 
-        output += "Arrived at the border, unable to move!";
-
-        return output;
     }
 
     public void openDoor(String keyId){
