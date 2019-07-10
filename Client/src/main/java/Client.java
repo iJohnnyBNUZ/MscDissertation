@@ -1,11 +1,13 @@
+import Controller.GamePanel;
 import Model.World;
 
 import javax.swing.*;
+import java.io.IOException;
 
 public class Client extends JFrame {
     private GamePanel gp;
 
-    public Client(){
+    public Client() throws IOException {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         String UserName = JOptionPane.showInputDialog("Input your userName:");
         System.out.println(UserName+"+++++");
@@ -22,7 +24,7 @@ public class Client extends JFrame {
         World.getInstance();
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException {
         new Client();
     }
 }

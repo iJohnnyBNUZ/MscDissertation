@@ -3,11 +3,12 @@ package Model.Location;
 import Model.Entity.User;
 import Model.Item.Item;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Location {
+public class Location implements Serializable {
     private String locationID;
     private HashMap<Coordinate, Tile> Tiles = new HashMap<Coordinate, Tile>();
     private HashMap<Coordinate, Item> Items = new HashMap<Coordinate, Item>();

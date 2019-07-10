@@ -1,6 +1,5 @@
 package Controller.Command;
 
-import Controller.LocationController;
 import Model.Location.Coordinate;
 import Model.World;
 

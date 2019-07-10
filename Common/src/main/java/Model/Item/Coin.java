@@ -1,4 +1,7 @@
 package Model.Item;
 
-public class Coin {
+public class Coin extends Item {
+	public Coin(String id) {
+		super(id);
+	}
 }

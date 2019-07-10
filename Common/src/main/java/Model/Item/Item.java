@@ -1,6 +1,8 @@
 package Model.Item;
 
-public abstract class Item {
+import java.io.Serializable;
+
+public abstract class Item implements Serializable {
     private String itemID;
     private int coinValue = 0;
     private boolean isEdible = false;

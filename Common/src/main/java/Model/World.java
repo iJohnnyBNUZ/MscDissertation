@@ -3,10 +3,11 @@ package Model;
 import Model.Entity.Entity;
 import Model.Location.Location;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class World {
+public class World implements Serializable {
 	private static World ourInstance = new World();
 
 	public static World getInstance() {

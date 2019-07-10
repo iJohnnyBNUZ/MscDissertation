@@ -1,6 +1,8 @@
 package Model.Location;
 
-public abstract class Tile {
+import java.io.Serializable;
+
+public abstract class Tile implements Serializable {
     private boolean isMovable = true;
     private String Terrain = "Grass";
     private int energyCost = 1;

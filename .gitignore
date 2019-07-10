@@ -15,6 +15,7 @@ Server/target
 .idea/**/dictionaries
 .idea/**/shelf
 .idea/compiler.xml
+.idea/MscDissertation.iml
 
 # Generated files
 .idea/**/contentModel.xml

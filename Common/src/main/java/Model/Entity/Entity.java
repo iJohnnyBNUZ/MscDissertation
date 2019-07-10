@@ -3,10 +3,11 @@ package Model.Entity;
 import Model.Item.Item;
 import Model.Location.Location;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Entity {
+public abstract class Entity implements Serializable {
     private String entityID;
     private int Energy;
     private int Coin;
