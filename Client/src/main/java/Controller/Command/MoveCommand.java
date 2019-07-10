@@ -1,6 +1,7 @@
 package Controller.Command;
 
 import Model.Location.Coordinate;
+import Controller.LocationController;
 import Model.World;
 
 public class MoveCommand implements Command {
@@ -10,13 +11,8 @@ public class MoveCommand implements Command {
         this.locationController = new LocationController(world);
     }
 
-    public String excute(String UserId,Coordinate c,String direction){
-        return locationController.moveTo(UserId,c,direction);
+    public void excute(String direction){
+        locationController.moveTo(direction.toLowerCase());
     }
 
-    /*LocationController locationController = new LocationController();
-
-    public void excute(String direction){
-        locationController.moveTo(direction);
-    }*/
 }

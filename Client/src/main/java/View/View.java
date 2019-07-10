@@ -2,8 +2,13 @@ package View;
 
 import java.net.URL;
 
+import Controller.Command.Command;
+import Controller.Command.MoveCommand;
+import Model.World;
 import Model.Location.Coordinate;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -13,6 +18,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -77,7 +83,7 @@ public class View {
     
 	private double image_w = 64.0;
 	
-    
+	private MoveCommand move = null;
     // This method is automatically invoked by the FXMLLoader - it's magic
     // This method must be public
     public void initialize() {
@@ -90,6 +96,7 @@ public class View {
     	item = new ItemView(this);
     	nps = new NPCView(this);
     	tansaction = new TransactionView(this);
+    	setMoveCommand(new MoveCommand(World.getInstance()));
     }
     
     
@@ -164,6 +171,8 @@ public class View {
 		entity.testStore();
 		entity.testNPC();
 		entity.testUsers();
+		initialForImage();
+		
 	}
 	
 	public void setCoinImage() {
@@ -191,7 +200,6 @@ public class View {
 		//create ImageView  to each of the items
 		ImageView imgView = new ImageView();
 		URL url = this.getClass().getResource("/images/" + fileName + ".png");
-		System.out.println(url.toString());
 		Image image = new Image(url.toString(), image_h, image_w, false, false);
 		if(!isItemTile) {
 			image = new Image(url.toString(), image_h, image_w, false, false);
@@ -218,5 +226,40 @@ public class View {
 		gContext.setStroke(Color.BLACK);
 		
 		
+	}
+	
+	
+	public void initialForImage() {
+		forImage.requestFocus();
+		forImage.setOnKeyPressed(new EventHandler<KeyEvent>() {
+		double moveX = 0;
+		double moveY = 0;
+			@Override
+			public void handle(KeyEvent k) {
+				// TODO Auto-generated method stub
+				System.out.println(k.getCode().getName());
+				move.excute(k.getCode().getName());
+				//This method will not be used in the final project, it just used for present demo.
+				tileWidth=mapView.getWidth()/10;
+				tileHeight = mapView.getHeight()/10;
+				switch(k.getCode().getName()) {
+				case "Right": moveX= tileWidth;break;
+				case "Left" : moveX = 0- tileWidth;break;
+				case "Up" : moveY = 0-tileHeight;break;
+				case "Down" : moveY = tileHeight;break;
+				}
+				
+				ImageView moved = (ImageView) forImage.lookup("#user0");
+				moved.setLayoutX(moved.getLayoutX()+moveX);
+				moved.setLayoutY(moved.getLayoutY()+moveY);
+				moveX=0;
+				moveY=0;
+			}
+			
+		});
+	}
+	
+	public void setMoveCommand(Command command) {
+		move = (MoveCommand) command;
 	}
 }
