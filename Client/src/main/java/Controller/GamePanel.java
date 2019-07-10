@@ -7,10 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -20,10 +17,11 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 	private char keyDirection;
 	private JLabel lbEnergy = new JLabel(); //show energy
 	private JLabel lbMove = new JLabel();
-	private Socket s = null;
+	private Socket s;
 	private Scanner in;
-	private PrintStream ps = null;
-	private ObjectOutputStream objectOutputStream = null;
+	private PrintStream ps;
+	private ObjectOutputStream objectOutputStream;
+	private ObjectInputStream objectInputStream;
 
 	private ResourceBundle rb = ResourceBundle.getBundle("config");
 	private String IP = "";
@@ -40,7 +38,7 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 		this.userName = userName;
 	}
 
-	public GamePanel() throws IOException {
+	public GamePanel() throws IOException, ClassNotFoundException {
 		//set whole panel
 		this.setLayout(null);
 		this.setBackground(Color.DARK_GRAY);
@@ -78,7 +76,10 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 			in = new Scanner(s.getInputStream());
 			OutputStream os = s.getOutputStream();
 			ps = new PrintStream(os);
-			objectOutputStream = new ObjectOutputStream(os);
+			this.objectOutputStream = new ObjectOutputStream(os);
+			this.objectInputStream = new ObjectInputStream((s.getInputStream()));
+			createUser();
+			getWorldFromServer();
 			new Thread(this).start();
 
 		} catch (Exception ex){
@@ -86,19 +87,18 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 			System.exit(0);
 		}
 
-		createUser();
-
-		getWorldFromServer();
-
 		lbEnergy.setText("Current energy: " + World.getInstance().getEntity(userName).getEnergy());
 	}
 
 	private void createUser() throws IOException {
 		objectOutputStream.writeObject(new User(userName));
+		objectOutputStream.close();
 	}
 
-	private void getWorldFromServer() {
+	private void getWorldFromServer() throws IOException, ClassNotFoundException {
 		ps.println("getWorld");
+		Object world = objectInputStream.readObject();
+		World.setOurInstance((World) world);
 	}
 
 	public void run() {

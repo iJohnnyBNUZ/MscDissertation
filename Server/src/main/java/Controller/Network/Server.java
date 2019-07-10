@@ -67,8 +67,6 @@ public class Server extends JFrame implements Runnable{
 		l1.addTile(c7,t7);
 		l1.addTile(c8,t8);
 		l1.addTile(c9,t9);
-
-		World.getInstance().getEntity(userName).setEnergy(100);
 	}
 
 	//receive the thread when clients connected in

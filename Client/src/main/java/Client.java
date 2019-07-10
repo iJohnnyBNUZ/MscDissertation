@@ -7,7 +7,7 @@ import java.io.IOException;
 public class Client extends JFrame {
     private GamePanel gp;
 
-    public Client() throws IOException {
+    public Client() throws IOException, ClassNotFoundException {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         String UserName = JOptionPane.showInputDialog("Input your userName:");
         System.out.println(UserName+"+++++");
@@ -24,7 +24,7 @@ public class Client extends JFrame {
         World.getInstance();
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         new Client();
     }
 }

@@ -1,26 +1,30 @@
 package Controller.Network;
 
+import Model.Entity.Entity;
+import Model.Entity.User;
 import Model.World;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class ClientThread extends Thread implements Runnable {
-	private Socket s = null;
-	private PrintStream ps =null;
-	private Scanner in;
-	private boolean canRun = true;
-	private PrintWriter out;
-	ObjectOutputStream objectOutput;
+	private Socket socket;
 	Server server;
+	private ObjectInputStream in;
+	private boolean canRun = true;
+	ObjectOutputStream objectOutput;
+	private PrintWriter out;
 
-	public ClientThread(Socket s, Server server) throws Exception{
+	public ClientThread(Socket socket, Server server) throws Exception{
 		//create input and output channels for this Thread
-		this.s = s;
-		in = new Scanner(new InputStreamReader(this.s.getInputStream()));
-		objectOutput = new ObjectOutputStream(s.getOutputStream());
+		this.socket = socket;
 		this.server = server;
+		in = new ObjectInputStream(socket.getInputStream());
+//		in = new Scanner(new InputStreamReader(this.socket.getInputStream()));
+		objectOutput = new ObjectOutputStream(socket.getOutputStream());
 	}
 
 	//share the messages from other users
@@ -28,10 +32,15 @@ public class ClientThread extends Thread implements Runnable {
 	public void run() {
 		try{
 			while(canRun){
-				String input = in.nextLine();
+				Object input = (Object) in.readObject();
 				System.out.println(input);
-				findNewCoordinate(input);
-				sendMessage(input);
+				if(input instanceof Entity) {
+					handleEntity((User) input);
+				}
+				else {
+					handleString((String) input);
+					sendMessage((String) input);
+				}
 			}
 		}catch (Exception ex){
 			canRun = false;
@@ -44,31 +53,33 @@ public class ClientThread extends Thread implements Runnable {
 		out.println(msg);
 	}
 
-	public void findNewCoordinate(String d) {
+	public void handleEntity(User user) {
+		World.getInstance().addEntity(user);
+	}
 
-		if (d.equals("a")) {
-			System.out.println("A");
-		}
+	public void handleString(String d) {
 
-		else if(d.equals("d")){
-			System.out.println("D");
-		}
-
-		else if(d.equals("w")){
-			System.out.println("W");
-		}
-
-		else if(d.equals("d")){
-			System.out.println("D");
-		}
-
-		else if (d.equals("getWorld")) {
-			try {
-				objectOutput.writeObject(World.getInstance());
-				System.out.println("Sending world");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		switch (d) {
+			case "a":
+				System.out.println("A");
+				break;
+			case "d":
+				System.out.println("D");
+				break;
+			case "w":
+				System.out.println("W");
+				break;
+			case "s":
+				System.out.println("S");
+				break;
+			case "getWorld":
+				try {
+					objectOutput.writeObject(World.getInstance());
+					System.out.println("Sending world");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				break;
 		}
 	}
 }
