@@ -91,18 +91,23 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 	}
 
 	public void run() {
-		try{
 			while(canRun) {
-				String str = in.nextLine();
-				System.out.println(str);
-				lbMove.setText(str);
-				checkFail();
+				try {
+					String str = in.nextLine();
+					System.out.println(str);
+					lbMove.setText(str);
+					objectOutputStream.writeObject(str);
+					checkFail();
+
+					String msg = (String) this.objectInputStream.readObject();
+					System.out.println("Server -> " + msg);
+					lbMove.setText("Server -> " + msg);
+				} catch (Exception ex) {
+					canRun = false;
+					javax.swing.JOptionPane.showMessageDialog(this, "Game exit exception");
+					System.exit(0);
+				}
 			}
-		} catch(Exception ex) {
-			canRun = false;
-			javax.swing.JOptionPane.showMessageDialog(this,"Game exit exception");
-			System.exit(0);
-		}
 	}
 
 

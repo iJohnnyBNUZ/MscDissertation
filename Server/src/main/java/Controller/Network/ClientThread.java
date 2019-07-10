@@ -14,6 +14,7 @@ public class ClientThread extends Thread implements Runnable {
 	private ObjectInputStream objectInput;
 	private ObjectOutputStream objectOutput;
 	private boolean canRun = true;
+	private String userName;
 
 	ClientThread(Socket socket, Server server) throws Exception{
 		this.server = server;
@@ -26,7 +27,7 @@ public class ClientThread extends Thread implements Runnable {
 		try{
 			while(canRun) {
 				Object input = (Object) objectInput.readObject();
-				System.out.println(input);
+
 				if(input instanceof Entity) {
 					handleEntity((User) input);
 				}
@@ -53,10 +54,11 @@ public class ClientThread extends Thread implements Runnable {
 	private void handleEntity(User user) {
 		System.out.println(user.getEntityID());
 		World.getInstance().addEntity(user);
+		userName = user.getEntityID();
 	}
 
 	private void handleString(String d) {
-
+		System.out.println("Username ->" + userName);
 		switch (d) {
 			case "a":
 				System.out.println("A");
@@ -79,6 +81,12 @@ public class ClientThread extends Thread implements Runnable {
 					e.printStackTrace();
 				}
 				break;
+		}
+
+		try {
+			server.updateClients();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }
