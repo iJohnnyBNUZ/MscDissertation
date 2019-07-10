@@ -37,10 +37,10 @@ public class Server implements Runnable{
 		clients.remove(client);
 	}
 
-	public void updateClients() throws IOException {
+	public void updateClients(String msg) throws IOException {
 		for(ClientThread ct:clients) {
 			System.out.println("Responding to client");
-			ct.sendMessage("Updating world");
+			ct.sendMessage(msg);
 		}
 	}
 
@@ -77,5 +77,6 @@ public class Server implements Runnable{
 		l1.addTile(c7,t7);
 		l1.addTile(c8,t8);
 		l1.addTile(c9,t9);
+
 	}
 }
