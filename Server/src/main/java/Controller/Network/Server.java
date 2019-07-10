@@ -3,36 +3,48 @@ package Controller.Network;
 import Model.Location.*;
 import Model.World;
 
-import javax.swing.*;
-import java.awt.*;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class Server extends JFrame implements Runnable{
-	private Socket s = null;
-	private ServerSocket ss = null;
+public class Server implements Runnable{
+	private ServerSocket serverSocket;
 	private ArrayList<ClientThread> clients = new ArrayList<ClientThread>();
 
-	private Coordinate initCoordinate = null;
-	private int energy = 100;
-	private String userName = " ";
-
 	public Server() throws Exception{
-		this.setTitle("ServerEnd");
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setBackground(Color.DARK_GRAY);
-		this.setSize(200,200);
-		this.setVisible(true);
-		ss = new ServerSocket(7777);
+		serverSocket = new ServerSocket(7777);
 		new Thread(this).start();
-
-		//init the world
 		this.initWorld();
 
 	}
 
-	public void initWorld(){
+	public void run() {
+		try{
+			while(true){
+				Socket socket = serverSocket.accept();
+				ClientThread ct = new ClientThread(socket, this);
+				clients.add(ct);
+				ct.start();
+			}
+		}catch (Exception ex){
+			ex.printStackTrace();
+			System.exit(0);
+		}
+	}
+
+	void removeClient(ClientThread client) {
+		clients.remove(client);
+	}
+
+	public void updateClients() throws IOException {
+		for(ClientThread ct:clients) {
+			System.out.println("Responding to client");
+			ct.sendMessage("Updating world");
+		}
+	}
+
+	private void initWorld(){
 		Location l1 = new Location("location1");
 		World.getInstance().addLocation(l1);
 
@@ -56,8 +68,6 @@ public class Server extends JFrame implements Runnable{
 		Coordinate c8 = new Coordinate(2,1);
 		Coordinate c9 = new Coordinate(2,2);
 
-		initCoordinate = c5;
-		l1.addEntity(userName,initCoordinate);
 		l1.addTile(c1,t1);
 		l1.addTile(c2,t2);
 		l1.addTile(c3,t3);
@@ -68,32 +78,4 @@ public class Server extends JFrame implements Runnable{
 		l1.addTile(c8,t8);
 		l1.addTile(c9,t9);
 	}
-
-	//receive the thread when clients connected in
-	public void run() {
-		try{
-			while(true){
-				s = ss.accept(); //wait for client connect
-				ClientThread ct = new ClientThread(s, this); //create new ChatThread for user
-				clients.add(ct); //add new Thread to List
-				ct.start(); //start the new Thread to implement communicate
-			}
-		}catch (Exception ex){
-			ex.printStackTrace();
-			javax.swing.JOptionPane.showMessageDialog(this,"Game exit exception");
-			System.exit(0);
-		}
-	}
-
-	public void removeClient(ClientThread client) {
-		clients.remove(client);
-	}
-
-	public void updateClients() {
-		for(ClientThread ct:clients) {
-			System.out.println("Responding to client");
-			ct.sendMessage("Updating world");
-		}
-	}
-
 }

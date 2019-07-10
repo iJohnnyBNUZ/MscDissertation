@@ -14,47 +14,30 @@ import java.util.ResourceBundle;
 import java.util.Scanner;
 
 public class GamePanel extends JPanel implements KeyListener,Runnable {
-	private char keyDirection;
-	private JLabel lbEnergy = new JLabel(); //show energy
 	private JLabel lbMove = new JLabel();
-	private Socket s;
 	private Scanner in;
-	private PrintStream ps;
 	private ObjectOutputStream objectOutputStream;
 	private ObjectInputStream objectInputStream;
 
-	private ResourceBundle rb = ResourceBundle.getBundle("config");
-	private String IP = "";
-	private Integer PORT = 0;
-
 	private boolean canRun = true;
-	private String userName = null;
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+	private String userName;
 
 	public GamePanel(String userName) throws IOException, ClassNotFoundException {
 
-		this.setUserName(userName);
+		this.userName = userName;
 
 		//set whole panel
 		this.setLayout(null);
 		this.setBackground(Color.DARK_GRAY);
 		this.setSize(1000,800);
 
-		//set energy label
+		JLabel lbEnergy = new JLabel();
 		this.add(lbEnergy);
 		lbEnergy.setFont(new Font("Arial",Font.BOLD,40));
 		lbEnergy.setBackground(Color.YELLOW);
 		lbEnergy.setForeground(Color.PINK);
 		lbEnergy.setBounds(0,0,this.getWidth(),20);
 
-		//set move label
 		this.add(lbMove);
 		lbMove.setFont(new Font("Arial",Font.BOLD,20));
 		lbMove.setBackground(Color.black);
@@ -63,22 +46,22 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 
 		this.addKeyListener(this);
 
-		// Get IP and port from resources
+		String IP = "";
+		int PORT = 0;
 		try{
+			ResourceBundle rb = ResourceBundle.getBundle("config");
 			IP = rb.getString("ip");
-			PORT = Integer.valueOf(rb.getString("port"));
+			PORT = Integer.parseInt(rb.getString("port"));
 		}
 		catch (MissingResourceException e) {
 			e.printStackTrace();
 		}
 
-		// connect to Server
 		try{
-			s = new Socket(IP, PORT);
+			Socket s = new Socket(IP, PORT);
 			JOptionPane.showMessageDialog(this,"Success connected");
 			in = new Scanner(s.getInputStream());
 			OutputStream os = s.getOutputStream();
-			ps = new PrintStream(os);
 			this.objectOutputStream = new ObjectOutputStream(os);
 			this.objectInputStream = new ObjectInputStream((s.getInputStream()));
 			createUser();
@@ -89,7 +72,7 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 			javax.swing.JOptionPane.showMessageDialog(this,"Game exit exception! ");
 			System.exit(0);
 		}
-		World w = World.getInstance();
+
 		lbEnergy.setText("Current energy: " + World.getInstance().getEntity(userName).getEnergy());
 	}
 
@@ -108,22 +91,27 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 	}
 
 	public void run() {
-		try{
-			while(canRun){
-				String str = in.nextLine();
-				System.out.println(str);
-				lbMove.setText(str);
-				checkFail();
+			while(canRun) {
+				try {
+					String str = in.nextLine();
+					System.out.println(str);
+					lbMove.setText(str);
+					objectOutputStream.writeObject(str);
+					checkFail();
+
+					String msg = (String) this.objectInputStream.readObject();
+					System.out.println("Server -> " + msg);
+					lbMove.setText("Server -> " + msg);
+				} catch (Exception ex) {
+					canRun = false;
+					javax.swing.JOptionPane.showMessageDialog(this, "Game exit exception");
+					System.exit(0);
+				}
 			}
-		}catch (Exception ex){
-			canRun = false;
-			javax.swing.JOptionPane.showMessageDialog(this,"Game exit exception! ");
-			System.exit(0);
-		}
 	}
 
 
-	public void checkFail(){
+	private void checkFail(){
 //        if(energy<=0){
 //            javax.swing.JOptionPane.showMessageDialog(this,"Energy is exhausted, the game is over!");
 //            System.exit(0);
@@ -136,12 +124,12 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 	}
 
 	public void keyPressed(KeyEvent e){
-		keyDirection = e.getKeyChar();
+		char keyDirection = e.getKeyChar();
 		String direction = String.valueOf(keyDirection).toLowerCase();
 		try{
 			String returnMsg = direction;
 			System.out.println(direction);
-			ps.println(returnMsg);
+			objectOutputStream.writeObject(returnMsg);
 			returnMsg+="\n";
 			returnMsg+=lbMove.getText();
 			lbMove.setText(returnMsg);
