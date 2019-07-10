@@ -191,6 +191,7 @@ public class View {
 		//create ImageView  to each of the items
 		ImageView imgView = new ImageView();
 		URL url = this.getClass().getResource("/images/" + fileName + ".png");
+		System.out.println(url.toString());
 		Image image = new Image(url.toString(), image_h, image_w, false, false);
 		if(!isItemTile) {
 			image = new Image(url.toString(), image_h, image_w, false, false);

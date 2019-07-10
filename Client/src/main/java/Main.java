@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 
+import View.View;
+
 public class Main extends Application {
 
     @Override
@@ -21,10 +23,10 @@ public class Main extends Application {
         primaryStage.setTitle("University of Edinburgh Dissertation");
         primaryStage.setScene(new Scene(root, 900, 720));
         
-//        View view = (View) fxmlLoader.getController();
+        View view = (View) fxmlLoader.getController();
         //Used for get the screen size and set to canvas.
         //Test is written in that method either.
-//        view.bindScene(primaryStage.getScene());
+        view.bindScene(primaryStage.getScene());
         primaryStage.show();
         
         
