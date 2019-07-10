@@ -38,7 +38,10 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 		this.userName = userName;
 	}
 
-	public GamePanel() throws IOException, ClassNotFoundException {
+	public GamePanel(String userName) throws IOException, ClassNotFoundException {
+
+		this.setUserName(userName);
+
 		//set whole panel
 		this.setLayout(null);
 		this.setBackground(Color.DARK_GRAY);
@@ -86,19 +89,22 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 			javax.swing.JOptionPane.showMessageDialog(this,"Game exit exception! ");
 			System.exit(0);
 		}
-
+		World w = World.getInstance();
 		lbEnergy.setText("Current energy: " + World.getInstance().getEntity(userName).getEnergy());
 	}
 
 	private void createUser() throws IOException {
 		objectOutputStream.writeObject(new User(userName));
-		objectOutputStream.close();
 	}
 
 	private void getWorldFromServer() throws IOException, ClassNotFoundException {
-		ps.println("getWorld");
-		Object world = objectInputStream.readObject();
-		World.setOurInstance((World) world);
+		objectOutputStream.writeObject("getWorld");
+
+		Object obj = this.objectInputStream.readObject();
+		if (obj != null){
+			World world = (World) obj;
+			World.setOurInstance((World) world);
+		}
 	}
 
 	public void run() {
