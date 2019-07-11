@@ -91,7 +91,7 @@ public class Location implements Serializable {
         users.remove(user);
     }
 
-    public void changeUserLocation(String userID, Coordinate coordinate) {
+    public void changeUserCoordinate(String userID, Coordinate coordinate) {
         Entities.put(userID, coordinate);
     }
 }
