@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Entity.Entity;
 import Model.Entity.User;
 import Model.World;
 
@@ -7,7 +8,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -22,8 +26,11 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 	private boolean canRun = true;
 	private String userName;
 	private Socket s;
+	private GameMediator gameMediator;
 
-	public GamePanel(String userName) throws IOException, ClassNotFoundException {
+	public GamePanel(String userName, GameMediator gameMediator) throws IOException, ClassNotFoundException {
+
+		this.gameMediator = gameMediator;
 
 		this.userName = userName;
 
@@ -67,7 +74,6 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 			this.objectInputStream = new ObjectInputStream((s.getInputStream()));
 			createUser();
 			getWorldFromServer();
-
 			new Thread(this).start();
 
 		} catch (Exception ex){
@@ -75,7 +81,7 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 			System.exit(0);
 		}
 
-		lbEnergy.setText("Current energy: " + World.getInstance().getEntity(userName).getEnergy());
+//		lbEnergy.setText("Current energy: " + World.getInstance().getEntity(userName).getEnergy());
 	}
 
 	private void createUser() throws IOException {
@@ -84,29 +90,42 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 
 	private void getWorldFromServer() throws IOException, ClassNotFoundException {
 		objectOutputStream.writeObject("getWorld");
-
-		Object obj = this.objectInputStream.readObject();
-		if (obj != null){
-			World world = (World) obj;
-			World.setOurInstance((World) world);
+		Object newWorld = this.objectInputStream.readObject();
+		if (newWorld instanceof World)
+			gameMediator.setWorld((World) newWorld);
+		else {
+			System.out.println(newWorld);
+			System.out.println("Something went wrong");
 		}
 	}
 
 	@Override
 	public void run() {
-			while(canRun) {
-				try {
+		while(canRun) {
+			try {
+				System.out.println("Awaiting message");
+			    Object input = objectInputStream.readObject();
+			    if(input instanceof World) {
+			        gameMediator.setWorld((World) input);
+				    for (Entity entity : ((World) input).getEntities()) {
+					    System.out.println(entity);
+				    }
+			    }
+			    else if(input instanceof String) {
+			        System.out.println((String) input);
+				    lbMove.setText("Server -> " + input);
+			    }
+			    else {
+				    System.out.println("What");
+			    }
 
-				    String str = (String) objectInputStream.readObject();
-				    lbMove.setText("Server -> " + str);
-
-				} catch (Exception ex) {
-					canRun = false;
-					javax.swing.JOptionPane.showMessageDialog(this, "Game exit exception");
-					System.exit(0);
-					ex.printStackTrace();
-				}
+			} catch (Exception ex) {
+				canRun = false;
+				javax.swing.JOptionPane.showMessageDialog(this, "Game exit exception");
+				System.exit(0);
+				ex.printStackTrace();
 			}
+		}
 	}
 
 

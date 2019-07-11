@@ -1,5 +1,6 @@
 package Controller.Network;
 
+import Controller.GameMediator;
 import Model.Entity.Entity;
 import Model.Entity.User;
 import Model.World;
@@ -15,35 +16,57 @@ public class ClientThread extends Thread implements Runnable {
 	private ObjectOutputStream objectOutput;
 	private boolean canRun = true;
 	private String userName;
+	private GameMediator gameMediator;
 
-	ClientThread(Socket socket, Server server) throws Exception{
+	ClientThread(Socket socket, Server server, GameMediator gameMediator) throws Exception{
 		this.server = server;
 		objectInput = new ObjectInputStream(socket.getInputStream());
 		objectOutput = new ObjectOutputStream(socket.getOutputStream());
+		this.gameMediator = gameMediator;
 	}
 
 	@Override
 	public void run() {
-		try{
-			while(canRun) {
-				Object input = (Object) objectInput.readObject();
-
-				if(input instanceof Entity) {
+		while (canRun) {
+			try {
+				Thread.sleep(300);
+				Object input = objectInput.readObject();
+				if (input instanceof Entity) {
 					handleEntity((User) input);
 				}
-				else {
+				else if (input instanceof String) {
 					handleString((String) input);
-					sendMessage((String) input);
 				}
+				else {
+					System.out.println("Unknown object type");
+				}
+				try {
+					server.updateClients();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				System.out.println("Tick");
 			}
-		}catch (Exception ex){
-			canRun = false;
-			server.removeClient(this);
-			ex.printStackTrace();
+			catch(Exception ex) {
+				canRun = false;
+				server.removeClient(this);
+				ex.printStackTrace();
+			}
+			try {
+				objectOutput.reset();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
-	void sendMessage(String msg) {
+	void sendMessage(Object msg) {
+		System.out.println("Sending message to user: " + userName);
+		if (msg instanceof World) {
+			for (Entity entity : ((World) msg).getEntities()) {
+				System.out.println(entity);
+			}
+		}
 		try {
 			objectOutput.writeObject(msg);
 		} catch (IOException e) {
@@ -53,7 +76,7 @@ public class ClientThread extends Thread implements Runnable {
 
 	private void handleEntity(User user) {
 		System.out.println(user.getEntityID());
-		World.getInstance().addEntity(user);
+		gameMediator.getWorld().addEntity(user);
 		userName = user.getEntityID();
 	}
 
@@ -62,7 +85,6 @@ public class ClientThread extends Thread implements Runnable {
 		switch (d) {
 			case "a":
 				System.out.println("A");
-
 				break;
 			case "d":
 				System.out.println("D");
@@ -74,20 +96,12 @@ public class ClientThread extends Thread implements Runnable {
 				System.out.println("S");
 				break;
 			case "getWorld":
-				System.out.println("Getting world");
 				try {
-					objectOutput.writeObject(World.getInstance());
-					System.out.println("Sending world");
+					objectOutput.writeObject(gameMediator.getWorld());
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 				break;
-		}
-
-		try {
-			server.updateClients(d);
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 }

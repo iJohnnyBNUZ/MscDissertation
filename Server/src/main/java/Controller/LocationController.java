@@ -2,17 +2,19 @@ package Controller;
 
 import Model.Location.Coordinate;
 import Model.Location.Location;
-import Model.World;
 
 import java.util.Iterator;
 import java.util.Map;
 
 public class LocationController {
+    private GameMediator gameMediator;
 
-    public LocationController(){}
+    public LocationController(GameMediator gameMediator){
+        this.gameMediator = gameMediator;
+    }
 
     public void moveTo(String userid, String direction){
-        for(Location location:World.getInstance().getLocations()) {
+        for(Location location:gameMediator.getWorld().getLocations()) {
             Coordinate coordinate = null;
             Iterator<Map.Entry<String, Coordinate>> iterator = location.getEntities().entrySet().iterator();
             while (iterator.hasNext()) {
@@ -26,16 +28,22 @@ public class LocationController {
             if (coordinate == null)
                 return;
 
-            if(direction == "a"){
-                changeUserCoordinate(coordinate.getxPostion()-1,coordinate.getyPosition(),userid,location);
-            }else if(direction == "d"){
-                changeUserCoordinate(coordinate.getxPostion()+1,coordinate.getyPosition(),userid,location);
-            }else if(direction == "w"){
-                changeUserCoordinate(coordinate.getxPostion(),coordinate.getyPosition()-1,userid,location);
-            }else if(direction == "s"){
-                changeUserCoordinate(coordinate.getxPostion(),coordinate.getyPosition()+1,userid,location);
-            }else
-                return;
+            switch (direction) {
+                case "a":
+                    changeUserCoordinate(coordinate.getxPostion() - 1, coordinate.getyPosition(), userid, location);
+                    break;
+                case "d":
+                    changeUserCoordinate(coordinate.getxPostion() + 1, coordinate.getyPosition(), userid, location);
+                    break;
+                case "w":
+                    changeUserCoordinate(coordinate.getxPostion(), coordinate.getyPosition() - 1, userid, location);
+                    break;
+                case "s":
+                    changeUserCoordinate(coordinate.getxPostion(), coordinate.getyPosition() + 1, userid, location);
+                    break;
+                default:
+                    return;
+            }
 
         }
     }
