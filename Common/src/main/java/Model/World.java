@@ -48,13 +48,13 @@ public class World implements Serializable {
 		this.Entities.remove(entity);
 	}
 
-	public Location getEntityLocation(String locationID) {
-		for(Location location : Locations) {
-			if(location.getLocationID().equals(locationID)) {
-				return location;
-			}
+	public Location getEntityLocation(String userid){
+		Location location = null;
+		for(Location l:this.getLocations()) {
+			if(l.getEntities().get(userid) != null)
+				location = l;
 		}
-		return null;
+		return location;
 	}
 
 	public Entity getEntity(String id) {

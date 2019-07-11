@@ -2,7 +2,6 @@ package Controller;
 
 import Model.Location.Coordinate;
 import Model.Location.Location;
-import Model.World;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -15,7 +14,7 @@ public class LocationController {
 
     public void moveTo(String userid, String direction){
         //gameMediator.getWorld().getEntity(userid);
-        Location entityLocation = this.getEntityLocation(userid);
+        Location entityLocation = gameMediator.getWorld().getEntityLocation(userid);
 
         Coordinate entityCoordinate = entityLocation.getEntities().get(userid);
 
@@ -54,15 +53,6 @@ public class LocationController {
             }
         }
 
-    }
-
-    public Location getEntityLocation(String userid){
-        Location location = null;
-        for(Location l:gameMediator.getWorld().getLocations()) {
-            if(l.getEntities().get(userid) != null)
-                location = l;
-        }
-        return location;
     }
 
     public void openDoor(String keyId){
