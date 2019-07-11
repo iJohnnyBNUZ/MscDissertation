@@ -71,6 +71,13 @@ public class LocationView{
 		}
 		
 	}
+
+	public Coordinate chooseItemPosition() {
+		//set the location to GaussianBlur effect
+		//accept the user's click and get a position Coordinate
+		Coordinate position = null;
+		return position;
+	}
 	
 	
 	

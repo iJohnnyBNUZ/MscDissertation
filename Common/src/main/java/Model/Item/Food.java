@@ -1,7 +1,14 @@
 package Model.Item;
 
 public class Food extends Item {
-	public Food(String id) {
-		super(id);
+
+	private int energy;
+
+	public Food(String id,int energy,int coinValue,String type) {
+		super(id,coinValue,type);
+
+		this.energy = energy;
 	}
+
+	public int getEnergy() { return energy; }
 }
