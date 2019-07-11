@@ -8,11 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class World implements Serializable {
-//	private static final World ourInstance = new World();
-//
-//	public static World getInstance() {
-//		return ourInstance;
-//	}
 
 	private ArrayList<Location> Locations = new ArrayList<Location>();
 	private ArrayList<Entity> Entities = new ArrayList<Entity>();
@@ -51,6 +46,15 @@ public class World implements Serializable {
 
 	public void removeEntity(Entity entity) {
 		this.Entities.remove(entity);
+	}
+
+	public Location getEntityLocation(String locationID) {
+		for(Location location : Locations) {
+			if(location.getLocationID().equals(locationID)) {
+				return location;
+			}
+		}
+		return null;
 	}
 
 	public Entity getEntity(String id) {
