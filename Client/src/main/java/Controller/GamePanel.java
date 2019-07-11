@@ -21,6 +21,7 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 
 	private boolean canRun = true;
 	private String userName;
+	private Socket s;
 
 	public GamePanel(String userName) throws IOException, ClassNotFoundException {
 
@@ -58,7 +59,7 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 		}
 
 		try{
-			Socket s = new Socket(IP, PORT);
+		    s = new Socket(IP, PORT);
 			JOptionPane.showMessageDialog(this,"Success connected");
 			in = new Scanner(s.getInputStream());
 			OutputStream os = s.getOutputStream();
@@ -66,6 +67,7 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 			this.objectInputStream = new ObjectInputStream((s.getInputStream()));
 			createUser();
 			getWorldFromServer();
+
 			new Thread(this).start();
 
 		} catch (Exception ex){
@@ -90,22 +92,19 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 		}
 	}
 
+	@Override
 	public void run() {
 			while(canRun) {
 				try {
-					String str = in.nextLine();
-					System.out.println(str);
-					lbMove.setText(str);
-					objectOutputStream.writeObject(str);
-					checkFail();
 
-					String msg = (String) this.objectInputStream.readObject();
-					System.out.println("Server -> " + msg);
-					lbMove.setText("Server -> " + msg);
+				    String str = (String) objectInputStream.readObject();
+				    lbMove.setText("Server -> " + str);
+
 				} catch (Exception ex) {
 					canRun = false;
 					javax.swing.JOptionPane.showMessageDialog(this, "Game exit exception");
 					System.exit(0);
+					ex.printStackTrace();
 				}
 			}
 	}

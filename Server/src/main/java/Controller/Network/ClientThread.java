@@ -62,6 +62,7 @@ public class ClientThread extends Thread implements Runnable {
 		switch (d) {
 			case "a":
 				System.out.println("A");
+
 				break;
 			case "d":
 				System.out.println("D");
@@ -84,7 +85,7 @@ public class ClientThread extends Thread implements Runnable {
 		}
 
 		try {
-			server.updateClients();
+			server.updateClients(d);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

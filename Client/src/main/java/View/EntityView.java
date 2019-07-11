@@ -8,10 +8,13 @@ import Controller.Command.Command;
 import Controller.Command.CommunicationCommand;
 import Controller.Command.MoveCommand;
 import Model.Location.Coordinate;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 public class EntityView{
@@ -20,7 +23,6 @@ public class EntityView{
 	private ProgressBar energy = null;
 	private Label coin = null;
 	private CommunicationCommand communication= null;
-	private MoveCommand move = null;
 	private int row=10;
 	private int column=10;
 	
@@ -28,6 +30,8 @@ public class EntityView{
 		energy = view.getEnergy();
 		coin = view.getCoin();
 		this.view = view;
+		
+		setCommunicationCommand(new CommunicationCommand());
 		
 	}
 	
@@ -73,7 +77,7 @@ public class EntityView{
 		for(int i=2;i<5;i++) {
 			for(int j=3;j<5;j++) {
 				Coordinate tmp_cor = new Coordinate(i, j);
-				tmp.put("users"+num, tmp_cor);
+				tmp.put("user"+num, tmp_cor);
 				num++;
 			}
 		}
@@ -99,22 +103,17 @@ public class EntityView{
 	public void updateNPC(final Map<String,Coordinate> npcs) {
 		
 		if(npcs.size() <= 100) {
-			for(final String name: npcs.keySet()) {
-				/*
-				URL url = this.getClass().getResource("/images/npc.png");
-				Image image = new Image(url.toString(), image_h, image_w, false, false);
+			for(String name: npcs.keySet()) {
 				
-				gContext.drawImage(image,0, 0,image_h,image_w, npcs.get(name).getyPosition()*tileWidth,
-						npcs.get(name).getxPostion()*tileHeight,tileWidth,tileHeight);*/
 				
 				ImageView imgView = view.drawClickable("npc", npcs.get(name), false);
-				
+				imgView.setId(name);
 				imgView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 					public void handle(MouseEvent m) {
 						// TODO Auto-generated method stub
-						System.out.println("npccccccccccccc"+npcs.get(name).getxPostion()+
-								npcs.get(name).getyPosition());
+						System.out.println("npc ID: "+ imgView.getId());
+						communication.execute(imgView.getId());
 					}
 					
 				});
@@ -130,12 +129,14 @@ public class EntityView{
 		if(users.size() <= 100) {
 			for(String name: users.keySet()) {
 				ImageView imgView = view.drawClickable("player", users.get(name), false);
-				
+				imgView.setId(name);
+				System.out.println(imgView.getId());
 				imgView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 					public void handle(MouseEvent m) {
 						// TODO Auto-generated method stub
-						System.out.println("userrrrrr");
+						System.out.println("user ID: " + imgView.getId());
+						communication.execute(imgView.getId());
 					}
 					
 				});
@@ -143,20 +144,22 @@ public class EntityView{
 		}else {
 			System.out.println("Wrong tiles size");
 		}
-		
 	}
+		
+		
 	
 	public void updateStore(Map<String,Coordinate> stores) {
 		
 		if(stores.size() <= 100) {
 			for(String name: stores.keySet()) {
 				ImageView imgView = view.drawClickable("store", stores.get(name), false);
-				
+				imgView.setId(name);
 				imgView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 					public void handle(MouseEvent m) {
 						// TODO Auto-generated method stub
-						System.out.println("storeeeeeeeeeeeeeeee");
+						System.out.println("storeId"+imgView.getId());
+						communication.execute(imgView.getId());
 					}
 					
 				});
@@ -191,7 +194,4 @@ public class EntityView{
 		communication = (CommunicationCommand) command;
 	}
 	
-	public void setMoveCommand(Command command) {
-		move = (MoveCommand) command;
-	}
 }

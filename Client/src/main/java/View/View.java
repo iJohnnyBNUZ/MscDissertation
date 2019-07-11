@@ -1,23 +1,41 @@
 package View;
 
 import java.net.URL;
+import java.util.LinkedList;
+import java.util.List;
 
+import Controller.Command.Command;
+import Controller.Command.MoveCommand;
+import Controller.Command.PostCommand;
+import Controller.CommunicationController;
+import Model.Item.Food;
+import Model.Item.Item;
+import Model.Item.Key;
+import Model.World;
 import Model.Location.Coordinate;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 public class View {
+
+	//testData
+	private List<Item> myBagData = new LinkedList<Item>();
+	private int myMoneyData = 0;
+	private List<Item> userShopData = new LinkedList<Item>();
+	private List<String> messageListData = new LinkedList<String>();
+	private CommunicationController communicationController;
 	
 	@FXML
     private AnchorPane page;
@@ -54,8 +72,81 @@ public class View {
 
     @FXML
     private Button close;
-    
-    private LocationView location = null;
+
+	@FXML
+	private Label numOfCoins;
+
+	@FXML
+	private TabPane transactionView;
+
+	@FXML
+	private Tab user_shop;
+
+	@FXML
+	private GridPane userOrShop;
+
+	@FXML
+	private Button buy;
+
+	@FXML
+	private Button closeUserShop;
+
+	@FXML
+	private GridPane myBag;
+
+	@FXML
+	private Button sell;
+
+	@FXML
+	private Button closeMyBag;
+
+	@FXML
+	private Label numOfMyBagCoins;
+
+	@FXML
+	private AnchorPane chatView;
+
+	@FXML
+	private Button closeChatView;
+
+	@FXML
+	private TextField messageWindow;
+
+	@FXML
+	private Button send;
+
+	@FXML
+	private VBox messageBox;
+
+	@FXML
+	private Label notifyWindow;
+
+	@FXML
+	private TabPane tabBagView;
+
+	@FXML
+	private GridPane bagFood;
+
+	@FXML
+	private GridPane bagKeys;
+
+	@FXML
+	private Button eatFood;
+
+	@FXML
+	private Button putDownFood;
+
+	@FXML
+	private Button closeFood;
+
+	@FXML
+	private Button putDownKey;
+
+	@FXML
+	private Button closeKey;
+
+
+	private LocationView location = null;
     
     private BagView bag = null;
     
@@ -77,19 +168,29 @@ public class View {
     
 	private double image_w = 64.0;
 	
-    
+	private MoveCommand move = null;
     // This method is automatically invoked by the FXMLLoader - it's magic
     // This method must be public
     public void initialize() {
     	System.out.println("initializeeeeeeeeeeeeeeeeeeee!!!!!!");
+		communicationController = new CommunicationController(this);
     	setCoinImage();
     	location = new LocationView(this);
     	bag = new BagView(this);
-    	chat = new ChatView(this);
+    	chat = new ChatView(this,communicationController);
     	entity = new EntityView(this);
     	item = new ItemView(this);
     	nps = new NPCView(this);
     	tansaction = new TransactionView(this);
+    	setMoveCommand(new MoveCommand(World.getInstance()));
+
+    	//set testData
+    	setTestData();
+    	//initialize bagView,transactionView,chatView
+		bag.updateBag(myBagData,myMoneyData);
+		tansaction.updateTransaction(userShopData,myBagData,myMoneyData);
+		chat.updateChat(messageListData);
+
     }
     
     
@@ -144,9 +245,73 @@ public class View {
 		return close;
 	}
 
+	public Label getNumOfCoins() { return numOfCoins; }
+
+	public LocationView getLocationView() { return location; }
+
+	public TabPane getTransactionView() { return transactionView; }
+
+	public Tab getUser_shop() { return user_shop; }
+
+	public GridPane getUserOrShop() { return userOrShop; }
+
+	public Button getBuy() { return buy; }
+
+	public Button getCloseUserShop() { return closeUserShop; }
+
+	public GridPane getMyBag() { return myBag; }
+
+	public Button getCloseMyBag() { return closeMyBag; }
+
+	public Button getSell() { return sell; }
+
+	public Label getNumOfMyBagCoins() { return numOfMyBagCoins; }
+
+	public AnchorPane getChatView() { return chatView; }
+
+	public Button getCloseChatView() { return closeChatView; }
+
+	public TextField getMessageWindow() { return messageWindow; }
+
+	public Button getSend() { return send; }
+
+	public VBox getMessageBox() { return messageBox; }
+
+	public Label getNotifyWindow() { return notifyWindow; }
+
+	public TabPane getTabBagView() { return tabBagView; }
+
+	public GridPane getBagFood() { return bagFood; }
+
+	public GridPane getBagKeys() { return bagKeys; }
+
+	public Button getEatFood() { return eatFood; }
+
+	public Button getPutDownFood() {
+		return putDownFood;
+	}
+
+	public Button getCloseFood() {
+		return closeFood;
+	}
+
+	public Button getPutDownKey() {
+		return putDownKey;
+	}
+
+	public Button getCloseKey() {
+		return closeKey;
+	}
+
+	public ChatView getChat() { return chat; }
+
 	public void showBag() {
     	bagView.setVisible(true);
     }
+
+	public void showTransaction() { transactionView.setVisible(true);}
+
+	public void showChat() { chatView.setVisible(true);}
     
     public void saveGame() {
     	System.out.println("saveeeeeeeeeeeeeeeeeeeeeeeeeee!");
@@ -164,6 +329,8 @@ public class View {
 		entity.testStore();
 		entity.testNPC();
 		entity.testUsers();
+		initialForImage();
+		
 	}
 	
 	public void setCoinImage() {
@@ -191,7 +358,6 @@ public class View {
 		//create ImageView  to each of the items
 		ImageView imgView = new ImageView();
 		URL url = this.getClass().getResource("/images/" + fileName + ".png");
-		System.out.println(url.toString());
 		Image image = new Image(url.toString(), image_h, image_w, false, false);
 		if(!isItemTile) {
 			image = new Image(url.toString(), image_h, image_w, false, false);
@@ -219,4 +385,69 @@ public class View {
 		
 		
 	}
+	
+	
+	public void initialForImage() {
+		forImage.requestFocus();
+		forImage.setOnKeyPressed(new EventHandler<KeyEvent>() {
+		double moveX = 0;
+		double moveY = 0;
+			@Override
+			public void handle(KeyEvent k) {
+				// TODO Auto-generated method stub
+				System.out.println(k.getCode().getName());
+				move.excute(k.getCode().getName());
+				//This method will not be used in the final project, it just used for present demo.
+				tileWidth=mapView.getWidth()/10;
+				tileHeight = mapView.getHeight()/10;
+				switch(k.getCode().getName()) {
+				case "Right": moveX= tileWidth;break;
+				case "Left" : moveX = 0- tileWidth;break;
+				case "Up" : moveY = 0-tileHeight;break;
+				case "Down" : moveY = tileHeight;break;
+				}
+				
+				ImageView moved = (ImageView) forImage.lookup("#user0");
+				moved.setLayoutX(moved.getLayoutX()+moveX);
+				moved.setLayoutY(moved.getLayoutY()+moveY);
+				moveX=0;
+				moveY=0;
+			}
+			
+		});
+	}
+	
+	public void setMoveCommand(Command command) {
+		move = (MoveCommand) command;
+	}
+
+	public void setTestData(){
+		//initialize testData
+		myBagData.add(new Food("apple01",10,10,"food"));
+		myBagData.add(new Food("orange01",15,10,"food"));
+		myBagData.add(new Food("lemon01",20,10,"food"));
+		myBagData.add(new Food("apple02",10,10,"food"));
+		myBagData.add(new Food("orange02",15,10,"food"));
+		myBagData.add(new Food("lemon02",20,10,"food"));
+		myBagData.add(new Key("bluekey01",15,"key"));
+		myBagData.add(new Key("redkey01",15,"key"));
+		myBagData.add(new Key("greenkey01",15,"key"));
+		myBagData.add(new Key("bluekey02",15,"key"));
+		myMoneyData = 232;
+		userShopData.add(new Food("apple01",10,10,"food"));
+		userShopData.add(new Food("orange01",15,10,"food"));
+		userShopData.add(new Food("lemon01",20,10,"food"));
+		userShopData.add(new Food("apple02",10,10,"food"));
+		userShopData.add(new Food("lemon02",20,10,"food"));
+		userShopData.add(new Key("bluekey01",15,"key"));
+		userShopData.add(new Key("bluekey02",15,"key"));
+		messageListData.add("Hello World");
+		messageListData.add("Hello Edinburgh");
+		messageListData.add("Hello Java");
+	}
+
+	public List<String> getMessageListData(){
+    	return messageListData;
+	}
+
 }

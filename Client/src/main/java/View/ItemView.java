@@ -18,6 +18,8 @@ public class ItemView{
 	
 	public ItemView(View view) {
 		this.view= view;
+		
+		setPickUpCommand(new PickUpCommand());
 	}
 	
 	public void test() {
@@ -45,25 +47,20 @@ public class ItemView{
 		if(items.size() <= 100) {
 			for(String name: items.keySet()) {
 				// only the item's name consisted by 5 characters can be used by this method.
-				final String fileName = name.substring(0,5);
+				String fileName = name.substring(0,5);
 				ImageView imgView = view.drawClickable(fileName, items.get(name), true);
 				
+				imgView.setId(name);
 				imgView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 					public void handle(MouseEvent m) {
 						// TODO Auto-generated method stub
-						System.out.println(fileName);
+						System.out.println("Item ID: " + imgView.getId());
+						pickUp.execute(imgView.getId());
 					}
 					
 				});
 				
-				//create ImageView to each of the items
-				/*URL url = this.getClass().getResource("/images/" + filename + ".png");
-				final Image image = new Image(url.toString(), image_h, image_w, false, false);
-				
-				
-				gContext.drawImage(image,0, 0,image_h,image_w, items.get(name).getyPosition()*tileWidth,
-						 items.get(name).getxPostion()*tileHeight,image_h,image_w);*/
 			}
 		}else {
 			System.out.println("Wrong tiles size");
