@@ -110,6 +110,15 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 				    for (Entity entity : ((World) input).getEntities()) {
 					    System.out.println(entity);
 				    }
+				    String printString = "";
+				    for(Entity entity:gameMediator.getWorld().getEntities()){
+				    	String name = entity.getEntityID();
+				    	String userinformation = name+"'s coordinate to"+"["+
+								gameMediator.getWorld().getEntityLocation(name).getEntities().get(name).getxPostion()
+								+","+gameMediator.getWorld().getEntityLocation(name).getEntities().get(name).getyPosition()+"]";
+				    	printString += userinformation;
+					}
+					//lbMove.setText(printString);
 			    }
 			    else if(input instanceof String) {
 			        System.out.println((String) input);

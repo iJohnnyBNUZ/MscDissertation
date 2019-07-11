@@ -24,16 +24,16 @@ public class LocationController {
 
             switch (direction) {
                 case "a":
-                    changeUserCoordinate(entityCoordinate.getxPostion() - 1, entityCoordinate.getyPosition(), userid, entityLocation);
+                    changeUserCoordinate(entityCoordinate.getxPostion() - 1, entityCoordinate.getyPosition(), userid);
                     break;
                 case "d":
-                    changeUserCoordinate(entityCoordinate.getxPostion() + 1, entityCoordinate.getyPosition(), userid, entityLocation);
+                    changeUserCoordinate(entityCoordinate.getxPostion() + 1, entityCoordinate.getyPosition(), userid);
                     break;
                 case "w":
-                    changeUserCoordinate(entityCoordinate.getxPostion(), entityCoordinate.getyPosition() - 1, userid, entityLocation);
+                    changeUserCoordinate(entityCoordinate.getxPostion(), entityCoordinate.getyPosition() - 1, userid);
                     break;
                 case "s":
-                    changeUserCoordinate(entityCoordinate.getxPostion(), entityCoordinate.getyPosition() + 1, userid, entityLocation);
+                    changeUserCoordinate(entityCoordinate.getxPostion(), entityCoordinate.getyPosition() + 1, userid);
                     break;
                 default:
                     return;
@@ -41,14 +41,11 @@ public class LocationController {
 
     }
 
-    public void changeUserCoordinate(int positionx,int positiony,String userid,Location location){
-        Coordinate coordinate;
-        Iterator<Map.Entry<String, Coordinate>> iterator = location.getEntities().entrySet().iterator();
-        while (iterator.hasNext()) {
-            Map.Entry<String, Coordinate> entry = iterator.next();
-            if (entry.getValue().getxPostion()==positionx && entry.getValue().getyPosition() == positiony) {
-                coordinate = entry.getValue();
-                location.changeUserCoordinate(userid, coordinate);
+    public void changeUserCoordinate(int positionx,int positiony,String userid){
+
+        for(Coordinate c:gameMediator.getWorld().getEntityLocation(userid).getTiles().keySet()){
+            if(c.getxPostion() == positionx && c.getyPosition() == positiony){
+                gameMediator.getWorld().getEntityLocation(userid).changeUserCoordinate(userid, c);
                 return;
             }
         }

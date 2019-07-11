@@ -1,8 +1,10 @@
 package Controller.Network;
 
 import Controller.GameMediator;
+import Controller.LocationController;
 import Model.Entity.Entity;
 import Model.Entity.User;
+import Model.Location.Coordinate;
 import Model.World;
 
 import java.io.IOException;
@@ -17,6 +19,7 @@ public class ClientThread extends Thread implements Runnable {
 	private boolean canRun = true;
 	private String userName;
 	private GameMediator gameMediator;
+	private LocationController locationController;
 
 	ClientThread(Socket socket, Server server, GameMediator gameMediator) throws Exception{
 		this.server = server;
@@ -78,31 +81,50 @@ public class ClientThread extends Thread implements Runnable {
 		System.out.println(user.getEntityID());
 		gameMediator.getWorld().addEntity(user);
 		userName = user.getEntityID();
+		initEntityLocation(userName);
+	}
+
+	private void initEntityLocation(String userName){
+		//inital the user in first location in the world
+		gameMediator.getWorld().getEntity(userName).setCurrentLocation(gameMediator.getWorld().getLocations().get(0));
+		gameMediator.getWorld().getLocations().get(0).addUser((User)gameMediator.getWorld().getEntity(userName));
+		//init the coordinate for user with random
+		int max =2,min =0;
+		int positionX = min + (int)(Math.random() * (max-min+1));
+		int positionY = min + (int)(Math.random() * (max-min+1));
+
+		for(Coordinate coordinate:gameMediator.getWorld().getLocations().get(0).getTiles().keySet()){
+			if(coordinate.getxPostion() == positionX && coordinate.getyPosition() == positionY){
+				gameMediator.getWorld().getLocations().get(0).addEntity(userName,coordinate);
+				System.out.println("gives user:"+userName+" an initial coordinate!");
+				break;
+			}
+		}
 	}
 
 	private void handleString(String d) {
-		System.out.println("Username ->" + userName);
-		switch (d) {
-			case "a":
-				System.out.println("A");
-				break;
-			case "d":
-				System.out.println("D");
-				break;
-			case "w":
-				System.out.println("W");
-				break;
-			case "s":
-				System.out.println("S");
-				break;
-			case "getWorld":
-				try {
-					objectOutput.writeObject(gameMediator.getWorld());
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				break;
+		System.out.println("Username ->" + userName+"now is in coordinate-> ["+
+				gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getxPostion()
+				+","+gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getyPosition()+"]");
+		if(d.equals("a") || d.equals("d") || d.equals("w") ||d.equals("s")){
+			locationController = new LocationController(gameMediator);
+			locationController.moveTo(userName,d);
+			try {
+				objectOutput.writeObject(gameMediator.getWorld());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			System.out.println("Change "+userName+"'s coordinate to"+"["+
+					gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getxPostion()
+					+","+gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getyPosition()+"]");
+		}else if(d == "getWorld"){
+			try {
+				objectOutput.writeObject(gameMediator.getWorld());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
+
 	}
 }
 
