@@ -39,7 +39,15 @@ public class ItemController {
 
     }
 
-    public void give(String itemID, String fromUserID, String toUserID){
+    public void exchange(String itemID, String sellerID, String buyerID){
+        //delete from seller's bag
+        Entity seller = this.gameMediator.getWorld().getEntity(sellerID);
+        Item item = seller.removeFromBag(itemID);
 
+        //add to buyer's bag
+        Entity buyer = this.gameMediator.getWorld().getEntity(buyerID);
+        if (item != null){
+            buyer.addToBag(item);
+        }
     }
 }
