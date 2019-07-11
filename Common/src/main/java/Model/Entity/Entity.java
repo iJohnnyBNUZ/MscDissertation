@@ -46,12 +46,14 @@ public abstract class Entity implements Serializable {
         this.Bag.add(item);
     }
 
-    public void removeFromBag(String id) {
+    public Item removeFromBag(String id) {
         for(Item item: Bag) {
             if(item.getItemID().equals(id)) {
                 this.Bag.remove(item);
+                return item;
             }
         }
+        return null;
     }
 
     public Location getCurrentLocation() {

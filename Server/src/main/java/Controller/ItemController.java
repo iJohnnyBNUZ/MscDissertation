@@ -26,6 +26,16 @@ public class ItemController {
     }
 
     public void drop(String itemID, String userID){
+        // delete from bag
+        Entity entity = this.gameMediator.getWorld().getEntity(userID);
+        Item item = entity.removeFromBag(itemID);
+
+        //add to location
+        Location location = this.gameMediator.getWorld().getEntityLocation(userID);
+        Coordinate userCoordinate = location.getEntities().get(userID);
+        if (item != null){
+            location.addItem(userCoordinate, item);
+        }
 
     }
 
