@@ -4,6 +4,7 @@
     <excludeFromCompile>
       <directory url="file://$PROJECT_DIR$/Client/src/main/java/View" includeSubdirectories="true" />
       <directory url="file://$PROJECT_DIR$/Client/src/main/java/Controller/Command" includeSubdirectories="true" />
+      <file url="file://$PROJECT_DIR$/Client/src/main/java/Main.java" />
     </excludeFromCompile>
     <annotationProcessing>
       <profile name="Maven default annotation processors profile" enabled="true">
