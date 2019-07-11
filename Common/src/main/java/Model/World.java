@@ -66,9 +66,9 @@ public class World implements Serializable {
 		return null;
 	}
 
-	public Location getLocation(String id) {
+	public Location getLocation(String locatoinID) {
 		for(Location location: Locations) {
-			if (location.getLocationID().equals(id)) {
+			if (location.getLocationID().equals(locatoinID)) {
 				return location;
 			}
 		}

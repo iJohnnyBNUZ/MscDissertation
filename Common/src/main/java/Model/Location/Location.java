@@ -63,8 +63,9 @@ public class Location implements Serializable {
         this.Items.put(c, i);
     }
 
-    public void removeItem(Coordinate c) {
+    public Item removeItem(Coordinate c) {
         this.Items.remove(c);
+        return this.Items.get(c);
     }
 
     public void addEntity(String id, Coordinate c) {
