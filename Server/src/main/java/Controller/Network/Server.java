@@ -1,7 +1,8 @@
 package Controller.Network;
 
+import Controller.GameMediator;
+import Model.Entity.Entity;
 import Model.Location.*;
-import Model.World;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -11,19 +12,21 @@ import java.util.ArrayList;
 public class Server implements Runnable{
 	private ServerSocket serverSocket;
 	private ArrayList<ClientThread> clients = new ArrayList<ClientThread>();
+	private GameMediator gameMediator;
 
-	public Server() throws Exception{
+	public Server(GameMediator gameMediator) throws Exception{
 		serverSocket = new ServerSocket(7777);
+		this.gameMediator = gameMediator;
 		new Thread(this).start();
 		this.initWorld();
-
 	}
 
 	public void run() {
+		System.out.println("Server is running");
 		try{
 			while(true){
 				Socket socket = serverSocket.accept();
-				ClientThread ct = new ClientThread(socket, this);
+				ClientThread ct = new ClientThread(socket, this, gameMediator);
 				clients.add(ct);
 				ct.start();
 			}
@@ -37,16 +40,19 @@ public class Server implements Runnable{
 		clients.remove(client);
 	}
 
-	public void updateClients(String msg) throws IOException {
+	void updateClients() throws IOException {
 		for(ClientThread ct:clients) {
 			System.out.println("Responding to client");
-			ct.sendMessage(msg);
+			for (Entity entity : gameMediator.getWorld().getEntities()) {
+				System.out.println(entity);
+			}
+			ct.sendMessage(gameMediator.getWorld());
 		}
 	}
 
 	private void initWorld(){
 		Location l1 = new Location("location1");
-		World.getInstance().addLocation(l1);
+		gameMediator.getWorld().addLocation(l1);
 
 		Tile t1 = new Grass(true,"Grass",1);
 		Tile t2 = new Water(true,"Water",1);

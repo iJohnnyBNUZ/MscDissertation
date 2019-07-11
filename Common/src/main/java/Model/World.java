@@ -8,25 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class World implements Serializable {
-	private static World ourInstance = new World();
 
-	public static World getInstance() {
-		return ourInstance;
-	}
+	private ArrayList<Location> Locations = new ArrayList<Location>();
+	private ArrayList<Entity> Entities = new ArrayList<Entity>();
 
-	private List<Location> Locations = new ArrayList<Location>();
-	private List<Entity> Entities = new ArrayList<Entity>();
+	public World(){
 
-	public World(int i){
-
-	}
-
-	public static World getOurInstance() {
-		return ourInstance;
-	}
-
-	public static void setOurInstance(World ourInstance) {
-		World.ourInstance = ourInstance;
 	}
 
 	public List<Location> getLocations() {
@@ -34,7 +21,7 @@ public class World implements Serializable {
 	}
 
 	public void setLocations(List<Location> locations) {
-		Locations = locations;
+		Locations = (ArrayList<Location>) locations;
 	}
 
 	public List<Entity> getEntities() {
@@ -42,10 +29,7 @@ public class World implements Serializable {
 	}
 
 	public void setEntities(List<Entity> entities) {
-		Entities = entities;
-	}
-
-	private World() {
+		Entities = (ArrayList<Entity>) entities;
 	}
 
 	public void addLocation(Location location) {
@@ -62,6 +46,15 @@ public class World implements Serializable {
 
 	public void removeEntity(Entity entity) {
 		this.Entities.remove(entity);
+	}
+
+	public Location getEntityLocation(String locationID) {
+		for(Location location : Locations) {
+			if(location.getLocationID().equals(locationID)) {
+				return location;
+			}
+		}
+		return null;
 	}
 
 	public Entity getEntity(String id) {

@@ -1,8 +1,9 @@
-import Controller.Network.Server;
+import Controller.GameMediator;
 
 
 public class RunServer {
     public static void main(String[] args) throws Exception{
-        Server server = new Server();
+        GameMediator gameMediator = new GameMediator();
+        gameMediator.startServer();
     }
 }
