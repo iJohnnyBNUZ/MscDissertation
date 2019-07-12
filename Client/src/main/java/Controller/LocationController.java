@@ -10,8 +10,8 @@ public class LocationController {
 	private World world =null;
 	private ResourceBundle rb = ResourceBundle.getBundle("config");
 
-    public LocationController(World world){
-    	this.world =world;
+    public LocationController(GameMediator gm){
+    	this.world =gm.getWorld();
     }
 
     public String getUserName() {

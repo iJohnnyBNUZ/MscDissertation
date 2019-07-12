@@ -6,7 +6,11 @@ import java.util.Map;
 import Controller.Command.Command;
 import Controller.Command.OpenDoorCommand;
 import Model.Location.Coordinate;
+import javafx.event.EventHandler;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 
 public class LocationView{
 	
@@ -52,19 +56,12 @@ public class LocationView{
 	 
 	public void update(Map<String,Coordinate> tiles) {
 
-		view.initialCancas();
+		view.initialCanvas();
 		if(tiles.size() == 100) {
 			for(String name: tiles.keySet()) {
 				String fileName = name.substring(0,5);
 				
 				view.draw(fileName, tiles.get(name));
-				//create Image to each of the items
-				/*URL url = this.getClass().getResource("/images/" + filename + ".png");
-				Image image = new Image(url.toString(), image_h, image_w, false, false);
-				
-				gContext.drawImage(image,0, 0,image_h,image_w, tiles.get(name).getyPosition()*tileWidth,
-						 tiles.get(name).getxPostion()*tileHeight,tileWidth,tileHeight);
-			*/
 			}
 		}else {
 			System.out.println("Wrong tiles size");
@@ -76,7 +73,35 @@ public class LocationView{
 		//set the location to GaussianBlur effect
 		//accept the user's click and get a position Coordinate
 		Coordinate position = null;
+		
 		return position;
+	}
+	
+	public void showAvaliable(Coordinate cor) {
+		AnchorPane forImage = view.getForImage();
+		forImage.setMouseTransparent(true);
+		/*for(int i=0;i< forImage.getChildren().size();i++) {
+			forImage.getChildren().get(i).setMouseTransparent(true);
+		}*/
+		Map<String,Double>boundary =view.drawRectangle(cor);
+		Canvas mapView = view.getMapView();
+		mapView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent m) {
+				// TODO Auto-generated method stub
+				if(m.getX()>boundary.get("beginX")&& m.getX()<boundary.get("endX")&&
+						m.getY()>boundary.get("beginY")&& m.getY()<boundary.get("endY")) {
+					System.out.println("put down item at :" + m.getX()+m.getY());
+					mapView.setOnMouseClicked(null);
+					forImage.setMouseTransparent(false);
+				}else {
+					System.out.println("the place is not avaliable");
+					System.out.println("position is: "+ m.getX()+m.getY());
+				}
+			}
+			
+		});
 	}
 	
 	

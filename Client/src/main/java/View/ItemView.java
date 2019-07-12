@@ -18,8 +18,6 @@ public class ItemView{
 	
 	public ItemView(View view) {
 		this.view= view;
-		
-		setPickUpCommand(new PickUpCommand());
 	}
 	
 	public void test() {
@@ -28,6 +26,26 @@ public class ItemView{
 		int num=0;
 		for(int i=0;i<row/2;i++) {
 			for(int j=0;j<column/5;j++) {
+				Coordinate tmp_cor = new Coordinate(i, j);
+				if(j%2 == 0 && i%2 == 0) {
+					tmp.put("orange"+num, tmp_cor);
+				}else {
+					tmp.put("apple"+num, tmp_cor);
+				}
+				
+				num++;
+			}
+		}
+		System.out.println("tiles size"+ tmp.size());
+		update(tmp);
+	}
+	
+	public void test2() {
+		// TODO Auto-generated method stub
+		Map<String,Coordinate> tmp = new HashMap<String,Coordinate>();
+		int num=0;
+		for(int i=0;i<row/5;i++) {
+			for(int j=0;j<column/2;j++) {
 				Coordinate tmp_cor = new Coordinate(i, j);
 				if(j%2 == 0 && i%2 == 0) {
 					tmp.put("lemon"+num, tmp_cor);
@@ -46,8 +64,8 @@ public class ItemView{
 		
 		if(items.size() <= 100) {
 			for(String name: items.keySet()) {
-				// only the item's name consisted by 5 characters can be used by this method.
-				String fileName = name.substring(0,5);
+				
+				String fileName = name.replaceAll("[0-9]", "");
 				ImageView imgView = view.drawClickable(fileName, items.get(name), true);
 				
 				imgView.setId(name);
@@ -56,7 +74,11 @@ public class ItemView{
 					public void handle(MouseEvent m) {
 						// TODO Auto-generated method stub
 						System.out.println("Item ID: " + imgView.getId());
-						pickUp.execute(imgView.getId());
+						
+						//Coordinate sCoordinate = new Coordinate(positionX,positionY);
+						System.out.println("Position: "+ items.get(name).getxPostion()+" "
+						+items.get(name).getyPosition());
+						//pickUp.execute(imgView.getId());
 					}
 					
 				});
@@ -65,7 +87,6 @@ public class ItemView{
 		}else {
 			System.out.println("Wrong tiles size");
 		}
-		System.out.println("for Image +   " + view.getForImage().getChildren().size());
 	}
 	
 	public void setPickUpCommand(Command command) {

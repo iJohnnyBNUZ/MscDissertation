@@ -1,20 +1,16 @@
 package View;
 
-import java.net.URL;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import Controller.Command.Command;
 import Controller.Command.CommunicationCommand;
-import Controller.Command.MoveCommand;
 import Model.Location.Coordinate;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 public class EntityView{
@@ -30,8 +26,6 @@ public class EntityView{
 		energy = view.getEnergy();
 		coin = view.getCoin();
 		this.view = view;
-		
-		setCommunicationCommand(new CommunicationCommand());
 		
 	}
 	
@@ -113,7 +107,7 @@ public class EntityView{
 					public void handle(MouseEvent m) {
 						// TODO Auto-generated method stub
 						System.out.println("npc ID: "+ imgView.getId());
-						communication.execute(imgView.getId());
+						//communication.execute(imgView.getId());
 					}
 					
 				});
@@ -136,7 +130,7 @@ public class EntityView{
 					public void handle(MouseEvent m) {
 						// TODO Auto-generated method stub
 						System.out.println("user ID: " + imgView.getId());
-						communication.execute(imgView.getId());
+						//communication.execute(imgView.getId());
 					}
 					
 				});
@@ -159,7 +153,7 @@ public class EntityView{
 					public void handle(MouseEvent m) {
 						// TODO Auto-generated method stub
 						System.out.println("storeId"+imgView.getId());
-						communication.execute(imgView.getId());
+						//communication.execute(imgView.getId());
 					}
 					
 				});

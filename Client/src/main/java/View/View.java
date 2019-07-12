@@ -1,13 +1,16 @@
 package View;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import Controller.Command.Command;
 import Controller.Command.MoveCommand;
 import Controller.Command.PostCommand;
 import Controller.CommunicationController;
+import Controller.LocationController;
 import Model.Item.Food;
 import Model.Item.Item;
 import Model.Item.Key;
@@ -22,6 +25,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -169,6 +174,7 @@ public class View {
 	private double image_w = 64.0;
 	
 	private MoveCommand move = null;
+	
     // This method is automatically invoked by the FXMLLoader - it's magic
     // This method must be public
     public void initialize() {
@@ -182,7 +188,6 @@ public class View {
     	item = new ItemView(this);
     	nps = new NPCView(this);
     	tansaction = new TransactionView(this);
-    	setMoveCommand(new MoveCommand(World.getInstance()));
 
     	//set testData
     	setTestData();
@@ -305,6 +310,17 @@ public class View {
 
 	public ChatView getChat() { return chat; }
 
+	
+	public double getTileWidth() {
+		return tileWidth;
+	}
+
+
+	public double getTileHeight() {
+		return tileHeight;
+	}
+
+
 	public void showBag() {
     	bagView.setVisible(true);
     }
@@ -324,14 +340,16 @@ public class View {
 		mapView.widthProperty().bind(scene.widthProperty().subtract(10));
 		System.out.println(scene.getHeight());
 		System.out.println(mapView.getHeight());
+		initialForImage();
 		location.test();
 		item.test();
 		entity.testStore();
 		entity.testNPC();
 		entity.testUsers();
-		initialForImage();
+		
 		
 	}
+	
 	
 	public void setCoinImage() {
 		URL url = this.getClass().getResource("/images/coin.png");
@@ -372,7 +390,7 @@ public class View {
 		return imgView;
 	}
 	
-	public void initialCancas() {
+	public void initialCanvas() {
 		GraphicsContext gContext = mapView.getGraphicsContext2D();
 		
 		gContext.save();
@@ -388,6 +406,7 @@ public class View {
 	
 	
 	public void initialForImage() {
+		forImage.getChildren().clear();
 		forImage.requestFocus();
 		forImage.setOnKeyPressed(new EventHandler<KeyEvent>() {
 		double moveX = 0;
@@ -396,7 +415,9 @@ public class View {
 			public void handle(KeyEvent k) {
 				// TODO Auto-generated method stub
 				System.out.println(k.getCode().getName());
-				move.excute(k.getCode().getName());
+				//move.excute(k.getCode().getName());
+				
+				
 				//This method will not be used in the final project, it just used for present demo.
 				tileWidth=mapView.getWidth()/10;
 				tileHeight = mapView.getHeight()/10;
@@ -412,6 +433,7 @@ public class View {
 				moved.setLayoutY(moved.getLayoutY()+moveY);
 				moveX=0;
 				moveY=0;
+				
 			}
 			
 		});
@@ -450,4 +472,46 @@ public class View {
     	return messageListData;
 	}
 
+	public void initialBeforeDraw() {
+		initialCanvas();
+		initialForImage();
+	}
+	/**
+	 * This method is used to draw a rectangle to show where is available to drop the item.
+	 * @param cor the position of the current user
+	 * @return square vertex coordinates
+	 */
+	public Map<String,Double> drawRectangle(Coordinate cor) {
+	
+		
+		// TODO Auto-generated method stub
+		GraphicsContext gContext = mapView.getGraphicsContext2D();
+		tileWidth=mapView.getWidth()/10;
+		tileHeight = mapView.getHeight()/10;
+		gContext.beginPath();
+		double beginX=(cor.getxPostion()-1)*tileWidth;
+		double beginY=(cor.getyPosition()-1)*tileHeight;
+		
+		gContext.setStroke(Color.RED);
+		gContext.setLineWidth(2.0);
+		gContext.strokeRect(beginX, beginY, 3*tileWidth, 3*tileHeight);
+		Map<String,Double> boundary = new HashMap<String,Double>();
+		boundary.put("beginX", beginX);
+		boundary.put("beginY", beginY);
+		boundary.put("endX", beginX + 3*tileWidth);
+		boundary.put("endY", beginY+ 3*tileHeight);
+		System.out.println(beginX+"   "+beginY+"   "+3*tileWidth+"   "+3*tileHeight);
+		return boundary;
+	}
+	
+	public void update() {
+		initialBeforeDraw();
+		location.test();
+		item.test2();
+		entity.testStore();
+		entity.testNPC();
+		entity.testUsers();
+		
+		System.out.println("finish updating!!!!!!!!1");
+	}
 }
