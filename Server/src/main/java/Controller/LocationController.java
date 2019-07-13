@@ -1,9 +1,9 @@
 package Controller;
 
+import Model.Item.Item;
+import Model.Item.Key;
 import Model.Location.Coordinate;
 import Model.Location.Location;
-import java.util.Iterator;
-import java.util.Map;
 
 public class LocationController {
     private GameMediator gameMediator;
@@ -52,7 +52,30 @@ public class LocationController {
 
     }
 
-    public void openDoor(String keyId){
+    public void openDoor(String userid){
+        for(Item item:gameMediator.getWorld().getEntity(userid).getBag()){
+            if(item instanceof Key){
+                //get currentLocation index
+                int indexOfCurrentLocation = gameMediator.getWorld().getLocations().indexOf(gameMediator.getWorld().getEntityLocation(userid));
+                //new location will be index+1 in the Location list
+                gameMediator.getWorld().getEntity(userid).setCurrentLocation(gameMediator.getWorld().getLocations().get(indexOfCurrentLocation+1));
 
+                //initial the user in Coordinate(0,0) in the next Location
+                int positionX=0,positionY=0;
+
+                for(Coordinate c:gameMediator.getWorld().getLocations().get(indexOfCurrentLocation+1).getTiles().keySet()){
+                    if(c.getxPostion() == positionX && c.getyPosition() == positionY){
+                        gameMediator.getWorld().getLocations().get(indexOfCurrentLocation+1).addEntity(userid,c);
+                        gameMediator.getWorld().getLocations().get(indexOfCurrentLocation).removeEntity(userid);
+                        System.out.println("USer->"+ userid+"open the door and moves to the new Location");
+                        //remove the used key from User's bag
+                        gameMediator.getWorld().getEntity(userid).getBag().remove(item);
+                        System.out.println("The key used has removed from bag!");
+                        return;
+                    }
+                }
+            }
+        }
+        System.out.println("There is no Key object in the bag!");
     }
 }
