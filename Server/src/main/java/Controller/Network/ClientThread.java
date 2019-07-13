@@ -64,7 +64,7 @@ public class ClientThread extends Thread implements Runnable {
 	}
 
 	void sendMessage(Object msg) {
-		System.out.println("Sending message to user: " + userName);
+		System.out.println("Sending message to user: " +userName);
 		if (msg instanceof World) {
 			for (Entity entity : ((World) msg).getEntities()) {
 				System.out.println(entity);
@@ -80,6 +80,7 @@ public class ClientThread extends Thread implements Runnable {
 	private void handleEntity(User user) {
 		System.out.println(user.getEntityID());
 		gameMediator.getWorld().addEntity(user);
+		this.userName = userName;
 		userName = user.getEntityID();
 		initEntityLocation(userName);
 	}
@@ -103,9 +104,9 @@ public class ClientThread extends Thread implements Runnable {
 	}
 
 	private void handleString(String d) {
-		System.out.println("Username ->" + userName+"now is in coordinate-> ["+
+/*		System.out.println("Username ->" + userName+"now is in coordinate-> ["+
 				gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getxPostion()
-				+","+gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getyPosition()+"]");
+				+","+gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getyPosition()+"]");*/
 		if(d.equals("a") || d.equals("d") || d.equals("w") ||d.equals("s")){
 			locationController = new LocationController(gameMediator);
 			locationController.moveTo(userName,d);
@@ -117,14 +118,15 @@ public class ClientThread extends Thread implements Runnable {
 			System.out.println("Change "+userName+"'s coordinate to"+"["+
 					gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getxPostion()
 					+","+gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getyPosition()+"]");
-		}else if(d == "getWorld"){
+		}else if(d.equals("getWorld")){
 			try {
 				objectOutput.writeObject(gameMediator.getWorld());
+				System.out.println("user get the world object when they login");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-		else if(d == "logout") {
+		else if(d.equals("logout")) {
 			logout();
 		}
 

@@ -91,8 +91,8 @@ public class GameMediator {
 		this.world = new World();
 	}
 
-	public void testClient() throws Exception{
-		client = new Client(this);
+	public void testClient(GameMediator gameMediator) throws Exception{
+		client = new Client(gameMediator);
 		
 	}
 
