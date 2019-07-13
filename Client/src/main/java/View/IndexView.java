@@ -39,26 +39,30 @@ public class IndexView {
 	
 	public void newGame() {
 		gameType = "new";
+		userStatus.setText("");
 		userInfo.setVisible(true);
 		index.setVisible(false);
 	}
 	
 	public void continueGame() {
-		gameType = "continue";
+		showMessage("");
+		userStatus.setText("");
 		userInfo.setVisible(true);
 		index.setVisible(false);
 	}
 	
-	public void startGame() throws IOException {
-		System.out.println(userName.getText().equals(""));
-		if(!userName.getText().equals("")&& !IPAddress.getText().equals("")) {
+	public void startGame() throws IOException, ClassNotFoundException {
+		String uName = userName.getText();
+		String IP = IPAddress.getText();
+		if(!uName.equals("")&& !IP.equals("")) {
+			showMessage("Connecting.......");
 			switch(gameType) {
-			case "new" : System.out.println("start new");enterGame(); break;
-			case "continue":System.out.println("start continues"); break;
-			default: System.out.println("Wrong!");break;
+			case "new" : startGame.execute("new", uName, IP); break;
+			case "continue":startGame.execute("continue", uName, IP); ; break;
+			default: showMessage("The game type is wrong");break;
 			}
 		}else {
-			userStatus.setText("Please input your info!");
+			showMessage("Please input your info!");
 		}
 		
 		
@@ -71,11 +75,12 @@ public class IndexView {
 		userStatus.setText("");
 	}
 	public void exit() {
-		
+		Stage stage = (Stage) page.getScene().getWindow();
+		stage.close();
 	}
 	
 	
-	public void showError(String message) {
+	public void showMessage(String message) {
 		userStatus.setText(message);
 	}
 	public void	enterGame() throws IOException {
