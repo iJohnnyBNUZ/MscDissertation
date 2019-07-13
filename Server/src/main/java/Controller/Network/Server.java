@@ -28,6 +28,7 @@ public class Server implements Runnable{
 				Socket socket = serverSocket.accept();
 				ClientThread ct = new ClientThread(socket, this, gameMediator);
 				clients.add(ct);
+				System.out.println("new Thread in Server!");
 				ct.start();
 			}
 		}catch (Exception ex){
