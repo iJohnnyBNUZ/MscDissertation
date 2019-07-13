@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import Controller.Command.Command;
-import Controller.Command.OpenDoorCommand;
 import Model.Location.Coordinate;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
@@ -15,7 +14,6 @@ import javafx.scene.layout.AnchorPane;
 public class LocationView{
 	
 	private View view = null;
-	private OpenDoorCommand openDoor= null;
 	private int row=10;
 	private int column=10;
 
@@ -27,25 +25,7 @@ public class LocationView{
 
 
 
-	public void test() {
-		// TODO Auto-generated method stub
-		Map<String,Coordinate> tmp = new HashMap<String,Coordinate>();
-		int num=0;
-		for(int i=0;i<row;i++) {
-			for(int j=0;j<column;j++) {
-				Coordinate tmp_cor = new Coordinate(i, j);
-				if(j%2 == 0 && i%2 == 0) {
-					tmp.put("water"+num, tmp_cor);
-				}else {
-					tmp.put("grass"+num, tmp_cor);
-				}
-				
-				num++;
-			}
-		}
-		System.out.println("tiles size"+ tmp.size());
-		update(tmp);
-	}
+	
 	
 
 	/** If the parameter can be a matrix, it will be easy to implemented!
@@ -69,6 +49,27 @@ public class LocationView{
 		
 	}
 
+	/*
+	 *
+	 * public void test() {
+		// TODO Auto-generated method stub
+		Map<String,Coordinate> tmp = new HashMap<String,Coordinate>();
+		int num=0;
+		for(int i=0;i<row;i++) {
+			for(int j=0;j<column;j++) {
+				Coordinate tmp_cor = new Coordinate(i, j);
+				if(j%2 == 0 && i%2 == 0) {
+					tmp.put("water"+num, tmp_cor);
+				}else {
+					tmp.put("grass"+num, tmp_cor);
+				}
+				
+				num++;
+			}
+		}
+		System.out.println("tiles size"+ tmp.size());
+		update(tmp);
+	}
 	public Coordinate chooseItemPosition() {
 		//set the location to GaussianBlur effect
 		//accept the user's click and get a position Coordinate
@@ -100,11 +101,7 @@ public class LocationView{
 			}
 			
 		});
-	}
+	}*/
 	
 	
-	
-	public void setOpenDoorCommand(Command command) {
-		openDoor = (OpenDoorCommand) command;
-	}
 }

@@ -19,7 +19,7 @@ public class ItemView{
 	public ItemView(View view) {
 		this.view= view;
 	}
-	
+	/*
 	public void test() {
 		// TODO Auto-generated method stub
 		Map<String,Coordinate> tmp = new HashMap<String,Coordinate>();
@@ -58,7 +58,7 @@ public class ItemView{
 		}
 		System.out.println("tiles size"+ tmp.size());
 		update(tmp);
-	}
+	}*/
 	
 	public void update(Map<String,Coordinate> items) {
 		
@@ -78,7 +78,7 @@ public class ItemView{
 						//Coordinate sCoordinate = new Coordinate(positionX,positionY);
 						System.out.println("Position: "+ items.get(name).getxPostion()+" "
 						+items.get(name).getyPosition());
-						//pickUp.execute(imgView.getId());
+						pickUp.execute(imgView.getId());
 					}
 					
 				});

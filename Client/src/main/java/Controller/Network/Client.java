@@ -142,6 +142,7 @@ public class Client implements Runnable {
 	}
 	
 	public void login(String type, String uName) throws IOException, ClassNotFoundException {
+		this.userName = uName;
 		if(type=="new") {
 			//createUser(uName);
 		}else if(type == "continue") {

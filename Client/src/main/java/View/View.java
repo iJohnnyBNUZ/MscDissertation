@@ -34,13 +34,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 public class View {
-
-	//testData
-	private List<Item> myBagData = new LinkedList<Item>();
-	private int myMoneyData = 0;
-	private List<Item> userShopData = new LinkedList<Item>();
-	private List<String> messageListData = new LinkedList<String>();
-	private CommunicationController communicationController;
 	
 	@FXML
     private AnchorPane page;
@@ -151,19 +144,7 @@ public class View {
 	private Button closeKey;
 
 
-	private LocationView location = null;
-    
-    private BagView bag = null;
-    
-    private ChatView chat = null;
-
-    private EntityView entity = null;
-    
-    private ItemView item = null;
-    
-    private NPCView nps = null;
-    
-    private TransactionView tansaction = null;
+	
     
     private double tileWidth = 0;
     
@@ -173,29 +154,14 @@ public class View {
     
 	private double image_w = 64.0;
 	
-	private MoveCommand move = null;
+	private MoveCommand moveCommand = null;
+	
 	
     // This method is automatically invoked by the FXMLLoader - it's magic
     // This method must be public
     public void initialize() {
     	System.out.println("initializeeeeeeeeeeeeeeeeeeee!!!!!!");
-		communicationController = new CommunicationController(this);
-    	setCoinImage();
-    	location = new LocationView(this);
-    	bag = new BagView(this);
-    	chat = new ChatView(this,communicationController);
-    	entity = new EntityView(this);
-    	item = new ItemView(this);
-    	nps = new NPCView(this);
-    	tansaction = new TransactionView(this);
-
-    	//set testData
-    	setTestData();
-    	//initialize bagView,transactionView,chatView
-		bag.updateBag(myBagData,myMoneyData);
-		tansaction.updateTransaction(userShopData,myBagData,myMoneyData);
-		chat.updateChat(messageListData);
-
+		setCoinImage();
     }
     
     
@@ -252,8 +218,6 @@ public class View {
 
 	public Label getNumOfCoins() { return numOfCoins; }
 
-	public LocationView getLocationView() { return location; }
-
 	public TabPane getTransactionView() { return transactionView; }
 
 	public Tab getUser_shop() { return user_shop; }
@@ -308,7 +272,6 @@ public class View {
 		return closeKey;
 	}
 
-	public ChatView getChat() { return chat; }
 
 	
 	public double getTileWidth() {
@@ -329,6 +292,7 @@ public class View {
 
 	public void showChat() { chatView.setVisible(true);}
     
+	
     public void saveGame() {
     	System.out.println("saveeeeeeeeeeeeeeeeeeeeeeeeeee!");
     }
@@ -340,13 +304,7 @@ public class View {
 		mapView.widthProperty().bind(scene.widthProperty().subtract(10));
 		System.out.println(scene.getHeight());
 		System.out.println(mapView.getHeight());
-		initialForImage();
-		location.test();
-		item.test();
-		entity.testStore();
-		entity.testNPC();
-		entity.testUsers();
-		
+		initialBeforeDraw();
 		
 	}
 	
@@ -390,6 +348,11 @@ public class View {
 		return imgView;
 	}
 	
+	public void initialBeforeDraw() {
+		initialCanvas();
+		initialForImage();
+	}
+	
 	public void initialCanvas() {
 		GraphicsContext gContext = mapView.getGraphicsContext2D();
 		
@@ -409,17 +372,17 @@ public class View {
 		forImage.getChildren().clear();
 		forImage.requestFocus();
 		forImage.setOnKeyPressed(new EventHandler<KeyEvent>() {
-		double moveX = 0;
-		double moveY = 0;
+		//double moveX = 0;
+		//double moveY = 0;
 			@Override
 			public void handle(KeyEvent k) {
 				// TODO Auto-generated method stub
 				System.out.println(k.getCode().getName());
-				//move.excute(k.getCode().getName());
+				moveCommand.excute(k.getCode().getName());
 				
 				
 				//This method will not be used in the final project, it just used for present demo.
-				tileWidth=mapView.getWidth()/10;
+				/*tileWidth=mapView.getWidth()/10;
 				tileHeight = mapView.getHeight()/10;
 				switch(k.getCode().getName()) {
 				case "Right": moveX= tileWidth;break;
@@ -432,7 +395,7 @@ public class View {
 				moved.setLayoutX(moved.getLayoutX()+moveX);
 				moved.setLayoutY(moved.getLayoutY()+moveY);
 				moveX=0;
-				moveY=0;
+				moveY=0;*/
 				
 			}
 			
@@ -440,48 +403,18 @@ public class View {
 	}
 	
 	public void setMoveCommand(Command command) {
-		move = (MoveCommand) command;
+		moveCommand = (MoveCommand) command;
 	}
 
-	public void setTestData(){
-		//initialize testData
-		myBagData.add(new Food("apple01",10,10,"food"));
-		myBagData.add(new Food("orange01",15,10,"food"));
-		myBagData.add(new Food("lemon01",20,10,"food"));
-		myBagData.add(new Food("apple02",10,10,"food"));
-		myBagData.add(new Food("orange02",15,10,"food"));
-		myBagData.add(new Food("lemon02",20,10,"food"));
-		myBagData.add(new Key("bluekey01",15,"key"));
-		myBagData.add(new Key("redkey01",15,"key"));
-		myBagData.add(new Key("greenkey01",15,"key"));
-		myBagData.add(new Key("bluekey02",15,"key"));
-		myMoneyData = 232;
-		userShopData.add(new Food("apple01",10,10,"food"));
-		userShopData.add(new Food("orange01",15,10,"food"));
-		userShopData.add(new Food("lemon01",20,10,"food"));
-		userShopData.add(new Food("apple02",10,10,"food"));
-		userShopData.add(new Food("lemon02",20,10,"food"));
-		userShopData.add(new Key("bluekey01",15,"key"));
-		userShopData.add(new Key("bluekey02",15,"key"));
-		messageListData.add("Hello World");
-		messageListData.add("Hello Edinburgh");
-		messageListData.add("Hello Java");
-	}
 
-	public List<String> getMessageListData(){
-    	return messageListData;
-	}
-
-	public void initialBeforeDraw() {
-		initialCanvas();
-		initialForImage();
-	}
+	
+	
 	/**
 	 * This method is used to draw a rectangle to show where is available to drop the item.
 	 * @param cor the position of the current user
 	 * @return square vertex coordinates
 	 */
-	public Map<String,Double> drawRectangle(Coordinate cor) {
+	/*public Map<String,Double> drawRectangle(Coordinate cor) {
 	
 		
 		// TODO Auto-generated method stub
@@ -502,8 +435,8 @@ public class View {
 		boundary.put("endY", beginY+ 3*tileHeight);
 		System.out.println(beginX+"   "+beginY+"   "+3*tileWidth+"   "+3*tileHeight);
 		return boundary;
-	}
-	
+	}*/
+	/*
 	public void update() {
 		initialBeforeDraw();
 		location.test();
@@ -513,5 +446,5 @@ public class View {
 		entity.testUsers();
 		
 		System.out.println("finish updating!!!!!!!!1");
-	}
+	}*/
 }

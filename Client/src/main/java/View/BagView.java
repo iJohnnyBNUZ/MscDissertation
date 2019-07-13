@@ -43,9 +43,9 @@ public class BagView{
 	private double image_h = 50.0;
 	private double image_w =50.0;
 	private EatCommand eatCommand = new EatCommand();
-	private PutDownCommand putDownCommand = new PutDownCommand();
+	private PutDownCommand putDownCommand = null;
 	private String selectedItemId = null;
-	private Coordinate position;
+	
 
 
 	public BagView(View view) {
@@ -65,7 +65,7 @@ public class BagView{
 		this.closeKey= view.getCloseKey();
 		this.bagKeys = view.getBagKeys();
 
-		this.locationView = view.getLocationView();
+		
 
 		close.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -201,8 +201,8 @@ public class BagView{
 			public void handle(ActionEvent actionEvent) {
 				if(selectedItemId != null){
 					cleanSelect();
-					Coordinate position = locationView.chooseItemPosition();
-					putDownCommand.execute(selectedItemId,position);
+					
+					putDownCommand.execute(selectedItemId);
 				}
 			}
 		});

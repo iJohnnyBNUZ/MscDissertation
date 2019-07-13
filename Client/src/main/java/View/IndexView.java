@@ -45,7 +45,7 @@ public class IndexView {
 	}
 	
 	public void continueGame() {
-		showMessage("");
+		gameType = "continue";
 		userStatus.setText("");
 		userInfo.setVisible(true);
 		index.setVisible(false);
@@ -82,21 +82,6 @@ public class IndexView {
 	
 	public void showMessage(String message) {
 		userStatus.setText(message);
-	}
-	public void	enterGame() throws IOException {
-		Stage stage = (Stage) page.getScene().getWindow();
-		URL location = getClass().getResource("sample.fxml");
-		System.out.println(location.toString());
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(location);
-        fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
-        Parent root = fxmlLoader.load();
-        stage.setScene(new Scene(root, 900, 720));
-        View view = (View) fxmlLoader.getController();
-        //Used for get the screen size and set to canvas.
-        //Test is written in that method either.
-        view.bindScene(stage.getScene());
-        stage.show();
 	}
 
 	public void setStartGame(StartGameCommand startGame) {

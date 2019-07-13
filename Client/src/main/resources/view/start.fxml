@@ -10,12 +10,12 @@
       <AnchorPane fx:id="userInfo" layoutX="126.0" layoutY="79.0" prefHeight="220.0" prefWidth="328.0" visible="false">
          <children>
             <Label layoutX="35.0" layoutY="53.0" prefHeight="26.0" prefWidth="80.0" text="Username" />
-            <Label layoutX="35.0" layoutY="90.0" prefHeight="26.0" prefWidth="80.0" text="IP" />
             <TextField fx:id="userName" layoutX="115.0" layoutY="53.0" />
-            <Button fx:id="login1" layoutX="200.0" layoutY="139.0" mnemonicParsing="false" onAction="#back" text="back" />
+            <Label layoutX="35.0" layoutY="90.0" prefHeight="26.0" prefWidth="80.0" text="IP" />
             <TextField fx:id="IPAddress" layoutX="115.0" layoutY="90.0" />
-            <Button fx:id="login" layoutX="127.0" layoutY="139.0" mnemonicParsing="false" onAction="#startGame" text="log in" />
             <Label fx:id="userStatus" layoutX="35.0" layoutY="173.0" prefHeight="26.0" prefWidth="250.0" text="User exists or not" />
+            <Button fx:id="login" layoutX="127.0" layoutY="139.0" mnemonicParsing="false" onAction="#startGame" text="log in" />
+            <Button fx:id="login1" layoutX="200.0" layoutY="139.0" mnemonicParsing="false" onAction="#back" text="back" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="index" layoutX="200.0" layoutY="68.0" prefHeight="200.0" prefWidth="200.0">

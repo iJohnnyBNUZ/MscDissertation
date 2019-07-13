@@ -5,14 +5,14 @@ import Model.Item.Item;
 import Model.Location.Coordinate;
 import Model.Location.Location;
 
-public class ItemController {
+public class ItemController implements Controller{
     private GameMediator gameMediator;
 
-    private ItemController(GameMediator gameMediator){
+    ItemController(GameMediator gameMediator){
         this.gameMediator = gameMediator;
     }
-    public void pickUp(Coordinate coordinate, String userID){
-
+    public void pickUp(Coordinate coordinate){
+    	String userID = gameMediator.getClient().getUserName();
         // delete from location
         Location location = this.gameMediator.getWorld().getEntityLocation(userID);
         Item item = null;
@@ -50,4 +50,9 @@ public class ItemController {
             buyer.addToBag(item);
         }
     }
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
 }

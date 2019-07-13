@@ -1,22 +1,91 @@
 package Controller;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import Controller.Command.BuyCommand;
+import Controller.Command.CommunicationCommand;
+import Controller.Command.EatCommand;
+import Controller.Command.MoveCommand;
+import Controller.Command.PickUpCommand;
+import Controller.Command.PostCommand;
+import Controller.Command.PutDownCommand;
+import Controller.Command.SellCommand;
 import Controller.Command.StartGameCommand;
 
 import Controller.Network.Client;
 import Model.World;
+import Model.Location.Coordinate;
+import Model.Location.Door;
+import Model.Location.Grass;
+import Model.Location.Location;
+import Model.Location.Stone;
+import Model.Location.Tile;
+import Model.Location.Water;
+import View.BagView;
+import View.ChatView;
+import View.EntityView;
 import View.IndexView;
+import View.ItemView;
+import View.LocationView;
+import View.NPCView;
+import View.TransactionView;
 import View.View;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.JavaFXBuilderFactory;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 public class GameMediator {
 	private World world;
 	private Client client = null;
+	private ArrayList<Controller> controllers  = new ArrayList<Controller>();
 	private IndexView indexView= null;
 	private View view = null;
-	private LocationController locationController =null;
-	private ItemController itemControler= null;
-	private CommunicationController CommunicationController= null;
-	private UserController userController= null;
+	private LocationView locationView = null;
+    
+    private BagView bagView = null;
+    
+    private ChatView chatView = null;
+
+    private EntityView entityView = null;
+    
+    private ItemView itemView = null;
+    
+    private NPCView npsView = null;
+    
+    private TransactionView tansactionView = null;
+    
+   
+	private Stage primaryStage = null;
+	private Controller locationController =null;
+	private Controller itemController= null;
+	private Controller communicationController= null;
+	private Controller userController= null;
+	
+	private MoveCommand moveCommand = null;
+	    
+	private PickUpCommand pickUpCommand = null;
+	
+	private PutDownCommand putDownCommand = null;
+	
+	private EatCommand eatCommand = null;
+	
+	private BuyCommand buyCommand = null;
+	
+	private SellCommand sellCommand = null;
+	
+	private CommunicationCommand communicationCommand = null;
+	
+	private PostCommand postCommand = null;
+	    
 	private StartGameCommand startGameCommand = null;
+	
+	
 	
 	public GameMediator() {
 		this.world = new World();
@@ -61,19 +130,321 @@ public class GameMediator {
 	}
 	
 	
+	public Stage getPrimaryStage() {
+		return primaryStage;
+	}
+
+	public void setPrimaryStage(Stage primaryStage) {
+		this.primaryStage = primaryStage;
+	}
+
+	
+	public LocationView getLocationView() {
+		return locationView;
+	}
+
+	public void setLocationView(LocationView location) {
+		this.locationView = location;
+	}
+
+	public BagView getBagView() {
+		return bagView;
+	}
+
+	public void setBagView(BagView bag) {
+		this.bagView = bag;
+	}
+
+	public ChatView getChatView() {
+		return chatView;
+	}
+
+	public void setChatView(ChatView chat) {
+		this.chatView = chat;
+	}
+
+	public EntityView getEntityView() {
+		return entityView;
+	}
+
+	public void setEntityView(EntityView entity) {
+		this.entityView = entity;
+	}
+
+	public ItemView getItemView() {
+		return itemView;
+	}
+
+	public void setItemView(ItemView item) {
+		this.itemView = item;
+	}
+
+	public NPCView getNPCView() {
+		return npsView;
+	}
+
+	public void setNPCView(NPCView nps) {
+		this.npsView = nps;
+	}
+
+	public TransactionView getTransactionView() {
+		return tansactionView;
+	}
+
+	public void setTransactionView(TransactionView tansaction) {
+		this.tansactionView = tansaction;
+	}
+
+	public Controller getLocationController() {
+		return locationController;
+	}
+
+	public void setLocationController(Controller locationController) {
+		this.locationController = locationController;
+	}
+
+	public Controller getItemControler() {
+		return itemController;
+	}
+
+	public void setItemControler(Controller itemControler) {
+		this.itemController = itemControler;
+	}
+
+	public Controller getCommunicationController() {
+		return communicationController;
+	}
+
+	public void setCommunicationController(Controller communicationController) {
+		this.communicationController = communicationController;
+	}
+
+	public Controller getUserController() {
+		return userController;
+	}
+
+	public void setUserController(Controller userController) {
+		this.userController = userController;
+	}
+
+	public MoveCommand getMoveCommand() {
+		return moveCommand;
+	}
+
+	public void setMoveCommand(MoveCommand moveCommand) {
+		this.moveCommand = moveCommand;
+	}
+
+	public PickUpCommand getPickUpCommand() {
+		return pickUpCommand;
+	}
+
+	public void setPickUpCommand(PickUpCommand pickUpCommand) {
+		this.pickUpCommand = pickUpCommand;
+	}
+
+	public PutDownCommand getPutDownCommand() {
+		return putDownCommand;
+	}
+
+	public void setPutDownCommand(PutDownCommand putDownCommand) {
+		this.putDownCommand = putDownCommand;
+	}
+
+	public EatCommand getEatCommand() {
+		return eatCommand;
+	}
+
+	public void setEatCommand(EatCommand eatCommand) {
+		this.eatCommand = eatCommand;
+	}
+
+	public BuyCommand getBuyCommand() {
+		return buyCommand;
+	}
+
+	public void setBuyCommand(BuyCommand buyCommand) {
+		this.buyCommand = buyCommand;
+	}
+
+	public SellCommand getSellCommand() {
+		return sellCommand;
+	}
+
+	public void setSellCommand(SellCommand sellCommand) {
+		this.sellCommand = sellCommand;
+	}
+
+	public CommunicationCommand getCommunicationCommand() {
+		return communicationCommand;
+	}
+
+	public void setCommunicationCommand(CommunicationCommand communicationCommand) {
+		this.communicationCommand = communicationCommand;
+	}
+
+	public PostCommand getPostCommand() {
+		return postCommand;
+	}
+
+	public void setPostCommand(PostCommand postCommand) {
+		this.postCommand = postCommand;
+	}
+
+	public StartGameCommand getStartGameCommand() {
+		return startGameCommand;
+	}
+
+	public void setStartGameCommand(StartGameCommand startGameCommand) {
+		this.startGameCommand = startGameCommand;
+	}
+
+	/**
+	 * Create the instances of controllers and commands.
+	 * The controller is the parameter of the Command's constructor.
+	 */
 	public void initialController() {
+		this.locationController = new LocationController(this);
+		this.itemController = new ItemController(this);
+		this.communicationController = new CommunicationController(this);
 		this.userController = new UserController(this);
+		
+		controllers.add(this.locationController);
+		controllers.add(this.itemController);
+		controllers.add(this.communicationController);
+		controllers.add(this.userController);
+		
+		this.moveCommand = new MoveCommand(locationController);
 		this.startGameCommand = new StartGameCommand(userController);
-		bindIndexCommand();
+		this.putDownCommand = new PutDownCommand(itemController);
+		this.pickUpCommand = new PickUpCommand(itemController);
+		this.communicationCommand = new CommunicationCommand(communicationController);
+		this.buyCommand = new BuyCommand(itemController);
+		this.sellCommand = new SellCommand(itemController);
+		this.postCommand = new PostCommand(communicationController);
 	}
 	
-	
+	/**
+	 * bind the Command to the index view
+	 */
 	public void bindIndexCommand() {
 		indexView.setStartGame(startGameCommand);
 	}
 	
+	
+	/**
+	 * Initial the view related to the game.
+	 */
+	public void initialGameView() {
+		locationView = new LocationView(this.view);
+    	bagView = new BagView(this.view);
+    	chatView = new ChatView(this.view);
+    	entityView = new EntityView(this.view);
+    	itemView = new ItemView(this.view);
+    	npsView = new NPCView(this.view);
+    	tansactionView = new TransactionView(this.view);
+
+	}
+	
+	/**
+	 * Bind the commands to the views related to the game.
+	 */
 	public void bindViewCommand() {
+		view.setMoveCommand(moveCommand);
+		itemView.setPickUpCommand(pickUpCommand);
+		entityView.setCommunicationCommand(communicationCommand);
+		bagView.setEatCommand(eatCommand);
+		bagView.setPutDownCommand(putDownCommand);
+		chatView.setPostCommand(postCommand);
+		tansactionView.setBuyCommand(buyCommand);
+		tansactionView.setSellCommand(sellCommand);
+	}
+	
+	/**
+	 * Show the game interface.
+	 * @throws IOException
+	 */
+	
+	public void	enterGame() throws IOException {
+		URL location = View.class.getResource("sample.fxml");
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(location);
+        fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
+        Parent root = fxmlLoader.load();
+        this.primaryStage.setScene(new Scene(root, 900, 720));
+        this.view = (View) fxmlLoader.getController();
+        //Used for get the screen size and set to canvas.
+        //Test is written in that method either.
+        this.view.bindScene(this.primaryStage.getScene());
+        this.primaryStage.show();
+        initialGameView();
+        bindViewCommand();
+        setTestData();
+	}
+	
+	public void isWorldChanged(World world) {
+		if(!this.world.equals(world)) {
+			notifyObservers();
+		}
+	}
+	
+	public void notifyObservers() {
+		for(Controller controller: controllers) {
+			controller.update();
+		}
+	}
+	
+	
+	public void setTestData() {
+		Location l1 = new Location("location1");
+		this.getWorld().addLocation(l1);
+
+		Tile t1 = new Grass(true,"Grass01",1);
+		Tile t2 = new Water(true,"Water01",1);
+		Tile t3 = new Grass(true,"Grass02",1);
+		Tile t4 = new Stone(true,"Stone01",1);
+		Tile t5 = new Grass(true,"Grass03",1);
+		Tile t6 = new Water(true,"water02",1);
+		Tile t7 = new Door(true,"Door01",1);
+		Tile t8 = new Grass(true,"Grass04",1);
+		Tile t9 = new Grass(true,"Grass05",1);
+
+		Coordinate c1 = new Coordinate(0,0);
+		Coordinate c2 = new Coordinate(0,1);
+		Coordinate c3 = new Coordinate(0,2);
+		Coordinate c4 = new Coordinate(1,0);
+		Coordinate c5 = new Coordinate(1,1);
+		Coordinate c6 = new Coordinate(1,2);
+		Coordinate c7 = new Coordinate(2,0);
+		Coordinate c8 = new Coordinate(2,1);
+		Coordinate c9 = new Coordinate(2,2);
+
+		l1.addTile(c1,t1);
+		l1.addTile(c2,t2);
+		l1.addTile(c3,t3);
+		l1.addTile(c4,t4);
+		l1.addTile(c5,t5);
+		l1.addTile(c6,t6);
+		l1.addTile(c7,t7);
+		l1.addTile(c8,t8);
+		l1.addTile(c9,t9);
 		
+		Map<String,Coordinate> tmp = new HashMap<String,Coordinate>();
+		int num=0;
+		for(int i=0;i<10;i++) {
+			for(int j=0;j<10;j++) {
+				Coordinate tmp_cor = new Coordinate(i, j);
+				if(j%2 == 0 && i%2 == 0) {
+					tmp.put("water"+num, tmp_cor);
+				}else {
+					tmp.put("grass"+num, tmp_cor);
+				}
+				
+				num++;
+			}
+		}
+		System.out.println("tiles size"+ tmp.size());
+		locationView.update(tmp);
 	}
 
 }

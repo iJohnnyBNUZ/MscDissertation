@@ -28,7 +28,7 @@ public class EntityView{
 		this.view = view;
 		
 	}
-	
+	/*
 	public void test() {
 		// TODO Auto-generated method stub
 		Map<String,Coordinate> tmp = new HashMap<String,Coordinate>();
@@ -92,13 +92,12 @@ public class EntityView{
 		}
 		System.out.println("tiles size"+ tmp.size());
 		updateNPC(tmp);
-	}
+	}*/
 	
 	public void updateNPC(final Map<String,Coordinate> npcs) {
 		
 		if(npcs.size() <= 100) {
 			for(String name: npcs.keySet()) {
-				
 				
 				ImageView imgView = view.drawClickable("npc", npcs.get(name), false);
 				imgView.setId(name);
@@ -107,7 +106,7 @@ public class EntityView{
 					public void handle(MouseEvent m) {
 						// TODO Auto-generated method stub
 						System.out.println("npc ID: "+ imgView.getId());
-						//communication.execute(imgView.getId());
+						communication.execute(imgView.getId());
 					}
 					
 				});
@@ -130,7 +129,7 @@ public class EntityView{
 					public void handle(MouseEvent m) {
 						// TODO Auto-generated method stub
 						System.out.println("user ID: " + imgView.getId());
-						//communication.execute(imgView.getId());
+						communication.execute(imgView.getId());
 					}
 					
 				});
@@ -153,7 +152,7 @@ public class EntityView{
 					public void handle(MouseEvent m) {
 						// TODO Auto-generated method stub
 						System.out.println("storeId"+imgView.getId());
-						//communication.execute(imgView.getId());
+						communication.execute(imgView.getId());
 					}
 					
 				});

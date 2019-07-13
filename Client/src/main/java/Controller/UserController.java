@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import Model.Entity.User;
 
-public class UserController extends Controller {
+public class UserController implements Controller {
 	private static final String String = null;
 	private GameMediator gameMediator;
 	
@@ -23,13 +23,13 @@ public class UserController extends Controller {
 				}else {
 					System.out.println("Create new user," + uName);
 					gameMediator.getClient().login("new",uName);
-					gameMediator.getIndexView().enterGame();
+					gameMediator.enterGame();
 				}
 			}else if(type == "continue") {
 				if(result == true) {
 					System.out.println("Start the game:"+ uName +IP);
 					gameMediator.getClient().login("continue",uName);
-					gameMediator.getIndexView().enterGame();
+					gameMediator.enterGame();
 				}else {
 					System.out.println("User is not exist, please try again!");
 					gameMediator.getIndexView().showMessage("User is not exist, please try again!");
@@ -51,6 +51,12 @@ public class UserController extends Controller {
 			System.out.println("User "+uName+" is already online!");
 		}
 		return result;
+	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

@@ -30,8 +30,11 @@ public class RunClient extends Application {
         
         GameMediator gameMediator = new GameMediator();
         gameMediator.setIndexView(indexView);
+        gameMediator.setPrimaryStage(primaryStage);
         gameMediator.initialController();
+        gameMediator.bindIndexCommand();
         gameMediator.testClient();
+       
 	}
 	
 	

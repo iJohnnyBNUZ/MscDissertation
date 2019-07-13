@@ -42,8 +42,8 @@ public class TransactionView {
 	private int soldMoney = 0;
 	private int boughtMoney = 0;
 
-	private BuyCommand buyCommand = new BuyCommand();
-	private SellCommand sellCommand = new SellCommand();
+	private BuyCommand buyCommand = null;
+	private SellCommand sellCommand = null;
 
 	public TransactionView(View view) {
 		// TODO Auto-generated constructor stub

@@ -15,8 +15,7 @@ import java.util.List;
 
 public class ChatView{
 
-	private CommunicationController communicationController = null;
-	private PostCommand postCommand;
+	private PostCommand postCommand = null;
 
 	private AnchorPane chatView = null;
 	private Button closeChatView = null;
@@ -25,15 +24,13 @@ public class ChatView{
 	private VBox messageBox = null;
 
 
-	public ChatView(View view, CommunicationController communicationController) {
+	public ChatView(View view) {
 		// TODO Auto-generated constructor stub
-		this.communicationController = communicationController;
 		this.chatView = view.getChatView();
 		this.closeChatView = view.getCloseChatView();
 		this.messageWindow = view.getMessageWindow();
 		this.send = view.getSend();
 		this.messageBox = view.getMessageBox();
-		postCommand = new PostCommand(communicationController);
 
 		closeChatView.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
