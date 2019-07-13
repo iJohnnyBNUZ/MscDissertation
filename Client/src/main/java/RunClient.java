@@ -34,6 +34,7 @@ public class RunClient extends Application {
         gameMediator.initialController();
         gameMediator.bindIndexCommand();
         gameMediator.testClient();
+        
        
 	}
 	

@@ -22,13 +22,13 @@ public class ItemController implements Controller{
 
         // add to user's bag
         Entity entity = this.gameMediator.getWorld().getEntity(userID);
-        entity.addToBag(item);
+        entity.pickUp(item);
     }
 
     public void drop(String itemID, String userID){
         // delete from bag
         Entity entity = this.gameMediator.getWorld().getEntity(userID);
-        Item item = entity.removeFromBag(itemID);
+        Item item = entity.putDown(itemID);
 
         //add to location
         Location location = this.gameMediator.getWorld().getEntityLocation(userID);
@@ -42,12 +42,12 @@ public class ItemController implements Controller{
     public void exchange(String itemID, String sellerID, String buyerID){
         //delete from seller's bag
         Entity seller = this.gameMediator.getWorld().getEntity(sellerID);
-        Item item = seller.removeFromBag(itemID);
+        Item item = seller.putDown(itemID);
 
         //add to buyer's bag
         Entity buyer = this.gameMediator.getWorld().getEntity(buyerID);
         if (item != null){
-            buyer.addToBag(item);
+            buyer.pickUp(item);
         }
     }
 	@Override

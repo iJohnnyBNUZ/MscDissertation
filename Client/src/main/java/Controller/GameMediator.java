@@ -96,7 +96,6 @@ public class GameMediator {
 		
 	}
 
-	
 	public Client getClient() {
 		return client;
 	}
@@ -445,6 +444,7 @@ public class GameMediator {
 		}
 		System.out.println("tiles size"+ tmp.size());
 		locationView.update(tmp);
+		
 	}
 
 }

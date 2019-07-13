@@ -120,7 +120,7 @@ public class Client implements Runnable {
 			this.objectInputStream = new ObjectInputStream((s.getInputStream()));
 			new Thread(this).start();
 			
-			//getWorldFromServer();
+			getWorldFromServer();
 
 		} catch (Exception ex){
 			//added by myself
@@ -132,23 +132,26 @@ public class Client implements Runnable {
 		
 	private void getWorldFromServer() throws IOException, ClassNotFoundException {
 		objectOutputStream.writeObject("getWorld");
-		Object newWorld = this.objectInputStream.readObject();
-		if (newWorld instanceof World)
+
+		/*Object newWorld = this.objectInputStream.readObject();
+		if (newWorld instanceof World){
 			gameMediator.setWorld((World) newWorld);
+			System.out.println("Already getWorld from server");
+		}
 		else {
 			System.out.println(newWorld);
 			System.out.println("Something went wrong");
-		}
+		}*/
 	}
 	
 	public void login(String type, String uName) throws IOException, ClassNotFoundException {
 		this.userName = uName;
 		if(type=="new") {
-			//createUser(uName);
+			createUser(uName);
 		}else if(type == "continue") {
 			if (!((User) gameMediator.getWorld().getEntity(uName)).getOnline()){
 				((User) gameMediator.getWorld().getEntity(uName)).setOnline(true);
-				//objectOutputStream.writeObject(gameMediator.getWorld());
+				objectOutputStream.writeObject(gameMediator.getWorld());
 			}
 		}
 		
@@ -167,6 +170,7 @@ public class Client implements Runnable {
 			try {
 				System.out.println("Awaiting message");
 			    Object input = objectInputStream.readObject();
+				System.out.println(input);
 			    if(input instanceof World) {
 			        gameMediator.setWorld((World) input);
 				    for (Entity entity : ((World) input).getEntities()) {
@@ -180,12 +184,10 @@ public class Client implements Runnable {
 								+","+gameMediator.getWorld().getEntityLocation(name).getEntities().get(name).getyPosition()+"]";
 				    	printString += userinformation;
 					}
-					//lbMove.setText(printString);
 			    }
 			    else if(input instanceof String) {
 			        System.out.println((String) input);
 			        gameMediator.getIndexView().showMessage("Cannot connect to the server");
-				    //lbMove.setText("Server -> " + input);
 			    }
 			    else {
 				    System.out.println("What");
