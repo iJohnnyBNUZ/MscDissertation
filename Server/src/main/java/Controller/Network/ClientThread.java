@@ -124,7 +124,15 @@ public class ClientThread extends Thread implements Runnable {
 				e.printStackTrace();
 			}
 		}
+		else if(d == "logout") {
+			removeSelf();
+		}
 
+	}
+
+	public void removeSelf() {
+//		gameMediator.getWorld().getEntity(userName)
+		server.removeClient(this);
 	}
 }
 
