@@ -125,14 +125,18 @@ public class ClientThread extends Thread implements Runnable {
 			}
 		}
 		else if(d == "logout") {
-			removeSelf();
+			logout();
 		}
 
 	}
 
-	public void removeSelf() {
-//		gameMediator.getWorld().getEntity(userName)
-		server.removeClient(this);
+	public void logout() {
+		Entity entity =  gameMediator.getWorld().getEntity(userName);
+
+		if (entity instanceof User){
+			((User) entity).logout();  // set isOnline is false
+			server.removeClient(this);  // remove clint thread
+		}
 	}
 }
 
