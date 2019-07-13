@@ -1,10 +1,18 @@
 package Model.Entity;
 
 public class User extends Entity {
-    String UserId;
+    private String UserId;
 
-    public User(String id){
+    public User(String id) {
         super(id);
         this.UserId = id;
+    }
+
+    public void reactTo(Entity entity) {
+        entity.decreaseEnergy(30);
+    }
+
+    public String getUserId() {
+        return UserId;
     }
 }

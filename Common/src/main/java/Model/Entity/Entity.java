@@ -9,13 +9,25 @@ import java.util.List;
 
 public abstract class Entity implements Serializable {
     private String entityID;
-    private int Energy;
-    private int Coin;
+    private int energy;
+    private int coin;
     private Location currentLocation;
     private List<Item> Bag = new ArrayList<Item>();
 
     public Entity(String id) {
         this.entityID = id;
+    }
+
+    public void useItem(Item item) {
+
+    }
+
+    public void interactWith(Entity entity) {
+        entity.reactTo(this);
+    }
+
+    public void reactTo(Entity entity) {
+        entity.increaseEnergy(20);
     }
 
     public String getEntityID() {
@@ -27,26 +39,34 @@ public abstract class Entity implements Serializable {
     }
 
     public int getEnergy() {
-        return Energy;
+        return energy;
     }
 
     public void setEnergy(int energy) {
-        Energy = energy;
+        this.energy = energy;
+    }
+
+    public void increaseEnergy(int amount) {
+        energy += amount;
+    }
+
+    public void decreaseEnergy(int amount) {
+        energy -= amount;
     }
 
     public int getCoin() {
-        return Coin;
+        return coin;
     }
 
     public void setCoin(int coin) {
-        Coin = coin;
+        this.coin = coin;
     }
 
-    public void addToBag(Item item) {
+    public void pickUp(Item item) {
         this.Bag.add(item);
     }
 
-    public Item removeFromBag(String id) {
+    public Item putDown(String id) {
         for(Item item: Bag) {
             if(item.getItemID().equals(id)) {
                 this.Bag.remove(item);
