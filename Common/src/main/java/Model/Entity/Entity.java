@@ -12,6 +12,7 @@ public abstract class Entity implements Serializable {
     private int energy;
     private int coin;
     private Location currentLocation;
+
     private List<Item> Bag = new ArrayList<Item>();
 
     public Entity(String id) {
@@ -20,6 +21,14 @@ public abstract class Entity implements Serializable {
 
     public void useItem(Item item) {
 
+    }
+
+    public List<Item> getBag() {
+        return Bag;
+    }
+
+    public void setBag(List<Item> bag) {
+        Bag = bag;
     }
 
     public void interactWith(Entity entity) {
