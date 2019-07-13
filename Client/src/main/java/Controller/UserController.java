@@ -1,5 +1,7 @@
 package Controller;
 
+import Model.Entity.User;
+
 public class UserController extends Controller {
 	private static final String String = null;
 	private GameMediator gameMediator;
@@ -30,6 +32,13 @@ public class UserController extends Controller {
 	
 	public Boolean isUserExist(String uName) {
 		Boolean result = false;
+		if (gameMediator.getWorld().getEntity(uName) instanceof User){
+			result = true;
+			if (!((User) gameMediator.getWorld().getEntity(uName)).getOnline()){
+				((User) gameMediator.getWorld().getEntity(uName)).setOnline(true);
+			}else
+				System.out.println("User "+uName+" is already online!");
+		}
 		return result;
 	}
 }

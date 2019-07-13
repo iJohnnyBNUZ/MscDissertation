@@ -4,6 +4,15 @@ public class User extends Entity {
     private String UserId;
     private Boolean isOnline;
 
+
+    public Boolean getOnline() {
+        return isOnline;
+    }
+
+    public void setOnline(Boolean online) {
+        isOnline = online;
+    }
+
     public User(String id) {
         super(id);
         this.UserId = id;

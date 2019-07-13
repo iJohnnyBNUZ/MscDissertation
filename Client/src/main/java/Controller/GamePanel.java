@@ -72,8 +72,18 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 			OutputStream os = s.getOutputStream();
 			this.objectOutputStream = new ObjectOutputStream(os);
 			this.objectInputStream = new ObjectInputStream((s.getInputStream()));
-			createUser();
-			getWorldFromServer();
+			if(gameMediator.getWorld().getEntity(userName) instanceof User){
+				System.out.println("User "+userName+ " exist, maybe change a name!");
+				if (!((User) gameMediator.getWorld().getEntity(userName)).getOnline()){
+					((User) gameMediator.getWorld().getEntity(userName)).setOnline(true);
+					objectOutputStream.writeObject(gameMediator.getWorld());
+				}else
+					System.out.println("User "+userName+" is already online!");
+			}else{
+				createUser();
+				getWorldFromServer();
+			}
+
 			new Thread(this).start();
 
 		} catch (Exception ex){
