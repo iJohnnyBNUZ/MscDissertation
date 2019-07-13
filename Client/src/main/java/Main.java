@@ -16,7 +16,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
     	
-    	URL location = getClass().getResource("view/sample.fxml");
+    	URL location = getClass().getResource("view/start.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(location);
         fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
@@ -24,10 +24,10 @@ public class Main extends Application {
         primaryStage.setTitle("University of Edinburgh Dissertation");
         primaryStage.setScene(new Scene(root, 900, 720));
         
-        View view = (View) fxmlLoader.getController();
+        //View view = (View) fxmlLoader.getController();
         //Used for get the screen size and set to canvas.
         //Test is written in that method either.
-        view.bindScene(primaryStage.getScene());
+        //view.bindScene(primaryStage.getScene());
         primaryStage.show();
         
         System.out.println("Finished Loading");

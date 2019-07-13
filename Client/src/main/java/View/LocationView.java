@@ -80,9 +80,7 @@ public class LocationView{
 	public void showAvaliable(Coordinate cor) {
 		AnchorPane forImage = view.getForImage();
 		forImage.setMouseTransparent(true);
-		/*for(int i=0;i< forImage.getChildren().size();i++) {
-			forImage.getChildren().get(i).setMouseTransparent(true);
-		}*/
+		
 		Map<String,Double>boundary =view.drawRectangle(cor);
 		Canvas mapView = view.getMapView();
 		mapView.setOnMouseClicked(new EventHandler<MouseEvent>() {
