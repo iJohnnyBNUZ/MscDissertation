@@ -11,8 +11,6 @@ public abstract class Entity implements Serializable {
     private String entityID;
     private int energy;
     private int coin;
-    private Location currentLocation;
-
     private List<Item> Bag = new ArrayList<Item>();
 
     public Entity(String id) {
@@ -83,13 +81,5 @@ public abstract class Entity implements Serializable {
             }
         }
         return null;
-    }
-
-    public Location getCurrentLocation() {
-        return currentLocation;
-    }
-
-    public void setCurrentLocation(Location currentLocation) {
-        this.currentLocation = currentLocation;
     }
 }
