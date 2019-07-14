@@ -93,7 +93,6 @@ public class GameMediator {
 
 	public void testClient(GameMediator gameMediator) throws Exception{
 		client = new Client(gameMediator);
-		
 	}
 
 	public Client getClient() {
@@ -316,6 +315,7 @@ public class GameMediator {
 		this.moveCommand = new MoveCommand(locationController);
 		this.startGameCommand = new StartGameCommand(userController);
 		this.putDownCommand = new PutDownCommand(itemController);
+		this.eatCommand = new EatCommand(itemController);
 		this.pickUpCommand = new PickUpCommand(itemController);
 		this.communicationCommand = new CommunicationCommand(communicationController);
 		this.buyCommand = new BuyCommand(itemController);
