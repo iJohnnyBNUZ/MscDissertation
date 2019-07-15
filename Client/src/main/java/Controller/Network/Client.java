@@ -132,6 +132,7 @@ public class Client implements Runnable {
 		
 	private void getWorldFromServer() throws IOException, ClassNotFoundException {
 		objectOutputStream.writeObject("getWorld");
+		System.out.println("getttttttttttttttttttt!!");
 
 		/*Object newWorld = this.objectInputStream.readObject();
 		if (newWorld instanceof World){

@@ -45,6 +45,8 @@ public class GameMediator {
 	private World world;
 	private Client client = null;
 	private ArrayList<Controller> controllers  = new ArrayList<Controller>();
+	private ArrayList<String> queue = new ArrayList<String>();
+	
 	private IndexView indexView= null;
 	private View view = null;
 	private LocationView locationView = null;
@@ -113,9 +115,16 @@ public class GameMediator {
 	public void setWorld(World newWorld) {
 		if(!this.world.equals(newWorld)) {
 			this.world = newWorld;
-			world.notifyAll();
+			this.notifyObservers();
 		}
 		
+	}
+
+	private void notifyObservers() {
+		// TODO Auto-generated method stub
+		for(Controller controller: controllers) {
+			controller.update();
+		}
 	}
 
 	public IndexView getIndexView() {
@@ -314,6 +323,20 @@ public class GameMediator {
 		this.saveGameCommand = saveGameCommand;
 	}
 
+	
+	
+	public ArrayList<String> getQueue() {
+		return queue;
+	}
+
+	public void addAction(String action) {
+		this.queue.add(action);
+	}
+	
+	public void cleanQueue() {
+		this.queue.clear();
+	}
+
 	/**
 	 * Create the instances of controllers and commands.
 	 * The controller is the parameter of the Command's constructor.
@@ -327,7 +350,6 @@ public class GameMediator {
 		controllers.add(this.locationController);
 		controllers.add(this.itemController);
 		controllers.add(this.communicationController);
-		controllers.add(this.userController);
 		
 		this.moveCommand = new MoveCommand(locationController);
 		this.startGameCommand = new StartGameCommand(userController);
@@ -425,5 +447,6 @@ public class GameMediator {
 		locationView.update(tmp);
 		
 	}
+	
 
 }

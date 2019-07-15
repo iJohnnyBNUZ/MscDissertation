@@ -85,7 +85,4 @@ public class World implements Serializable {
 		return null;
 	}
 
-	public void notifyObservers() {
-
-	}
 }
