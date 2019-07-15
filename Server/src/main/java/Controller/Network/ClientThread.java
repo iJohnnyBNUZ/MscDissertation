@@ -87,7 +87,7 @@ public class ClientThread extends Thread implements Runnable {
 
 	private void initEntityLocation(String userName){
 		//inital the user in first location in the world
-		gameMediator.getWorld().getEntity(userName).setCurrentLocation(gameMediator.getWorld().getLocations().get(0));
+		//gameMediator.getWorld().getEntity(userName).setCurrentLocation(gameMediator.getWorld().getLocations().get(0));
 		gameMediator.getWorld().getLocations().get(0).addUser((User)gameMediator.getWorld().getEntity(userName));
 		//init the coordinate for user with random
 		int max =2,min =0;

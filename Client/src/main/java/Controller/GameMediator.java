@@ -96,7 +96,6 @@ public class GameMediator {
 
 	public void testClient(GameMediator gameMediator) throws Exception{
 		client = new Client(gameMediator);
-		
 	}
 
 	public Client getClient() {

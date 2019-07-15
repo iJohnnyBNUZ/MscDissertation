@@ -139,9 +139,7 @@ public class View {
 	private Button closeMyBag;
 
 
-	
-    
-    private double tileWidth = 0;
+	private double tileWidth = 0;
     
     private double tileHeight = 0;
     
@@ -164,7 +162,9 @@ public class View {
 
 	public Canvas getMapView() { return mapView; }
 
+
 	public AnchorPane getForImage() { return forImage; }
+	
 
 	public ImageView getUserImage() { return userImage; }
 

@@ -2,6 +2,10 @@ package Controller.Command;
 
 import Controller.Controller;
 import Controller.ItemController;
+import Model.Item.Item;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class BuyCommand implements Command {
 	
@@ -11,10 +15,8 @@ public class BuyCommand implements Command {
     	this.itemController = (ItemController) itemController2;
 	}
 
-	public void execute(String boughtItemId, int money){
-        //current user's money decreases
-        //current user's bag add item
-        //shop or other user remove item
-        System.out.println("item "+boughtItemId+" is bought, it costs "+ money +" coins");
-    }
+	public void execute(List<Item> usershop, HashMap<String,Integer> buyList, int buyValue){
+		System.out.println("several items are bought, it costs "+ buyValue +" coins");
+		//transactionController.buyItems(usershop,buyList,buyValue);
+	}
 }

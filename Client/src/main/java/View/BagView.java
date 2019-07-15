@@ -3,8 +3,8 @@ package View;
 import Controller.Command.Command;
 import Controller.Command.EatCommand;
 import Controller.Command.PutDownCommand;
+import Model.Item.Food;
 import Model.Item.Item;
-import Model.Location.Coordinate;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
@@ -20,13 +20,7 @@ import java.util.*;
 
 public class BagView{
 
-	private Button eat = null;
-	private Button putDown = null;
-	private Button close = null;
-	private TitledPane bagView = null;
-	private GridPane inBag = null;
-
-	private Label numOfCoins = null;
+	private Label numOfCoins;
 	private TabPane tabBagView;
 	private GridPane bagFood;
 	private GridPane bagKeys;
@@ -35,26 +29,22 @@ public class BagView{
 	private Button closeFood;
 	private Button putDownKey;
 	private Button closeKey;
+	private Button closeCoins;
 
-	private LocationView locationView = null;
+	private EatCommand eatCommand;
+	private PutDownCommand putDownCommand;
+	private String selectedItemId = null;
+	private int energy = 0;
 
 	private int row = 3;
 	private int column = 3;
 	private double image_h = 50.0;
 	private double image_w =50.0;
-	private EatCommand eatCommand = new EatCommand();
-	private PutDownCommand putDownCommand = null;
-	private String selectedItemId = null;
-	
+
 
 
 	public BagView(View view) {
 		// TODO Auto-generated constructor stub
-		this.eat = view.getEat();
-		this.putDown = view.getPutDown();
-		this.close = view.getClose();
-		this.bagView = view.getBagView();
-		this.inBag = view.getInBag();
 		this.numOfCoins = view.getNumOfCoins();
 		this.tabBagView = view.getTabBagView();
 		this.eatFood = view.getEatFood();
@@ -64,15 +54,10 @@ public class BagView{
 		this.putDownKey = view.getPutDownKey();
 		this.closeKey= view.getCloseKey();
 		this.bagKeys = view.getBagKeys();
+		this.closeCoins = view.getCloseCoins();
 
-		
-
-		close.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent actionEvent) {
-				bagView.setVisible(false);
-			}
-		});
+		this.eatCommand = eatCommand;
+		this.putDownCommand = putDownCommand;
 
 		closeFood.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -88,146 +73,185 @@ public class BagView{
 			}
 		});
 
+		closeCoins.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent actionEvent) {
+				tabBagView.setVisible(false);
+			}
+		});
+
 	}
 
-	public void updateBag(List<Item> bag, int money){
 
+	public void updateBag(List<Item> bag,int money){
 		numOfCoins.setText(String.valueOf(money));
-		inBag.getChildren().clear();
-		List<String> bagItems = new LinkedList<String>();
+
+		/* get List<String> foodItems of food and keyItems of key */
+		List<String> foodItems = new LinkedList<String>();
+		List<String> keyItems = new LinkedList<String>();
 		for(Item item: bag){
-			String[] itemName = item.getItemID().split("0|1|2|3|4|5|6|7|8|9");
-			StringBuffer itemType = new StringBuffer();
-			for (String s : itemName) {
-				itemType.append(s);
+			if(item.getType()=="food"){
+				String foodString = item.getItemID().replaceAll("[0-9]","");
+				foodItems.add(foodString);
 			}
-			bagItems.add(itemType.toString());
+			else if(item.getType()=="key"){
+				String keyString = item.getItemID().replaceAll("[0-9]","");
+				keyItems.add(keyString.toString());
+			}
 		}
 
+		/* preparation for displaysing */
 		int r = 0;
 		int c = 0;
+		final GaussianBlur effect = new GaussianBlur();
 
-		if (bagItems != null) {
-			//convert the list to set.
-			Set<String> uniqueSet = new HashSet<String>(bagItems);
-			for (final String tmp_name : uniqueSet) {
-				System.out.println(tmp_name);
-
-				//Item item_bag = null;
+		/* display food in the bag */
+		if(foodItems != null){
+			Set<String> uniqueFoodSet = new HashSet<String>(foodItems);
+			for (final String tmp_food_name : uniqueFoodSet){
 				if (r > row - 1) {
 					System.out.println("ERROR");
 					break;
 				}
-
 				//create border pane for each item
-				final BorderPane item = new BorderPane();
-
+				final BorderPane food_item = new BorderPane();
 				//create label to show the number of item
-				Label item_num = new Label("" + Collections.frequency(bagItems, tmp_name));
-
-				item.setBottom(item_num);
-				System.out.println(item_num.getText());
-
+				Label food_item_num = new Label("" + Collections.frequency(foodItems, tmp_food_name));
+				food_item.setBottom(food_item_num);
 				//create ImageView to each of the items
-				final ImageView item_img = new ImageView();
-				URL url = this.getClass().getResource("/images/" + tmp_name + ".png");
-
-				final Image image = new Image(url.toString(), image_h, image_w, false, false);
-				//final String style = "-fx-background-color:  #ffffff";
-				final GaussianBlur effect = new GaussianBlur();
-
-				//set image on-click effect
-				item_img.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-					public void handle(MouseEvent arg0) {
-
-						// TODO Auto-generated method stub
-
-						if(item_img.getEffect() == effect){
-							item_img.setEffect(null);
+				final ImageView food_item_img = new ImageView();
+				URL url = this.getClass().getResource("/images/" + tmp_food_name + ".png");
+				final Image food_image = new Image(url.toString(), image_h, image_w, false, false);
+				//create item's image.
+				food_item_img.setImage(food_image);
+				food_item.setCenter(food_item_img);
+				food_item_img.setOnMouseClicked(new EventHandler<MouseEvent>() {
+					@Override
+					public void handle(MouseEvent mouseEvent) {
+						if(food_item_img.getEffect()==effect){
+							food_item_img.setEffect(null);
 							selectedItemId = null;
 						}
 						else{
-							//清除其他选中的item的效果 cleanSelect();
-							cleanSelect();
-							item_img.setEffect(effect);
-							for(int i=0; i<bag.size();i++){
-								String[] name = bag.get(i).getItemID().split("0|1|2|3|4|5|6|7|8|9");
-								StringBuffer type = new StringBuffer();
+							cleanSelect(bagFood);
+							food_item_img.setEffect(effect);
+							//set selectedItemId
+							for(Item item: bag){
+								String[] name = item.getItemID().split("0|1|2|3|4|5|6|7|8|9");
+								StringBuffer itemString = new StringBuffer();
 								for (String s : name) {
-									type.append(s);
+									itemString.append(s);
 								}
-								if(type.toString() == tmp_name){
-									selectedItemId = bag.get(i).getItemID();
+								if(itemString.toString().equals(tmp_food_name)){
+									selectedItemId = item.getItemID();
+									final Food food = (Food) item;
+									energy = food.getEnergy();
 									break;
 								}
 							}
 						}
 					}
-
-
-
 				});
-
-
-				//create item's image.
-				item_img.setImage(image);
-
-				item.setCenter(item_img);
 				//set the item's position.
-				inBag.add(item, c, r);
+				bagFood.add(food_item, c, r);
 				if (c < column - 1) {
 					c++;
 				} else {
 					c = 0;
 					r++;
 				}
-
 			}
 		}
 
-		eat.setOnAction(new EventHandler<ActionEvent>() {
+		r = 0;
+		c = 0;
+		/* display keys in the bag */
+		if(keyItems != null){
+			Set<String> uniqueKeySet = new HashSet<String>(keyItems);
+			for (final String tmp_key_name : uniqueKeySet){
+				if (r > row - 1) {
+					System.out.println("ERROR");
+					break;
+				}
+				//create border pane for each item
+				final BorderPane key_item = new BorderPane();
+				//create label to show the number of item
+				Label key_item_num = new Label("" + Collections.frequency(keyItems, tmp_key_name));
+				key_item.setBottom(key_item_num);
+				//create ImageView to each of the items
+				final ImageView key_item_img = new ImageView();
+				URL url = this.getClass().getResource("/images/" + tmp_key_name + ".png");
+				final Image key_image = new Image(url.toString(), image_h, image_w, false, false);
+				//create item's image.
+				key_item_img.setImage(key_image);
+				key_item.setCenter(key_item_img);
+				key_item_img.setOnMouseClicked(new EventHandler<MouseEvent>() {
+					@Override
+					public void handle(MouseEvent mouseEvent) {
+						if(key_item_img.getEffect()==effect){
+							key_item_img.setEffect(null);
+							selectedItemId = null;
+						}
+						else{
+							cleanSelect(bagKeys);
+							key_item_img.setEffect(effect);
+							//set selectedItemId
+							for(Item item: bag){
+								String itemString = item.getItemID().replaceAll("[0-9]","");
+								if(itemString.equals(tmp_key_name)){
+									selectedItemId = item.getItemID();
+									break;
+								}
+							}
+						}
+					}
+				});
+				//set the item's position.
+				bagKeys.add(key_item, c, r);
+				if (c < column - 1) {
+					c++;
+				} else {
+					c = 0;
+					r++;
+				}
+			}
+		}
+
+		eatFood.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
-				if(selectedItemId != null){
-					cleanSelect();
-					eatCommand.execute(selectedItemId);
-				}
+				eatCommand.execute(selectedItemId);
 			}
 		});
 
-		putDown.setOnAction(new EventHandler<ActionEvent>() {
+		putDownFood.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
-				if(selectedItemId != null){
-					cleanSelect();
-					
-					putDownCommand.execute(selectedItemId);
-				}
+				putDownCommand.execute(selectedItemId);
 			}
 		});
 
 
+
 	}
 
-	public void setEatCommand(Command command){
-		this.eatCommand = (EatCommand) command;
-	}
 
-	public void setPutDownCommand(Command command){
-		this.putDownCommand = (PutDownCommand) command;
-	}
-
-	private void cleanSelect() {
-		// TODO Auto-generated method stub
-		int size =inBag.getChildren().size();
+	private void cleanSelect(GridPane gridPane){
+		int size = gridPane.getChildren().size();
 		for(int i=0; i<size; i++){
-			BorderPane item = (BorderPane) inBag.getChildren().get(i);
+			BorderPane item = (BorderPane) gridPane.getChildren().get(i);
 			if(item.getCenter().getEffect()!=null)
 				item.getCenter().setEffect(null);
 		}
 	}
 
+	public void setEatCommand(EatCommand eatCommand){
+		this.eatCommand = eatCommand;
+	}
+
+	public void setPutDownCommand(PutDownCommand putDownCommand){
+		this.putDownCommand = putDownCommand;
+	}
 
 
 

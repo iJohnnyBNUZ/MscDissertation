@@ -82,4 +82,8 @@ public abstract class Entity implements Serializable {
         }
         return null;
     }
+
+    public void removeFromBag(Item item){
+        this.Bag.remove(item);
+    }
 }
