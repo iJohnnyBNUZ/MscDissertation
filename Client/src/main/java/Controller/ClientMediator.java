@@ -24,6 +24,7 @@ public class ClientMediator implements GameMediator {
 	private Client client = null;
 	private ArrayList<Observer> observers  = new ArrayList<Observer>();
 	private ArrayList<String> queue = new ArrayList<String>();
+	private String userName = null;
 	
 	private IndexView indexView= null;
 	private View view = null;
@@ -96,11 +97,24 @@ public class ClientMediator implements GameMediator {
 	}
 
 	public void setWorld(World newWorld) {
-		if(!this.world.equals(newWorld)) {
+		if(newWorld.getEntityLocation(userName)!=null){
+			if(!this.world.equals(newWorld)) {
+				this.world = newWorld;
+				this.notifyObservers();
+			}
+		}else{
 			this.world = newWorld;
-			this.notifyObservers();
 		}
 
+
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	private void notifyObservers() {
