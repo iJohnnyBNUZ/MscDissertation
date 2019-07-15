@@ -2,6 +2,7 @@ package Controller;
 
 import Controller.Command.*;
 import Controller.Network.Client;
+import Controller.Observer.*;
 import Model.Location.Coordinate;
 import Model.Location.Location;
 import Model.World;
@@ -21,7 +22,7 @@ import java.util.Map;
 public class GameMediator {
 	private World world;
 	private Client client = null;
-	private ArrayList<Controller> controllers  = new ArrayList<Controller>();
+	private ArrayList<Observer> observers  = new ArrayList<Observer>();
 	private ArrayList<String> queue = new ArrayList<String>();
 	
 	private IndexView indexView= null;
@@ -42,10 +43,15 @@ public class GameMediator {
     
    
 	private Stage primaryStage = null;
-	private Controller locationController =null;
-	private Controller itemController= null;
-	private Controller communicationController= null;
-	private Controller userController= null;
+	private LocationController locationController =null;
+	private ItemController itemController= null;
+	private CommunicationController communicationController= null;
+	private UserController userController= null;
+	
+	
+	private Observer locationObserver = null;
+	private Observer itemObserver= null;
+	private Observer communicationObserver= null;
 	
 	private MoveCommand moveCommand = null;
 	    
@@ -99,9 +105,11 @@ public class GameMediator {
 
 	private void notifyObservers() {
 		// TODO Auto-generated method stub
-		for(Controller controller: controllers) {
-			controller.update();
-		}
+		//for(Observer observer: observers) {
+		//	observer.update();
+		//}
+		System.out.println(this.locationObserver);
+		locationObserver.update();
 	}
 
 	public IndexView getIndexView() {
@@ -186,36 +194,77 @@ public class GameMediator {
 		this.tansactionView = tansaction;
 	}
 
-	public Controller getLocationController() {
+
+	public NPCView getNpsView() {
+		return npsView;
+	}
+
+	public void setNpsView(NPCView npsView) {
+		this.npsView = npsView;
+	}
+
+	public TransactionView getTansactionView() {
+		return tansactionView;
+	}
+
+	public void setTansactionView(TransactionView tansactionView) {
+		this.tansactionView = tansactionView;
+	}
+
+	public LocationController getLocationController() {
 		return locationController;
 	}
 
-	public void setLocationController(Controller locationController) {
+	public void setLocationController(LocationController locationController) {
 		this.locationController = locationController;
 	}
 
-	public Controller getItemControler() {
+	public ItemController getItemController() {
 		return itemController;
 	}
 
-	public void setItemControler(Controller itemControler) {
-		this.itemController = itemControler;
+	public void setItemController(ItemController itemController) {
+		this.itemController = itemController;
 	}
 
-	public Controller getCommunicationController() {
+	public CommunicationController getCommunicationController() {
 		return communicationController;
 	}
 
-	public void setCommunicationController(Controller communicationController) {
+	public void setCommunicationController(CommunicationController communicationController) {
 		this.communicationController = communicationController;
 	}
 
-	public Controller getUserController() {
+	public UserController getUserController() {
 		return userController;
 	}
 
-	public void setUserController(Controller userController) {
+	public void setUserController(UserController userController) {
 		this.userController = userController;
+	}
+
+	public Observer getLocationObserver() {
+		return locationObserver;
+	}
+
+	public void setLocationObserver(Observer locationObserver) {
+		this.locationObserver = locationObserver;
+	}
+
+	public Observer getItemObserver() {
+		return itemObserver;
+	}
+
+	public void setItemObserver(Observer itemObserver) {
+		this.itemObserver = itemObserver;
+	}
+
+	public Observer getCommunicationObserverr() {
+		return communicationObserver;
+	}
+
+	public void setCommunicationObserverr(Observer communicationObserverr) {
+		this.communicationObserver = communicationObserverr;
 	}
 
 	public MoveCommand getMoveCommand() {
@@ -324,9 +373,14 @@ public class GameMediator {
 		this.communicationController = new CommunicationController(this);
 		this.userController = new UserController(this);
 		
-		controllers.add(this.locationController);
-		controllers.add(this.itemController);
-		controllers.add(this.communicationController);
+		this.locationObserver = new LocationObserver(this);
+		this.itemObserver = new ItemObserver(this);
+		this.communicationObserver = new CommunicationObserver(this);
+		
+		observers.add(this.locationObserver);
+		observers.add(this.itemObserver);
+		observers.add(this.communicationObserver);
+		
 		
 		this.moveCommand = new MoveCommand(locationController);
 		this.startGameCommand = new StartGameCommand(userController);
