@@ -12,7 +12,8 @@ public class MoveCommand implements Command {
     }
 
     public void excute(String direction){
-        locationController.moveTo(direction.toLowerCase());
+        // TODO pass userName to MoveTO()
+        locationController.moveTo("", direction.toLowerCase());
     }
 
 }
