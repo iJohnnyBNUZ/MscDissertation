@@ -17,7 +17,7 @@ public class ClientThread extends Thread implements Runnable {
 	private ObjectInputStream objectInput;
 	private ObjectOutputStream objectOutput;
 	private boolean canRun = true;
-	private String userName;
+	private String userName = null;
 	private ServerMediator serverMediator;
 	private LocationController locationController;
 
@@ -80,7 +80,6 @@ public class ClientThread extends Thread implements Runnable {
 	private void handleEntity(User user) {
 		System.out.println(user.getEntityID());
 		serverMediator.getWorld().addEntity(user);
-		this.userName = userName;
 		userName = user.getEntityID();
 		initEntityLocation(userName);
 	}

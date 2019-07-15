@@ -22,12 +22,14 @@ public class UserController implements Controller {
 					clientMediator.getIndexView().showMessage("User is exist, please use another name!");
 				}else {
 					System.out.println("Create new user," + uName);
+					clientMediator.setUserName(uName);
 					clientMediator.getClient().login("new",uName);
 					clientMediator.enterGame();
 				}
 			}else if(type == "continue") {
 				if(result == true) {
 					System.out.println("Start the game:"+ uName +IP);
+					clientMediator.setUserName(uName);
 					clientMediator.getClient().login("continue",uName);
 					clientMediator.enterGame();
 				}else {
