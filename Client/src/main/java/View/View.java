@@ -9,6 +9,7 @@ import java.util.Map;
 import Controller.Command.Command;
 import Controller.Command.MoveCommand;
 import Controller.Command.PostCommand;
+import Controller.Command.SaveGameCommand;
 import Controller.CommunicationController;
 import Controller.LocationController;
 import Model.Item.Food;
@@ -34,72 +35,27 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 public class View {
-	
-	@FXML
-    private AnchorPane page;
-	
-	@FXML
-    private Canvas mapView;
-	
-	@FXML
-    private AnchorPane forImage;
-	
-    @FXML
-    private ImageView userImage;
-
-    @FXML
-    private ProgressBar energy;
-
-    @FXML
-    private ImageView coinIcon;
-    
-    @FXML
-    private Label coin;
-    
-    @FXML
-    private TitledPane bagView;
-
-    @FXML
-    private GridPane inBag;
-
-    @FXML
-    private Button eat;
-
-    @FXML
-    private Button putDown;
-
-    @FXML
-    private Button close;
 
 	@FXML
-	private Label numOfCoins;
+	private AnchorPane page;
 
 	@FXML
-	private TabPane transactionView;
+	private Canvas mapView;
 
 	@FXML
-	private Tab user_shop;
+	private AnchorPane forImage;
 
 	@FXML
-	private GridPane userOrShop;
+	private ImageView userImage;
 
 	@FXML
-	private Button buy;
+	private ProgressBar energy;
 
 	@FXML
-	private Button closeUserShop;
+	private ImageView coinIcon;
 
 	@FXML
-	private GridPane myBag;
-
-	@FXML
-	private Button sell;
-
-	@FXML
-	private Button closeMyBag;
-
-	@FXML
-	private Label numOfMyBagCoins;
+	private Label coin;
 
 	@FXML
 	private AnchorPane chatView;
@@ -143,6 +99,45 @@ public class View {
 	@FXML
 	private Button closeKey;
 
+	@FXML
+	private Label numOfCoins;
+
+	@FXML
+	private Button closeCoins;
+
+	@FXML
+	private TabPane newTransaction;
+
+	@FXML
+	private Tab user_shop;
+
+	@FXML
+	private VBox usershopVbox;
+
+	@FXML
+	private Label totalValue;
+
+	@FXML
+	private Button closeUserShop;
+
+	@FXML
+	private Button buy;
+
+	@FXML
+	private VBox myBagVbox;
+
+	@FXML
+	private Label numOfMyCoins;
+
+	@FXML
+	private Label totalSellValue;
+
+	@FXML
+	private Button sell;
+
+	@FXML
+	private Button closeMyBag;
+
 
 	
     
@@ -155,6 +150,7 @@ public class View {
 	private double image_w = 64.0;
 	
 	private MoveCommand moveCommand = null;
+	private SaveGameCommand saveGameCommand = null;
 	
 	
     // This method is automatically invoked by the FXMLLoader - it's magic
@@ -162,79 +158,21 @@ public class View {
     public void initialize() {
     	System.out.println("initializeeeeeeeeeeeeeeeeeeee!!!!!!");
 		setCoinImage();
+		setUserImage();
     }
-    
-    
-    public AnchorPane getPage() {
-		return page;
-	}
-    
-	public Canvas getMapView() {
-		return mapView;
-	}
+	public AnchorPane getPage() { return page; }
 
-	
+	public Canvas getMapView() { return mapView; }
 
-	public AnchorPane getForImage() {
-		return forImage;
-	}
+	public AnchorPane getForImage() { return forImage; }
 
+	public ImageView getUserImage() { return userImage; }
 
-	public ImageView getUserImage() {
-		return userImage;
-	}
+	public ProgressBar getEnergy() { return energy; }
 
-	public ProgressBar getEnergy() {
-		return energy;
-	}
+	public ImageView getCoinIcon() { return coinIcon; }
 
-	public ImageView getCoinIcon() {
-		return coinIcon;
-	}
-
-	public Label getCoin() {
-		return coin;
-	}
-
-	public TitledPane getBagView() {
-		return bagView;
-	}
-
-	public GridPane getInBag() {
-		return inBag;
-	}
-
-	public Button getEat() {
-		return eat;
-	}
-
-	public Button getPutDown() {
-		return putDown;
-	}
-
-	public Button getClose() {
-		return close;
-	}
-
-	public Label getNumOfCoins() { return numOfCoins; }
-
-	public TabPane getTransactionView() { return transactionView; }
-
-	public Tab getUser_shop() { return user_shop; }
-
-	public GridPane getUserOrShop() { return userOrShop; }
-
-	public Button getBuy() { return buy; }
-
-	public Button getCloseUserShop() { return closeUserShop; }
-
-	public GridPane getMyBag() { return myBag; }
-
-	public Button getCloseMyBag() { return closeMyBag; }
-
-	public Button getSell() { return sell; }
-
-	public Label getNumOfMyBagCoins() { return numOfMyBagCoins; }
+	public Label getCoin() { return coin; }
 
 	public AnchorPane getChatView() { return chatView; }
 
@@ -256,21 +194,39 @@ public class View {
 
 	public Button getEatFood() { return eatFood; }
 
-	public Button getPutDownFood() {
-		return putDownFood;
-	}
+	public Button getPutDownFood() { return putDownFood; }
 
-	public Button getCloseFood() {
-		return closeFood;
-	}
+	public Button getCloseFood() { return closeFood; }
 
-	public Button getPutDownKey() {
-		return putDownKey;
-	}
+	public Button getPutDownKey() { return putDownKey; }
 
-	public Button getCloseKey() {
-		return closeKey;
-	}
+	public Button getCloseKey() { return closeKey; }
+
+	public Label getNumOfCoins() { return numOfCoins; }
+
+	public Button getCloseCoins() { return closeCoins; }
+
+	public TabPane getNewTransaction() { return newTransaction; }
+
+	public Tab getUser_shop() { return user_shop; }
+
+	public VBox getUsershopVbox() { return usershopVbox; }
+
+	public Label getTotalValue() { return totalValue; }
+
+	public Button getBuy() { return buy;}
+
+	public Button getCloseUserShop() { return closeUserShop; }
+
+	public VBox getMyBagVbox() { return myBagVbox; }
+
+	public Label getNumOfMyCoins() { return numOfMyCoins; }
+
+	public Label getTotalSellValue() { return totalSellValue; }
+
+	public Button getSell() { return sell; }
+
+	public Button getCloseMyBag() { return closeMyBag; }
 
 
 	
@@ -285,16 +241,16 @@ public class View {
 
 
 	public void showBag() {
-    	bagView.setVisible(true);
+    	tabBagView.setVisible(true);
     }
 
-	public void showTransaction() { transactionView.setVisible(true);}
+	public void showTransaction() { newTransaction.setVisible(true);}
 
 	public void showChat() { chatView.setVisible(true);}
     
 	
     public void saveGame() {
-    	System.out.println("saveeeeeeeeeeeeeeeeeeeeeeeeeee!");
+    	saveGameCommand.excute();
     }
 
 
@@ -313,6 +269,12 @@ public class View {
 		URL url = this.getClass().getResource("/images/coin.png");
 		Image image = new Image(url.toString(), coinIcon.getFitWidth(), coinIcon.getFitHeight() , false, false);
 		coinIcon.setImage(image);
+	}
+	
+	public void setUserImage() {
+		URL url = this.getClass().getResource("/images/player.png");
+		Image image = new Image(url.toString(), userImage.getFitWidth(), userImage.getFitHeight() , false, false);
+		userImage.setImage(image);
 	}
 	
 	public void draw(String fileName, Coordinate position) {

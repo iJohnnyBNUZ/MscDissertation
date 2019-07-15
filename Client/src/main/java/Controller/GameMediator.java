@@ -13,6 +13,7 @@ import Controller.Command.MoveCommand;
 import Controller.Command.PickUpCommand;
 import Controller.Command.PostCommand;
 import Controller.Command.PutDownCommand;
+import Controller.Command.SaveGameCommand;
 import Controller.Command.SellCommand;
 import Controller.Command.StartGameCommand;
 
@@ -85,6 +86,8 @@ public class GameMediator {
 	    
 	private StartGameCommand startGameCommand = null;
 	
+	private SaveGameCommand saveGameCommand = null;
+	
 	
 	
 	public GameMediator() {
@@ -109,7 +112,11 @@ public class GameMediator {
 	}
 
 	public void setWorld(World newWorld) {
-		this.world = newWorld;
+		if(!this.world.equals(newWorld)) {
+			this.world = newWorld;
+			world.notifyAll();
+		}
+		
 	}
 
 	public IndexView getIndexView() {
@@ -298,6 +305,16 @@ public class GameMediator {
 		this.startGameCommand = startGameCommand;
 	}
 
+	
+	
+	public SaveGameCommand getSaveGameCommand() {
+		return saveGameCommand;
+	}
+
+	public void setSaveGameCommand(SaveGameCommand saveGameCommand) {
+		this.saveGameCommand = saveGameCommand;
+	}
+
 	/**
 	 * Create the instances of controllers and commands.
 	 * The controller is the parameter of the Command's constructor.
@@ -316,11 +333,13 @@ public class GameMediator {
 		this.moveCommand = new MoveCommand(locationController);
 		this.startGameCommand = new StartGameCommand(userController);
 		this.putDownCommand = new PutDownCommand(itemController);
+		this.eatCommand = new EatCommand(itemController);
 		this.pickUpCommand = new PickUpCommand(itemController);
 		this.communicationCommand = new CommunicationCommand(communicationController);
 		this.buyCommand = new BuyCommand(itemController);
 		this.sellCommand = new SellCommand(itemController);
 		this.postCommand = new PostCommand(communicationController);
+		this.saveGameCommand = new SaveGameCommand();
 	}
 	
 	/**
@@ -381,52 +400,13 @@ public class GameMediator {
         setTestData();
 	}
 	
-	public void isWorldChanged(World world) {
-		if(!this.world.equals(world)) {
-			notifyObservers();
-		}
-	}
 	
-	public void notifyObservers() {
-		for(Controller controller: controllers) {
-			controller.update();
-		}
-	}
-	
+
 	
 	public void setTestData() {
 		Location l1 = new Location("location1");
 		this.getWorld().addLocation(l1);
-
-		Tile t1 = new Grass(true,"Grass01",1);
-		Tile t2 = new Water(true,"Water01",1);
-		Tile t3 = new Grass(true,"Grass02",1);
-		Tile t4 = new Stone(true,"Stone01",1);
-		Tile t5 = new Grass(true,"Grass03",1);
-		Tile t6 = new Water(true,"water02",1);
-		Tile t7 = new Door(true,"Door01",1);
-		Tile t8 = new Grass(true,"Grass04",1);
-		Tile t9 = new Grass(true,"Grass05",1);
-
-		Coordinate c1 = new Coordinate(0,0);
-		Coordinate c2 = new Coordinate(0,1);
-		Coordinate c3 = new Coordinate(0,2);
-		Coordinate c4 = new Coordinate(1,0);
-		Coordinate c5 = new Coordinate(1,1);
-		Coordinate c6 = new Coordinate(1,2);
-		Coordinate c7 = new Coordinate(2,0);
-		Coordinate c8 = new Coordinate(2,1);
-		Coordinate c9 = new Coordinate(2,2);
-
-		l1.addTile(c1,t1);
-		l1.addTile(c2,t2);
-		l1.addTile(c3,t3);
-		l1.addTile(c4,t4);
-		l1.addTile(c5,t5);
-		l1.addTile(c6,t6);
-		l1.addTile(c7,t7);
-		l1.addTile(c8,t8);
-		l1.addTile(c9,t9);
+		
 		
 		Map<String,Coordinate> tmp = new HashMap<String,Coordinate>();
 		int num=0;

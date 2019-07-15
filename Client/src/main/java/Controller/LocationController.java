@@ -86,7 +86,7 @@ public class LocationController implements Controller{
 	public void update() {
 		// TODO Auto-generated method stub
 		String uId = gameMediator.getClient().getUserName();
-		Location curLocation = gameMediator.getWorld().getEntity(uId).getCurrentLocation();
+		Location curLocation = gameMediator.getWorld().getEntityLocation(uId);
 		Map<String,Coordinate> tiles = new HashMap<String,Coordinate>();
 		
 		for(Coordinate cor: curLocation.getTiles().keySet()) {
