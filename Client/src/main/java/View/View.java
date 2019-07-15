@@ -250,7 +250,7 @@ public class View {
     
 	
     public void saveGame() {
-    	saveGameCommand.excute();
+    	saveGameCommand.execute();
     }
 
 
