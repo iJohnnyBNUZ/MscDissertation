@@ -1,7 +1,7 @@
 package Controller.Network;
 
-import Controller.GameMediator;
 import Controller.LocationController;
+import Controller.ServerMediator;
 import Model.Entity.Entity;
 import Model.Entity.User;
 import Model.Location.Coordinate;
@@ -18,14 +18,14 @@ public class ClientThread extends Thread implements Runnable {
 	private ObjectOutputStream objectOutput;
 	private boolean canRun = true;
 	private String userName;
-	private GameMediator gameMediator;
+	private ServerMediator serverMediator;
 	private LocationController locationController;
 
-	ClientThread(Socket socket, Server server, GameMediator gameMediator) throws Exception{
+	ClientThread(Socket socket, Server server, ServerMediator serverMediator) throws Exception{
 		this.server = server;
 		objectInput = new ObjectInputStream(socket.getInputStream());
 		objectOutput = new ObjectOutputStream(socket.getOutputStream());
-		this.gameMediator = gameMediator;
+		this.serverMediator = serverMediator;
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class ClientThread extends Thread implements Runnable {
 
 	private void handleEntity(User user) {
 		System.out.println(user.getEntityID());
-		gameMediator.getWorld().addEntity(user);
+		serverMediator.getWorld().addEntity(user);
 		this.userName = userName;
 		userName = user.getEntityID();
 		initEntityLocation(userName);
@@ -87,17 +87,17 @@ public class ClientThread extends Thread implements Runnable {
 
 	private void initEntityLocation(String userName){
 		//inital the user in first location in the world
-		gameMediator.getWorld().setEntityLocation(userName, "location0");
+		serverMediator.getWorld().setEntityLocation(userName, "location0");
 		//init the coordinate for user with random
 		int max =2,min =0;
 		int positionX = min + (int)(Math.random() * (max-min+1));
 		int positionY = min + (int)(Math.random() * (max-min+1));
 		Coordinate userCoordinate = new Coordinate(positionX, positionY);
-		gameMediator.getWorld().getLocations().get(0).addEntity(userName, userCoordinate);
+		serverMediator.getWorld().getLocations().get(0).addEntity(userName, userCoordinate);
 
-		for(Coordinate coordinate:gameMediator.getWorld().getLocations().get(0).getTiles().keySet()){
+		for(Coordinate coordinate: serverMediator.getWorld().getLocations().get(0).getTiles().keySet()){
 			if(coordinate.getxPostion() == positionX && coordinate.getyPosition() == positionY){
-				gameMediator.getWorld().getLocations().get(0).addEntity(userName,coordinate);
+				serverMediator.getWorld().getLocations().get(0).addEntity(userName,coordinate);
 				System.out.println("gives user:"+userName+" an initial coordinate!");
 				break;
 			}
@@ -106,22 +106,22 @@ public class ClientThread extends Thread implements Runnable {
 
 	private void handleString(String d) {
 /*		System.out.println("Username ->" + userName+"now is in coordinate-> ["+
-				gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getxPostion()
-				+","+gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getyPosition()+"]");*/
+				serverMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getxPostion()
+				+","+serverMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getyPosition()+"]");*/
 		if(d.equals("left") || d.equals("right") || d.equals("up") ||d.equals("down")){
-			locationController = new LocationController(gameMediator);
+			locationController = new LocationController(serverMediator);
 			locationController.moveTo(userName,d);
 			try {
-				objectOutput.writeObject(gameMediator.getWorld());
+				objectOutput.writeObject(serverMediator.getWorld());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			System.out.println("Change "+userName+"'s coordinate to"+"["+
-					gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getxPostion()
-					+","+gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getyPosition()+"]");
+					serverMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getxPostion()
+					+","+ serverMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getyPosition()+"]");
 		}else if(d.equals("getWorld")){
 			try {
-				objectOutput.writeObject(gameMediator.getWorld());
+				objectOutput.writeObject(serverMediator.getWorld());
 				System.out.println("user get the world object when they login");
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -134,7 +134,7 @@ public class ClientThread extends Thread implements Runnable {
 	}
 
 	public void logout() {
-		Entity entity =  gameMediator.getWorld().getEntity(userName);
+		Entity entity =  serverMediator.getWorld().getEntity(userName);
 
 		if (entity instanceof User){
 			((User) entity).logout();  // set isOnline is false

@@ -1,13 +1,13 @@
 package Controller.Observer;
 
-import Controller.GameMediator;
+import Controller.ClientMediator;
 
 public class UserObserver implements Observer {
 
-	private GameMediator gameMediator;
+	private ClientMediator clientMediator;
 
-	public UserObserver(GameMediator gameMediator) {
-		this.gameMediator = gameMediator;
+	public UserObserver(ClientMediator clientMediator) {
+		this.clientMediator = clientMediator;
 	}
 
 	@Override

@@ -1,33 +1,19 @@
 package View;
 
 import java.net.URL;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
 import Controller.Command.Command;
 import Controller.Command.MoveCommand;
-import Controller.Command.PostCommand;
 import Controller.Command.SaveGameCommand;
-import Controller.CommunicationController;
-import Controller.LocationController;
-import Model.Item.Food;
-import Model.Item.Item;
-import Model.Item.Key;
-import Model.World;
 import Model.Location.Coordinate;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;

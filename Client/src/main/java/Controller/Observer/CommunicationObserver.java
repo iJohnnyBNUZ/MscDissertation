@@ -1,17 +1,17 @@
 package Controller.Observer;
 
-import Controller.GameMediator;
+import Controller.ClientMediator;
 
 public class CommunicationObserver implements Observer {
 
-	private GameMediator gameMediator;
+	private ClientMediator clientMediator;
 
-	public CommunicationObserver(GameMediator gameMediator) {
-		this.gameMediator = gameMediator;
+	public CommunicationObserver(ClientMediator clientMediator) {
+		this.clientMediator = clientMediator;
 	}
 
 	@Override
 	public void update() {
-		gameMediator.getChatView().updateChat(null);
+		clientMediator.getChatView().updateChat(null);
 	}
 }

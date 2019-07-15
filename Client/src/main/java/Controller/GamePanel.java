@@ -26,11 +26,11 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 	private boolean canRun = true;
 	private String userName;
 	private Socket s;
-	private GameMediator gameMediator;
+	private ClientMediator clientMediator;
 
-	public GamePanel(String userName, GameMediator gameMediator) throws IOException, ClassNotFoundException {
+	public GamePanel(String userName, ClientMediator clientMediator) throws IOException, ClassNotFoundException {
 
-		this.gameMediator = gameMediator;
+		this.clientMediator = clientMediator;
 
 		this.userName = userName;
 
@@ -72,11 +72,11 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 			OutputStream os = s.getOutputStream();
 			this.objectOutputStream = new ObjectOutputStream(os);
 			this.objectInputStream = new ObjectInputStream((s.getInputStream()));
-			if(gameMediator.getWorld().getEntity(userName) instanceof User){
+			if(clientMediator.getWorld().getEntity(userName) instanceof User){
 				System.out.println("User "+userName+ " exist, maybe change a name!");
-				if (!((User) gameMediator.getWorld().getEntity(userName)).getOnline()){
-					((User) gameMediator.getWorld().getEntity(userName)).setOnline(true);
-					objectOutputStream.writeObject(gameMediator.getWorld());
+				if (!((User) clientMediator.getWorld().getEntity(userName)).getOnline()){
+					((User) clientMediator.getWorld().getEntity(userName)).setOnline(true);
+					objectOutputStream.writeObject(clientMediator.getWorld());
 				}else
 					System.out.println("User "+userName+" is already online!");
 			}else{
@@ -102,7 +102,7 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 		objectOutputStream.writeObject("getWorld");
 		Object newWorld = this.objectInputStream.readObject();
 		if (newWorld instanceof World)
-			gameMediator.setWorld((World) newWorld);
+			clientMediator.setWorld((World) newWorld);
 		else {
 			System.out.println(newWorld);
 			System.out.println("Something went wrong");
@@ -116,16 +116,16 @@ public class GamePanel extends JPanel implements KeyListener,Runnable {
 				System.out.println("Awaiting message");
 			    Object input = objectInputStream.readObject();
 			    if(input instanceof World) {
-			        gameMediator.setWorld((World) input);
+			        clientMediator.setWorld((World) input);
 				    for (Entity entity : ((World) input).getEntities()) {
 					    System.out.println(entity);
 				    }
 				    String printString = "";
-				    for(Entity entity:gameMediator.getWorld().getEntities()){
+				    for(Entity entity: clientMediator.getWorld().getEntities()){
 				    	String name = entity.getEntityID();
 				    	String userinformation = name+"'s coordinate to"+"["+
-								gameMediator.getWorld().getEntityLocation(name).getEntities().get(name).getxPostion()
-								+","+gameMediator.getWorld().getEntityLocation(name).getEntities().get(name).getyPosition()+"]";
+								clientMediator.getWorld().getEntityLocation(name).getEntities().get(name).getxPostion()
+								+","+ clientMediator.getWorld().getEntityLocation(name).getEntities().get(name).getyPosition()+"]";
 				    	printString += userinformation;
 					}
 					//lbMove.setText(printString);

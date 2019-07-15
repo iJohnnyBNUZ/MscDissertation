@@ -5,10 +5,10 @@ import Controller.Network.Server;
 import Controller.Save.SaveWorld;
 import Model.World;
 
-public class GameMediator {
+public class ServerMediator implements GameMediator{
 	private World world;
 
-	public GameMediator() {
+	public ServerMediator() {
 		this.world = new World();
 	}
 

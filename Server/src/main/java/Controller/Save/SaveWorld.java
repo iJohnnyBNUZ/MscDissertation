@@ -1,11 +1,11 @@
 package Controller.Save;
 
-import Controller.GameMediator;
+import Controller.ServerMediator;
 
 public class SaveWorld {
-    private GameMediator gameMediator;
+    private ServerMediator serverMediator;
 
-    public SaveWorld(GameMediator gameMediator, String saveDirectoryPath) {
-        this.gameMediator = gameMediator;
+    public SaveWorld(ServerMediator serverMediator, String saveDirectoryPath) {
+        this.serverMediator = serverMediator;
     }
 }

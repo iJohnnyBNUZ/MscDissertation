@@ -6,15 +6,15 @@ import Model.Location.Coordinate;
 import Model.Location.Location;
 
 public class LocationController {
-    private GameMediator gameMediator;
+    private ServerMediator serverMediator;
 
-    public LocationController(GameMediator gameMediator){
-        this.gameMediator = gameMediator;
+    public LocationController(ServerMediator serverMediator){
+        this.serverMediator = serverMediator;
     }
 
     public void moveTo(String userid, String direction){
-        //gameMediator.getWorld().getEntity(userid);
-        Location entityLocation = gameMediator.getWorld().getEntityLocation(userid);
+        //serverMediator.getWorld().getEntity(userid);
+        Location entityLocation = serverMediator.getWorld().getEntityLocation(userid);
 
         Coordinate entityCoordinate = entityLocation.getEntities().get(userid);
 
@@ -42,30 +42,30 @@ public class LocationController {
 
     public void changeUserCoordinate(int positionx,int positiony,String userid){
 
-        for(Coordinate c:gameMediator.getWorld().getEntityLocation(userid).getTiles().keySet()){
+        for(Coordinate c: serverMediator.getWorld().getEntityLocation(userid).getTiles().keySet()){
             if(c.getxPostion() == positionx && c.getyPosition() == positiony){
-                gameMediator.getWorld().getEntityLocation(userid).changeUserCoordinate(userid, c);
+                serverMediator.getWorld().getEntityLocation(userid).changeUserCoordinate(userid, c);
                 return;
             }
         }
     }
 
     public void openDoor(String userid){
-        for(Item item:gameMediator.getWorld().getEntity(userid).getBag()){
+        for(Item item: serverMediator.getWorld().getEntity(userid).getBag()){
             if(item instanceof Key){
                 //get currentLocation index
-                int indexOfCurrentLocation = gameMediator.getWorld().getLocations().indexOf(gameMediator.getWorld().getEntityLocation(userid));
+                int indexOfCurrentLocation = serverMediator.getWorld().getLocations().indexOf(serverMediator.getWorld().getEntityLocation(userid));
                 //new location will be index+1 in the Location list
                 //initial the user in Coordinate(0,0) in the next Location
                 int positionX=0,positionY=0;
 
-                for(Coordinate c:gameMediator.getWorld().getLocations().get(indexOfCurrentLocation+1).getTiles().keySet()){
+                for(Coordinate c: serverMediator.getWorld().getLocations().get(indexOfCurrentLocation+1).getTiles().keySet()){
                     if(c.getxPostion() == positionX && c.getyPosition() == positionY){
-                        gameMediator.getWorld().getLocations().get(indexOfCurrentLocation+1).addEntity(userid,c);
-                        gameMediator.getWorld().getLocations().get(indexOfCurrentLocation).removeEntity(userid);
+                        serverMediator.getWorld().getLocations().get(indexOfCurrentLocation+1).addEntity(userid,c);
+                        serverMediator.getWorld().getLocations().get(indexOfCurrentLocation).removeEntity(userid);
                         System.out.println("USer->"+ userid+"open the door and moves to the new Location");
                         //remove the used key from User's bag
-                        gameMediator.getWorld().getEntity(userid).getBag().remove(item);
+                        serverMediator.getWorld().getEntity(userid).getBag().remove(item);
                         System.out.println("The key used has removed from bag!");
                         return;
                     }

@@ -6,37 +6,37 @@ import java.io.IOException;
 
 public class UserController implements Controller {
 	private static final String String = null;
-	private GameMediator gameMediator;
+	private ClientMediator clientMediator;
 	
-	public UserController(GameMediator gameMediator){
+	public UserController(ClientMediator clientMediator){
 		
-	    this.gameMediator = gameMediator;
+	    this.clientMediator = clientMediator;
 	}
 	
 	public void startGame(String type, String uName, String IP) throws IOException, ClassNotFoundException {
-		if(gameMediator.getClient().connectToServer(IP)) {
+		if(clientMediator.getClient().connectToServer(IP)) {
 			Boolean result = isUserExist(uName);
 			if(type=="new") {
 				if(result == true) {
 					System.out.println("User is exist, please use another name!");
-					gameMediator.getIndexView().showMessage("User is exist, please use another name!");
+					clientMediator.getIndexView().showMessage("User is exist, please use another name!");
 				}else {
 					System.out.println("Create new user," + uName);
-					gameMediator.getClient().login("new",uName);
-					gameMediator.enterGame();
+					clientMediator.getClient().login("new",uName);
+					clientMediator.enterGame();
 				}
 			}else if(type == "continue") {
 				if(result == true) {
 					System.out.println("Start the game:"+ uName +IP);
-					gameMediator.getClient().login("continue",uName);
-					gameMediator.enterGame();
+					clientMediator.getClient().login("continue",uName);
+					clientMediator.enterGame();
 				}else {
 					System.out.println("User is not exist, please try again!");
-					gameMediator.getIndexView().showMessage("User is not exist, please try again!");
+					clientMediator.getIndexView().showMessage("User is not exist, please try again!");
 				}
 			}
 		}else {
-			gameMediator.getIndexView().showMessage("Cannot Connect to the server");
+			clientMediator.getIndexView().showMessage("Cannot Connect to the server");
 		}
 		
 		
@@ -45,7 +45,7 @@ public class UserController implements Controller {
 
 	public Boolean isUserExist(String uName) {
 		Boolean result = false;
-		if (gameMediator.getWorld().getEntity(uName) instanceof User){
+		if (clientMediator.getWorld().getEntity(uName) instanceof User){
 			result = true;
 		}else {
 			System.out.println("User "+uName+" is already online!");

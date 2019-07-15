@@ -1,16 +1,16 @@
 package Controller.Load;
 
-import Controller.GameMediator;
+import Controller.ServerMediator;
 
 import java.io.File;
 
 public class LoadWorld {
-	private GameMediator gameMediator;
+	private ServerMediator serverMediator;
 	private LoadLocation loadLocation  = new LoadLocation();
 	private LoadEntity loadEntity = new LoadEntity();
 
-	public LoadWorld(GameMediator gameMediator, String filePath) {
-		this.gameMediator = gameMediator;
+	public LoadWorld(ServerMediator serverMediator, String filePath) {
+		this.serverMediator = serverMediator;
 		loadLocations(filePath + "/Locations");
 		loadEntities(filePath  + "/Entities");
 	}
@@ -19,7 +19,7 @@ public class LoadWorld {
 		File[] fileList = getFileList(filePath);
 		if(fileList != null) {
 			for (File child : fileList) {
-				gameMediator.getWorld().addLocation(loadLocation.buildLocation(child));
+				serverMediator.getWorld().addLocation(loadLocation.buildLocation(child));
 			}
 		}
 		else {
@@ -31,7 +31,7 @@ public class LoadWorld {
 		File[] fileList = getFileList(filePath);
 		if(fileList != null) {
 			for (File child : fileList) {
-				gameMediator.getWorld().addEntity(loadEntity.buildEntity(child));
+				serverMediator.getWorld().addEntity(loadEntity.buildEntity(child));
 			}
 		}
 		else {

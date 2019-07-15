@@ -6,18 +6,18 @@ import java.util.List;
 
 public class CommunicationController implements Controller {
 
-    private GameMediator gameMediator;
+    private ClientMediator clientMediator;
     private List<String> messageList;
     private ChatView chatView;
 
-    public CommunicationController(GameMediator gameMediator){
-        this.gameMediator = gameMediator;
-        //this.messageList = gameMediator.getView().getMessageListData();
+    public CommunicationController(ClientMediator clientMediator){
+        this.clientMediator = clientMediator;
+        //this.messageList = clientMediator.getView().getMessageListData();
     }
 
     public void addMessages(String message){
         messageList.add(message);
-        chatView = gameMediator.getChatView();
+        chatView = clientMediator.getChatView();
         chatView.updateChat(messageList);
     }
 

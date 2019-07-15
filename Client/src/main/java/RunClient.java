@@ -1,4 +1,4 @@
-import Controller.GameMediator;
+import Controller.ClientMediator;
 import View.IndexView;
 import View.View;
 import javafx.application.Application;
@@ -26,12 +26,12 @@ public class RunClient extends Application {
 		primaryStage.show();
 		System.out.println("Finished Loading index");
 
-		GameMediator gameMediator = new GameMediator();
-		gameMediator.setIndexView(indexView);
-		gameMediator.setPrimaryStage(primaryStage);
-		gameMediator.initialController();
-		gameMediator.bindIndexCommand();
-		gameMediator.testClient(gameMediator);
+		ClientMediator clientMediator = new ClientMediator();
+		clientMediator.setIndexView(indexView);
+		clientMediator.setPrimaryStage(primaryStage);
+		clientMediator.initialController();
+		clientMediator.bindIndexCommand();
+		clientMediator.testClient(clientMediator);
 	}
 
 

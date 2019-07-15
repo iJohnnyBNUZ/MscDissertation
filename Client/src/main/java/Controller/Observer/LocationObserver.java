@@ -1,6 +1,6 @@
 package Controller.Observer;
 
-import Controller.GameMediator;
+import Controller.ClientMediator;
 import Model.Location.Coordinate;
 import Model.Location.Location;
 
@@ -9,24 +9,24 @@ import java.util.Map;
 
 public class LocationObserver implements Observer {
 
-	private GameMediator gameMediator;
+	private ClientMediator clientMediator;
 
-	public LocationObserver(GameMediator gameMediator) {
-		this.gameMediator = gameMediator;
+	public LocationObserver(ClientMediator clientMediator) {
+		this.clientMediator = clientMediator;
 	}
 
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		String uId = gameMediator.getClient().getUserName();
-		Location curLocation = gameMediator.getWorld().getEntityLocation(uId);
+		String uId = clientMediator.getClient().getUserName();
+		Location curLocation = clientMediator.getWorld().getEntityLocation(uId);
 		Map<String, Coordinate> tiles = new HashMap<String,Coordinate>();
 
 		for(Coordinate cor: curLocation.getTiles().keySet()) {
 			tiles.put(curLocation.getTiles().get(cor).getTerrain(), cor);
 		}
 
-		gameMediator.getLocationView().update(tiles);
+		clientMediator.getLocationView().update(tiles);
 	}
 
 }

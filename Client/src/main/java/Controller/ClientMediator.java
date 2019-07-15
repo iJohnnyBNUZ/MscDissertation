@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GameMediator {
+public class ClientMediator implements GameMediator {
 	private World world;
 	private Client client = null;
 	private ArrayList<Observer> observers  = new ArrayList<Observer>();
@@ -75,12 +75,12 @@ public class GameMediator {
 
 
 	
-	public GameMediator() {
+	public ClientMediator() {
 		this.world = new World();
 	}
 
-	public void testClient(GameMediator gameMediator) throws Exception{
-		client = new Client(gameMediator);
+	public void testClient(ClientMediator clientMediator) throws Exception{
+		client = new Client(clientMediator);
 	}
 
 	public Client getClient() {

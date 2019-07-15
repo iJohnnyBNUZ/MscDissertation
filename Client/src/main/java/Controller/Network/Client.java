@@ -1,6 +1,6 @@
 package Controller.Network;
 
-import Controller.GameMediator;
+import Controller.ClientMediator;
 import Model.Entity.Entity;
 import Model.Entity.User;
 import Model.World;
@@ -23,13 +23,13 @@ public class Client implements Runnable {
 	private boolean canRun = true;
 	private String userName;
 	private Socket s;
-	private GameMediator gameMediator;
+	private ClientMediator clientMediator;
 	
 	private String IP = "";
 	private int PORT = 0;
 	
-	public Client(GameMediator gameMediator){
-		this.gameMediator= gameMediator;
+	public Client(ClientMediator clientMediator){
+		this.clientMediator = clientMediator;
 	}
 	
 
@@ -81,12 +81,12 @@ public class Client implements Runnable {
 		this.s = s;
 	}
 
-	public GameMediator getGameMediator() {
-		return gameMediator;
+	public ClientMediator getClientMediator() {
+		return clientMediator;
 	}
 
-	public void setGameMediator(GameMediator gameMediator) {
-		this.gameMediator = gameMediator;
+	public void setClientMediator(ClientMediator clientMediator) {
+		this.clientMediator = clientMediator;
 	}
 
 	
@@ -127,9 +127,9 @@ public class Client implements Runnable {
 		if(type.equals("new")) {
 			createUser(uName);
 		}else if(type.equals("continue")) {
-			if (!((User) gameMediator.getWorld().getEntity(uName)).getOnline()){
-				((User) gameMediator.getWorld().getEntity(uName)).setOnline(true);
-				objectOutputStream.writeObject(gameMediator.getWorld());
+			if (!((User) clientMediator.getWorld().getEntity(uName)).getOnline()){
+				((User) clientMediator.getWorld().getEntity(uName)).setOnline(true);
+				objectOutputStream.writeObject(clientMediator.getWorld());
 			}
 		}
 		
@@ -150,22 +150,22 @@ public class Client implements Runnable {
 			    Object input = objectInputStream.readObject();
 				System.out.println(input);
 			    if(input instanceof World) {
-			        gameMediator.setWorld((World) input);
+			        clientMediator.setWorld((World) input);
 				    for (Entity entity : ((World) input).getEntities()) {
 					    System.out.println(entity);
 				    }
 				    String printString = "";
-				    for(Entity entity:gameMediator.getWorld().getEntities()){
+				    for(Entity entity: clientMediator.getWorld().getEntities()){
 				    	String name = entity.getEntityID();
 				    	String userinformation = name+"'s coordinate to"+"["+
-								gameMediator.getWorld().getEntityLocation(name).getEntities().get(name).getxPostion()
-								+","+gameMediator.getWorld().getEntityLocation(name).getEntities().get(name).getyPosition()+"]";
+								clientMediator.getWorld().getEntityLocation(name).getEntities().get(name).getxPostion()
+								+","+ clientMediator.getWorld().getEntityLocation(name).getEntities().get(name).getyPosition()+"]";
 				    	printString += userinformation;
 					}
 			    }
 			    else if(input instanceof String) {
 			        System.out.println((String) input);
-			        gameMediator.getIndexView().showMessage("Cannot connect to the server");
+			        clientMediator.getIndexView().showMessage("Cannot connect to the server");
 			    }
 			    else {
 				    System.out.println("What");

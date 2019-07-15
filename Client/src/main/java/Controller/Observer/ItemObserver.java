@@ -1,19 +1,19 @@
 package Controller.Observer;
 
-import Controller.GameMediator;
+import Controller.ClientMediator;
 
 public class ItemObserver implements Observer {
 
-	private GameMediator gameMediator;
+	private ClientMediator clientMediator;
 
-	public ItemObserver(GameMediator gameMediator) {
-		this.gameMediator = gameMediator;
+	public ItemObserver(ClientMediator clientMediator) {
+		this.clientMediator = clientMediator;
 	}
 
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		gameMediator.getItemView().update(null);
+		clientMediator.getItemView().update(null);
 
 	}
 }
