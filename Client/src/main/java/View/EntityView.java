@@ -1,6 +1,8 @@
 package View;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -106,7 +108,8 @@ public class EntityView{
 					public void handle(MouseEvent m) {
 						// TODO Auto-generated method stub
 						System.out.println("npc ID: "+ imgView.getId());
-						communication.execute(imgView.getId());
+						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+						communication.execute(imgView.getId(),df.format(new Date()).toString());
 					}
 					
 				});
@@ -129,7 +132,8 @@ public class EntityView{
 					public void handle(MouseEvent m) {
 						// TODO Auto-generated method stub
 						System.out.println("user ID: " + imgView.getId());
-						communication.execute(imgView.getId());
+						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+						communication.execute(imgView.getId(),df.format(new Date()).toString());
 					}
 					
 				});
@@ -152,7 +156,8 @@ public class EntityView{
 					public void handle(MouseEvent m) {
 						// TODO Auto-generated method stub
 						System.out.println("storeId"+imgView.getId());
-						communication.execute(imgView.getId());
+						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+						communication.execute(imgView.getId(),df.format(new Date()).toString());
 					}
 					
 				});

@@ -4,6 +4,8 @@ import Controller.CommunicationController;
 import Controller.Controller;
 import View.ChatView;
 
+import java.text.SimpleDateFormat;
+
 public class PostCommand implements Command {
 
 
@@ -13,9 +15,10 @@ public class PostCommand implements Command {
         this.communicationController = (CommunicationController) communicationController2;
     }
 
-    public void execute(String sentence){
+    public void execute(String sentence, String date){
         //add messages to messageList in World
-        communicationController.addMessages(sentence);
-        System.out.println(sentence+" is posting");
+        String message = sentence + "  " + date;
+        communicationController.addMessages(message);
+        System.out.println(message+" is posting");
     }
 }

@@ -15,8 +15,8 @@ public class BuyCommand implements Command {
     	this.itemController = (ItemController) itemController2;
 	}
 
-	public void execute(List<Item> usershop, HashMap<String,Integer> buyList, int buyValue){
+	public void execute(String usershopName,HashMap<String,Integer> buyList, int buyValue){
 		System.out.println("several items are bought, it costs "+ buyValue +" coins");
-		//transactionController.buyItems(usershop,buyList,buyValue);
+		itemController.buyItems(usershopName,buyList,buyValue);
 	}
 }

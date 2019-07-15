@@ -75,24 +75,48 @@ public class ItemController implements Controller{
 
     }
 
-    public void buyItems(List<Item> usershop,HashMap<String, Integer> buyList, int buyValue){
+    public void buyItems(String usershopName,HashMap<String, Integer> buyList, int buyValue){
 
         //if user has enough money to buy,decrease user's money,current user add item,other user or shop remove item
         if(this.gameMediator.getWorld().getEntity(userID).getCoin()>=buyValue){
             this.gameMediator.getWorld().getEntity(userID).setCoin(this.gameMediator.getWorld().getEntity(userID).getCoin()-buyValue);
-            //current user add items
-            //other user or shop remove item
+            this.gameMediator.getWorld().getEntity(usershopName).setCoin(this.gameMediator.getWorld().getEntity(usershopName).getCoin()+buyValue);
+            List<Item> usershop = this.gameMediator.getWorld().getEntity(usershopName).getBag();
+            for(Item item:usershop){
+                final String itemName = item.getItemID().replaceAll("[0-9]","");
+                if(buyList.containsKey(itemName) && buyList.get(itemName)>=1){
+                    //current user add items
+                    this.gameMediator.getWorld().getEntity(userID).getBag().add(item);
+                    //other user or shop remove item
+                    usershop.remove(item);
+                    buyList.put(itemName,buyList.get(itemName)-1);
+                }
+            }
         }
         else{
             //tell user you don't have enough money
         }
     }
 
-    public void sellItems(String usershopName,List<Item> usershop,HashMap<String,Integer> sellList,int sellValue){
-        //if usershopName is a user,judge if the user has enough money to buy these items
-        //if so,remove items from current user's bag,and add items to other user or shop's itemList
-        //else, the other user can't buy the items
-        //shop always can buy these items
+    public void sellItems(String usershopName,HashMap<String,Integer> sellList,int sellValue){
+        final String nameType = usershopName.replaceAll("[0-9]","");
+        //that user or shop has enough money to buy these items
+        if(this.gameMediator.getWorld().getEntity(usershopName).getCoin()>=sellValue){
+            this.gameMediator.getWorld().getEntity(userID).setCoin(this.gameMediator.getWorld().getEntity(userID).getCoin()+sellValue);
+            this.gameMediator.getWorld().getEntity(usershopName).setCoin(this.gameMediator.getWorld().getEntity(usershopName).getCoin()-sellValue);
+            for(Item item:this.gameMediator.getWorld().getEntity(userID).getBag()){
+                final String itemString = item.getItemID().replaceAll("[0-9]","");
+                if(sellList.containsKey(itemString) && sellList.get(itemString)>=1){
+                    this.gameMediator.getWorld().getEntity(usershopName).getBag().add(item);
+                    this.gameMediator.getWorld().getEntity(userID).getBag().remove(item);
+                    sellList.put(itemString,sellList.get(itemString)-1);
+                }
+            }
+
+        }
+        else{
+            //tell user that user or shop don't have enough money to buy these items
+        }
 
     }
 }

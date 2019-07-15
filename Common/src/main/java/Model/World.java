@@ -6,12 +6,14 @@ import Model.Location.Location;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class World implements Serializable {
 
 	private ArrayList<Location> Locations = new ArrayList<Location>();
 	private ArrayList<Entity> Entities = new ArrayList<Entity>();
+	private List<String> messageList = new LinkedList<String>();
 
 	public World(){
 
@@ -83,6 +85,14 @@ public class World implements Serializable {
 			}
 		}
 		return null;
+	}
+
+	public List<String> getMessageList(){
+		return messageList;
+	}
+
+	public void addMessage(String message){
+		messageList.add(message);
 	}
 
 }

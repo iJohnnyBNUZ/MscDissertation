@@ -156,7 +156,7 @@ public class TransactionView {
 		buy.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
-				buyCommand.execute(user__shop,buyList,buyValue);
+				buyCommand.execute(userShopName,buyList,buyValue);
 			}
 		});
 
@@ -234,7 +234,7 @@ public class TransactionView {
 		sell.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
-				sellCommand.execute(userShopName, user__shop, sellList,sellValue);
+				sellCommand.execute(userShopName, sellList,sellValue);
 			}
 		});
 	}

@@ -11,6 +11,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class ChatView{
@@ -43,7 +45,8 @@ public class ChatView{
 			@Override
 			public void handle(ActionEvent actionEvent) {
 				if(messageWindow.getText() != null){
-					postCommand.execute(messageWindow.getText());
+					SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					postCommand.execute(messageWindow.getText(),df.format(new Date()).toString());
 					messageWindow.setText("");
 				}
 			}

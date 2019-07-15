@@ -7,7 +7,6 @@ import java.util.List;
 public class CommunicationController implements Controller {
 
     private ClientMediator clientMediator;
-    private List<String> messageList;
     private ChatView chatView;
 
     public CommunicationController(ClientMediator clientMediator){
@@ -16,16 +15,16 @@ public class CommunicationController implements Controller {
     }
 
     public void addMessages(String message){
-        messageList.add(message);
+    	this.clientMediator.getWorld().addMessage(message);
         chatView = clientMediator.getChatView();
-        chatView.updateChat(messageList);
+        chatView.updateChat(this.clientMediator.getWorld().getMessageList());
     }
 
-	public void communicateWith(String id) {
+	public void communicateWith(String id,String time) {
 		// TODO Auto-generated method stub
 		String name = id.replaceAll("[0-9]", "");
 		switch(name) {
-		case "npc": System.out.println("Talk with NPC:" + id );withNPC(id);break;
+		case "npc": System.out.println("Talk with NPC:" + id );withNPC(id,time);break;
 		case "store": System.out.println("Talk with STORE:" + id );withStore(id);break;
 		case "user" : System.out.println("Talk with USER:" + id );withUser(id);break;
 		}
@@ -41,7 +40,7 @@ public class CommunicationController implements Controller {
 		
 	}
 
-	private void withNPC(String id) {
+	private void withNPC(String id,String time) {
 		// TODO Auto-generated method stub
 		
 	}
