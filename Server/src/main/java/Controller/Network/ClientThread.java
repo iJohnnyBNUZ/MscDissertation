@@ -107,7 +107,7 @@ public class ClientThread extends Thread implements Runnable {
 /*		System.out.println("Username ->" + userName+"now is in coordinate-> ["+
 				gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getxPostion()
 				+","+gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getyPosition()+"]");*/
-		if(d.equals("a") || d.equals("d") || d.equals("w") ||d.equals("s")){
+		if(d.equals("left") || d.equals("right") || d.equals("up") ||d.equals("down")){
 			locationController = new LocationController(gameMediator);
 			locationController.moveTo(userName,d);
 			try {
