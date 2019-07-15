@@ -1,10 +1,7 @@
 package Controller;
 
-import Model.World;
-import View.View;
 import View.ChatView;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class CommunicationController implements Controller {
@@ -47,12 +44,6 @@ public class CommunicationController implements Controller {
 	private void withNPC(String id) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		gameMediator.getChatView().updateChat(null);
 	}
 }
 

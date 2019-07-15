@@ -66,8 +66,8 @@ public class GameMediator {
 	private StartGameCommand startGameCommand = null;
 	
 	private SaveGameCommand saveGameCommand = null;
-	
-	
+
+
 	
 	public GameMediator() {
 		this.world = new World();
@@ -94,7 +94,7 @@ public class GameMediator {
 			this.world = newWorld;
 			this.notifyObservers();
 		}
-		
+
 	}
 
 	private void notifyObservers() {
@@ -290,8 +290,8 @@ public class GameMediator {
 		this.startGameCommand = startGameCommand;
 	}
 
-	
-	
+
+
 	public SaveGameCommand getSaveGameCommand() {
 		return saveGameCommand;
 	}
@@ -382,7 +382,7 @@ public class GameMediator {
 	 */
 	
 	public void	enterGame() throws IOException {
-		URL location = View.class.getResource("sample.fxml");
+		URL location = View.class.getResource("/view/sample.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(location);
         fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
@@ -397,14 +397,14 @@ public class GameMediator {
         bindViewCommand();
         setTestData();
 	}
-	
+
 	
 
 	
 	public void setTestData() {
 		Location l1 = new Location("location1");
 		this.getWorld().addLocation(l1);
-		
+
 		
 		Map<String,Coordinate> tmp = new HashMap<String,Coordinate>();
 		int num=0;
