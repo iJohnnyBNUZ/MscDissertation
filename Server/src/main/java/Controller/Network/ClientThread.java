@@ -88,11 +88,12 @@ public class ClientThread extends Thread implements Runnable {
 	private void initEntityLocation(String userName){
 		//inital the user in first location in the world
 		gameMediator.getWorld().setEntityLocation(userName, "location0");
-		gameMediator.getWorld().getLocations().get(0).addUser((User)gameMediator.getWorld().getEntity(userName));
 		//init the coordinate for user with random
 		int max =2,min =0;
 		int positionX = min + (int)(Math.random() * (max-min+1));
 		int positionY = min + (int)(Math.random() * (max-min+1));
+		Coordinate userCoordinate = new Coordinate(positionX, positionY);
+		gameMediator.getWorld().getLocations().get(0).addEntity(userName, userCoordinate);
 
 		for(Coordinate coordinate:gameMediator.getWorld().getLocations().get(0).getTiles().keySet()){
 			if(coordinate.getxPostion() == positionX && coordinate.getyPosition() == positionY){

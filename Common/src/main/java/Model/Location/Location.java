@@ -13,7 +13,6 @@ public class Location implements Serializable {
     private HashMap<Coordinate, Tile> Tiles = new HashMap<Coordinate, Tile>();
     private HashMap<Coordinate, Item> Items = new HashMap<Coordinate, Item>();
     private Map<String, Coordinate> Entities = new HashMap<String, Coordinate>();
-    private ArrayList<User> users = new ArrayList<User>();
 
     public HashMap<Coordinate, Tile> getTiles() {
         return Tiles;
@@ -37,14 +36,6 @@ public class Location implements Serializable {
 
     public void setEntities(Map<String, Coordinate> entities) {
         Entities = entities;
-    }
-
-    public ArrayList<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(ArrayList<User> users) {
-        this.users = users;
     }
 
     public Location(String id) {
@@ -82,14 +73,6 @@ public class Location implements Serializable {
 
     public void setLocationID(String locationID) {
         this.locationID = locationID;
-    }
-
-    public void addUser(User user){
-        users.add(user);
-    }
-
-    public void removeUser(User user){
-        users.remove(user);
     }
 
     public void changeUserCoordinate(String userID, Coordinate coordinate) {
