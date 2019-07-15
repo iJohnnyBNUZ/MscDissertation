@@ -1,5 +1,7 @@
 package Model.Item;
 
+import Model.Entity.Entity;
+
 public class Food extends Item {
 
 	private int energy;
@@ -11,4 +13,10 @@ public class Food extends Item {
 	}
 
 	public int getEnergy() { return energy; }
+
+	@Override
+	public void use(Entity entity) {
+		super.use(entity);
+		entity.increaseEnergy(energy);
+	}
 }

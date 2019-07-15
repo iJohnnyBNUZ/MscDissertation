@@ -1,5 +1,7 @@
 package Model.Item;
 
+import Model.Entity.Entity;
+
 import java.io.Serializable;
 
 public class Item implements Serializable {
@@ -50,4 +52,6 @@ public class Item implements Serializable {
     public void setType(String type) { this.type = type; }
 
     public String getType() { return type; }
+
+    public void use(Entity entity){}
 }
