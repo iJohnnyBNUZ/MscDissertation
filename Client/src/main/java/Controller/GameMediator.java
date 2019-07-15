@@ -1,45 +1,22 @@
 package Controller;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-import Controller.Command.BuyCommand;
-import Controller.Command.CommunicationCommand;
-import Controller.Command.EatCommand;
-import Controller.Command.MoveCommand;
-import Controller.Command.PickUpCommand;
-import Controller.Command.PostCommand;
-import Controller.Command.PutDownCommand;
-import Controller.Command.SaveGameCommand;
-import Controller.Command.SellCommand;
-import Controller.Command.StartGameCommand;
-
+import Controller.Command.*;
 import Controller.Network.Client;
-import Model.World;
 import Model.Location.Coordinate;
-import Model.Location.Door;
-import Model.Location.Grass;
 import Model.Location.Location;
-import Model.Location.Stone;
-import Model.Location.Tile;
-import Model.Location.Water;
-import View.BagView;
-import View.ChatView;
-import View.EntityView;
-import View.IndexView;
-import View.ItemView;
-import View.LocationView;
-import View.NPCView;
-import View.TransactionView;
-import View.View;
+import Model.World;
+import View.*;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameMediator {
 	private World world;
