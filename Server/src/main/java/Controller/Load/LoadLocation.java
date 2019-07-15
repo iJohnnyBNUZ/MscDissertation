@@ -10,6 +10,7 @@ public class LoadLocation {
 	}
 
 	public Location buildLocation(File file) {
+
 		Location location = new Location("test");
 		System.out.println("Loading location file: " + file.getName());
 		return location;

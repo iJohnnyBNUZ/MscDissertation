@@ -36,7 +36,6 @@ public class LocationController {
                     changeUserCoordinate(entityCoordinate.getxPostion(), entityCoordinate.getyPosition() + 1, userid);
                     break;
                 default:
-                    return;
             }
 
     }

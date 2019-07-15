@@ -1,8 +1,8 @@
 package Controller;
 
-import java.io.IOException;
-
 import Model.Entity.User;
+
+import java.io.IOException;
 
 public class UserController implements Controller {
 	private static final String String = null;
@@ -52,11 +52,4 @@ public class UserController implements Controller {
 		}
 		return result;
 	}
-
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
-	}
-	
 }

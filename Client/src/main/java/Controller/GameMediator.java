@@ -1,45 +1,22 @@
 package Controller;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-import Controller.Command.BuyCommand;
-import Controller.Command.CommunicationCommand;
-import Controller.Command.EatCommand;
-import Controller.Command.MoveCommand;
-import Controller.Command.PickUpCommand;
-import Controller.Command.PostCommand;
-import Controller.Command.PutDownCommand;
-import Controller.Command.SaveGameCommand;
-import Controller.Command.SellCommand;
-import Controller.Command.StartGameCommand;
-
+import Controller.Command.*;
 import Controller.Network.Client;
-import Model.World;
 import Model.Location.Coordinate;
-import Model.Location.Door;
-import Model.Location.Grass;
 import Model.Location.Location;
-import Model.Location.Stone;
-import Model.Location.Tile;
-import Model.Location.Water;
-import View.BagView;
-import View.ChatView;
-import View.EntityView;
-import View.IndexView;
-import View.ItemView;
-import View.LocationView;
-import View.NPCView;
-import View.TransactionView;
-import View.View;
+import Model.World;
+import View.*;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameMediator {
 	private World world;
@@ -87,8 +64,8 @@ public class GameMediator {
 	private StartGameCommand startGameCommand = null;
 	
 	private SaveGameCommand saveGameCommand = null;
-	
-	
+
+
 	
 	public GameMediator() {
 		this.world = new World();
@@ -115,7 +92,7 @@ public class GameMediator {
 			this.world = newWorld;
 			world.notifyAll();
 		}
-		
+
 	}
 
 	public IndexView getIndexView() {
@@ -304,8 +281,8 @@ public class GameMediator {
 		this.startGameCommand = startGameCommand;
 	}
 
-	
-	
+
+
 	public SaveGameCommand getSaveGameCommand() {
 		return saveGameCommand;
 	}
@@ -383,7 +360,7 @@ public class GameMediator {
 	 */
 	
 	public void	enterGame() throws IOException {
-		URL location = View.class.getResource("sample.fxml");
+		URL location = View.class.getResource("/view/sample.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(location);
         fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
@@ -398,14 +375,14 @@ public class GameMediator {
         bindViewCommand();
         setTestData();
 	}
-	
+
 	
 
 	
 	public void setTestData() {
 		Location l1 = new Location("location1");
 		this.getWorld().addLocation(l1);
-		
+
 		
 		Map<String,Coordinate> tmp = new HashMap<String,Coordinate>();
 		int num=0;

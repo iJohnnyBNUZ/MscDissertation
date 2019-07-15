@@ -1,27 +1,15 @@
 package Controller.Network;
 
 import Controller.GameMediator;
-import Controller.GamePanel;
-import Model.World;
 import Model.Entity.Entity;
 import Model.Entity.User;
-import View.View;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.JavaFXBuilderFactory;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import Model.World;
 
-import javax.swing.*;
-
-import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.net.URL;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -132,23 +120,13 @@ public class Client implements Runnable {
 		
 	private void getWorldFromServer() throws IOException, ClassNotFoundException {
 		objectOutputStream.writeObject("getWorld");
-
-		/*Object newWorld = this.objectInputStream.readObject();
-		if (newWorld instanceof World){
-			gameMediator.setWorld((World) newWorld);
-			System.out.println("Already getWorld from server");
-		}
-		else {
-			System.out.println(newWorld);
-			System.out.println("Something went wrong");
-		}*/
 	}
 	
 	public void login(String type, String uName) throws IOException, ClassNotFoundException {
 		this.userName = uName;
-		if(type=="new") {
+		if(type.equals("new")) {
 			createUser(uName);
-		}else if(type == "continue") {
+		}else if(type.equals("continue")) {
 			if (!((User) gameMediator.getWorld().getEntity(uName)).getOnline()){
 				((User) gameMediator.getWorld().getEntity(uName)).setOnline(true);
 				objectOutputStream.writeObject(gameMediator.getWorld());

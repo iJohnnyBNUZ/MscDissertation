@@ -1,8 +1,5 @@
 package Controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import Model.Item.Item;
 import Model.Item.Key;
 import Model.Location.Coordinate;
@@ -61,6 +58,8 @@ public class LocationController implements Controller{
                 //get currentLocation index
                 int indexOfCurrentLocation = gameMediator.getWorld().getLocations().indexOf(gameMediator.getWorld().getEntityLocation(userid));
                 //new location will be index+1 in the Location list
+                gameMediator.getWorld().setEntityLocation(userid, "location1");
+
                 //initial the user in Coordinate(0,0) in the next Location
                 int positionX=0,positionY=0;
 
@@ -79,18 +78,4 @@ public class LocationController implements Controller{
         }
         System.out.println("There is no Key object in the bag!");
     }
-
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		String uId = gameMediator.getClient().getUserName();
-		Location curLocation = gameMediator.getWorld().getEntityLocation(uId);
-		Map<String,Coordinate> tiles = new HashMap<String,Coordinate>();
-		
-		for(Coordinate cor: curLocation.getTiles().keySet()) {
-			tiles.put(curLocation.getTiles().get(cor).getTerrain(), cor);
-		}
-		
-		gameMediator.getLocationView().update(tiles);
-	}
 }
