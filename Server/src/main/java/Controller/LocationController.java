@@ -23,16 +23,16 @@ public class LocationController {
                 return;
 
             switch (direction) {
-                case "a":
+                case "left":
                     changeUserCoordinate(entityCoordinate.getxPostion() - 1, entityCoordinate.getyPosition(), userid);
                     break;
-                case "d":
+                case "right":
                     changeUserCoordinate(entityCoordinate.getxPostion() + 1, entityCoordinate.getyPosition(), userid);
                     break;
-                case "w":
+                case "up":
                     changeUserCoordinate(entityCoordinate.getxPostion(), entityCoordinate.getyPosition() - 1, userid);
                     break;
-                case "s":
+                case "down":
                     changeUserCoordinate(entityCoordinate.getxPostion(), entityCoordinate.getyPosition() + 1, userid);
                     break;
                 default:
@@ -49,7 +49,6 @@ public class LocationController {
                 return;
             }
         }
-
     }
 
     public void openDoor(String userid){
@@ -58,8 +57,6 @@ public class LocationController {
                 //get currentLocation index
                 int indexOfCurrentLocation = gameMediator.getWorld().getLocations().indexOf(gameMediator.getWorld().getEntityLocation(userid));
                 //new location will be index+1 in the Location list
-                gameMediator.getWorld().getEntity(userid).setCurrentLocation(gameMediator.getWorld().getLocations().get(indexOfCurrentLocation+1));
-
                 //initial the user in Coordinate(0,0) in the next Location
                 int positionX=0,positionY=0;
 
