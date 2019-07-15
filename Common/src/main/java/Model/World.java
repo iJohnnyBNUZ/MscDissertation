@@ -1,6 +1,7 @@
 package Model;
 
 import Model.Entity.Entity;
+import Model.Location.Coordinate;
 import Model.Location.Location;
 
 import java.io.Serializable;
@@ -55,6 +56,15 @@ public class World implements Serializable {
 				location = l;
 		}
 		return location;
+	}
+
+	public void setEntityLocation(String entityID, String locationID) {
+		for(Location location : Locations) {
+			if(location.getLocationID().equals(locationID)) {
+				getEntityLocation(entityID).removeEntity(entityID);
+				location.addEntity(entityID, new Coordinate(0, 0));
+			}
+		}
 	}
 
 	public Entity getEntity(String id) {

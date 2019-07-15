@@ -102,6 +102,7 @@ public class ItemController implements Controller{
     @Override
 	public void update() {
 		// TODO Auto-generated method stub
+		gameMediator.getItemView().update(null);
 		
 	}
 }

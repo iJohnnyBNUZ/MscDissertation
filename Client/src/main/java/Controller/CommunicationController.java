@@ -52,7 +52,7 @@ public class CommunicationController implements Controller {
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		
+		gameMediator.getChatView().updateChat(null);
 	}
 }
 

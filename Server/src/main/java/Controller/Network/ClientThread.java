@@ -87,7 +87,7 @@ public class ClientThread extends Thread implements Runnable {
 
 	private void initEntityLocation(String userName){
 		//inital the user in first location in the world
-		//gameMediator.getWorld().getEntity(userName).setCurrentLocation(gameMediator.getWorld().getLocations().get(0));
+		gameMediator.getWorld().setEntityLocation(userName, "location0");
 		gameMediator.getWorld().getLocations().get(0).addUser((User)gameMediator.getWorld().getEntity(userName));
 		//init the coordinate for user with random
 		int max =2,min =0;
@@ -107,7 +107,7 @@ public class ClientThread extends Thread implements Runnable {
 /*		System.out.println("Username ->" + userName+"now is in coordinate-> ["+
 				gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getxPostion()
 				+","+gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getyPosition()+"]");*/
-		if(d.equals("left") || d.equals("right") || d.equals("down") ||d.equals("up")){
+		if(d.equals("a") || d.equals("d") || d.equals("w") ||d.equals("s")){
 			locationController = new LocationController(gameMediator);
 			locationController.moveTo(userName,d);
 			try {

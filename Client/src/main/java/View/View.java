@@ -9,6 +9,7 @@ import java.util.Map;
 import Controller.Command.Command;
 import Controller.Command.MoveCommand;
 import Controller.Command.PostCommand;
+import Controller.Command.SaveGameCommand;
 import Controller.CommunicationController;
 import Controller.LocationController;
 import Model.Item.Food;
@@ -138,8 +139,6 @@ public class View {
 	private Button closeMyBag;
 
 
-
-
 	private double tileWidth = 0;
     
     private double tileHeight = 0;
@@ -149,6 +148,7 @@ public class View {
 	private double image_w = 64.0;
 	
 	private MoveCommand moveCommand = null;
+	private SaveGameCommand saveGameCommand = null;
 	
 	
     // This method is automatically invoked by the FXMLLoader - it's magic
@@ -156,13 +156,15 @@ public class View {
     public void initialize() {
     	System.out.println("initializeeeeeeeeeeeeeeeeeeee!!!!!!");
 		setCoinImage();
+		setUserImage();
     }
-
 	public AnchorPane getPage() { return page; }
 
 	public Canvas getMapView() { return mapView; }
 
+
 	public AnchorPane getForImage() { return forImage; }
+	
 
 	public ImageView getUserImage() { return userImage; }
 
@@ -232,6 +234,7 @@ public class View {
 		return tileWidth;
 	}
 
+
 	public double getTileHeight() {
 		return tileHeight;
 	}
@@ -247,7 +250,7 @@ public class View {
     
 	
     public void saveGame() {
-    	System.out.println("saveeeeeeeeeeeeeeeeeeeeeeeeeee!");
+    	saveGameCommand.excute();
     }
 
 
@@ -266,6 +269,12 @@ public class View {
 		URL url = this.getClass().getResource("/images/coin.png");
 		Image image = new Image(url.toString(), coinIcon.getFitWidth(), coinIcon.getFitHeight() , false, false);
 		coinIcon.setImage(image);
+	}
+	
+	public void setUserImage() {
+		URL url = this.getClass().getResource("/images/player.png");
+		Image image = new Image(url.toString(), userImage.getFitWidth(), userImage.getFitHeight() , false, false);
+		userImage.setImage(image);
 	}
 	
 	public void draw(String fileName, Coordinate position) {

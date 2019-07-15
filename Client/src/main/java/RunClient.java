@@ -31,6 +31,8 @@ public class RunClient extends Application {
         GameMediator gameMediator = new GameMediator();
         gameMediator.setIndexView(indexView);
         gameMediator.setPrimaryStage(primaryStage);
+        
+        
         gameMediator.initialController();
         gameMediator.bindIndexCommand();
         gameMediator.testClient(gameMediator);
@@ -42,7 +44,6 @@ public class RunClient extends Application {
 
 	public static void main(String[] args) throws Exception {
        
-        //gameMediator.testClient();
         launch(args);
     }
 }
