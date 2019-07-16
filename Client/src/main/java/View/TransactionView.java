@@ -81,7 +81,8 @@ public class TransactionView {
 	}
 
 
-	public void updateNewTransaction(List<Item> user__shop, String userShopName, List<Item> bag, int money){
+	public void updateTransaction(List<Item> user__shop, String userShopName, List<Item> bag, int money){
+		newTransaction.setVisible(true);
 		user_shop.setText(userShopName);
 		totalValue.setText("0");
 
