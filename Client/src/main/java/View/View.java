@@ -360,6 +360,10 @@ public class View {
 		moveCommand = (MoveCommand) command;
 	}
 	
+	public void setSaveGameCommand(Command command) {
+		saveGameCommand = (SaveGameCommand) command;
+	}
+	
 	/**
 	 * Before close the game, user need to choose save game or continue to play the game.
 	 * @param primaryStage
