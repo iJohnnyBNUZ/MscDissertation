@@ -12,6 +12,6 @@ public class CommunicationObserver implements Observer {
 
 	@Override
 	public void update() {
-		clientMediator.getChatView().updateChat(null);
+		clientMediator.getChatView().updateChat(this.clientMediator.getWorld().getMessageList());
 	}
 }

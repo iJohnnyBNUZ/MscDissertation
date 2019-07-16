@@ -69,6 +69,10 @@ public abstract class Entity implements Serializable {
         this.coin = coin;
     }
 
+    public void increaseCoin(int amount) { coin += amount; }
+
+    public void decreaseCoin(int amount) { coin -= amount; }
+
     public void pickUp(Item item) {
         this.Bag.add(item);
     }
@@ -86,4 +90,6 @@ public abstract class Entity implements Serializable {
     public void removeFromBag(Item item){
         this.Bag.remove(item);
     }
+
+    public void addToBag(Item item) { this.Bag.add(item); }
 }

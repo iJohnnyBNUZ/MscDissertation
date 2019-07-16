@@ -8,9 +8,11 @@ public class CommunicationController implements Controller {
 
     private ClientMediator clientMediator;
     private ChatView chatView;
+    private String userID;
 
     public CommunicationController(ClientMediator clientMediator){
         this.clientMediator = clientMediator;
+        this.userID = clientMediator.getUserName();
         //this.messageList = clientMediator.getView().getMessageListData();
     }
 
@@ -32,17 +34,19 @@ public class CommunicationController implements Controller {
 
 	private void withUser(String id) {
 		// TODO Auto-generated method stub
-		
+		this.clientMediator.getTansactionView().updateTransaction(this.clientMediator.getWorld().getEntity(id).getBag(),id,this.clientMediator.getWorld().getEntity(userID).getBag(),this.clientMediator.getWorld().getEntity(userID).getCoin());
 	}
 
 	private void withStore(String id) {
 		// TODO Auto-generated method stub
-		
+		this.clientMediator.getTansactionView().updateTransaction(this.clientMediator.getWorld().getEntity(id).getBag(),id,this.clientMediator.getWorld().getEntity(userID).getBag(),this.clientMediator.getWorld().getEntity(userID).getCoin());
 	}
 
 	private void withNPC(String id,String time) {
 		// TODO Auto-generated method stub
-		
+		this.clientMediator.getWorld().getEntity(userID).reactTo(this.clientMediator.getWorld().getEntity(id));
+		String message = "You are communicate with "+ id + ", and you lose 20 energy at " + time;
+		this.clientMediator.getNPCView().updateNpcView(message);
 	}
 }
 
