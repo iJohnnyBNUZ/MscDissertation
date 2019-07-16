@@ -278,7 +278,7 @@ public class View {
 		
 		gContext.drawImage(image,0, 0,image_h,image_w, position.getyPosition()*tileWidth,
 				position.getxPostion()*tileHeight,tileWidth,tileHeight);
-		System.out.println("drawing "+ fileName);
+		
 	}
 	
 	public ImageView drawClickable(String fileName, Coordinate position, Boolean isItemTile) {
@@ -288,17 +288,23 @@ public class View {
 		//create ImageView  to each of the items
 		ImageView imgView = new ImageView();
 		URL url = this.getClass().getResource("/images/" + fileName + ".png");
-		Image image = new Image(url.toString(), image_h, image_w, false, false);
+		
 		if(!isItemTile) {
-			image = new Image(url.toString(), image_h, image_w, false, false);
+			Image image = new Image(url.toString(), image_h, image_w, false, false);
+			imgView.setImage(image);
+			System.out.println("creat image of: "+ fileName);
 		}else {
-			image = new Image(url.toString(), image_h/2, image_w/2, false, false);
+			Image image = new Image(url.toString(), image_h/2, image_w/2, false, false);
+			imgView.setImage(image);
+			System.out.println("creat image of: "+ fileName);
 
 		}
-		imgView.setImage(image);
+		
 		imgView.setLayoutX(position.getyPosition()*tileWidth);
 		imgView.setLayoutY(position.getxPostion()*tileHeight);
+		System.out.println(forImage.getChildren().size());
 		forImage.getChildren().add(imgView);
+		System.out.println("draw clickable: "+ fileName);
 		return imgView;
 	}
 	
@@ -323,6 +329,7 @@ public class View {
 	
 	
 	public void initialForImage() {
+		System.out.println("initial forImage");
 		forImage.getChildren().clear();
 		forImage.requestFocus();
 		forImage.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -386,7 +393,7 @@ public class View {
 					System.out.println("Save");
 					saveGame();
 					System.exit(0);
-				}else if(result.get() == buttonCancel){    // ... user chose CANCEL or closed the dialog
+				}else if(result.get() == buttonCancel){ 
 					alert.close();
 					w.consume();
 				}

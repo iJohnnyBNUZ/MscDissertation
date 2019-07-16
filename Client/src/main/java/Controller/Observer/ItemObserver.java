@@ -22,9 +22,10 @@ public class ItemObserver implements Observer {
 		String uId = clientMediator.getUserName();
 		Location curLocation = clientMediator.getWorld().getEntityLocation(uId);
 		Map<String, Coordinate> items = new HashMap<String,Coordinate>();
-
+		System.out.println(curLocation.getItems().keySet().size());
 		for(Coordinate cor: curLocation.getItems().keySet()) {
 			items.put(curLocation.getItems().get(cor).getItemID(), cor);
+			
 		}
 		
 		clientMediator.getItemView().update(items);
