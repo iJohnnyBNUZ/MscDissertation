@@ -18,14 +18,13 @@ public class LocationObserver implements Observer {
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		String uId = clientMediator.getClient().getUserName();
+		String uId = clientMediator.getUserName();
 		Location curLocation = clientMediator.getWorld().getEntityLocation(uId);
 		Map<String, Coordinate> tiles = new HashMap<String,Coordinate>();
 
 		for(Coordinate cor: curLocation.getTiles().keySet()) {
 			tiles.put(curLocation.getTiles().get(cor).getTerrain(), cor);
 		}
-
 		clientMediator.getLocationView().update(tiles);
 	}
 

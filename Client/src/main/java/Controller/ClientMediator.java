@@ -3,6 +3,7 @@ package Controller;
 import Controller.Command.*;
 import Controller.Network.Client;
 import Controller.Observer.*;
+import Controller.LocationController;
 import Model.Location.Coordinate;
 import Model.Location.Location;
 import Model.World;
@@ -463,7 +464,7 @@ public class ClientMediator implements GameMediator {
         this.primaryStage.show();
         initialGameView();
         bindViewCommand();
-        setTestData();
+        //setTestData();
 	}
 
 	

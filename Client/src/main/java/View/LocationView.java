@@ -39,8 +39,7 @@ public class LocationView{
 		view.initialCanvas();
 		if(tiles.size() == 100) {
 			for(String name: tiles.keySet()) {
-				String fileName = name.substring(0,5);
-				
+				String fileName = name.replaceAll("[0-9]", "");
 				view.draw(fileName, tiles.get(name));
 			}
 		}else {

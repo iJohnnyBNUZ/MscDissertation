@@ -54,36 +54,28 @@ public class Server implements Runnable{
 	private void initWorld(){
 		Location l1 = new Location("location1");
 		serverMediator.getWorld().addLocation(l1);
-
-		Tile t1 = new Grass(true,"Grass",1);
-		Tile t2 = new Water(true,"Water",1);
-		Tile t3 = new Grass(true,"Grass",1);
-		Tile t4 = new Stone(true,"Stone",1);
-		Tile t5 = new Grass(true,"Grass",1);
-		Tile t6 = new Water(true,"water",1);
-		Tile t7 = new Door(true,"Door",1);
-		Tile t8 = new Grass(true,"Grass",1);
-		Tile t9 = new Grass(true,"Grass",1);
-
-		Coordinate c1 = new Coordinate(0,0);
-		Coordinate c2 = new Coordinate(0,1);
-		Coordinate c3 = new Coordinate(0,2);
-		Coordinate c4 = new Coordinate(1,0);
-		Coordinate c5 = new Coordinate(1,1);
-		Coordinate c6 = new Coordinate(1,2);
-		Coordinate c7 = new Coordinate(2,0);
-		Coordinate c8 = new Coordinate(2,1);
-		Coordinate c9 = new Coordinate(2,2);
-
-		l1.addTile(c1,t1);
-		l1.addTile(c2,t2);
-		l1.addTile(c3,t3);
-		l1.addTile(c4,t4);
-		l1.addTile(c5,t5);
-		l1.addTile(c6,t6);
-		l1.addTile(c7,t7);
-		l1.addTile(c8,t8);
-		l1.addTile(c9,t9);
+		
+		int num=0;
+		for(int i=0;i<10;i++) {
+			for(int j=0;j<10;j++) {
+				Coordinate tmp_cor = new Coordinate(i, j);
+				if(i<5&&j<5) {
+					Tile tile = new Grass(true,"grass"+num,1);
+					l1.addTile(tmp_cor, tile);
+				}else if(i<5&& j >5){
+					Tile tile = new Water(true,"water"+num,1);
+					l1.addTile(tmp_cor, tile);
+				}else if(i>5) {
+					Tile tile = new Stone(true,"stone"+num,1);
+					l1.addTile(tmp_cor, tile);
+				}else {
+					Tile tile = new Door(true,"door"+num,1);
+					l1.addTile(tmp_cor, tile);
+				}
+				
+				num++;
+			}
+		}
 
 	}
 }

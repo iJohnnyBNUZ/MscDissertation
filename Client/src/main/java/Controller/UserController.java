@@ -50,7 +50,7 @@ public class UserController implements Controller {
 		if (clientMediator.getWorld().getEntity(uName) instanceof User){
 			result = true;
 		}else {
-			System.out.println("User "+uName+" is already online!");
+			System.out.println("User "+uName+" is not exist!");
 		}
 		return result;
 	}

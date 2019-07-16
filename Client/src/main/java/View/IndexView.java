@@ -58,7 +58,7 @@ public class IndexView {
 			showMessage("Connecting.......");
 			switch(gameType) {
 			case "new" : startGame.execute("new", uName, IP); break;
-			case "continue":startGame.execute("continue", uName, IP); ; break;
+			case "continue":startGame.execute("continue", uName, IP);  break;
 			default: showMessage("The game type is wrong");break;
 			}
 		}else {

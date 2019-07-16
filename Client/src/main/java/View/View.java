@@ -270,6 +270,7 @@ public class View {
 		//create Image to each of the items
 		URL url = this.getClass().getResource("/images/" + fileName + ".png");
 		Image image = new Image(url.toString(), image_h, image_w, false, false);
+		
 		gContext.drawImage(image,0, 0,image_h,image_w, position.getyPosition()*tileWidth,
 				position.getxPostion()*tileHeight,tileWidth,tileHeight);
 		
