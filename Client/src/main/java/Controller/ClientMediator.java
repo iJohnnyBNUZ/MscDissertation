@@ -123,6 +123,7 @@ public class ClientMediator implements GameMediator {
 		}*/
 		
 		locationObserver.update();
+		//itemObserver.update();
 	}
 
 	public IndexView getIndexView() {
@@ -446,6 +447,7 @@ public class ClientMediator implements GameMediator {
 	 */
 	public void bindViewCommand() {
 		view.setMoveCommand(moveCommand);
+		view.setSaveGameCommand(saveGameCommand);
 		itemView.setPickUpCommand(pickUpCommand);
 		entityView.setCommunicationCommand(communicationCommand);
 		bagView.setEatCommand(eatCommand);
