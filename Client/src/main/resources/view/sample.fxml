@@ -60,7 +60,7 @@
       <Label fx:id="coin" layoutX="443.0" layoutY="455.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="400.0" />
       <Label fx:id="notifyWindow" layoutX="432.0" layoutY="455.0" prefHeight="28.0" prefWidth="151.0" text="show message when clicks NPC" visible="false" />
       <AnchorPane fx:id="forImage" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="40.0" />
-      <AnchorPane fx:id="chatView" layoutX="10.0" layoutY="32.0" prefHeight="387.0" prefWidth="324.0" style="-fx-background-color: #F5F5F5;">
+      <AnchorPane fx:id="chatView" layoutX="10.0" layoutY="32.0" prefHeight="387.0" prefWidth="324.0" style="-fx-background-color: #F5F5F5;" visible="false">
          <children>
             <Button fx:id="closeChatView" layoutX="259.0" layoutY="353.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="55.0" text="Close" />
             <TextField fx:id="messageWindow" layoutX="8.0" layoutY="353.0" prefHeight="27.0" prefWidth="169.0" />
