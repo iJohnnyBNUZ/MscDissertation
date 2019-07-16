@@ -232,12 +232,14 @@ public class View {
 
 
 	public void showBag() {
+    	chatView.setVisible(false);
     	tabBagView.setVisible(true);
     }
 
-	public void showTransaction() { newTransaction.setVisible(true);}
-
-	public void showChat() { chatView.setVisible(true);}
+	public void showChat() {
+    	tabBagView.setVisible(false);
+    	chatView.setVisible(true);
+    }
     
 	
     public void saveGame() {
