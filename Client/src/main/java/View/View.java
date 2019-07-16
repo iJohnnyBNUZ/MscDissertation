@@ -1,6 +1,7 @@
 package View;
 
 import java.net.URL;
+import java.util.Optional;
 
 import Controller.Command.Command;
 import Controller.Command.MoveCommand;
@@ -12,6 +13,8 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -19,6 +22,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class View {
 
@@ -273,7 +278,7 @@ public class View {
 		
 		gContext.drawImage(image,0, 0,image_h,image_w, position.getyPosition()*tileWidth,
 				position.getxPostion()*tileHeight,tileWidth,tileHeight);
-		
+		System.out.println("drawing "+ fileName);
 	}
 	
 	public ImageView drawClickable(String fileName, Coordinate position, Boolean isItemTile) {
@@ -354,6 +359,37 @@ public class View {
 	public void setMoveCommand(Command command) {
 		moveCommand = (MoveCommand) command;
 	}
+	
+	/**
+	 * Before close the game, user need to choose save game or continue to play the game.
+	 * @param primaryStage
+	 */
+	public void setWindowsCloseAction(Stage primaryStage) {
+		// TODO Auto-generated method stub
+		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+
+			@Override
+			public void handle(WindowEvent w) {
+				// TODO Auto-generated method stub
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				alert.setTitle("Exit game");
+				alert.setHeaderText("Are your sure to exit game");
+				ButtonType buttonSave = new ButtonType("Exit and save");
+				ButtonType buttonCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE); 
+				alert.getButtonTypes().setAll(buttonSave, buttonCancel); 
+				Optional<ButtonType> result = alert.showAndWait();
+				if (result.get() == buttonSave){
+					System.out.println("Save");
+					saveGame();
+					System.exit(0);
+				}else if(result.get() == buttonCancel){    // ... user chose CANCEL or closed the dialog
+					alert.close();
+					w.consume();
+				}
+			}
+			
+		});
+	}
 
 
 	
@@ -384,16 +420,5 @@ public class View {
 		boundary.put("endY", beginY+ 3*tileHeight);
 		System.out.println(beginX+"   "+beginY+"   "+3*tileWidth+"   "+3*tileHeight);
 		return boundary;
-	}*/
-	/*
-	public void update() {
-		initialBeforeDraw();
-		location.test();
-		item.test2();
-		entity.testStore();
-		entity.testNPC();
-		entity.testUsers();
-		
-		System.out.println("finish updating!!!!!!!!1");
 	}*/
 }

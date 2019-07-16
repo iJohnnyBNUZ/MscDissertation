@@ -5,7 +5,6 @@ import Model.Entity.User;
 import java.io.IOException;
 
 public class UserController implements Controller {
-	private static final String String = null;
 	private ClientMediator clientMediator;
 	
 	public UserController(ClientMediator clientMediator){

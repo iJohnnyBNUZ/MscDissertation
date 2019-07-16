@@ -35,7 +35,6 @@ public class LocationView{
 	 * */
 	 
 	public void update(Map<String,Coordinate> tiles) {
-
 		view.initialCanvas();
 		if(tiles.size() == 100) {
 			for(String name: tiles.keySet()) {

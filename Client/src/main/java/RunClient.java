@@ -15,6 +15,8 @@ public class RunClient extends Application {
 
 
 	public void start(Stage primaryStage) throws Exception {
+		
+		//show index page
 		URL location = View.class.getResource("/view/start.fxml");
 		FXMLLoader fxmlLoader = new FXMLLoader();
 		fxmlLoader.setLocation(location);
@@ -29,9 +31,15 @@ public class RunClient extends Application {
 		ClientMediator clientMediator = new ClientMediator();
 		clientMediator.setIndexView(indexView);
 		clientMediator.setPrimaryStage(primaryStage);
+		
+		//initialize the controllers, commands, and observers.
 		clientMediator.initialController();
+		
+		//bind the commands (related to the index view) with index view.
 		clientMediator.bindIndexCommand();
-		clientMediator.testClient(clientMediator);
+		
+		//create client used for network communication.
+		clientMediator.createClient(clientMediator);
 	}
 
 
