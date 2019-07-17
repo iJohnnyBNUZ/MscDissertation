@@ -2,6 +2,10 @@ package Controller.Network;
 
 import Controller.ServerMediator;
 import Model.Entity.Entity;
+import Model.Entity.NPC;
+import Model.Entity.Shop;
+import Model.Item.Food;
+import Model.Item.Item;
 import Model.Location.*;
 
 import java.io.IOException;
@@ -76,6 +80,30 @@ public class Server implements Runnable{
 				num++;
 			}
 		}
+		
+		Item item1 = new Food("apple1", 10, 10, "food");
+		Coordinate cor1 = new Coordinate(0, 0);
+		Item item2 = new Food("orange1", 20, 20, "food");
+		Coordinate cor2 = new Coordinate(3, 1);
+		Item item3 = new Food("apple2", 10, 10, "food");
+		Coordinate cor3 = new Coordinate(2, 4);
+		
+		l1.addItem(cor1,item1);
+		l1.addItem(cor2, item2);
+		l1.addItem(cor3, item3);
+		
+		Entity e1 = new NPC("npc1");
+		Coordinate n_cor1 = new Coordinate(4, 4);
+		Entity e2 = new NPC("npc2");
+		Coordinate n_cor2 = new Coordinate(8, 4);
+		
+		l1.addEntity("npc1", n_cor1);
+		l1.addEntity("npc2", n_cor2);
+		
+		Entity e3 = new Shop("store1");
+		Coordinate n_cor3 = new Coordinate(0, 4);
+		l1.addEntity("store1", n_cor3);
+
 
 	}
 }

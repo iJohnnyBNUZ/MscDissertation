@@ -1,6 +1,8 @@
 package Controller.Command;
 
 
+import java.util.ResourceBundle;
+
 import Controller.Controller;
 import Controller.LocationController;
 
@@ -13,7 +15,9 @@ public class MoveCommand implements Command {
 
     public void excute(String direction){
         // TODO pass userName to MoveTO()
-        locationController.moveTo("", direction.toLowerCase());
+    	ResourceBundle rb = ResourceBundle.getBundle("config");
+		String uName = rb.getString("userName");
+        locationController.moveTo(uName, direction.toLowerCase());
     }
 
 }

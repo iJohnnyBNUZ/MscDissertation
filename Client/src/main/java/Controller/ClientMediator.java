@@ -124,6 +124,7 @@ public class ClientMediator implements GameMediator {
 		
 		locationObserver.update();
 		itemObserver.update();
+		entityObserver.update();
 	}
 
 	public IndexView getIndexView() {

@@ -335,31 +335,11 @@ public class View {
 		forImage.getChildren().clear();
 		forImage.requestFocus();
 		forImage.setOnKeyPressed(new EventHandler<KeyEvent>() {
-		//double moveX = 0;
-		//double moveY = 0;
 			@Override
 			public void handle(KeyEvent k) {
 				// TODO Auto-generated method stub
 				System.out.println(k.getCode().getName());
 				moveCommand.excute(k.getCode().getName());
-				
-				
-				//This method will not be used in the final project, it just used for present demo.
-				/*tileWidth=mapView.getWidth()/10;
-				tileHeight = mapView.getHeight()/10;
-				switch(k.getCode().getName()) {
-				case "Right": moveX= tileWidth;break;
-				case "Left" : moveX = 0- tileWidth;break;
-				case "Up" : moveY = 0-tileHeight;break;
-				case "Down" : moveY = tileHeight;break;
-				}
-				
-				ImageView moved = (ImageView) forImage.lookup("#user0");
-				moved.setLayoutX(moved.getLayoutX()+moveX);
-				moved.setLayoutY(moved.getLayoutY()+moveY);
-				moveX=0;
-				moveY=0;*/
-				
 			}
 			
 		});

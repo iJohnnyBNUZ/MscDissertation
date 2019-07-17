@@ -5,6 +5,7 @@ import java.util.Map;
 
 import Controller.Command.Command;
 import Model.Location.Coordinate;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -39,7 +40,12 @@ public class LocationView{
 		if(tiles.size() == 100) {
 			for(String name: tiles.keySet()) {
 				String fileName = name.replaceAll("[0-9]", "");
-				view.draw(fileName, tiles.get(name));
+				Platform.runLater(new Runnable() {
+	                @Override public void run() {
+	                	view.draw(fileName, tiles.get(name));
+	    			}
+				});
+				
 			}
 		}else {
 			System.out.println("Wrong tiles size");

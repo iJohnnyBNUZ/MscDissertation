@@ -9,6 +9,7 @@ import java.util.Map;
 import Controller.Command.Command;
 import Controller.Command.CommunicationCommand;
 import Model.Location.Coordinate;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -101,18 +102,23 @@ public class EntityView{
 		if(npcs.size() <= 100) {
 			for(String name: npcs.keySet()) {
 				
-				ImageView imgView = view.drawClickable("npc", npcs.get(name), false);
-				imgView.setId(name);
-				imgView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				Platform.runLater(new Runnable() {
+	                @Override public void run() {
+	                	ImageView imgView = view.drawClickable("npc", npcs.get(name), false);
+	    				imgView.setId(name);
+	    				imgView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
-					public void handle(MouseEvent m) {
-						// TODO Auto-generated method stub
-						System.out.println("npc ID: "+ imgView.getId());
-						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-						communication.execute(imgView.getId(),df.format(new Date()).toString());
-					}
-					
+	    					public void handle(MouseEvent m) {
+	    						// TODO Auto-generated method stub
+	    						System.out.println("npc ID: "+ imgView.getId());
+	    						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	    						communication.execute(imgView.getId(),df.format(new Date()).toString());
+	    					}
+	    					
+	    				});
+	    			}
 				});
+				
 			}
 		}else {
 			System.out.println("Wrong tiles size");
@@ -124,20 +130,25 @@ public class EntityView{
 		
 		if(users.size() <= 100) {
 			for(String name: users.keySet()) {
-				ImageView imgView = view.drawClickable("player", users.get(name), false);
-				imgView.setId(name);
-				System.out.println(imgView.getId());
-				imgView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				Platform.runLater(new Runnable() {
+	                @Override public void run() {
+	                	ImageView imgView = view.drawClickable("player", users.get(name), false);
+	    				imgView.setId(name);
+	    				System.out.println(imgView.getId());
+	    				imgView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
-					public void handle(MouseEvent m) {
-						// TODO Auto-generated method stub
-						System.out.println("user ID: " + imgView.getId());
-						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-						communication.execute(imgView.getId(),df.format(new Date()).toString());
-					}
-					
+	    					public void handle(MouseEvent m) {
+	    						// TODO Auto-generated method stub
+	    						System.out.println("user ID: " + imgView.getId());
+	    						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	    						communication.execute(imgView.getId(),df.format(new Date()).toString());
+	    					}
+	    					
+	    				});
+	    			}
 				});
 			}
+				
 		}else {
 			System.out.println("Wrong tiles size");
 		}
@@ -149,18 +160,24 @@ public class EntityView{
 		
 		if(stores.size() <= 100) {
 			for(String name: stores.keySet()) {
-				ImageView imgView = view.drawClickable("store", stores.get(name), false);
-				imgView.setId(name);
-				imgView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				
+				Platform.runLater(new Runnable() {
+	                @Override public void run() {
+	                	ImageView imgView = view.drawClickable("store", stores.get(name), false);
+	    				imgView.setId(name);
+	    				imgView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
-					public void handle(MouseEvent m) {
-						// TODO Auto-generated method stub
-						System.out.println("storeId"+imgView.getId());
-						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-						communication.execute(imgView.getId(),df.format(new Date()).toString());
-					}
-					
+	    					public void handle(MouseEvent m) {
+	    						// TODO Auto-generated method stub
+	    						System.out.println("storeId"+imgView.getId());
+	    						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	    						communication.execute(imgView.getId(),df.format(new Date()).toString());
+	    					}
+	    					
+	    				});
+	    			}
 				});
+				
 			}
 		}else {
 			System.out.println("Wrong tiles size");
@@ -171,7 +188,12 @@ public class EntityView{
 	public void updateEnergy(int energyPoints) {
 		
 		if(energyPoints <= 100 && energyPoints >= 0) {
-			energy.setProgress((double)energyPoints/100);
+			Platform.runLater(new Runnable() {
+                @Override public void run() {
+                	energy.setProgress((double)energyPoints/100);
+    			}
+			});
+			
 		}else {
 			System.out.println("Wrong energy value!");
 		}
@@ -181,7 +203,12 @@ public class EntityView{
 	public void updateCoin(int coins) {
 		
 		if(coins > 0) {
-			coin.setText(""+coins);
+			Platform.runLater(new Runnable() {
+                @Override public void run() {
+                	coin.setText(""+coins);
+    			}
+			});
+			
 		}else {
 			System.out.println("Wrong coin value!");
 		}

@@ -28,7 +28,7 @@ public class EntityObserver implements Observer{
 		Map<String,Coordinate> stores = new HashMap<String,Coordinate>();
 		int energyPoints = clientMediator.getWorld().getEntity(uId).getEnergy();
 		int coins = clientMediator.getWorld().getEntity(uId).getCoin();
-
+		System.out.println(curLocation.getEntities().keySet().size());
 		for(String entity: curLocation.getEntities().keySet()) {
 			if(entity.contains("user")) {
 				users.put(entity, curLocation.getEntities().get(entity));
@@ -38,6 +38,7 @@ public class EntityObserver implements Observer{
 				stores.put(entity, curLocation.getEntities().get(entity));
 			}
 		}
+		System.out.println("npc size"+ npcs.size()+" "+"store size"+ stores.size());
 		EntityView entityView = clientMediator.getEntityView();
 		entityView.updateCoin(coins);
 		entityView.updateEnergy(energyPoints);
