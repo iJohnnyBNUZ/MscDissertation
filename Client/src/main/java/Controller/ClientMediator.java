@@ -63,6 +63,7 @@ public class ClientMediator implements GameMediator {
 	private PostCommand postCommand = null;
 	private StartGameCommand startGameCommand = null;
 	private SaveGameCommand saveGameCommand = null;
+	private LogOutCommand logOutCommand = null;
 
 
 	
@@ -419,6 +420,7 @@ public class ClientMediator implements GameMediator {
 		this.sellCommand = new SellCommand(itemController);
 		this.postCommand = new PostCommand(communicationController);
 		this.saveGameCommand = new SaveGameCommand(this.saveUser);
+		this.logOutCommand = new LogOutCommand();
 	}
 	
 	/**
@@ -449,6 +451,7 @@ public class ClientMediator implements GameMediator {
 	public void bindViewCommand() {
 		view.setMoveCommand(moveCommand);
 		view.setSaveGameCommand(saveGameCommand);
+		view.setLogOutCommand(logOutCommand);
 		itemView.setPickUpCommand(pickUpCommand);
 		entityView.setCommunicationCommand(communicationCommand);
 		bagView.setEatCommand(eatCommand);

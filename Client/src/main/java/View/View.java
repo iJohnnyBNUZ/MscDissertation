@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.Optional;
 
 import Controller.Command.Command;
+import Controller.Command.LogOutCommand;
 import Controller.Command.MoveCommand;
 import Controller.Command.SaveGameCommand;
 import Model.Location.Coordinate;
@@ -140,6 +141,7 @@ public class View {
 	
 	private MoveCommand moveCommand = null;
 	private SaveGameCommand saveGameCommand = null;
+	private LogOutCommand logOutCommand= null;
 	
 	
     // This method is automatically invoked by the FXMLLoader - it's magic
@@ -353,6 +355,10 @@ public class View {
 		saveGameCommand = (SaveGameCommand) command;
 	}
 	
+	public void setLogOutCommand(Command command) {
+		logOutCommand = (LogOutCommand) command;
+	}
+	
 	/**
 	 * Before close the game, user need to choose save game or continue to play the game.
 	 * @param primaryStage
@@ -374,6 +380,7 @@ public class View {
 				if (result.get() == buttonSave){
 					System.out.println("Save");
 					saveGame();
+					logOutCommand.execute();
 					System.exit(0);
 				}else if(result.get() == buttonCancel){ 
 					alert.close();
