@@ -9,10 +9,10 @@ public class BagObserver implements Observer {
 
     public BagObserver(ClientMediator clientMediator){
         this.clientMediator = clientMediator;
-        this.userID = clientMediator.getUserName();
     }
 
     public void update(){
+        userID = this.clientMediator.getUserName();
         clientMediator.getBagView().updateBag(this.clientMediator.getWorld().getEntity(userID).getBag(),this.clientMediator.getWorld().getEntity(userID).getCoin());
     }
 
