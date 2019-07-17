@@ -32,7 +32,7 @@ public class ClientThread extends Thread implements Runnable {
 	public void run() {
 		while (canRun) {
 			try {
-				Thread.sleep(300);
+				System.out.println("Tock");
 				Object input = objectInput.readObject();
 				if (input instanceof Entity) {
 					handleEntity((User) input);
@@ -48,7 +48,6 @@ public class ClientThread extends Thread implements Runnable {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				System.out.println("Tick");
 			}
 			catch(Exception ex) {
 				canRun = false;
@@ -64,7 +63,7 @@ public class ClientThread extends Thread implements Runnable {
 	}
 
 	void sendMessage(Object msg) {
-		System.out.println("Sending message to user: " +userName);
+		System.out.println("Sending message to user: " + userName);
 		if (msg instanceof World) {
 			for (Entity entity : ((World) msg).getEntities()) {
 				System.out.println(entity);
@@ -85,9 +84,7 @@ public class ClientThread extends Thread implements Runnable {
 	}
 
 	private void initEntityLocation(String userName){
-		//inital the user in first location in the world
 		serverMediator.getWorld().setEntityLocation(userName, "location0");
-		//init the coordinate for user with random
 		int max =2,min =0;
 		int positionX = min + (int)(Math.random() * (max-min+1));
 		int positionY = min + (int)(Math.random() * (max-min+1));
@@ -103,41 +100,44 @@ public class ClientThread extends Thread implements Runnable {
 		}
 	}
 
-	private void handleString(String d) {
-/*		System.out.println("Username ->" + userName+"now is in coordinate-> ["+
-				serverMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getxPostion()
-				+","+serverMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getyPosition()+"]");*/
-		if(d.equals("left") || d.equals("right") || d.equals("up") ||d.equals("down")){
-			locationController = new LocationController(serverMediator);
-			locationController.moveTo(userName,d);
-			try {
-				objectOutput.writeObject(serverMediator.getWorld());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			System.out.println("Change "+userName+"'s coordinate to"+"["+
-					serverMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getxPostion()
-					+","+ serverMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getyPosition()+"]");
-		}else if(d.equals("getWorld")){
-			try {
-				objectOutput.writeObject(serverMediator.getWorld());
-				System.out.println("user get the world object when they login");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		else if(d.equals("logout")) {
-			logout();
+	private void handleString(String command) {
+		switch (command) {
+			case "left":
+			case "right":
+			case "up":
+			case "down":
+				locationController = new LocationController(serverMediator);
+				locationController.moveTo(userName, command);
+				try {
+					objectOutput.writeObject(serverMediator.getWorld());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				System.out.println("Change " + userName + "'s coordinate to" + "[" +
+						serverMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getxPostion()
+						+ "," + serverMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getyPosition() + "]");
+				break;
+			case "getWorld":
+				try {
+					objectOutput.writeObject(serverMediator.getWorld());
+					System.out.println("user get the world object when they login");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				break;
+			case "logout":
+				logout();
+				break;
 		}
 
 	}
 
-	public void logout() {
+	private void logout() {
 		Entity entity =  serverMediator.getWorld().getEntity(userName);
 
 		if (entity instanceof User){
-			((User) entity).logout();  // set isOnline is false
-			server.removeClient(this);  // remove clint thread
+			((User) entity).logout();
+			server.removeClient(this);
 		}
 	}
 }

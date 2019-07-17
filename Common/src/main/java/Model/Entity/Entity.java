@@ -1,7 +1,6 @@
 package Model.Entity;
 
 import Model.Item.Item;
-import Model.Location.Location;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ public abstract class Entity implements Serializable {
     }
 
     public void useItem(Item item) {
-
+        removeFromBag(item);
     }
 
     public List<Item> getBag() {

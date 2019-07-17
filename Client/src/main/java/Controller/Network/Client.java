@@ -111,7 +111,6 @@ public class Client implements Runnable {
 			getWorldFromServer();
 
 		} catch (Exception ex){
-			//added by myself
 			canRun=false;
 		}
 		
@@ -139,45 +138,50 @@ public class Client implements Runnable {
 		objectOutputStream.writeObject(new User(userName));
 		getWorldFromServer();
 	}
-	
-
 
 	@Override
 	public void run() {
 		while(canRun) {
 			try {
-				System.out.println("Awaiting message");
+				Thread.sleep(500);
+				System.out.println("Tick");
 			    Object input = objectInputStream.readObject();
-				System.out.println(input);
 			    if(input instanceof World) {
-			        clientMediator.setWorld((World) input);
-				    for (Entity entity : ((World) input).getEntities()) {
-					    System.out.println(entity);
-				    }
-				    String printString = "";
-				    for(Entity entity: clientMediator.getWorld().getEntities()){
-				    	String name = entity.getEntityID();
-				    	String userinformation = name+"'s coordinate to"+"["+
-								clientMediator.getWorld().getEntityLocation(name).getEntities().get(name).getxPostion()
-								+","+ clientMediator.getWorld().getEntityLocation(name).getEntities().get(name).getyPosition()+"]";
-				    	printString += userinformation;
-					}
+			    	updateWorld((World)input);
 			    }
 			    else if(input instanceof String) {
-			        System.out.println((String) input);
-			        clientMediator.getIndexView().showMessage("Cannot connect to the server");
+					handleString((String)input);
 			    }
 			    else {
-				    System.out.println("What");
+				    System.out.println("Received unknown object from server");
 			    }
 
 			} catch (Exception ex) {
 				canRun = false;
-				
 				System.exit(0);
 				ex.printStackTrace();
 			}
 		}
 	}
-	
+
+	private void handleString(String input) {
+		System.out.println((input));
+		clientMediator.getIndexView().showMessage("Cannot connect to the server");
+	}
+
+	private void updateWorld(World world) {
+		clientMediator.setWorld(world);
+		for (Entity entity : world.getEntities()) {
+			System.out.println(entity);
+		}
+		StringBuilder printString = new StringBuilder();
+		for(Entity entity: clientMediator.getWorld().getEntities()){
+			String name = entity.getEntityID();
+			String userInfo = name+"'s coordinate to"+"["+
+					clientMediator.getWorld().getEntityLocation(name).getEntities().get(name).getxPostion()
+					+","+ clientMediator.getWorld().getEntityLocation(name).getEntities().get(name).getyPosition()+"]";
+			printString.append(userInfo);
+		}
+	}
+
 }
