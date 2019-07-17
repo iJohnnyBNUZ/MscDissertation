@@ -8,8 +8,8 @@ import java.util.List;
 
 public abstract class Entity implements Serializable {
     private String entityID;
-    private int energy;
-    private int coin;
+    private int energy=100;
+    private int coin=100;
     private List<Item> Bag = new ArrayList<Item>();
 
     public Entity(String id) {

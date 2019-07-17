@@ -38,7 +38,7 @@ public class EntityObserver implements Observer{
 				stores.put(entity, curLocation.getEntities().get(entity));
 			}
 		}
-		System.out.println("npc size"+ npcs.size()+" "+"store size"+ stores.size());
+		
 		EntityView entityView = clientMediator.getEntityView();
 		entityView.updateCoin(coins);
 		entityView.updateEnergy(energyPoints);
