@@ -412,12 +412,12 @@ public class ClientMediator implements GameMediator {
 		
 		this.moveCommand = new MoveCommand(locationController,this);
 		this.startGameCommand = new StartGameCommand(userController);
-		this.putDownCommand = new PutDownCommand(itemController);
-		this.eatCommand = new EatCommand(itemController);
+		this.putDownCommand = new PutDownCommand(itemController,this);
+		this.eatCommand = new EatCommand(itemController,this);
 		this.pickUpCommand = new PickUpCommand(itemController);
 		this.communicationCommand = new CommunicationCommand(communicationController);
-		this.buyCommand = new BuyCommand(itemController);
-		this.sellCommand = new SellCommand(itemController);
+		this.buyCommand = new BuyCommand(itemController,this);
+		this.sellCommand = new SellCommand(itemController,this);
 		this.postCommand = new PostCommand(communicationController);
 		this.saveGameCommand = new SaveGameCommand(this.saveUser);
 		this.logOutCommand = new LogOutCommand();

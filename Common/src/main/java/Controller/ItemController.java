@@ -11,13 +11,14 @@ import java.util.List;
 
 public class ItemController implements Controller{
     private GameMediator gameMediator;
-    private String userID;
 
     ItemController(GameMediator gameMediator){
         this.gameMediator = gameMediator;
     }
 
     public void pickUp(Coordinate coordinate){
+        //get current userID
+        String userID = "";
         // delete from location
         Location location = this.gameMediator.getWorld().getEntityLocation(userID);
         Item item = null;
@@ -30,7 +31,7 @@ public class ItemController implements Controller{
         entity.pickUp(item);
     }
 
-    public void drop(String itemID, String userID){
+    public void drop(String userID,String itemID){
         // delete from bag
         Entity entity = this.gameMediator.getWorld().getEntity(userID);
         Item item = entity.putDown(itemID);
@@ -58,16 +59,13 @@ public class ItemController implements Controller{
     }
     */
 
-    public void eat(String itemID){
+    public void eat(String userID,String itemID){
 
-        int addEnergy = 0;
-        Food food;
         for(Item item:this.gameMediator.getWorld().getEntity(userID).getBag()){
             if(item.getItemID()==itemID){
-                food = (Food)item;
-                food.use(this.gameMediator.getWorld().getEntity(userID));
+                final Food food = (Food)item;
                 //add user's energy
-                this.gameMediator.getWorld().getEntity(userID).increaseEnergy(addEnergy);
+                food.use(this.gameMediator.getWorld().getEntity(userID));
                 //delete from user's bag
                 this.gameMediator.getWorld().getEntity(userID).removeFromBag(food);
                 break;
@@ -76,7 +74,7 @@ public class ItemController implements Controller{
 
     }
 
-    public void buyItems(String usershopName,HashMap<String, Integer> buyList, int buyValue){
+    public void buyItems(String userID,String usershopName,HashMap<String, Integer> buyList, int buyValue){
 
         //if user has enough money to buy,decrease user's money,current user add item,other user or shop remove item
         if(this.gameMediator.getWorld().getEntity(userID).getCoin()>=buyValue){
@@ -99,7 +97,7 @@ public class ItemController implements Controller{
         }
     }
 
-    public void sellItems(String usershopName,HashMap<String,Integer> sellList,int sellValue){
+    public void sellItems(String userID,String usershopName,HashMap<String,Integer> sellList,int sellValue){
         final String nameType = usershopName.replaceAll("[0-9]","");
         //that user or shop has enough money to buy these items
         if(this.gameMediator.getWorld().getEntity(usershopName).getCoin()>=sellValue){

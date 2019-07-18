@@ -2,20 +2,22 @@ package Controller.Command;
 
 import Controller.Controller;
 import Controller.ItemController;
-import Model.Location.Coordinate;
+import Controller.ClientMediator;
 
 public class PutDownCommand implements Command {
 
-	private ItemController itemController;
-	//get current userID
+	private ItemController itemController = null;
+	private ClientMediator clientMediator = null;
 	private String userID;
 
-	public PutDownCommand(Controller controller){
+	public PutDownCommand(Controller controller,ClientMediator clientMediator){
 		this.itemController = (ItemController) controller;
+		this.clientMediator = clientMediator;
 	}
 
 	public void execute(String selectedItem){
-		System.out.println("Item "+selectedItem+" is put down on this position");
-		itemController.drop(selectedItem,userID);
+		userID = clientMediator.getUserName();
+		System.out.println("Item "+selectedItem+" is put down on this position by " + userID);
+		itemController.drop(userID,selectedItem);
     }
 }
