@@ -27,16 +27,16 @@ public class LocationController implements Controller{
 
 		switch (direction) {
 			case "left":
-				changeUserCoordinate(entityCoordinate.getxPostion() - 1, entityCoordinate.getyPosition(), uName);
+				changeUserCoordinate(entityCoordinate.getxPostion() , entityCoordinate.getyPosition()-1, uName);
 				break;
 			case "right":
-				changeUserCoordinate(entityCoordinate.getxPostion() + 1, entityCoordinate.getyPosition(), uName);
+				changeUserCoordinate(entityCoordinate.getxPostion() , entityCoordinate.getyPosition()+1, uName);
 				break;
 			case "up":
-				changeUserCoordinate(entityCoordinate.getxPostion(), entityCoordinate.getyPosition() - 1, uName);
+				changeUserCoordinate(entityCoordinate.getxPostion()-1, entityCoordinate.getyPosition() , uName);
 				break;
 			case "down":
-				changeUserCoordinate(entityCoordinate.getxPostion(), entityCoordinate.getyPosition() + 1, uName);
+				changeUserCoordinate(entityCoordinate.getxPostion()+1, entityCoordinate.getyPosition() , uName);
 				break;
 			default:
 		}

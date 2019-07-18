@@ -410,7 +410,7 @@ public class ClientMediator implements GameMediator {
 		observers.add(this.bagObserver);
 		
 		
-		this.moveCommand = new MoveCommand(locationController);
+		this.moveCommand = new MoveCommand(locationController,this);
 		this.startGameCommand = new StartGameCommand(userController);
 		this.putDownCommand = new PutDownCommand(itemController);
 		this.eatCommand = new EatCommand(itemController);

@@ -1,5 +1,6 @@
 package View;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 
@@ -341,7 +342,13 @@ public class View {
 			public void handle(KeyEvent k) {
 				// TODO Auto-generated method stub
 				System.out.println(k.getCode().getName());
-				moveCommand.excute(k.getCode().getName());
+				try {
+					moveCommand.excute(k.getCode().getName());
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}
 			}
 			
 		});

@@ -107,7 +107,7 @@ public class ClientThread extends Thread implements Runnable {
 			case "up":
 			case "down":
 				locationController = new LocationController(serverMediator);
-				System.out.println("move------->"+this.userName);
+				System.out.println(this.userName+" move----->"+command);
 				locationController.moveTo(this.userName, command);
 				try {
 					objectOutput.writeObject(serverMediator.getWorld());
