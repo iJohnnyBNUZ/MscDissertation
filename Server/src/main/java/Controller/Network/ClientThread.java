@@ -79,7 +79,7 @@ public class ClientThread extends Thread implements Runnable {
 	private void handleEntity(User user) {
 		System.out.println(user.getEntityID());
 		serverMediator.getWorld().addEntity(user);
-		userName = user.getEntityID();
+		this.userName = user.getEntityID();
 		initEntityLocation(userName);
 	}
 
@@ -94,7 +94,7 @@ public class ClientThread extends Thread implements Runnable {
 		for(Coordinate coordinate: serverMediator.getWorld().getLocations().get(0).getTiles().keySet()){
 			if(coordinate.getxPostion() == positionX && coordinate.getyPosition() == positionY){
 				serverMediator.getWorld().getLocations().get(0).addEntity(userName,coordinate);
-				System.out.println("gives user:"+userName+" an initial coordinate!");
+				System.out.println("gives user:"+userName+" an initial coordinate! ["+positionX+","+positionY+"]");
 				break;
 			}
 		}
@@ -107,7 +107,8 @@ public class ClientThread extends Thread implements Runnable {
 			case "up":
 			case "down":
 				locationController = new LocationController(serverMediator);
-				locationController.moveTo(userName, command);
+				System.out.println("move------->"+this.userName);
+				locationController.moveTo(this.userName, command);
 				try {
 					objectOutput.writeObject(serverMediator.getWorld());
 				} catch (IOException e) {

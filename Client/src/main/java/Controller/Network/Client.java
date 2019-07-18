@@ -125,6 +125,7 @@ public class Client implements Runnable {
 		this.userName = uName;
 		if(type.equals("new")) {
 			createUser(uName);
+			//getWorldFromServer();
 		}else if(type.equals("continue")) {
 			if (!((User) clientMediator.getWorld().getEntity(uName)).getOnline()){
 				((User) clientMediator.getWorld().getEntity(uName)).setOnline(true);
@@ -133,10 +134,14 @@ public class Client implements Runnable {
 		}
 		
 	}
+
+	public void MoveTo(String command)throws IOException, ClassNotFoundException {
+		if(command != null)
+			objectOutputStream.writeObject((Object) command);
+	}
 	
 	private void createUser(String userName) throws IOException, ClassNotFoundException {
 		objectOutputStream.writeObject(new User(userName));
-		getWorldFromServer();
 	}
 
 	@Override

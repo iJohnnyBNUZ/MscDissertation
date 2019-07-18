@@ -1,11 +1,14 @@
 package Controller;
 
+import Model.Entity.User;
 import Model.Item.Item;
 import Model.Item.Key;
 import Model.Location.Coordinate;
 import Model.Location.Door;
 import Model.Location.Location;
 import Model.Location.Tile;
+
+import java.util.Map;
 
 public class LocationController implements Controller{
 	private GameMediator gameMediator;
@@ -53,40 +56,82 @@ public class LocationController implements Controller{
 
 	public void openDoor(String userid){
 		Key key;
-		String nextLocationId = null;
-		for(Item item: gameMediator.getWorld().getEntity(userid).getBag()){
-			if(item instanceof Key){
-				key = (Key)item;
-				if(!key.isUsed()){
-					Location currentLocation = gameMediator.getWorld().getEntityLocation(userid);
-					for (Tile tile:currentLocation.getTiles().values()){
-						if(tile instanceof Door){
-							Door door = (Door)tile;
-							if (door.getCurrentLocationId() == currentLocation.getLocationID())
-								nextLocationId = door.getNextLocationId();
-						}
-					}
-					//set new location for user
-					if (nextLocationId != null){
-						gameMediator.getWorld().setEntityLocation(userid, nextLocationId);
-						gameMediator.getWorld().getLocation(currentLocation.getLocationID()).removeEntity(userid);
-						//change key status
-						key.setUsed(true);
-						System.out.println("The key is used now!");
+		Door door = null;
+		Location currentLocation = gameMediator.getWorld().getEntityLocation(userid);
 
-						int positionX=0,positionY=0;
-						for(Coordinate c: gameMediator.getWorld().getEntityLocation(userid).getTiles().keySet()){
-							if(c.getxPostion() == positionX && c.getyPosition() == positionY){
-								gameMediator.getWorld().getLocation(nextLocationId).addEntity(userid,c);
-								System.out.println("USer->"+ userid+"open the door and moves to the new Location");
+		//find the door for nextLocation
+		for (Tile tile:currentLocation.getTiles().values()){
+			if(tile instanceof Door){
+				if (((Door)tile).getCurrentLocationId() == currentLocation.getLocationID()){
+					door = (Door)tile;
+					break;
+				}
 
-								return;
-							}
+			}
+		}
+
+		if(door != null){
+			if (((User)gameMediator.getWorld().getEntity(userid)).getOpenedDoors().contains(door.getDoorId())){
+				//user have already opened this door,only to give a initial coordinate in next location
+				moveUserToNextLocation(door,userid);
+				return;
+			}else{
+				for(Item item: gameMediator.getWorld().getEntity(userid).getBag()){
+					if(item instanceof Key){
+						key = (Key)item;
+						if(!key.isUsed()){
+							moveUserToNextLocation(door,userid);
+							//change key status
+							key.setUsed(true);
+							//add opened door for user
+							((User)gameMediator.getWorld().getEntity(userid)).addOpenedDoors(door.getDoorId());
+							System.out.println("The key is used now!");
 						}
 					}
 				}
+				System.out.println("There is no Key object in the bag!");
 			}
+		}else
+			System.out.println("door is none!");
 		}
-		System.out.println("There is no Key object in the bag!");
+
+
+	public void moveUserToNextLocation(Door door,String userid){
+		if(door != null){
+			String nextLocationId = door.getNextLocationId();
+			Coordinate appearDoor = null;
+
+			//set new location for user
+			if (nextLocationId != null){
+				gameMediator.getWorld().setEntityLocation(userid, nextLocationId);
+				gameMediator.getWorld().getLocation(door.getCurrentLocationId()).removeEntity(userid);
+
+				int positionX=0,positionY=0;
+				//initial user coordinate to nextLocation, near the door
+				for (Map.Entry<Coordinate, Tile> entry : gameMediator.getWorld().getLocation(nextLocationId).getTiles().entrySet()) {
+					if(entry.getValue() instanceof Door){
+						if(((Door)entry.getValue()).getNextLocationId() == door.getCurrentLocationId()){
+							appearDoor = entry.getKey();
+							break;
+						}
+					}
+				}
+				if (appearDoor != null){
+					positionX = appearDoor.getxPostion()+1;
+					positionY = appearDoor.getyPosition();
+				}
+
+				for(Coordinate c: gameMediator.getWorld().getEntityLocation(userid).getTiles().keySet()){
+					if(c.getxPostion() == positionX && c.getyPosition() == positionY){
+						gameMediator.getWorld().getLocation(nextLocationId).addEntity(userid,c);
+						System.out.println("USer->"+ userid+"open the door and moves to the new Location");
+
+						return;
+					}
+				}
+			}
+		}else
+			System.out.println("Door is null!");
+
 	}
 }

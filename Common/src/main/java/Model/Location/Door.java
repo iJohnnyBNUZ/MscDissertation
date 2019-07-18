@@ -3,7 +3,7 @@ package Model.Location;
 public class Door extends Tile {
     private String CurrentLocationId;
     private String NextLocationId;
-    private Door doorId;
+    private String doorId;
 
     public String getCurrentLocationId() {
         return CurrentLocationId;
@@ -21,12 +21,11 @@ public class Door extends Tile {
         NextLocationId = nextLocationId;
     }
 
-
-    public Door getDoorId() {
+    public String getDoorId() {
         return doorId;
     }
 
-    public void setDoorId(Door doorId) {
+    public void setDoorId(String doorId) {
         this.doorId = doorId;
     }
 
