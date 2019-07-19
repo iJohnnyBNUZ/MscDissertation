@@ -36,17 +36,17 @@ public class LocationView{
 	 * */
 	 
 	public void update(Map<String,Coordinate> tiles) {
-		view.initialCanvas();
 		if(tiles.size() == 100) {
-			for(String name: tiles.keySet()) {
-				String fileName = name.replaceAll("[0-9]", "");
-				Platform.runLater(new Runnable() {
-	                @Override public void run() {
-	                	view.draw(fileName, tiles.get(name));
-	    			}
-				});
-				
-			}
+			Platform.runLater(new Runnable() {
+                @Override public void run() {
+                	view.initialBeforeDraw();
+        			for(String name: tiles.keySet()) {
+        				String fileName = name.replaceAll("[0-9]", "");
+        				view.draw(fileName, tiles.get(name));	
+        			}
+    			}
+			});
+			
 		}else {
 			System.out.println("Wrong tiles size");
 		}
