@@ -67,14 +67,14 @@ public class TransactionView {
 		closeUserShop.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
-				newTransaction.setVisible(false);
+				Transaction.setVisible(false);
 			}
 		});
 
 		closeMyBag.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
-				newTransaction.setVisible(false);
+				Transaction.setVisible(false);
 			}
 		});
 
