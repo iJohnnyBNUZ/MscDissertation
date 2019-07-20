@@ -4,14 +4,14 @@ import javafx.scene.control.Label;
 
 public class NPCView{
 
-	private Label notifyWindow;
+	private View view;
 
 	public NPCView(View view) {
 		// TODO Auto-generated constructor stub
-		this.notifyWindow = view.getNotifyWindow();
+		this.view = view;
 	}
 
 	public void updateNpcView(String sentence){
-		notifyWindow.setText(sentence);
+		view.showAlert(sentence);
 	}
 }

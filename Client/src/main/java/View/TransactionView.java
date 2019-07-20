@@ -20,7 +20,7 @@ import java.util.*;
 
 public class TransactionView {
 
-	private TabPane newTransaction;
+	private TabPane Transaction;
 	private Tab user_shop;
 	private VBox usershopVbox;
 	private Label totalValue;
@@ -52,7 +52,7 @@ public class TransactionView {
 		// TODO Auto-generated constructor stub
 		this.user_shop = view.getUser_shop();
 		this.closeUserShop = view.getCloseUserShop();
-		this.newTransaction = view.getNewTransaction();
+		this.Transaction = view.getNewTransaction();
 		this.usershopVbox = view.getUsershopVbox();
 		this.totalValue = view.getTotalValue();
 		this.buy = view.getBuy();
@@ -82,7 +82,7 @@ public class TransactionView {
 
 
 	public void updateTransaction(List<Item> user__shop, String userShopName, List<Item> bag, int money){
-		newTransaction.setVisible(true);
+		//Transaction.setVisible(true);
 		user_shop.setText(userShopName);
 		totalValue.setText("0");
 

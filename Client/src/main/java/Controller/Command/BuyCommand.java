@@ -6,22 +6,20 @@ import Model.Item.Item;
 
 import java.util.HashMap;
 import Controller.ClientMediator;
+import Controller.MessageController;
 
 public class BuyCommand implements Command {
-	
-	private ItemController itemController = null;
-	private ClientMediator clientMediator = null;
+
+	private MessageController messageController = null;
 	private String userID;
 
-    public BuyCommand(Controller itemController2,ClientMediator clientMediator) {
+    public BuyCommand(Controller messageController) {
 		// TODO Auto-generated constructor stub
-    	this.itemController = (ItemController) itemController2;
-    	this.clientMediator = clientMediator;
+    	this.messageController = (MessageController) messageController;
 	}
 
 	public void execute(String usershopName,HashMap<String,Integer> buyList, int buyValue){
-    	userID = clientMediator.getUserName();
-		System.out.println("several items are bought by " + userID + " , it costs "+ buyValue +" coins");
-		itemController.buyItems(userID,usershopName,buyList,buyValue);
+		System.out.println("several items are bought, it costs "+ buyValue +" coins");
+		messageController.buyMessage(usershopName,buyList,buyValue);
 	}
 }

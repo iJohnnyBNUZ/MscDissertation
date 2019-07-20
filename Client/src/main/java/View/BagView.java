@@ -1,20 +1,21 @@
 package View;
 
-import Controller.Command.Command;
 import Controller.Command.EatCommand;
 import Controller.Command.PutDownCommand;
 import Model.Item.Food;
 import Model.Item.Item;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+
 import java.net.URL;
 import java.util.*;
 
@@ -22,8 +23,8 @@ public class BagView{
 
 	private Label numOfCoins;
 	private TabPane tabBagView;
-	private GridPane bagFood;
-	private GridPane bagKeys;
+	private VBox bagFoodVbox;
+	private VBox bagKeysVbox;
 	private Button eatFood;
 	private Button putDownFood;
 	private Button closeFood;
@@ -34,14 +35,13 @@ public class BagView{
 	private EatCommand eatCommand;
 	private PutDownCommand putDownCommand;
 	private String selectedItemId = null;
-	private int energy = 0;
 
 	private int row = 3;
 	private int column = 3;
 	private double image_h = 50.0;
 	private double image_w =50.0;
-
-
+	private List<GridPane> gridPaneFoodList = new LinkedList<GridPane>();
+	private List<GridPane> gridPaneKeyList = new LinkedList<GridPane>();
 
 	public BagView(View view) {
 		// TODO Auto-generated constructor stub
@@ -50,10 +50,10 @@ public class BagView{
 		this.eatFood = view.getEatFood();
 		this.putDownFood = view.getPutDownFood();
 		this.closeFood = view.getCloseFood();
-		this.bagFood = view.getBagFood();
+		this.bagFoodVbox = view.getBagFoodVbox();
 		this.putDownKey = view.getPutDownKey();
 		this.closeKey= view.getCloseKey();
-		this.bagKeys = view.getBagKeys();
+		this.bagKeysVbox = view.getBagKeysVbox();
 		this.closeCoins = view.getCloseCoins();
 
 		this.eatCommand = eatCommand;
@@ -83,7 +83,10 @@ public class BagView{
 	}
 
 
+
 	public void updateBag(List<Item> bag,int money){
+		bagFoodVbox.getChildren().clear();
+		bagKeysVbox.getChildren().clear();
 		numOfCoins.setText(String.valueOf(money));
 
 		/* get List<String> foodItems of food and keyItems of key */
@@ -101,30 +104,38 @@ public class BagView{
 		}
 
 		/* preparation for displaysing */
-		int r = 0;
-		int c = 0;
 		final GaussianBlur effect = new GaussianBlur();
 
 		/* display food in the bag */
 		if(foodItems != null){
 			Set<String> uniqueFoodSet = new HashSet<String>(foodItems);
 			for (final String tmp_food_name : uniqueFoodSet){
-				if (r > row - 1) {
-					System.out.println("ERROR");
-					break;
-				}
-				//create border pane for each item
-				final BorderPane food_item = new BorderPane();
-				//create label to show the number of item
-				Label food_item_num = new Label("" + Collections.frequency(foodItems, tmp_food_name));
-				food_item.setBottom(food_item_num);
-				//create ImageView to each of the items
+
 				final ImageView food_item_img = new ImageView();
 				URL url = this.getClass().getResource("/images/" + tmp_food_name + ".png");
 				final Image food_image = new Image(url.toString(), image_h, image_w, false, false);
-				//create item's image.
 				food_item_img.setImage(food_image);
-				food_item.setCenter(food_item_img);
+				final Label numOfFood = new Label();
+				numOfFood.setText(String.valueOf(Collections.frequency(foodItems, tmp_food_name)));
+				numOfFood.setPrefWidth(80);
+				numOfFood.setAlignment(Pos.CENTER);
+				final Label energy = new Label();
+				for(Item item: bag){
+					final String foodString = item.getItemID().replaceAll("[0-9]","");
+					if(foodString.toString().equals(tmp_food_name)){
+						final Food food = (Food)item;
+						energy.setText(String.valueOf(food.getEnergy()));
+						break;
+					}
+				}
+				energy.setPrefWidth(100);
+				energy.setAlignment(Pos.CENTER);
+				final GridPane foodBox = new GridPane();
+				foodBox.add(food_item_img,0,0);
+				foodBox.add(numOfFood,1,0);
+				foodBox.add(energy,2,0);
+				bagFoodVbox.getChildren().add(foodBox);
+				gridPaneFoodList.add(foodBox);
 				food_item_img.setOnMouseClicked(new EventHandler<MouseEvent>() {
 					@Override
 					public void handle(MouseEvent mouseEvent) {
@@ -133,58 +144,46 @@ public class BagView{
 							selectedItemId = null;
 						}
 						else{
-							cleanSelect(bagFood);
+							cleanSelect(bagFoodVbox,gridPaneFoodList);
 							food_item_img.setEffect(effect);
 							//set selectedItemId
 							for(Item item: bag){
-								String[] name = item.getItemID().split("0|1|2|3|4|5|6|7|8|9");
-								StringBuffer itemString = new StringBuffer();
-								for (String s : name) {
-									itemString.append(s);
-								}
-								if(itemString.toString().equals(tmp_food_name)){
+								String foodString = item.getItemID().replaceAll("[0-9]","");
+								if(foodString.toString().equals(tmp_food_name)){
 									selectedItemId = item.getItemID();
-									final Food food = (Food) item;
-									energy = food.getEnergy();
 									break;
 								}
 							}
 						}
 					}
 				});
-				//set the item's position.
-				bagFood.add(food_item, c, r);
-				if (c < column - 1) {
-					c++;
-				} else {
-					c = 0;
-					r++;
-				}
+
 			}
 		}
 
-		r = 0;
-		c = 0;
+
 		/* display keys in the bag */
 		if(keyItems != null){
 			Set<String> uniqueKeySet = new HashSet<String>(keyItems);
 			for (final String tmp_key_name : uniqueKeySet){
-				if (r > row - 1) {
-					System.out.println("ERROR");
-					break;
-				}
-				//create border pane for each item
-				final BorderPane key_item = new BorderPane();
-				//create label to show the number of item
-				Label key_item_num = new Label("" + Collections.frequency(keyItems, tmp_key_name));
-				key_item.setBottom(key_item_num);
-				//create ImageView to each of the items
+
+				final Label blank = new Label();
+				blank.setPrefWidth(25);
 				final ImageView key_item_img = new ImageView();
 				URL url = this.getClass().getResource("/images/" + tmp_key_name + ".png");
 				final Image key_image = new Image(url.toString(), image_h, image_w, false, false);
-				//create item's image.
 				key_item_img.setImage(key_image);
-				key_item.setCenter(key_item_img);
+				final Label numOfKey = new Label();
+				numOfKey.setText(String.valueOf(Collections.frequency(keyItems, tmp_key_name)));
+				numOfKey.setPrefWidth(180);
+				numOfKey.setAlignment(Pos.CENTER);
+
+				final GridPane keyBox = new GridPane();
+				keyBox.add(blank,0,0);
+				keyBox.add(key_item_img,1,0);
+				keyBox.add(numOfKey,2,0);
+				bagKeysVbox.getChildren().add(keyBox);
+				gridPaneKeyList.add(keyBox);
 				key_item_img.setOnMouseClicked(new EventHandler<MouseEvent>() {
 					@Override
 					public void handle(MouseEvent mouseEvent) {
@@ -193,12 +192,12 @@ public class BagView{
 							selectedItemId = null;
 						}
 						else{
-							cleanSelect(bagKeys);
+							cleanSelect(bagKeysVbox,gridPaneKeyList);
 							key_item_img.setEffect(effect);
 							//set selectedItemId
 							for(Item item: bag){
-								String itemString = item.getItemID().replaceAll("[0-9]","");
-								if(itemString.equals(tmp_key_name)){
+								String keyString = item.getItemID().replaceAll("[0-9]","");
+								if(keyString.toString().equals(tmp_key_name)){
 									selectedItemId = item.getItemID();
 									break;
 								}
@@ -206,14 +205,8 @@ public class BagView{
 						}
 					}
 				});
-				//set the item's position.
-				bagKeys.add(key_item, c, r);
-				if (c < column - 1) {
-					c++;
-				} else {
-					c = 0;
-					r++;
-				}
+
+
 			}
 		}
 
@@ -231,17 +224,22 @@ public class BagView{
 			}
 		});
 
-
+		putDownKey.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent actionEvent) {
+				putDownCommand.execute(selectedItemId);
+			}
+		});
 
 	}
 
 
-	private void cleanSelect(GridPane gridPane){
-		int size = gridPane.getChildren().size();
+	private void cleanSelect(VBox vBox, List<GridPane> gridPaneList){
+		int size = gridPaneList.size();
 		for(int i=0; i<size; i++){
-			BorderPane item = (BorderPane) gridPane.getChildren().get(i);
-			if(item.getCenter().getEffect()!=null)
-				item.getCenter().setEffect(null);
+			ImageView imageView = (ImageView)gridPaneList.get(i).getChildren().get(0);
+			if(imageView.getEffect()!=null)
+				imageView.setEffect(null);
 		}
 	}
 

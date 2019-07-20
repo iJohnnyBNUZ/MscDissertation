@@ -44,6 +44,11 @@
                   <MenuItem fx:id="openChat" mnemonicParsing="false" onAction="#showChat" text="Open the chat" />
                </items>
             </Menu>
+            <Menu fx:id="Bag1111" mnemonicParsing="false" text="Transaction">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#showTransaction" text="Open the transaction" />
+               </items>
+            </Menu>
             <!--
             <Menu mnemonicParsing="false" text="ItemPosition">
                 <items>
@@ -58,7 +63,6 @@
       <ProgressBar fx:id="energy" layoutX="168.0" layoutY="453.0" prefWidth="200.0" progress="0.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="150.0" />
       <ImageView fx:id="coinIcon" fitHeight="20.0" fitWidth="20.0" layoutX="405.0" layoutY="453.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="380.0" />
       <Label fx:id="coin" layoutX="443.0" layoutY="455.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="400.0" />
-      <Label fx:id="notifyWindow" layoutX="432.0" layoutY="455.0" prefHeight="28.0" prefWidth="151.0" text="show message when clicks NPC" visible="false" />
       <AnchorPane fx:id="forImage" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="40.0" />
       <AnchorPane fx:id="chatView" layoutX="10.0" layoutY="32.0" prefHeight="387.0" prefWidth="324.0" style="-fx-background-color: #F5F5F5;" visible="false">
          <children>
@@ -76,7 +80,7 @@
             </ScrollPane>
          </children>
       </AnchorPane>
-      <TabPane fx:id="tabBagView" layoutX="10.0" layoutY="40.0" prefHeight="272.0" prefWidth="291.0" tabClosingPolicy="UNAVAILABLE" visible="false">
+      <TabPane fx:id="tabBagView" layoutX="10.0" layoutY="40.0" prefHeight="377.0" prefWidth="308.0" tabClosingPolicy="UNAVAILABLE" visible="false">
          <tabs>
             <Tab fx:id="food" text="Food">
                <content>
@@ -94,9 +98,17 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                         </GridPane>
-                        <Button fx:id="putDownFood" layoutX="88.0" layoutY="205.0" mnemonicParsing="false" text="Put Down" />
-                        <Button fx:id="closeFood" layoutX="188.0" layoutY="205.0" mnemonicParsing="false" text="Close" />
-                        <Button fx:id="eatFood" layoutX="27.0" layoutY="205.0" mnemonicParsing="false" text="Eat" />
+                        <Button fx:id="putDownFood" layoutX="88.0" layoutY="310.0" mnemonicParsing="false" text="Put Down" />
+                        <Button fx:id="closeFood" layoutX="188.0" layoutY="310.0" mnemonicParsing="false" text="Close" />
+                        <Button fx:id="eatFood" layoutX="27.0" layoutY="310.0" mnemonicParsing="false" text="Eat" />
+                        <Label layoutX="20.0" layoutY="10.0" text="Food" />
+                        <Label layoutX="80.0" layoutY="10.0" text="Number" />
+                        <Label layoutX="150.0" layoutY="10.0" prefHeight="17.0" prefWidth="151.0" text="Energy of each Item" />
+                        <ScrollPane layoutX="15.0" layoutY="37.0" prefHeight="260.0" prefWidth="277.0">
+                           <content>
+                              <VBox fx:id="bagFoodVbox" layoutX="15.0" prefHeight="200.0" prefWidth="280.0" />
+                           </content>
+                        </ScrollPane>
                      </children>
                   </AnchorPane>
                </content>
@@ -105,20 +117,15 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #F5F5F5;">
                      <children>
-                        <GridPane fx:id="bagKeys" prefHeight="202.0" prefWidth="258.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                        </GridPane>
-                        <Button fx:id="putDownKey" layoutX="60.0" layoutY="205.0" mnemonicParsing="false" text="Put Down" />
-                        <Button fx:id="closeKey" layoutX="150.0" layoutY="205.0" mnemonicParsing="false" text="Close" />
+                        <Button fx:id="putDownKey" layoutX="70.0" layoutY="310.0" mnemonicParsing="false" text="Put Down" />
+                        <Button fx:id="closeKey" layoutX="170.0" layoutY="310.0" mnemonicParsing="false" text="Close" />
+                        <Label layoutX="75.0" layoutY="10.0" text="Keys" />
+                        <Label layoutX="180.0" layoutY="10.0" text="Number" />
+                        <ScrollPane layoutX="39.0" layoutY="37.0" prefHeight="260.0" prefWidth="232.0">
+                           <content>
+                              <VBox fx:id="bagKeysVbox" layoutX="15.0" prefHeight="200.0" prefWidth="280.0" />
+                           </content>
+                        </ScrollPane>
                      </children>
                   </AnchorPane>
                </content>
@@ -128,7 +135,7 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #F5F5F5;">
                      <children>
                         <Label fx:id="numOfCoins" layoutX="96.0" layoutY="54.0" prefHeight="28.0" prefWidth="55.0" />
-                        <Button fx:id="closeCoins" layoutX="100.0" layoutY="205.0" mnemonicParsing="false" text="Close" />
+                        <Button fx:id="closeCoins" layoutX="130.0" layoutY="54.0" mnemonicParsing="false" text="Close" />
                      </children>
                   </AnchorPane>
                </content>

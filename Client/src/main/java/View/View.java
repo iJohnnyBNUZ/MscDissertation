@@ -66,16 +66,13 @@ public class View {
 	private VBox messageBox;
 
 	@FXML
-	private Label notifyWindow;
-
-	@FXML
 	private TabPane tabBagView;
 
 	@FXML
-	private GridPane bagFood;
+	private VBox bagFoodVbox;
 
 	@FXML
-	private GridPane bagKeys;
+	private VBox bagKeysVbox;
 
 	@FXML
 	private Button eatFood;
@@ -133,32 +130,32 @@ public class View {
 
 
 	private double tileWidth = 0;
-    
-    private double tileHeight = 0;
-    
-    private double image_h = 64.0;
-    
+
+	private double tileHeight = 0;
+
+	private double image_h = 64.0;
+
 	private double image_w = 64.0;
-	
+
 	private MoveCommand moveCommand = null;
 	private SaveGameCommand saveGameCommand = null;
 	private LogOutCommand logOutCommand= null;
-	
-	
-    // This method is automatically invoked by the FXMLLoader - it's magic
-    // This method must be public
-    public void initialize() {
-    	System.out.println("initializeeeeeeeeeeeeeeeeeeee!!!!!!");
+
+
+	// This method is automatically invoked by the FXMLLoader - it's magic
+	// This method must be public
+	public void initialize() {
+		System.out.println("initializeeeeeeeeeeeeeeeeeeee!!!!!!");
 		setCoinImage();
 		setUserImage();
-    }
+	}
 	public AnchorPane getPage() { return page; }
 
 	public Canvas getMapView() { return mapView; }
 
 
 	public AnchorPane getForImage() { return forImage; }
-	
+
 
 	public ImageView getUserImage() { return userImage; }
 
@@ -178,13 +175,11 @@ public class View {
 
 	public VBox getMessageBox() { return messageBox; }
 
-	public Label getNotifyWindow() { return notifyWindow; }
-
 	public TabPane getTabBagView() { return tabBagView; }
 
-	public GridPane getBagFood() { return bagFood; }
+	public VBox getBagFoodVbox() { return bagFoodVbox; }
 
-	public GridPane getBagKeys() { return bagKeys; }
+	public VBox getBagKeysVbox() { return bagKeysVbox; }
 
 	public Button getEatFood() { return eatFood; }
 
@@ -223,7 +218,7 @@ public class View {
 	public Button getCloseMyBag() { return closeMyBag; }
 
 
-	
+
 	public double getTileWidth() {
 		return tileWidth;
 	}
@@ -235,19 +230,23 @@ public class View {
 
 
 	public void showBag() {
-    	chatView.setVisible(false);
-    	tabBagView.setVisible(true);
-    }
+		chatView.setVisible(false);
+		tabBagView.setVisible(true);
+	}
 
 	public void showChat() {
-    	tabBagView.setVisible(false);
-    	chatView.setVisible(true);
-    }
-    
-	
-    public void saveGame() {
-    	saveGameCommand.execute();
-    }
+		tabBagView.setVisible(false);
+		chatView.setVisible(true);
+	}
+
+	public void showTransaction() {
+		newTransaction.setVisible(true);
+	}
+
+
+	public void saveGame() {
+		saveGameCommand.execute();
+	}
 
 
 	public void bindScene(Scene scene) {
@@ -257,22 +256,22 @@ public class View {
 		System.out.println(scene.getHeight());
 		System.out.println(mapView.getHeight());
 		initialBeforeDraw();
-		
+
 	}
-	
-	
+
+
 	public void setCoinImage() {
 		URL url = this.getClass().getResource("/images/coin.png");
 		Image image = new Image(url.toString(), coinIcon.getFitWidth(), coinIcon.getFitHeight() , false, false);
 		coinIcon.setImage(image);
 	}
-	
+
 	public void setUserImage() {
 		URL url = this.getClass().getResource("/images/player.png");
 		Image image = new Image(url.toString(), userImage.getFitWidth(), userImage.getFitHeight() , false, false);
 		userImage.setImage(image);
 	}
-	
+
 	public void draw(String fileName, Coordinate position) {
 		GraphicsContext gContext = mapView.getGraphicsContext2D();
 		tileWidth=mapView.getWidth()/10;
@@ -280,20 +279,20 @@ public class View {
 		//create Image to each of the items
 		URL url = this.getClass().getResource("/images/" + fileName + ".png");
 		Image image = new Image(url.toString(), image_h, image_w, false, false);
-		
+
 		gContext.drawImage(image,0, 0,image_h,image_w, position.getyPosition()*tileWidth,
 				position.getxPostion()*tileHeight,tileWidth,tileHeight);
-		
+
 	}
-	
+
 	public ImageView drawClickable(String fileName, Coordinate position, Boolean isItemTile) {
 		tileWidth=mapView.getWidth()/10;
 		tileHeight = mapView.getHeight()/10;
-		
+
 		//create ImageView  to each of the items
 		ImageView imgView = new ImageView();
 		URL url = this.getClass().getResource("/images/" + fileName + ".png");
-		
+
 		if(!isItemTile) {
 			Image image = new Image(url.toString(), image_h, image_w, false, false);
 			imgView.setImage(image);
@@ -304,7 +303,7 @@ public class View {
 			System.out.println("creat image of: "+ fileName);
 
 		}
-		
+
 		imgView.setLayoutX(position.getyPosition()*tileWidth);
 		imgView.setLayoutY(position.getxPostion()*tileHeight);
 		System.out.println(forImage.getChildren().size());
@@ -312,15 +311,15 @@ public class View {
 		System.out.println("draw clickable: "+ fileName);
 		return imgView;
 	}
-	
+
 	public void initialBeforeDraw() {
 		initialCanvas();
 		initialForImage();
 	}
-	
+
 	public void initialCanvas() {
 		GraphicsContext gContext = mapView.getGraphicsContext2D();
-		
+
 		gContext.save();
 
 		gContext.setFill(Color.WHITE);
@@ -328,11 +327,11 @@ public class View {
 		gContext.clearRect(0, 0, mapView.getWidth(), mapView.getHeight());
 
 		gContext.setStroke(Color.BLACK);
-		
-		
+
+
 	}
-	
-	
+
+
 	public void initialForImage() {
 		System.out.println("initial forImage");
 		forImage.getChildren().clear();
@@ -350,22 +349,22 @@ public class View {
 					e.printStackTrace();
 				}
 			}
-			
+
 		});
 	}
-	
+
 	public void setMoveCommand(Command command) {
 		moveCommand = (MoveCommand) command;
 	}
-	
+
 	public void setSaveGameCommand(Command command) {
 		saveGameCommand = (SaveGameCommand) command;
 	}
-	
+
 	public void setLogOutCommand(Command command) {
 		logOutCommand = (LogOutCommand) command;
 	}
-	
+
 	/**
 	 * Before close the game, user need to choose save game or continue to play the game.
 	 * @param primaryStage
@@ -381,34 +380,35 @@ public class View {
 				alert.setTitle("Exit game");
 				alert.setHeaderText("Are your sure to exit game");
 				ButtonType buttonSave = new ButtonType("Exit and save");
-				ButtonType buttonCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE); 
-				alert.getButtonTypes().setAll(buttonSave, buttonCancel); 
+				ButtonType buttonCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+				alert.getButtonTypes().setAll(buttonSave, buttonCancel);
 				Optional<ButtonType> result = alert.showAndWait();
 				if (result.get() == buttonSave){
 					System.out.println("Save");
 					saveGame();
 					logOutCommand.execute();
 					System.exit(0);
-				}else if(result.get() == buttonCancel){ 
+				}else if(result.get() == buttonCancel){
 					alert.close();
 					w.consume();
 				}
 			}
-			
+
 		});
 	}
 
 
-	
-	
-	/**
+
+
+	/*
 	 * This method is used to draw a rectangle to show where is available to drop the item.
-	 * @param cor the position of the current user
+	 * @param  cor the position of the current user
 	 * @return square vertex coordinates
 	 */
-	/*public Map<String,Double> drawRectangle(Coordinate cor) {
-	
-		
+	/*
+	public Map<String,Double> drawRectangle(Coordinate cor) {
+
+
 		// TODO Auto-generated method stub
 		GraphicsContext gContext = mapView.getGraphicsContext2D();
 		tileWidth=mapView.getWidth()/10;
@@ -416,7 +416,7 @@ public class View {
 		gContext.beginPath();
 		double beginX=(cor.getxPostion()-1)*tileWidth;
 		double beginY=(cor.getyPosition()-1)*tileHeight;
-		
+
 		gContext.setStroke(Color.RED);
 		gContext.setLineWidth(2.0);
 		gContext.strokeRect(beginX, beginY, 3*tileWidth, 3*tileHeight);
@@ -428,4 +428,13 @@ public class View {
 		System.out.println(beginX+"   "+beginY+"   "+3*tileWidth+"   "+3*tileHeight);
 		return boundary;
 	}*/
+
+	public void showAlert(String message){
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION,message,new ButtonType("Cancel", ButtonBar.ButtonData.NO),
+				new ButtonType("Confirm", ButtonBar.ButtonData.YES));
+		alert.setTitle("Information");
+		alert.setHeaderText("");
+		alert.show();
+	}
+
 }

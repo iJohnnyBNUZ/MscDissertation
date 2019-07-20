@@ -7,7 +7,6 @@ import java.util.List;
 public class CommunicationController implements Controller {
 
     private ClientMediator clientMediator;
-    private ChatView chatView;
     private String userID;
 
     public CommunicationController(ClientMediator clientMediator){
@@ -16,8 +15,6 @@ public class CommunicationController implements Controller {
 
     public void addMessages(String message){
     	this.clientMediator.getWorld().addMessage(message);
-        chatView = clientMediator.getChatView();
-        //chatView.updateChat(this.clientMediator.getWorld().getMessageList());
     }
 
 	public void communicateWith(String id,String time) {
