@@ -8,24 +8,24 @@ import Model.Location.Location;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ItemController implements Controller{
     private GameMediator gameMediator;
 
 
-    ItemController(GameMediator gameMediator){
+    public ItemController(GameMediator gameMediator){
 
         this.gameMediator = gameMediator;
     }
 
-    public void pickUp(Coordinate coordinate){
-        //get current userID
-        String userID = "";
+    public void pickUp(String userID, Coordinate coordinate){
         // delete from location
         Location location = this.gameMediator.getWorld().getEntityLocation(userID);
         Item item = null;
         if (location.getItems().get(coordinate) != null){
-            item = location.getItems().remove(coordinate);
+            item = location.getItems().get(coordinate);
+            location.getItems().remove(coordinate);
         }
 
         // add to user's bag
