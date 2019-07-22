@@ -107,9 +107,11 @@ public class Client implements Runnable {
 			this.objectOutputStream = new ObjectOutputStream(os);
 			this.objectInputStream = new ObjectInputStream((s.getInputStream()));
 			new Thread(this).start();
-			
 			getWorldFromServer();
-
+			Object input = objectInputStream.readObject();
+			if(input instanceof World) {
+				updateWorld((World)input);
+			}
 		} catch (Exception ex){
 			canRun=false;
 		}
@@ -117,7 +119,7 @@ public class Client implements Runnable {
 		return canRun;
 	}
 		
-	private void getWorldFromServer() throws IOException, ClassNotFoundException {
+	public void getWorldFromServer() throws IOException, ClassNotFoundException {
 		objectOutputStream.writeObject("getWorld");
 	}
 	
@@ -127,10 +129,10 @@ public class Client implements Runnable {
 			createUser(uName);
 			//getWorldFromServer();
 		}else if(type.equals("continue")) {
-			if (!((User) clientMediator.getWorld().getEntity(uName)).getOnline()){
+			//if (!((User) clientMediator.getWorld().getEntity(uName)).getOnline()){
 				((User) clientMediator.getWorld().getEntity(uName)).setOnline(true);
-				objectOutputStream.writeObject(clientMediator.getWorld());
-			}
+				objectOutputStream.writeObject(clientMediator.getWorld().getEntity(uName));
+			//}
 		}
 		
 	}
@@ -138,6 +140,10 @@ public class Client implements Runnable {
 	public void MoveTo(String command)throws IOException, ClassNotFoundException {
 		if(command != null)
 			objectOutputStream.writeObject((Object) command);
+	}
+
+	public void OpenDoor(String command)throws IOException, ClassNotFoundException{
+		if(command != null || command.equals("o")) objectOutputStream.writeObject((Object) "OpenDoor");
 	}
 	
 	private void createUser(String userName) throws IOException, ClassNotFoundException {
@@ -176,16 +182,9 @@ public class Client implements Runnable {
 
 	private void updateWorld(World world) {
 		clientMediator.setWorld(world);
+		System.out.print("Entity in the world:");
 		for (Entity entity : world.getEntities()) {
-			System.out.println(entity);
-		}
-		StringBuilder printString = new StringBuilder();
-		for(Entity entity: clientMediator.getWorld().getEntities()){
-			String name = entity.getEntityID();
-			String userInfo = name+"'s coordinate to"+"["+
-					clientMediator.getWorld().getEntityLocation(name).getEntities().get(name).getxPostion()
-					+","+ clientMediator.getWorld().getEntityLocation(name).getEntities().get(name).getyPosition()+"]";
-			printString.append(userInfo);
+			System.out.print(entity.getEntityID()+", ");
 		}
 	}
 

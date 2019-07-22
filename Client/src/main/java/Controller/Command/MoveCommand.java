@@ -22,10 +22,10 @@ public class MoveCommand implements Command {
         // TODO pass userName to MoveTO()
     	ResourceBundle rb = ResourceBundle.getBundle("config");
 		//String uName = rb.getString("userName");
-		clientMediator.getClient().MoveTo(direction.toLowerCase());
         String uName = clientMediator.getClient().getUserName();
         System.out.println(uName+"Move to in Command-> "+direction);
         locationController.moveTo(uName, direction.toLowerCase());
+		clientMediator.getClient().MoveTo(direction.toLowerCase());
     }
 
 }

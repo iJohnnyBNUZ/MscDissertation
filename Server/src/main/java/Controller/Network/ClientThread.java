@@ -26,6 +26,7 @@ public class ClientThread extends Thread implements Runnable {
 		objectInput = new ObjectInputStream(socket.getInputStream());
 		objectOutput = new ObjectOutputStream(socket.getOutputStream());
 		this.serverMediator = serverMediator;
+		this.locationController = new LocationController(this.serverMediator);
 	}
 
 	@Override
@@ -77,10 +78,17 @@ public class ClientThread extends Thread implements Runnable {
 	}
 
 	private void handleEntity(User user) {
-		System.out.println(user.getEntityID());
-		serverMediator.getWorld().addEntity(user);
-		this.userName = user.getEntityID();
-		initEntityLocation(userName);
+		//old users, continue the game
+		if (serverMediator.getWorld().getEntity(user.getUserId()) != null){
+			System.out.println("User "+ user.getEntityID()+" exist, continue game.");
+			((User)serverMediator.getWorld().getEntity(user.getEntityID())).setOnline(true);
+			this.userName = user.getUserId();
+		}else{
+			//new user
+			serverMediator.getWorld().addEntity(user);
+			this.userName = user.getEntityID();
+			initEntityLocation(userName);
+		}
 	}
 
 	private void initEntityLocation(String userName){
@@ -106,7 +114,6 @@ public class ClientThread extends Thread implements Runnable {
 			case "right":
 			case "up":
 			case "down":
-				locationController = new LocationController(serverMediator);
 				System.out.println(this.userName+" move----->"+command);
 				locationController.moveTo(this.userName, command);
 				try {
@@ -117,6 +124,14 @@ public class ClientThread extends Thread implements Runnable {
 				System.out.println("Change " + userName + "'s coordinate to" + "[" +
 						serverMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getxPostion()
 						+ "," + serverMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getyPosition() + "]");
+				break;
+			case "OpenDoor":
+				locationController.openDoor(this.userName);
+				try {
+					objectOutput.writeObject(serverMediator.getWorld());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 				break;
 			case "getWorld":
 				try {
@@ -135,7 +150,7 @@ public class ClientThread extends Thread implements Runnable {
 
 	private void logout() {
 		Entity entity =  serverMediator.getWorld().getEntity(userName);
-
+		System.out.println("logout now!!!!!");
 		if (entity instanceof User){
 			((User) entity).logout();
 			server.removeClient(this);

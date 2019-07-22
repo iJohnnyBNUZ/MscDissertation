@@ -34,7 +34,7 @@ public class RunClient extends Application {
 		
 		//initialize the controllers, commands, and observers.
 		clientMediator.initialController();
-		
+
 		//bind the commands (related to the index view) with index view.
 		clientMediator.bindIndexCommand();
 		

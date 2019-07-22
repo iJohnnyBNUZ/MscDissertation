@@ -1,17 +1,27 @@
 package Controller;
 
+import Model.Entity.Entity;
 import Model.Entity.User;
 
 import java.io.IOException;
 
 public class UserController implements Controller {
+
 	private ClientMediator clientMediator;
 	
 	public UserController(ClientMediator clientMediator){
 		
 	    this.clientMediator = clientMediator;
 	}
-	
+
+	public ClientMediator getClientMediator() {
+		return clientMediator;
+	}
+
+	public void setClientMediator(ClientMediator clientMediator) {
+		this.clientMediator = clientMediator;
+	}
+
 	public void startGame(String type, String uName, String IP) throws IOException, ClassNotFoundException {
 		if(clientMediator.getClient().connectToServer(IP)) {
 			Boolean result = isUserExist(uName);
@@ -27,7 +37,7 @@ public class UserController implements Controller {
 				}
 			}else if(type == "continue") {
 				if(result == true) {
-					System.out.println("Start the game:"+ uName +IP);
+					System.out.println("Continue the game:  "+ uName +" "+IP);
 					clientMediator.setUserName(uName);
 					clientMediator.getClient().login("continue",uName);
 					clientMediator.enterGame();
@@ -46,11 +56,11 @@ public class UserController implements Controller {
 
 	public Boolean isUserExist(String uName) {
 		Boolean result = false;
-		if (clientMediator.getWorld().getEntity(uName) instanceof User){
+		if(clientMediator.getWorld().getEntity(uName)instanceof User){
 			result = true;
-		}else {
+		}else
 			System.out.println("User "+uName+" is not exist!");
-		}
+
 		return result;
 	}
 }

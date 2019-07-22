@@ -65,9 +65,8 @@ public class ClientMediator implements GameMediator {
 	private StartGameCommand startGameCommand = null;
 	private SaveGameCommand saveGameCommand = null;
 	private LogOutCommand logOutCommand = null;
+	private OpenDoorCommand openDoorCommand = null;
 
-
-	
 	public ClientMediator() {
 		this.world = new World();
 	}
@@ -356,7 +355,13 @@ public class ClientMediator implements GameMediator {
 		this.startGameCommand = startGameCommand;
 	}
 
+	public OpenDoorCommand getOpenDoorCommand() {
+		return openDoorCommand;
+	}
 
+	public void setOpenDoorCommand(OpenDoorCommand openDoorCommand) {
+		this.openDoorCommand = openDoorCommand;
+	}
 
 	public SaveGameCommand getSaveGameCommand() {
 		return saveGameCommand;
@@ -413,6 +418,7 @@ public class ClientMediator implements GameMediator {
 		
 		
 		this.moveCommand = new MoveCommand(locationController,this);
+		this.openDoorCommand = new OpenDoorCommand(locationController,this);
 		this.startGameCommand = new StartGameCommand(userController);
 		this.putDownCommand = new PutDownCommand(itemController,this);
 		this.eatCommand = new EatCommand(itemController,this);
@@ -452,6 +458,7 @@ public class ClientMediator implements GameMediator {
 	 */
 	public void bindViewCommand() {
 		view.setMoveCommand(moveCommand);
+		view.setOpenDoorCommand(openDoorCommand);
 		view.setSaveGameCommand(saveGameCommand);
 		view.setLogOutCommand(logOutCommand);
 		itemView.setPickUpCommand(pickUpCommand);

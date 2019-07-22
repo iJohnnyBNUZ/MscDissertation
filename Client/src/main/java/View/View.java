@@ -4,10 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 
-import Controller.Command.Command;
-import Controller.Command.LogOutCommand;
-import Controller.Command.MoveCommand;
-import Controller.Command.SaveGameCommand;
+import Controller.Command.*;
 import Model.Location.Coordinate;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -140,6 +137,7 @@ public class View {
 	private MoveCommand moveCommand = null;
 	private SaveGameCommand saveGameCommand = null;
 	private LogOutCommand logOutCommand= null;
+	private OpenDoorCommand openDoorCommand = null;
 
 
 	// This method is automatically invoked by the FXMLLoader - it's magic
@@ -342,7 +340,10 @@ public class View {
 				// TODO Auto-generated method stub
 				System.out.println(k.getCode().getName());
 				try {
-					moveCommand.excute(k.getCode().getName());
+					if(k.getCode().getName().equals("Left") || k.getCode().getName().equals("Right")||k.getCode().getName().equals("Up")|| k.getCode().getName().equals("Down"))
+						moveCommand.excute(k.getCode().getName());
+					else if (k.getCode().getName().equals("o") || k.getCode().getName().equals("O"))
+						openDoorCommand.excute(k.getCode().getName());
 				} catch (IOException e) {
 					e.printStackTrace();
 				} catch (ClassNotFoundException e) {
@@ -364,6 +365,8 @@ public class View {
 	public void setLogOutCommand(Command command) {
 		logOutCommand = (LogOutCommand) command;
 	}
+
+	public void setOpenDoorCommand(Command command){openDoorCommand = (OpenDoorCommand)command;}
 
 	/**
 	 * Before close the game, user need to choose save game or continue to play the game.

@@ -1,15 +1,21 @@
 package Controller.Command;
 
+import Controller.ClientMediator;
 import Controller.LocationController;
+
+import java.io.IOException;
 
 public class OpenDoorCommand implements Command {
     LocationController locationController;
+    ClientMediator clientMediator;
 
-    public OpenDoorCommand(LocationController locationController){
+    public OpenDoorCommand(LocationController locationController, ClientMediator clientMediator){
         this.locationController = locationController;
+        this.clientMediator = clientMediator;
     }
 
-    public void excute(String keyId){
-        locationController.openDoor(keyId);
+    public void excute(String commandString) throws IOException, ClassNotFoundException {
+        locationController.openDoor(clientMediator.getClient().getUserName());
+        clientMediator.getClient().OpenDoor(commandString.toLowerCase());
     }
 }

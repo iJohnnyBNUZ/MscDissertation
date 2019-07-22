@@ -2,12 +2,11 @@ package Controller.Command;
 
 import java.io.IOException;
 
-import Controller.CommunicationController;
 import Controller.Controller;
 import Controller.UserController;
 
-public class StartGameCommand {
-	 private UserController userController = null;
+public class StartGameCommand implements Command {
+		private UserController userController = null;
 
 	    public StartGameCommand(Controller userController2){
 	        this.userController = (UserController) userController2;
