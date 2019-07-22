@@ -35,10 +35,33 @@ public class ItemControllerTest extends BaseTest {
         }
         int beforeSize = location.getItems().size();
         int beforeBag = entity.getBag().size();
+
         itemController.pickUp("testUser", new Coordinate(0, 0));
+
         assertEquals(location.getItems().size(), beforeSize - 1);
         assertEquals(entity.getBag().size(), beforeBag + 1);
 
+    }
+
+    @Test
+    public void dropTest(){
+        if(location == null)
+            return;
+
+        Entity entity = this.gameMediator.getWorld().getEntity("testUser");
+        if (entity == null){
+            return;
+        }
+
+        int beforeSize = location.getItems().size();
+        int beforeBag = entity.getBag().size();
+
+        location.getEntities().put("testUser", new Coordinate(3,4));
+        itemController.drop("testUser", "apple3");
+
+
+        assertEquals(location.getItems().size(), beforeSize + 1);
+        assertEquals(entity.getBag().size(), beforeBag - 1);
     }
 
 

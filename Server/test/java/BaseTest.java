@@ -63,9 +63,14 @@ public class BaseTest {
         gameMediator.getWorld().addEntity(e3);
 
         User user = new User("testUser");
+
+        Item item4 = new Food("apple3", 10, 10, "food");
+        user.addToBag(item4);
         Coordinate n_cor4 = new Coordinate(0, 0);
         l1.addEntity("testUser", n_cor4);
         gameMediator.getWorld().addEntity(user);
+
+
 
     }
 
