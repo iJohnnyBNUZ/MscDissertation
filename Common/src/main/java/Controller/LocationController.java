@@ -48,6 +48,7 @@ public class LocationController implements Controller{
 		for(Coordinate c: gameMediator.getWorld().getEntityLocation(userid).getTiles().keySet()){
 			if(c.getxPostion() == positionx && c.getyPosition() == positiony){
 				gameMediator.getWorld().getEntityLocation(userid).changeUserCoordinate(userid, c);
+				gameMediator.getWorld().getEntity(userid).decreaseEnergy(1);
 				return;
 			}
 		}
@@ -62,7 +63,7 @@ public class LocationController implements Controller{
 		//find the door for nextLocation
 		for (Tile tile:currentLocation.getTiles().values()){
 			if(tile instanceof Door){
-				if (((Door)tile).getCurrentLocationId() == currentLocation.getLocationID()){
+				if (((Door)tile).getCurrentLocationId().equals(currentLocation.getLocationID())){
 					door = (Door)tile;
 					break;
 				}
@@ -110,21 +111,22 @@ public class LocationController implements Controller{
 				//initial user coordinate to nextLocation, near the door
 				for (Map.Entry<Coordinate, Tile> entry : gameMediator.getWorld().getLocation(nextLocationId).getTiles().entrySet()) {
 					if(entry.getValue() instanceof Door){
-						if(((Door)entry.getValue()).getNextLocationId() == door.getCurrentLocationId()){
+						if(((Door)entry.getValue()).getNextLocationId().equals(door.getCurrentLocationId())){
 							appearDoor = entry.getKey();
 							break;
 						}
 					}
 				}
 				if (appearDoor != null){
-					positionX = appearDoor.getxPostion()+1;
-					positionY = appearDoor.getyPosition();
+					positionX = appearDoor.getxPostion();
+					positionY = appearDoor.getyPosition()+1;
 				}
 
 				for(Coordinate c: gameMediator.getWorld().getEntityLocation(userid).getTiles().keySet()){
 					if(c.getxPostion() == positionX && c.getyPosition() == positionY){
 						gameMediator.getWorld().getLocation(nextLocationId).addEntity(userid,c);
 						System.out.println("USer->"+ userid+"open the door and moves to the new Location");
+						gameMediator.getWorld().getEntity(userid).decreaseEnergy(1);
 
 						return;
 					}
