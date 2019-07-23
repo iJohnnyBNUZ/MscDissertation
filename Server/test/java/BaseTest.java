@@ -66,10 +66,22 @@ public class BaseTest {
 
         Item item4 = new Food("apple3", 10, 10, "food");
         user.addToBag(item4);
+
+        Item item5 = new Food("apple4", 10, 10, "food");
+        user.addToBag(item5);
+
+        Item item6 = new Food("apple5", 10, 10, "food");
+        user.addToBag(item6);
+
+        Item item7 = new Food("banana1", 10, 10, "food");
+        user.addToBag(item7);
+
         Coordinate n_cor4 = new Coordinate(0, 0);
         l1.addEntity("testUser", n_cor4);
         gameMediator.getWorld().addEntity(user);
 
+        User user2 = new User("testUser2");
+        gameMediator.getWorld().addEntity(user2);
 
 
     }
