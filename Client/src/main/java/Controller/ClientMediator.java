@@ -490,7 +490,7 @@ public class ClientMediator implements GameMediator {
         
         initialGameView();
         bindViewCommand();
-        setTestData();
+        //setTestData();
 	}
 
 	
@@ -518,7 +518,7 @@ public class ClientMediator implements GameMediator {
 			}
 		}
 		System.out.println("tiles size"+ tmp.size());
-		locationView.update(tmp);
+        //locationView.update(tmp);
 		
 	}
 	

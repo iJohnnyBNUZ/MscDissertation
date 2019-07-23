@@ -68,7 +68,7 @@
 	],
 	"items": [
 	  {
-		"id": "food0",
+		  "id": "apple1",
 		"type": "food",
 		"value": 10,
 		"isCollectible": true,
@@ -85,7 +85,7 @@
 		"coin": 100,
 		"bag": [
 		  {
-			"id": "food1",
+			  "id": "apple1",
 			"type": "food",
 			"value": 10,
 			"isCollectible": true,

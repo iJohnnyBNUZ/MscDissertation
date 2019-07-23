@@ -20,10 +20,10 @@ public class LocationObserver implements Observer {
 		// TODO Auto-generated method stub
 		String uId = clientMediator.getUserName();
 		Location curLocation = clientMediator.getWorld().getEntityLocation(uId);
-		Map<String, Coordinate> tiles = new HashMap<String,Coordinate>();
+        Map<Coordinate, String> tiles = new HashMap<Coordinate, String>();
 
 		for(Coordinate cor: curLocation.getTiles().keySet()) {
-			tiles.put(curLocation.getTiles().get(cor).getTerrain(), cor);
+            tiles.put(cor, curLocation.getTiles().get(cor).getTerrain());
 		}
 		clientMediator.getLocationView().update(tiles);
 	}

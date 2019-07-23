@@ -34,15 +34,14 @@ public class LocationView{
 	 *  	 use the String(specific Id) to represent the tiles.
 	 *  Picture need to be refined after the functions are implemented.
 	 * */
-	 
-	public void update(Map<String,Coordinate> tiles) {
+
+    public void update(Map<Coordinate, String> tiles) {
 		if(tiles.size() != 0) {
 			Platform.runLater(new Runnable() {
                 @Override public void run() {
                 	view.initialBeforeDraw();
-        			for(String name: tiles.keySet()) {
-        				String fileName = name.replaceAll("[0-9]", "");
-        				view.draw(fileName, tiles.get(name));	
+                    for (Coordinate cor : tiles.keySet()) {
+                        view.draw(tiles.get(cor), cor);
         			}
     			}
 			});
