@@ -11,17 +11,17 @@ import com.google.gson.JsonParser;
 import java.io.File;
 import java.io.IOException;
 
-public class LoadLocation {
+class LoadLocation {
 
 	private ReadFile readFile;
 	private ServerMediator serverMediator;
 
-	public LoadLocation(ServerMediator serverMediator) {
+	LoadLocation(ServerMediator serverMediator) {
 		this.readFile = new ReadFile();
 		this.serverMediator = serverMediator;
 	}
 
-	public Location buildLocation(File file) throws IOException {
+	Location buildLocation(File file) throws IOException {
 		String saveString = readFile.readJSON(file.getAbsolutePath());
 		JsonArray locationArray = new JsonParser().parse(saveString).getAsJsonArray();
 		for(int i = 0; i < locationArray.size(); i++) {
@@ -36,17 +36,20 @@ public class LoadLocation {
 		return null;
 	}
 
-	public void addTiles(Location location, JsonArray tiles) {
+	private void addTiles(Location location, JsonArray tiles) {
 		for (int i = 0; i < tiles.size(); i++) {
 			JsonObject tile = tiles.get(i).getAsJsonObject();
 			Tile newTile;
 			switch (tile.get("terrain").getAsString()) {
 				case "grass":
 					newTile = new Grass(tile.get("isMovable").getAsBoolean(), "grass", tile.get("energyCost").getAsInt());
+					break;
 				case "stone":
 					newTile = new Stone(tile.get("isMovable").getAsBoolean(), "stone", tile.get("energyCost").getAsInt());
+					break;
 				case "water":
 					newTile = new Water(tile.get("isMovable").getAsBoolean(), "water", tile.get("energyCost").getAsInt());
+					break;
 				case "door":
 					newTile = new Door(tile.get("isMovable").getAsBoolean(), "door", tile.get("energyCost").getAsInt());
 					break;

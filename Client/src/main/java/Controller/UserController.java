@@ -1,9 +1,9 @@
 package Controller;
 
-import Model.Entity.Entity;
 import Model.Entity.User;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class UserController implements Controller {
 
@@ -25,8 +25,8 @@ public class UserController implements Controller {
 	public void startGame(String type, String uName, String IP) throws IOException, ClassNotFoundException {
 		if(clientMediator.getClient().connectToServer(IP)) {
 			Boolean result = isUserExist(uName);
-			if(type=="new") {
-				if(result == true) {
+			if(Objects.equals(type, "new")) {
+				if(result) {
 					System.out.println("User is exist, please use another name!");
 					clientMediator.getIndexView().showMessage("User is exist, please use another name!");
 				}else {
@@ -35,8 +35,8 @@ public class UserController implements Controller {
 					clientMediator.getClient().login("new",uName);
 					clientMediator.enterGame();
 				}
-			}else if(type == "continue") {
-				if(result == true) {
+			} else if(Objects.equals(type, "continue")) {
+				if(result) {
 					System.out.println("Continue the game:  "+ uName +" "+IP);
 					clientMediator.setUserName(uName);
 					clientMediator.getClient().login("continue",uName);
@@ -49,13 +49,11 @@ public class UserController implements Controller {
 		}else {
 			clientMediator.getIndexView().showMessage("Cannot Connect to the server");
 		}
-		
-		
 	}
 	
 
 	public Boolean isUserExist(String uName) {
-		Boolean result = false;
+		boolean result = false;
 		if(clientMediator.getWorld().getEntity(uName)instanceof User){
 			result = true;
 		}else

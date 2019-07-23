@@ -23,6 +23,7 @@ public class LoadWorld {
 		if(fileList != null) {
 			for (File child : fileList) {
 				serverMediator.getWorld().addLocation(loadLocation.buildLocation(child));
+				System.out.println("Location size: " + serverMediator.getWorld().getLocations().size());
 			}
 		}
 		else {

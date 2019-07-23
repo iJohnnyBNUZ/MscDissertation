@@ -8,7 +8,6 @@ import Model.World;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.net.Socket;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -103,15 +102,14 @@ public class Client implements Runnable {
 		try{
 		    s = new Socket(IP, PORT);
 			in = new Scanner(s.getInputStream());
-			OutputStream os = s.getOutputStream();
-			this.objectOutputStream = new ObjectOutputStream(os);
+			this.objectOutputStream = new ObjectOutputStream(s.getOutputStream());
 			this.objectInputStream = new ObjectInputStream((s.getInputStream()));
-			new Thread(this).start();
 			getWorldFromServer();
 			Object input = objectInputStream.readObject();
 			if(input instanceof World) {
 				updateWorld((World)input);
 			}
+			new Thread(this).start();
 		} catch (Exception ex){
 			canRun=false;
 		}
@@ -154,7 +152,6 @@ public class Client implements Runnable {
 	public void run() {
 		while(canRun) {
 			try {
-				Thread.sleep(500);
 				System.out.println("Tick");
 			    Object input = objectInputStream.readObject();
 			    if(input instanceof World) {
@@ -166,6 +163,11 @@ public class Client implements Runnable {
 			    else {
 				    System.out.println("Received unknown object from server");
 			    }
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException ie) {
+					ie.printStackTrace();
+				}
 
 			} catch (Exception ex) {
 				canRun = false;
