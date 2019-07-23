@@ -1,26 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <excludeFromCompile>
-      <directory url="file://$PROJECT_DIR$/Client/src/main/java/View" includeSubdirectories="true" />
-      <directory url="file://$PROJECT_DIR$/Client/src/main/java/Controller/Command" includeSubdirectories="true" />
-      <file url="file://$PROJECT_DIR$/Client/src/main/java/Main.java" />
-    </excludeFromCompile>
     <annotationProcessing>
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Server" />
-        <module name="Common" />
         <module name="Client" />
+        <module name="Common" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Client" target="11" />
-      <module name="Common" target="11" />
-      <module name="MscDissertation" target="11" />
-      <module name="Server" target="11" />
+      <module name="Client" target="11.0.1" />
+      <module name="Common" target="11.0.1" />
+      <module name="MscDissertation" target="11.0.1" />
+      <module name="Server" target="11.0.1" />
     </bytecodeTargetLevel>
   </component>
 </project>

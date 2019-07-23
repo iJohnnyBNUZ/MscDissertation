@@ -22,7 +22,8 @@ public class Server implements Runnable{
 		serverSocket = new ServerSocket(7777);
 		this.serverMediator = serverMediator;
 		new Thread(this).start();
-		this.initWorld();
+//		this.initWorld();
+		serverMediator.newGame();
 	}
 
 	public void run() {

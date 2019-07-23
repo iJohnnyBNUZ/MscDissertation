@@ -3,20 +3,23 @@ package Controller.Load;
 import Controller.ServerMediator;
 
 import java.io.File;
+import java.io.IOException;
 
 public class LoadWorld {
 	private ServerMediator serverMediator;
-	private LoadLocation loadLocation  = new LoadLocation();
-	private LoadEntity loadEntity = new LoadEntity();
+	private LoadLocation loadLocation;
+	private LoadEntity loadEntity;
+	private String filePath;
 
-	public LoadWorld(ServerMediator serverMediator, String filePath) {
+	public LoadWorld(ServerMediator serverMediator, String filePath) throws IOException {
 		this.serverMediator = serverMediator;
-		loadLocations(filePath + "/Locations");
-		loadEntities(filePath  + "/Entities");
+		this.loadLocation = new LoadLocation(serverMediator);
+		this.loadEntity = new LoadEntity(serverMediator);
+		this.filePath = filePath;
 	}
 
-	private void loadLocations(String filePath) {
-		File[] fileList = getFileList(filePath);
+	public void loadLocations() throws IOException {
+		File[] fileList = getFileList(filePath + "/Locations");
 		if(fileList != null) {
 			for (File child : fileList) {
 				serverMediator.getWorld().addLocation(loadLocation.buildLocation(child));
@@ -27,8 +30,8 @@ public class LoadWorld {
 		}
 	}
 
-	private void loadEntities(String filePath) {
-		File[] fileList = getFileList(filePath);
+	public void loadEntities() throws IOException {
+		File[] fileList = getFileList(filePath + "/Entities");
 		if(fileList != null) {
 			for (File child : fileList) {
 				serverMediator.getWorld().addEntity(loadEntity.buildEntity(child));
