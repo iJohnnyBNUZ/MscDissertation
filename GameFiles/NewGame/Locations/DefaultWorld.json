@@ -1,7 +1,7 @@
-{
-  "Location": {
-	"locationID": "location0",
-	"Tiles": [
+[
+  {
+	"id": "location0",
+	"tiles": [
 	  {
 		"terrain": "grass",
 		"isMovable": true,
@@ -66,11 +66,35 @@
 		"yCoordinate": 2
 	  }
 	],
-	"Items": [
-
+	"items": [
+	  {
+		"id": "food0",
+		"type": "food",
+		"value": 10,
+		"isCollectible": true,
+		"isEdible": true,
+		"xCoordinate": 1,
+		"yCoordinate": 0
+	  }
 	],
-	"Entities": [
-
+	"entities": [
+	  {
+		"id": "shop0",
+		"type": "shop",
+		"energy": 200,
+		"coin": 100,
+		"bag": [
+		  {
+			"id": "food1",
+			"type": "food",
+			"value": 10,
+			"isCollectible": true,
+			"isEdible": true
+		  }
+		],
+		"xCoordinate": 2,
+		"yCoordinate": 1
+	  }
 	]
   }
-}
+]

@@ -1,9 +1,20 @@
-{
-  "Entity": {
+[
+  {
+	"id": "default",
+	"type": "user",
 	"energy": 200,
 	"coin": 100,
 	"bag": [
-
-	]
+	  {
+		"id": "defaultFood0",
+		"type": "food",
+		"value": 10,
+		"isCollectible": true,
+		"isEdible": true
+	  }
+	],
+	"xCoordinate": 2,
+	"yCoordinate": 2,
+	"location": "location0"
   }
-}
+]
