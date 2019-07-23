@@ -62,11 +62,20 @@ public class World implements Serializable {
 		return location;
 	}
 
-	public void setEntityLocation(String entityID, String locationID) {
-		for(Location location : Locations) {
-			if(location.getLocationID().equals(locationID)) {
-				getEntityLocation(entityID).removeEntity(entityID);
-				location.addEntity(entityID, new Coordinate(0, 0));
+
+	public void initEntityLocation(String userName){
+		//this.setEntityLocation(userName, "location0");
+		int max =2,min =0;
+		int positionX = min + (int)(Math.random() * (max-min+1));
+		int positionY = min + (int)(Math.random() * (max-min+1));
+		Coordinate userCoordinate = new Coordinate(positionX, positionY);
+		this.getLocations().get(0).addEntity(userName, userCoordinate);
+
+		for(Coordinate coordinate: this.getLocations().get(0).getTiles().keySet()){
+			if(coordinate.getxPostion() == positionX && coordinate.getyPosition() == positionY){
+				this.getLocations().get(0).addEntity(userName,coordinate);
+				System.out.println("gives user:"+userName+" an initial coordinate! ["+positionX+","+positionY+"]");
+				break;
 			}
 		}
 	}

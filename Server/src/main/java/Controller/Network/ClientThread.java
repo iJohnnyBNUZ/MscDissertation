@@ -87,26 +87,11 @@ public class ClientThread extends Thread implements Runnable {
 			//new user
 			serverMediator.getWorld().addEntity(user);
 			this.userName = user.getEntityID();
-			initEntityLocation(userName);
+			serverMediator.getWorld().initEntityLocation(userName);
 		}
 	}
 
-	private void initEntityLocation(String userName){
-		serverMediator.getWorld().setEntityLocation(userName, "location0");
-		int max =2,min =0;
-		int positionX = min + (int)(Math.random() * (max-min+1));
-		int positionY = min + (int)(Math.random() * (max-min+1));
-		Coordinate userCoordinate = new Coordinate(positionX, positionY);
-		serverMediator.getWorld().getLocations().get(0).addEntity(userName, userCoordinate);
 
-		for(Coordinate coordinate: serverMediator.getWorld().getLocations().get(0).getTiles().keySet()){
-			if(coordinate.getxPostion() == positionX && coordinate.getyPosition() == positionY){
-				serverMediator.getWorld().getLocations().get(0).addEntity(userName,coordinate);
-				System.out.println("gives user:"+userName+" an initial coordinate! ["+positionX+","+positionY+"]");
-				break;
-			}
-		}
-	}
 
 	private void handleString(String command) {
 		switch (command) {

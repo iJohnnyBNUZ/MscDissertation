@@ -36,7 +36,7 @@ public class LocationView{
 	 * */
 	 
 	public void update(Map<String,Coordinate> tiles) {
-		if(tiles.size() == 100) {
+		if(tiles.size() != 0) {
 			Platform.runLater(new Runnable() {
                 @Override public void run() {
                 	view.initialBeforeDraw();
