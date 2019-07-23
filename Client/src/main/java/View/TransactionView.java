@@ -5,6 +5,7 @@ import Controller.Command.SellCommand;
 import Model.Item.Item;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -40,8 +41,8 @@ public class TransactionView {
 	private double image_w = 50.0;
 	private int buyValue;
 	private int sellValue;
-	private HashMap<TextField,Integer> oldBuyNum = new HashMap<TextField,Integer>();
-	private HashMap<TextField,Integer> oldSellNum = new HashMap<TextField,Integer>();
+	private HashMap<ChoiceBox,Integer> oldBuyNum = new HashMap<ChoiceBox, Integer>();
+	private HashMap<ChoiceBox,Integer> oldSellNum = new HashMap<ChoiceBox,Integer>();
 	private String soldItemId = null;
 	private int soldMoney = 0;
 
@@ -106,9 +107,11 @@ public class TransactionView {
 				final Label blank = new Label();
 				blank.setPrefWidth(60);
 				final BorderPane numBuyPane = new BorderPane();
-				final TextField numBuy = new TextField();
+				final ChoiceBox numBuy = new ChoiceBox();
+				final ArrayList<Integer> numBuyList = new ArrayList<Integer>();
+				//final TextField numBuy = new TextField();
 				oldBuyNum.put(numBuy,0);
-				numBuy.setText("0");
+				//numBuy.setText("0");
 				numBuy.setPrefWidth(50);
 				numBuyPane.setCenter(numBuy);
 
@@ -118,6 +121,10 @@ public class TransactionView {
 				usershop_item_img.setImage(image);
 				//set the number of items
 				numOfItems.setText(String.valueOf(Collections.frequency(usershopItems, tmp_name)));
+				for(int i = 0; i<= (Collections.frequency(usershopItems, tmp_name) + 1); i++){
+                    numBuyList.add(i);
+				}
+				numBuy.setItems(FXCollections.observableArrayList(numBuyList));
 				//set the coins of each item
 				for(Item item: user__shop){
 					String itemString = item.getItemID().replaceAll("[0-9]","");
@@ -135,6 +142,20 @@ public class TransactionView {
 				itemBox.add(numBuyPane,4,0);
 				usershopVbox.getChildren().add(itemBox);
 				buyList.put(tmp_name,0);
+				numBuy.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+					@Override
+					public void changed(ObservableValue observableValue, Object o, Object t1) {
+						buyValue = Integer.parseInt(totalValue.getText())-oldBuyNum.get(numBuy)+Integer.parseInt(coins.getText())*Integer.parseInt(numBuy.getValue().toString());
+						totalValue.setText(String.valueOf(buyValue));
+						if(buyList.containsKey(tmp_name)){
+							buyList.put(tmp_name,Integer.parseInt(numBuy.getValue().toString()));
+						}
+						if(oldBuyNum.containsKey(numBuy)){
+							oldBuyNum.put(numBuy,Integer.parseInt(numBuy.getValue().toString())*Integer.parseInt(coins.getText()));
+						}
+					}
+				});
+				/*
 				numBuy.textProperty().addListener(new ChangeListener<String>() {
 					@Override
 					public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
@@ -150,6 +171,7 @@ public class TransactionView {
 						}
 					}
 				});
+				*/
 			}
 
 		}
@@ -184,9 +206,11 @@ public class TransactionView {
 				final Label mybagblank = new Label();
 				mybagblank.setPrefWidth(60);
 				final BorderPane numSellPane = new BorderPane();
-				final TextField numSell = new TextField();
+				//final TextField numSell = new TextField();
+				final ChoiceBox numSell = new ChoiceBox();
+				final ArrayList<Integer> numSellList = new ArrayList<Integer>();
 				oldSellNum.put(numSell,0);
-				numSell.setText("0");
+				//numSell.setText("0");
 				numSell.setPrefWidth(50);
 				numSellPane.setCenter(numSell);
 
@@ -196,6 +220,10 @@ public class TransactionView {
 				mybag_item_img.setImage(image);
 				//set the number of items
 				numOfMyBagItems.setText(String.valueOf(Collections.frequency(mybagItems, tmp_bag_name)));
+				for(int i = 0; i<= (Collections.frequency(mybagItems, tmp_bag_name) + 1); i++){
+					numSellList.add(i);
+				}
+				numSell.setItems(FXCollections.observableArrayList(numSellList));
 				//set the coins of each item
 				for(Item item: bag){
 					String itemString = item.getItemID().replaceAll("[0-9]","");
@@ -213,6 +241,20 @@ public class TransactionView {
 				itemMyBagBox.add(numSellPane,4,0);
 				myBagVbox.getChildren().add(itemMyBagBox);
 				sellList.put(tmp_bag_name,0);
+				numSell.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+					@Override
+					public void changed(ObservableValue observableValue, Object o, Object t1) {
+						sellValue = Integer.parseInt(totalSellValue.getText())-oldSellNum.get(numSell)+Integer.parseInt(mybagcoins.getText())*Integer.parseInt(numSell.getValue().toString());
+						totalSellValue.setText(String.valueOf(sellValue));
+						if(buyList.containsKey(tmp_bag_name)){
+							buyList.put(tmp_bag_name,Integer.parseInt(numSell.getValue().toString()));
+						}
+						if(oldSellNum.containsKey(numSell)){
+							oldSellNum.put(numSell,Integer.parseInt(numSell.getValue().toString())*Integer.parseInt(mybagcoins.getText()));
+						}
+					}
+				});
+				/*
 				numSell.textProperty().addListener(new ChangeListener<String>() {
 					@Override
 					public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
@@ -228,6 +270,7 @@ public class TransactionView {
 						}
 					}
 				});
+				*/
 			}
 
 		}
