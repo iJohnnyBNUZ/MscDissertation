@@ -18,6 +18,9 @@ public class LocationController implements Controller{
 	}
 
 	public void moveTo(String uName, String direction){
+	    if(gameMediator.getWorld().getEntity(uName)==null)
+	        return;
+
 		Location entityLocation = gameMediator.getWorld().getEntityLocation(uName);
 
 		Coordinate entityCoordinate = entityLocation.getEntities().get(uName);
