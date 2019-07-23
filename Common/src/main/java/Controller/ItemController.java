@@ -6,6 +6,7 @@ import Model.Item.Item;
 import Model.Location.Coordinate;
 import Model.Location.Location;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,61 +48,67 @@ public class ItemController implements Controller{
 
     }
 
-    /*
-    public void exchange(String itemID, String sellerID, String buyerID){
-        //delete from seller's bag
-        Entity seller = this.gameMediator.getWorld().getEntity(sellerID);
-        Item item = seller.putDown(itemID);
+    public void exchange(String buyerID,String sellerID, HashMap<String, Integer> buyList, int value) {
 
-        //add to buyer's bag
         Entity buyer = this.gameMediator.getWorld().getEntity(buyerID);
-        if (item != null){
-            buyer.pickUp(item);
+        if (buyer == null)
+            return;
+
+        Entity seller = this.gameMediator.getWorld().getEntity(sellerID);
+        if (seller == null)
+            return;
+
+        //exchange items
+        for (Map.Entry<String, Integer> entry : buyList.entrySet()) {
+
+            List<Item> bag = seller.getBag();
+            if (bag == null)
+                return;
+
+            int sellNum = 0;
+            for(int i = 0; i < bag.size(); i++){
+                Item item = bag.get(i);
+                if (item.getItemID().contains(entry.getKey())
+                        && sellNum < entry.getValue()) {
+
+                    //delete from seller's bag
+                    seller.putDown(item.getItemID());
+
+                    //add to buyer's bag
+                    if (item != null)
+                        buyer.pickUp(item);
+                    sellNum += 1;
+                }
+            }
         }
+
+
+        //buyer decrease money
+        if (buyer.getCoin() >= value) {
+            this.gameMediator.getWorld().getEntity(buyerID).decreaseCoin(value);
+        }
+
+        //seller increase money
+        seller.increaseCoin(value);
     }
-    */
 
     public void eat(String userID,String itemID){
+        Entity user = this.gameMediator.getWorld().getEntity(userID);
+        if (user == null)
+            return;
 
-        for(Item item:this.gameMediator.getWorld().getEntity(userID).getBag()){
-            if(item.getItemID()==itemID){
-                final Food food = (Food)item;
+        List<Item> items = user.getBag();
+        if(items == null)
+            return;
+
+        for(Item item : items){
+            if(item.getItemID().equals(itemID) && item.getType().equals("food")){
+                Food food = (Food)item;
                 //add user's energy
                 food.use(this.gameMediator.getWorld().getEntity(userID));
                 //delete from user's bag
                 this.gameMediator.getWorld().getEntity(userID).removeFromBag(food);
                 break;
-            }
-        }
-
-    }
-
-    public void buyItems(String userID,String usershopName,HashMap<String, Integer> buyList, int buyValue){
-
-        //if user has enough money to buy,decrease user's money,current user add item,other user or shop remove item
-        this.gameMediator.getWorld().getEntity(userID).decreaseCoin(buyValue);
-        this.gameMediator.getWorld().getEntity(usershopName).increaseCoin(buyValue);
-        for(Item item:this.gameMediator.getWorld().getEntity(usershopName).getBag()){
-            final String itemName = item.getItemID().replaceAll("[0-9]","");
-            if(buyList.containsKey(itemName) && buyList.get(itemName)>=1){
-                //current user add items
-                this.gameMediator.getWorld().getEntity(userID).addToBag(item);
-                //other user or shop remove item
-                this.gameMediator.getWorld().getEntity(usershopName).removeFromBag(item);
-                buyList.put(itemName,buyList.get(itemName)-1);
-            }
-        }
-    }
-
-    public void sellItems(String userID,String usershopName,HashMap<String,Integer> sellList,int sellValue){
-        this.gameMediator.getWorld().getEntity(userID).increaseCoin(sellValue);
-        this.gameMediator.getWorld().getEntity(usershopName).decreaseCoin(sellValue);
-        for(Item item:this.gameMediator.getWorld().getEntity(userID).getBag()){
-            final String itemString = item.getItemID().replaceAll("[0-9]","");
-            if(sellList.containsKey(itemString) && sellList.get(itemString)>=1){
-                this.gameMediator.getWorld().getEntity(usershopName).addToBag(item);
-                this.gameMediator.getWorld().getEntity(userID).removeFromBag(item);
-                sellList.put(itemString,sellList.get(itemString)-1);
             }
         }
     }
