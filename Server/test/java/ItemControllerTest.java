@@ -9,6 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 
+import java.util.HashMap;
+
 import static org.junit.Assert.assertEquals;
 
 public class ItemControllerTest extends BaseTest {
@@ -82,6 +84,39 @@ public class ItemControllerTest extends BaseTest {
 
         assertEquals(entity.getEnergy(), beforeEnergy + 10);
         assertEquals(entity.getBag().size(), beforeBag - 1);
+    }
+
+    @Test
+    public void exchangeTest(){
+
+        if(location == null)
+            return;
+
+        Entity testUser = this.gameMediator.getWorld().getEntity("testUser");
+        if (testUser == null){
+            return;
+        }
+        Entity testUser2 = this.gameMediator.getWorld().getEntity("testUser2");
+        if (testUser2 == null){
+            return;
+        }
+
+        HashMap<String, Integer> list = new HashMap<>();
+        list.put("apple", 2);
+        list.put("banana", 1);
+
+        int beforeBuyerCoin = testUser2.getCoin();
+        int beforeBuyerBagSize = testUser2.getBag().size();
+
+        int beforeSellerCoin = testUser.getCoin();
+        int beforeSellerBagSize = testUser.getBag().size();
+        itemController.exchange("testUser2", "testUser", list, 30);
+
+        assertEquals(testUser2.getCoin(), beforeBuyerCoin - 30);
+        assertEquals(testUser.getCoin(), beforeSellerCoin + 30);
+
+        assertEquals(testUser2.getBag().size(), beforeBuyerBagSize + 3);
+        assertEquals(testUser.getBag().size(), beforeSellerBagSize - 3);
     }
 
 }

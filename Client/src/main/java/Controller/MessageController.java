@@ -19,7 +19,7 @@ public class MessageController implements Controller{
         String userID = clientMediator.getUserName();
         if(clientMediator.getWorld().getEntity(userID).getCoin()>=buyValue){
             showMessage("You have enough money to buy the items");
-            itemController.buyItems(userID,usershopName,buyList,buyValue);
+            itemController.exchange(userID,usershopName,buyList,buyValue);
         }
         else{
             showMessage("You don't have enough money to buy the items");
@@ -30,7 +30,7 @@ public class MessageController implements Controller{
         String userID = clientMediator.getUserName();
         if(clientMediator.getWorld().getEntity(usershopName).getCoin()>=sellVale){
             showMessage(usershopName + " has enough money to buy the items");
-            itemController.sellItems(userID,usershopName,sellList,sellVale);
+            itemController.exchange(usershopName, userID,sellList,sellVale);
         }
         else{
             showMessage(usershopName + " doesn't have enough money to buy the items");
