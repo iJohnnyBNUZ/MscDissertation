@@ -121,7 +121,7 @@ public class TransactionView {
 				usershop_item_img.setImage(image);
 				//set the number of items
 				numOfItems.setText(String.valueOf(Collections.frequency(usershopItems, tmp_name)));
-				for(int i = 0; i<= (Collections.frequency(usershopItems, tmp_name) + 1); i++){
+				for(int i = 0; i<= Collections.frequency(usershopItems, tmp_name); i++){
                     numBuyList.add(i);
 				}
 				numBuy.setItems(FXCollections.observableArrayList(numBuyList));
@@ -220,7 +220,7 @@ public class TransactionView {
 				mybag_item_img.setImage(image);
 				//set the number of items
 				numOfMyBagItems.setText(String.valueOf(Collections.frequency(mybagItems, tmp_bag_name)));
-				for(int i = 0; i<= (Collections.frequency(mybagItems, tmp_bag_name) + 1); i++){
+				for(int i = 0; i<= Collections.frequency(mybagItems, tmp_bag_name); i++){
 					numSellList.add(i);
 				}
 				numSell.setItems(FXCollections.observableArrayList(numSellList));
