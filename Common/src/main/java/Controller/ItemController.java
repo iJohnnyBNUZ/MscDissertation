@@ -62,10 +62,17 @@ public class ItemController implements Controller{
     */
 
     public void eat(String userID,String itemID){
+        Entity user = this.gameMediator.getWorld().getEntity(userID);
+        if (user == null)
+            return;
 
-        for(Item item:this.gameMediator.getWorld().getEntity(userID).getBag()){
-            if(item.getItemID()==itemID){
-                final Food food = (Food)item;
+        List<Item> items = user.getBag();
+        if(items == null)
+            return;
+
+        for(Item item : items){
+            if(item.getItemID().equals(itemID) && item.getType().equals("food")){
+                Food food = (Food)item;
                 //add user's energy
                 food.use(this.gameMediator.getWorld().getEntity(userID));
                 //delete from user's bag

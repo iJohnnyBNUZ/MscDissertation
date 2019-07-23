@@ -64,5 +64,24 @@ public class ItemControllerTest extends BaseTest {
         assertEquals(entity.getBag().size(), beforeBag - 1);
     }
 
+    @Test
+    public void eatTest(){
+        if(location == null)
+            return;
+
+        Entity entity = this.gameMediator.getWorld().getEntity("testUser");
+        if (entity == null){
+            return;
+        }
+
+        int beforeEnergy = entity.getEnergy();
+        int beforeBag = entity.getBag().size();
+
+        itemController.eat("testUser", "apple3");
+
+
+        assertEquals(entity.getEnergy(), beforeEnergy + 10);
+        assertEquals(entity.getBag().size(), beforeBag - 1);
+    }
 
 }
