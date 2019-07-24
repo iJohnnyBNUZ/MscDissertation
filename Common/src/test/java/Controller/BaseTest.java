@@ -1,3 +1,5 @@
+package Controller;
+
 import Controller.GameMediator;
 import Model.Entity.Entity;
 import Model.Entity.NPC;
@@ -28,7 +30,7 @@ public class BaseTest {
                     Tile tile = new Stone(true,"stone"+num,1);
                     l1.addTile(tmp_cor, tile);
                 }else {
-                    Tile tile = new Door(true,"door"+num,1);
+                    Tile tile = new Door(true,"door"+num,1, "location0", "location1");
                     l1.addTile(tmp_cor, tile);
                 }
 

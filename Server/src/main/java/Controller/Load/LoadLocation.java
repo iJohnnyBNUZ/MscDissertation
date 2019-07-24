@@ -51,7 +51,7 @@ class LoadLocation {
 					newTile = new Water(tile.get("isMovable").getAsBoolean(), "water", tile.get("energyCost").getAsInt());
 					break;
 				case "door":
-					newTile = new Door(tile.get("isMovable").getAsBoolean(), "door", tile.get("energyCost").getAsInt());
+					newTile = new Door(tile.get("isMovable").getAsBoolean(), "door", tile.get("energyCost").getAsInt(), location.getLocationID(), tile.get("nextLocationID").getAsString());
 					break;
 				default:
 					throw new IllegalStateException("Unexpected value: " + tile.get("terrain").getAsString());

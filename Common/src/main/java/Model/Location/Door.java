@@ -1,35 +1,28 @@
 package Model.Location;
 
 public class Door extends Tile {
-    private String CurrentLocationId;
-    private String NextLocationId;
-    private String doorId;
+    private String currentLocationId;
+    private String nextLocationId;
 
     public String getCurrentLocationId() {
-        return CurrentLocationId;
+        return currentLocationId;
     }
 
     public void setCurrentLocationId(String currentLocationId) {
-        CurrentLocationId = currentLocationId;
+        this.currentLocationId = currentLocationId;
     }
 
     public String getNextLocationId() {
-        return NextLocationId;
+        return nextLocationId;
     }
 
     public void setNextLocationId(String nextLocationId) {
-        NextLocationId = nextLocationId;
+        this.nextLocationId = nextLocationId;
     }
 
-    public String getDoorId() {
-        return doorId;
-    }
-
-    public void setDoorId(String doorId) {
-        this.doorId = doorId;
-    }
-
-    public Door(boolean isMovable, String terrain, int energyCost) {
+    public Door(boolean isMovable, String terrain, int energyCost,String currentLocationId,String nextLocationId) {
         super(isMovable, terrain, energyCost);
+        this.currentLocationId = currentLocationId;
+        this.nextLocationId = nextLocationId;
     }
 }

@@ -64,6 +64,28 @@
 		"energyCost": 1,
 		"xCoordinate": 2,
 		"yCoordinate": 2
+	  },
+	  {
+		"terrain": "stone",
+		"isMovable": true,
+		"energyCost": 1,
+		"xCoordinate": 0,
+		"yCoordinate": 3
+	  },
+	  {
+		"terrain": "stone",
+		"isMovable": true,
+		"energyCost": 1,
+		"xCoordinate": 1,
+		"yCoordinate": 3
+	  },
+	  {
+		"terrain": "door",
+		"isMovable": true,
+		"energyCost": 1,
+		"xCoordinate": 2,
+		"yCoordinate": 3,
+		"nextLocationID": "location1"
 	  }
 	],
 	"items": [
