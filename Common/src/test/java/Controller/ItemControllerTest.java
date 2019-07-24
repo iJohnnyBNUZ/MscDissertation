@@ -1,6 +1,8 @@
+package Controller;
+
 import Controller.GameMediator;
 import Controller.ItemController;
-import Controller.ServerMediator;
+//import Controller.ServerMediator;
 import Model.Entity.Entity;
 import Model.Location.Coordinate;
 import Model.Location.Location;
@@ -14,7 +16,12 @@ import java.util.HashMap;
 import static org.junit.Assert.assertEquals;
 
 public class ItemControllerTest extends BaseTest {
-    ServerMediator gameMediator = new ServerMediator();
+    GameMediator gameMediator = new GameMediator() {
+        @Override
+        public World getWorld() {
+            return new World();
+        }
+    };
     private ItemController itemController = null;
     private Location location = null;
 

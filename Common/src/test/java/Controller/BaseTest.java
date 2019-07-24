@@ -1,3 +1,5 @@
+package Controller;
+
 import Controller.GameMediator;
 import Model.Entity.Entity;
 import Model.Entity.NPC;
