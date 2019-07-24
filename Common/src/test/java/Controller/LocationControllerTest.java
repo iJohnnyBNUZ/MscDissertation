@@ -197,7 +197,9 @@ public class LocationControllerTest {
         //energy cost test
         assertEquals(gameMediator.getWorld().getEntity(userName).getEnergy(),97);
 
-        //user can also go back to the last location
+        /*
+        user can also go back to the last location
+         */
         locationController.changeUserCoordinate(0,0,userName);
         //energy cost test
         assertEquals(gameMediator.getWorld().getEntity(userName).getEnergy(),95);
@@ -226,6 +228,28 @@ public class LocationControllerTest {
 
     @Test
     public void moveUserToNextLocation() {
+        String userName = "user1";
+
+        //Door not null
+        assertNotNull(t9);
+
+        //move user
+        locationController.moveUserToNextLocation(t9,userName);
+        //now user1 moves from location0 to location1
+        assertEquals(gameMediator.getWorld().getEntityLocation(userName),gameMediator.getWorld().getLocation("location1"));
+
+        //location0 already as no entity
+        assertEquals(gameMediator.getWorld().getLocation("location0").getEntities(),new HashMap<String, Coordinate>());
+
+        //user1 has add to the location1 Entities
+        assertNotNull(gameMediator.getWorld().getLocation("location1").getEntities());
+
+        //the new coordinate for user in new location should next to the door, door(index8) y+1,should be (0,1)
+        assertEquals(gameMediator.getWorld().getLocation("location1").getEntities().get(userName).getxPostion(),0);
+        assertEquals(gameMediator.getWorld().getLocation("location1").getEntities().get(userName).getyPosition(),1);
+
+        //energy cost test
+        assertEquals(gameMediator.getWorld().getEntity(userName).getEnergy(),99);
 
     }
 
