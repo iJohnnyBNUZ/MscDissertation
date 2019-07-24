@@ -263,14 +263,14 @@
 		},
 		{
 			"terrain": "water",
-			"isMovable": true,
+			"isMovable": false,
 			"energyCost": 1,
 			"xCoordinate": 7,
 			"yCoordinate": 3
 		},
 		{
 			"terrain": "water",
-			"isMovable": true,
+			"isMovable": false,
 			"energyCost": 1,
 			"xCoordinate": 8,
 			"yCoordinate": 3

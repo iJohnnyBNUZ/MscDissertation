@@ -50,10 +50,14 @@ public class LocationController implements Controller{
 		Location location = gameMediator.getWorld().getEntityLocation(userid);
 		for(Coordinate c: location.getTiles().keySet()){
 			if(c.getxPostion() == positionx && c.getyPosition() == positiony){
-				gameMediator.getWorld().getEntityLocation(userid).changeUserCoordinate(userid, c);
-				//decrease the energy for this tile
-				gameMediator.getWorld().getEntity(userid).decreaseEnergy(location.getTiles().get(c).getEnergyCost());
-				return;
+				if (location.getTiles().get(c).isMovable()){
+					gameMediator.getWorld().getEntityLocation(userid).changeUserCoordinate(userid, c);
+					//decrease the energy for this tile
+					gameMediator.getWorld().getEntity(userid).decreaseEnergy(location.getTiles().get(c).getEnergyCost());
+					return;
+				}else
+					return;
+
 			}
 		}
 
@@ -129,19 +133,23 @@ public class LocationController implements Controller{
 
 				for(Coordinate c: nextLocation.getTiles().keySet()){
 					if(c.getxPostion() == positionX && c.getyPosition() == positionY){
-						gameMediator.getWorld().getLocation(nextLocationId).addEntity(userid,c);
-						System.out.println("USer->"+ userid+"open the door and moves to the new Location");
-						//decrease user energy
-						gameMediator.getWorld().getEntity(userid).decreaseEnergy(nextLocation.getTiles().get(c).getEnergyCost());
+						if(nextLocation.getTiles().get(c).isMovable()){
+							gameMediator.getWorld().getLocation(nextLocationId).addEntity(userid,c);
+							System.out.println("USer->"+ userid+"open the door and moves to the new Location");
+							//decrease user energy
+							gameMediator.getWorld().getEntity(userid).decreaseEnergy(nextLocation.getTiles().get(c).getEnergyCost());
 
-						return;
+							return;
+						}
 					}else if(c.getxPostion() == positionX && c.getyPosition() == positionY-2){
-						gameMediator.getWorld().getLocation(nextLocationId).addEntity(userid,c);
-						System.out.println("USer->"+ userid+"open the door and moves to the new Location");
-						//decrease user energy
-						gameMediator.getWorld().getEntity(userid).decreaseEnergy(nextLocation.getTiles().get(c).getEnergyCost());
+						if(nextLocation.getTiles().get(c).isMovable()) {
+							gameMediator.getWorld().getLocation(nextLocationId).addEntity(userid, c);
+							System.out.println("USer->" + userid + "open the door and moves to the new Location");
+							//decrease user energy
+							gameMediator.getWorld().getEntity(userid).decreaseEnergy(nextLocation.getTiles().get(c).getEnergyCost());
 
-						return;
+							return;
+						}
 					}
 				}
 			}
