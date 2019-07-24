@@ -4,6 +4,7 @@ import Controller.GameMediator;
 import Controller.ItemController;
 //import Controller.ServerMediator;
 import Model.Entity.Entity;
+import Model.Entity.User;
 import Model.Location.Coordinate;
 import Model.Location.Location;
 import Model.World;
@@ -64,8 +65,11 @@ public class ItemControllerTest extends BaseTest {
 
         int beforeSize = location.getItems().size();
         int beforeBag = entity.getBag().size();
+        Entity user = gameMediator.getWorld().getEntity("testUser");
 
-        location.getEntities().put("testUser", new Coordinate(3,4));
+//        location.getEntities().put("testUser", new Coordinate(3,4));
+        LocationController locationController = new LocationController(gameMediator);
+        locationController.moveTo("testUser", "right");
         itemController.drop("testUser", "apple3");
 
 
