@@ -76,6 +76,7 @@ public class LocationController implements Controller{
 			if (((User)gameMediator.getWorld().getEntity(userid)).getOpenedDoors().contains(door.getNextLocationId())){
 				//user have already opened this door,only to give a initial coordinate in next location
 				moveUserToNextLocation(door,userid);
+				((User)gameMediator.getWorld().getEntity(userid)).addOpenedDoors(door.getCurrentLocationId());
 				return;
 			}else{
 				for(Item item: gameMediator.getWorld().getEntity(userid).getBag()){
