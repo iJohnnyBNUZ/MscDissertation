@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import Controller.ClientMediator;
+import Model.Entity.Entity;
+import Model.Entity.NPC;
+import Model.Entity.Shop;
 import Model.Entity.User;
 import Model.Location.Coordinate;
 import Model.Location.Location;
@@ -29,13 +32,13 @@ public class EntityObserver implements Observer{
 		int energyPoints = clientMediator.getWorld().getEntity(uId).getEnergy();
 		int coins = clientMediator.getWorld().getEntity(uId).getCoin();
 		System.out.println(curLocation.getEntities().keySet().size());
-		for(String entity: curLocation.getEntities().keySet()) {
-			if(entity.contains("user")) {
-				users.put(entity, curLocation.getEntities().get(entity));
-			}else if(entity.contains("npc")) {
-				npcs.put(entity, curLocation.getEntities().get(entity));
-			}else if(entity.contains("store")){
-				stores.put(entity, curLocation.getEntities().get(entity));
+		for(Entity entity: curLocation.getEntities().keySet()) {
+			if(entity instanceof User) {
+				users.put(entity.getEntityID(), curLocation.getEntities().get(entity));
+			}else if(entity.getEntityID().contains("npc")) {
+				npcs.put(entity.getEntityID(), curLocation.getEntities().get(entity));
+			}else if(entity.getEntityID().contains("store")){
+				stores.put(entity.getEntityID(), curLocation.getEntities().get(entity));
 			}
 		}
 		

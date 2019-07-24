@@ -23,7 +23,7 @@ public class LocationController implements Controller{
 
 		Location entityLocation = gameMediator.getWorld().getEntityLocation(uName);
 
-		Coordinate entityCoordinate = entityLocation.getEntities().get(uName);
+		Coordinate entityCoordinate = entityLocation.getEntities().get(gameMediator.getWorld().getEntity(uName));
 
 		if (entityCoordinate == null)
 			return;
@@ -51,7 +51,7 @@ public class LocationController implements Controller{
 		for(Coordinate c: location.getTiles().keySet()){
 			if(c.getxPostion() == positionx && c.getyPosition() == positiony){
 				if (location.getTiles().get(c).isMovable()){
-					gameMediator.getWorld().getEntityLocation(userid).changeUserCoordinate(userid, c);
+					gameMediator.getWorld().getEntityLocation(userid).changeUserCoordinate(gameMediator.getWorld().getEntity(userid), c);
 					//decrease the energy for this tile
 					gameMediator.getWorld().getEntity(userid).decreaseEnergy(location.getTiles().get(c).getEnergyCost());
 					return;
@@ -67,7 +67,7 @@ public class LocationController implements Controller{
 		Key key;
 		Door door = null;
 		Location currentLocation = gameMediator.getWorld().getEntityLocation(userid);
-		Coordinate coordinate = currentLocation.getEntities().get(userid);
+		Coordinate coordinate = currentLocation.getEntities().get(gameMediator.getWorld().getEntity(userid));
 
 		//find the door for nextLocation
 		if(currentLocation.getTiles().get(coordinate) instanceof Door){
@@ -113,7 +113,7 @@ public class LocationController implements Controller{
 			if (nextLocationId != null){
 				Location currentLocation = gameMediator.getWorld().getLocation(door.getCurrentLocationId());
 				//gameMediator.getWorld().setEntityLocation(userid, nextLocationId);
-				currentLocation.removeEntity(userid);
+				currentLocation.removeEntity(gameMediator.getWorld().getEntity(userid));
 
 				int positionX=0,positionY=0;
 				//initial user coordinate to nextLocation, near the door
@@ -134,8 +134,8 @@ public class LocationController implements Controller{
 				for(Coordinate c: nextLocation.getTiles().keySet()){
 					if(c.getxPostion() == positionX && c.getyPosition() == positionY){
 						if(nextLocation.getTiles().get(c).isMovable()){
-							gameMediator.getWorld().getLocation(nextLocationId).addEntity(userid,c);
-							System.out.println("USer->"+ userid+"open the door and moves to the new Location");
+							gameMediator.getWorld().getLocation(nextLocationId).addEntity(gameMediator.getWorld().getEntity(userid),c);
+							System.out.println("USer->"+ userid+" open the door and moves to the new Location");
 							//decrease user energy
 							gameMediator.getWorld().getEntity(userid).decreaseEnergy(nextLocation.getTiles().get(c).getEnergyCost());
 
@@ -143,7 +143,7 @@ public class LocationController implements Controller{
 						}
 					}else if(c.getxPostion() == positionX && c.getyPosition() == positionY-2){
 						if(nextLocation.getTiles().get(c).isMovable()) {
-							gameMediator.getWorld().getLocation(nextLocationId).addEntity(userid, c);
+							gameMediator.getWorld().getLocation(nextLocationId).addEntity(gameMediator.getWorld().getEntity(userid), c);
 							System.out.println("USer->" + userid + "open the door and moves to the new Location");
 							//decrease user energy
 							gameMediator.getWorld().getEntity(userid).decreaseEnergy(nextLocation.getTiles().get(c).getEnergyCost());

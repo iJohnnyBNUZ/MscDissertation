@@ -74,7 +74,7 @@ class LoadLocation {
 		LoadEntity loadEntity = new LoadEntity(serverMediator);
 		for (int i = 0; i < entities.size(); i++) {
 			Entity entity = loadEntity.parseEntity(entities.get(i).getAsJsonObject());
-			location.addEntity(entity.getEntityID(), new Coordinate(entities.get(i).getAsJsonObject().get("xCoordinate").getAsInt(), entities.get(i).getAsJsonObject().get("yCoordinate").getAsInt()));
+			location.addEntity(entity, new Coordinate(entities.get(i).getAsJsonObject().get("xCoordinate").getAsInt(), entities.get(i).getAsJsonObject().get("yCoordinate").getAsInt()));
 		}
 	}
 

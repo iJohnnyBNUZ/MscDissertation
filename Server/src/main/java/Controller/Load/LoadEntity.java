@@ -30,7 +30,7 @@ public class LoadEntity {
 		for(int i = 0; i < entityArray.size(); i++) {
 			Entity entity = parseEntity(entityArray.get(i).getAsJsonObject());
 			serverMediator.getWorld().addEntity(entity);
-			serverMediator.getWorld().getLocation(entityArray.get(i).getAsJsonObject().get("location").getAsString()).addEntity(entity.getEntityID(), new Coordinate(entityArray.get(i).getAsJsonObject().get("xCoordinate").getAsInt(), entityArray.get(i).getAsJsonObject().get("yCoordinate").getAsInt()));
+			serverMediator.getWorld().getLocation(entityArray.get(i).getAsJsonObject().get("location").getAsString()).addEntity(entity, new Coordinate(entityArray.get(i).getAsJsonObject().get("xCoordinate").getAsInt(), entityArray.get(i).getAsJsonObject().get("yCoordinate").getAsInt()));
 		}
 		return null;
 	}

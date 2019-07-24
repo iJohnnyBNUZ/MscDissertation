@@ -19,6 +19,7 @@ public class LocationControllerTest {
     private GameMediator gameMediator;
     private Door t9;
     private Door nextLocationDoor;
+    Entity user;
 
     @Before
     public void setUp() throws Exception {
@@ -50,7 +51,6 @@ public class LocationControllerTest {
 
         List<Coordinate> clist = new ArrayList<Coordinate>();
 
-        User user0 = new User("user0");
         for(int i=0;i<3;i++){
             for (int j = 0;j<3;j++){
                 int num = 1;
@@ -64,9 +64,9 @@ public class LocationControllerTest {
         }
 
         //User now is in (0,0)
-        Entity user = new User("user1");
+        user = new User("user1");
         world.addEntity(user);
-        location.addEntity(user.getEntityID(),clist.get(0));
+        location.addEntity(user,clist.get(0));
 
         gameMediator = new GameMediator() {
             @Override
@@ -103,32 +103,32 @@ public class LocationControllerTest {
         String userName = "user1";
         //move right test,user now is in (0,0),right y+1
         locationController.moveTo(userName,"right");
-        assertEquals(gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getxPostion(),0);
-        assertEquals(gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getyPosition(),1);
+        assertEquals(gameMediator.getWorld().getEntityLocation(userName).getEntities().get(user).getxPostion(),0);
+        assertEquals(gameMediator.getWorld().getEntityLocation(userName).getEntities().get(user).getyPosition(),1);
 
         //test the energy cost,(0,1) is grass, should cost 1 energy
         assertEquals(gameMediator.getWorld().getEntity(userName).getEnergy(),99);
 
         //move down test,user now is in (0,1),down x+1;
         locationController.moveTo(userName,"down");
-        assertEquals(gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getxPostion(),1);
-        assertEquals(gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getyPosition(),1);
+        assertEquals(gameMediator.getWorld().getEntityLocation(userName).getEntities().get(user).getxPostion(),1);
+        assertEquals(gameMediator.getWorld().getEntityLocation(userName).getEntities().get(user).getyPosition(),1);
 
         //test the energy cost,(1,0) is grass, should cost 1 energy
         assertEquals(gameMediator.getWorld().getEntity(userName).getEnergy(),96);
 
         //move left test,user now is in (1,1),left y-1
         locationController.moveTo(userName,"left");
-        assertEquals(gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getxPostion(),1);
-        assertEquals(gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getyPosition(),0);
+        assertEquals(gameMediator.getWorld().getEntityLocation(userName).getEntities().get(user).getxPostion(),1);
+        assertEquals(gameMediator.getWorld().getEntityLocation(userName).getEntities().get(user).getyPosition(),0);
 
         //test the energy cost, is water, should cost 3 energy
         assertEquals(gameMediator.getWorld().getEntity(userName).getEnergy(),95);
 
         //move up test, user now is in (1,0),up x-1
         locationController.moveTo(userName,"up");
-        assertEquals(gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getxPostion(),0);
-        assertEquals(gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getyPosition(),0);
+        assertEquals(gameMediator.getWorld().getEntityLocation(userName).getEntities().get(user).getxPostion(),0);
+        assertEquals(gameMediator.getWorld().getEntityLocation(userName).getEntities().get(user).getyPosition(),0);
 
         //test the energy cost, is grass, should cost 1 energy
         assertEquals(gameMediator.getWorld().getEntity(userName).getEnergy(),94);
@@ -136,8 +136,8 @@ public class LocationControllerTest {
         //boundary test, if user is in boundray, then they can not move beyond the boundary
         locationController.moveTo(userName,"up");
         locationController.moveTo(userName,"left");
-        assertEquals(gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getxPostion(),0);
-        assertEquals(gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getyPosition(),0);
+        assertEquals(gameMediator.getWorld().getEntityLocation(userName).getEntities().get(user).getxPostion(),0);
+        assertEquals(gameMediator.getWorld().getEntityLocation(userName).getEntities().get(user).getyPosition(),0);
 
         //can not move, do not cost energy
         assertEquals(gameMediator.getWorld().getEntity(userName).getEnergy(),94);
@@ -151,16 +151,16 @@ public class LocationControllerTest {
         String userName = "user1";
         //user now is in (0,0),change it to (2,2)
         locationController.changeUserCoordinate(2,2,userName);
-        assertEquals(gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getxPostion(),2);
-        assertEquals(gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getyPosition(),2);
+        assertEquals(gameMediator.getWorld().getEntityLocation(userName).getEntities().get(user).getxPostion(),2);
+        assertEquals(gameMediator.getWorld().getEntityLocation(userName).getEntities().get(user).getyPosition(),2);
 
         //test the energy cost,(2,2) is a door, should cost 2 energy
         assertEquals(gameMediator.getWorld().getEntity(userName).getEnergy(),98);
 
         //if the change coordinate is out of boundary, then it will not change at all
         locationController.changeUserCoordinate(3,4,userName);
-        assertEquals(gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getxPostion(),2);
-        assertEquals(gameMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getyPosition(),2);
+        assertEquals(gameMediator.getWorld().getEntityLocation(userName).getEntities().get(user).getxPostion(),2);
+        assertEquals(gameMediator.getWorld().getEntityLocation(userName).getEntities().get(user).getyPosition(),2);
 
         //test the energy cost, can not move, the energy should not cost
         assertEquals(gameMediator.getWorld().getEntity(userName).getEnergy(),98);
@@ -188,8 +188,8 @@ public class LocationControllerTest {
         assertNotNull(gameMediator.getWorld().getLocation("location1").getEntities());
 
         //the new coordinate for user in new location should next to the door, door(index8) y+1,should be (0,1)
-        assertEquals(gameMediator.getWorld().getLocation("location1").getEntities().get(userName).getxPostion(),0);
-        assertEquals(gameMediator.getWorld().getLocation("location1").getEntities().get(userName).getyPosition(),1);
+        assertEquals(gameMediator.getWorld().getLocation("location1").getEntities().get(user).getxPostion(),0);
+        assertEquals(gameMediator.getWorld().getLocation("location1").getEntities().get(user).getyPosition(),1);
 
         //user1 has alreay get the openDoor t9
         assertEquals(((User)gameMediator.getWorld().getEntity(userName)).getOpenedDoors().get(0),t9.getCurrentLocationId());
@@ -221,8 +221,8 @@ public class LocationControllerTest {
         assertNotNull(gameMediator.getWorld().getLocation("location0").getEntities());
 
         //the new coordinate for user in new location should next to the door, door(index8) y+1 or y-1,should be (0)
-        assertEquals(gameMediator.getWorld().getLocation("location0").getEntities().get(userName).getxPostion(),2);
-        assertEquals(gameMediator.getWorld().getLocation("location0").getEntities().get(userName).getyPosition(),1);
+        assertEquals(gameMediator.getWorld().getLocation("location0").getEntities().get(user).getxPostion(),2);
+        assertEquals(gameMediator.getWorld().getLocation("location0").getEntities().get(user).getyPosition(),1);
 
     }
 
@@ -245,8 +245,8 @@ public class LocationControllerTest {
         assertNotNull(gameMediator.getWorld().getLocation("location1").getEntities());
 
         //the new coordinate for user in new location should next to the door, door(index8) y+1,should be (0,1)
-        assertEquals(gameMediator.getWorld().getLocation("location1").getEntities().get(userName).getxPostion(),0);
-        assertEquals(gameMediator.getWorld().getLocation("location1").getEntities().get(userName).getyPosition(),1);
+        assertEquals(gameMediator.getWorld().getLocation("location1").getEntities().get(user).getxPostion(),0);
+        assertEquals(gameMediator.getWorld().getLocation("location1").getEntities().get(user).getyPosition(),1);
 
         //energy cost test
         assertEquals(gameMediator.getWorld().getEntity(userName).getEnergy(),99);

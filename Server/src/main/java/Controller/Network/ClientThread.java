@@ -107,8 +107,8 @@ public class ClientThread extends Thread implements Runnable {
 					e.printStackTrace();
 				}
 				System.out.println("Change " + userName + "'s coordinate to" + "[" +
-						serverMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getxPostion()
-						+ "," + serverMediator.getWorld().getEntityLocation(userName).getEntities().get(userName).getyPosition() + "]");
+						serverMediator.getWorld().getEntityLocation(userName).getEntities().get(serverMediator.getWorld().getEntity(userName)).getxPostion()
+						+ "," + serverMediator.getWorld().getEntityLocation(userName).getEntities().get(serverMediator.getWorld().getEntity(userName)).getyPosition() + "]");
 				break;
 			case "OpenDoor":
 				locationController.openDoor(this.userName);

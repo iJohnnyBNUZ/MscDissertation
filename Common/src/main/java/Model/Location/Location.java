@@ -1,5 +1,6 @@
 package Model.Location;
 
+import Model.Entity.Entity;
 import Model.Entity.User;
 import Model.Item.Item;
 
@@ -12,7 +13,7 @@ public class Location implements Serializable {
     private String locationID;
     private HashMap<Coordinate, Tile> Tiles = new HashMap<Coordinate, Tile>();
     private HashMap<Coordinate, Item> Items = new HashMap<Coordinate, Item>();
-    private Map<String, Coordinate> Entities = new HashMap<String, Coordinate>();
+    private Map<Entity, Coordinate> Entities = new HashMap<Entity, Coordinate>();
 
     public HashMap<Coordinate, Tile> getTiles() {
         return Tiles;
@@ -30,11 +31,11 @@ public class Location implements Serializable {
         Items = items;
     }
 
-    public Map<String, Coordinate> getEntities() {
+    public Map<Entity, Coordinate> getEntities() {
         return Entities;
     }
 
-    public void setEntities(Map<String, Coordinate> entities) {
+    public void setEntities(Map<Entity, Coordinate> entities) {
         Entities = entities;
     }
 
@@ -59,12 +60,12 @@ public class Location implements Serializable {
         return this.Items.get(c);
     }
 
-    public void addEntity(String id, Coordinate c) {
-        this.Entities.put(id, c);
+    public void addEntity(Entity entity, Coordinate c) {
+        this.Entities.put(entity, c);
     }
 
-    public void removeEntity(String id) {
-        this.Entities.remove(id);
+    public void removeEntity(Entity entity) {
+        this.Entities.remove(entity);
     }
 
     public String getLocationID() {
@@ -75,7 +76,7 @@ public class Location implements Serializable {
         this.locationID = locationID;
     }
 
-    public void changeUserCoordinate(String userID, Coordinate coordinate) {
-        Entities.put(userID, coordinate);
+    public void changeUserCoordinate(Entity entity, Coordinate coordinate) {
+        Entities.put(entity, coordinate);
     }
 }
