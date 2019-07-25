@@ -30,7 +30,7 @@ public class Location extends Observable implements Serializable {
 
     public void setItems(HashMap<Coordinate, Item> items) {
         Items = items;
-        notifyObserver("changeItem");
+        notifyObserver();
     }
 
     public Map<Entity, Coordinate> getEntities() {
@@ -40,9 +40,9 @@ public class Location extends Observable implements Serializable {
     public void setEntities(Map<Entity, Coordinate> entities) {
         Entities = entities;
         if (entities.size() != this.getEntities().size())
-            notifyObserver("changeLocation"); // notify entity change Location
+            notifyObserver(); // notify entity change Location
         else
-            notifyObserver("changeEntity"); // notify entity move
+            notifyObserver(); // notify entity move
     }
 
     public Location(String id) {
@@ -59,10 +59,12 @@ public class Location extends Observable implements Serializable {
 
     public void addItem(Coordinate c, Item i) {
         this.Items.put(c, i);
+        notifyObserver();
     }
 
     public Item removeItem(Coordinate c) {
         this.Items.remove(c);
+        notifyObserver();
         return this.Items.get(c);
     }
 
@@ -90,4 +92,5 @@ public class Location extends Observable implements Serializable {
         entities_temp.put(entity, coordinate);
         setEntities(entities_temp);
     }
+
 }

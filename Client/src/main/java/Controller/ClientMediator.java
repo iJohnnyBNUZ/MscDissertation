@@ -3,7 +3,6 @@ package Controller;
 import Controller.Command.*;
 import Controller.Network.Client;
 import Controller.Observer.*;
-//import Controller.Observer.Observer;
 import Controller.Save.SaveUser;
 import Model.Entity.Entity;
 import Model.Entity.NPC;
@@ -12,6 +11,7 @@ import Model.Entity.User;
 import Model.Location.Coordinate;
 import Model.Location.Location;
 import Model.World;
+import Utils.Observer;
 import View.*;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
@@ -29,8 +29,8 @@ public class ClientMediator implements GameMediator {
 	private String userName = null;
 
 	private Boolean isInit = Boolean.FALSE;
-	
-	private ArrayList<Observer> observers  = new ArrayList<Observer>();
+
+	private Set<Observer> observerSet = new HashSet<>();
 	private ArrayList<String> queue = new ArrayList<String>(); //User actions waiting to be send to the sever.
 	
 	
@@ -73,6 +73,8 @@ public class ClientMediator implements GameMediator {
 	private LogOutCommand logOutCommand = null;
 	private OpenDoorCommand openDoorCommand = null;
 
+	private boolean haveObservers = false;
+
 	public ClientMediator() {
 		this.world = new World();
 	}
@@ -95,16 +97,17 @@ public class ClientMediator implements GameMediator {
 
 	public void initWorld(World newWorld){
 		// add location observer
-		for (Location newLocation: newWorld.getLocations()){
+		/*for (Location newLocation: newWorld.getLocations()){
 			this.world.getLocations().add(new Location(newLocation.getLocationID()));
-		}
+		}*/
 		for(Location location: this.world.getLocations()){
-			location.addObserver(locationObserver);
-			location.addObserver(itemObserver);
+			//location.addObserver(locationObserver);
+			//location.addObserver(itemObserver);
+			location.setObserverSet(observerSet);
 		}
 
 		// add entity observer
-		for(Entity newEntity: newWorld.getEntities()){
+		/*for(Entity newEntity: newWorld.getEntities()){
 			if (newEntity instanceof NPC){
 				this.world.getEntities().add(new NPC(newEntity.getEntityID()));
 			}
@@ -114,15 +117,18 @@ public class ClientMediator implements GameMediator {
 			else {
 				this.world.getEntities().add(new User(newEntity.getEntityID()));
 			}
-		}
+		}*/
 		for (Entity entity: this.world.getEntities()){
-			entity.addObserver(bagObserver);
-			entity.addObserver(entityObserver);
+			//entity.addObserver(bagObserver);
+			//entity.addObserver(entityObserver);
+			entity.setObserverSet(observerSet);
 		}
 
 		// init world data
-		this.world.setLocations(newWorld.getLocations());
-		this.world.setEntities(newWorld.getEntities());
+		//this.world.setLocations(newWorld.getLocations());
+		//this.world.setEntities(newWorld.getEntities());
+		this.haveObservers=true;
+		System.out.println("initial finished!!!!!!!!!!!!!!!!");
 	}
 
 	/**
@@ -132,18 +138,18 @@ public class ClientMediator implements GameMediator {
 	 */
 	public void setWorld(World newWorld) {
 		if(newWorld.getEntityLocation(userName)!=null){
-			if(!this.world.equals(newWorld)) { //TODO override equals and hasHash
-
-				this.world.setLocations(newWorld.getLocations());
-				this.world.setEntities(newWorld.getEntities());
-//				this.world = newWorld;
-//				this.notifyObservers();
+			if(!this.haveObservers){
+				this.world = newWorld;
+				initWorld(newWorld);
+			}else{
+				//this.world.setLocations(newWorld.getLocations());
+				//this.world.setEntities(newWorld.getEntities());
+				this.world = newWorld;
 			}
-//
+            this.notifyObservers();
+
 		}else{
-//			this.world = newWorld;
-			this.world.setLocations(newWorld.getLocations());
-			this.world.setEntities(newWorld.getEntities());
+			this.world = newWorld;
 		}
 
 
@@ -164,10 +170,9 @@ public class ClientMediator implements GameMediator {
 		/*for(Observer observer: observers) {
 			observer.update();
 		}*/
-		
-//		locationObserver.update();
-//		itemObserver.update();
-//		entityObserver.update();
+		locationObserver.update();
+		itemObserver.update();
+		entityObserver.update();
 	}
 
 	public IndexView getIndexView() {
@@ -440,7 +445,6 @@ public class ClientMediator implements GameMediator {
 	 */
 	public void initialController() {
 		this.locationController = new LocationController(this);
-//		this.locationController = new ClientLocationController(this);
 		this.itemController = new ItemController(this);
 		this.communicationController = new CommunicationController(this);
 		this.userController = new UserController(this);
@@ -453,11 +457,11 @@ public class ClientMediator implements GameMediator {
 		this.entityObserver = new EntityObserver(this);
 		this.bagObserver =  new BagObserver(this);
 		
-//		observers.add(this.locationObserver);
-//		observers.add(this.itemObserver);
-//		observers.add(this.communicationObserver);
-//		observers.add(this.entityObserver);
-//		observers.add(this.bagObserver);
+		observerSet.add(this.locationObserver);
+		observerSet.add(this.itemObserver);
+		observerSet.add(this.communicationObserver);
+		observerSet.add(this.entityObserver);
+		observerSet.add(this.bagObserver);
 		
 		
 		this.moveCommand = new MoveCommand(locationController,this);
@@ -465,7 +469,7 @@ public class ClientMediator implements GameMediator {
 		this.startGameCommand = new StartGameCommand(userController);
 		this.putDownCommand = new PutDownCommand(itemController,this);
 		this.eatCommand = new EatCommand(itemController,this);
-		this.pickUpCommand = new PickUpCommand(itemController);
+		this.pickUpCommand = new PickUpCommand(itemController,this);
 		this.communicationCommand = new CommunicationCommand(communicationController);
 		this.buyCommand = new BuyCommand(messageController);
 		this.sellCommand = new SellCommand(messageController);

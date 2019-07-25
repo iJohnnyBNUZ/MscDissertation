@@ -7,9 +7,9 @@ public class Observable {
 
     private Set<Observer> observerSet = new HashSet<>();
 
-    protected void notifyObserver(Object... params){
+    protected void notifyObserver(){
         for(Observer observer: observerSet){
-            observer.takeAction(params);
+            observer.update();
         }
     }
 
@@ -19,5 +19,13 @@ public class Observable {
 
     public void removeObserver(Observer observer){
         observerSet.remove(observer);
+    }
+
+    public Set<Observer> getObserverSet() {
+        return observerSet;
+    }
+
+    public void setObserverSet(Set<Observer> observerSet) {
+        this.observerSet = observerSet;
     }
 }

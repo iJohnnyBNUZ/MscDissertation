@@ -27,7 +27,7 @@ public abstract class Entity extends Observable implements Serializable {
 
     public void setBag(List<Item> bag) {
         Bag = bag;
-        notifyObserver("changeBag");
+        notifyObserver();
     }
 
     public void interactWith(Entity entity) {
@@ -52,15 +52,17 @@ public abstract class Entity extends Observable implements Serializable {
 
     public void setEnergy(int energy) {
         this.energy = energy;
-        notifyObserver("changeEntity");
+        notifyObserver();
     }
 
     public void increaseEnergy(int amount) {
         energy += amount;
+        notifyObserver();
     }
 
     public void decreaseEnergy(int amount) {
         energy -= amount;
+        notifyObserver();
     }
 
     public int getCoin() {
@@ -69,15 +71,16 @@ public abstract class Entity extends Observable implements Serializable {
 
     public void setCoin(int coin) {
         this.coin = coin;
-        notifyObserver("changeEntity");
+        notifyObserver();
     }
 
-    public void increaseCoin(int amount) { coin += amount; }
+    public void increaseCoin(int amount) { coin += amount; notifyObserver();}
 
-    public void decreaseCoin(int amount) { coin -= amount; }
+    public void decreaseCoin(int amount) { coin -= amount; notifyObserver();}
 
     public void pickUp(Item item) {
         this.Bag.add(item);
+        notifyObserver();
     }
 
     public Item putDown(String id) {
@@ -87,12 +90,15 @@ public abstract class Entity extends Observable implements Serializable {
                 return item;
             }
         }
+        notifyObserver();
         return null;
     }
 
     public void removeFromBag(Item item){
         this.Bag.remove(item);
+        notifyObserver();
     }
 
-    public void addToBag(Item item) { this.Bag.add(item); }
+    public void addToBag(Item item) { this.Bag.add(item);
+        notifyObserver();}
 }

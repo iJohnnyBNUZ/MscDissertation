@@ -4,6 +4,8 @@ import Controller.Command.EatCommand;
 import Controller.Command.PutDownCommand;
 import Model.Item.Food;
 import Model.Item.Item;
+import Model.Location.Coordinate;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -84,151 +86,156 @@ public class BagView{
 
 
 	public void updateBag(List<Item> bag,int money){
-		bagFoodVbox.getChildren().clear();
-		bagKeysVbox.getChildren().clear();
-		numOfCoins.setText(String.valueOf(money));
+		Platform.runLater(new Runnable() {
+			@Override public void run() {
+				bagFoodVbox.getChildren().clear();
+				bagKeysVbox.getChildren().clear();
+				numOfCoins.setText(String.valueOf(money));
 
-		/* get List<String> foodItems of food and keyItems of key */
-		List<String> foodItems = new LinkedList<String>();
-		List<String> keyItems = new LinkedList<String>();
-		for(Item item: bag){
-			if(item.getType()=="food"){
-				String foodString = item.getItemID().replaceAll("[0-9]","");
-				foodItems.add(foodString);
-			}
-			else if(item.getType()=="key"){
-				String keyString = item.getItemID().replaceAll("[0-9]","");
-				keyItems.add(keyString.toString());
-			}
-		}
-
-		/* preparation for displaysing */
-		final GaussianBlur effect = new GaussianBlur();
-
-		/* display food in the bag */
-		if(foodItems != null){
-			Set<String> uniqueFoodSet = new HashSet<String>(foodItems);
-			for (final String tmp_food_name : uniqueFoodSet){
-
-				final ImageView food_item_img = new ImageView();
-				URL url = this.getClass().getResource("/images/" + tmp_food_name + ".png");
-				final Image food_image = new Image(url.toString(), image_h, image_w, false, false);
-				food_item_img.setImage(food_image);
-				final Label numOfFood = new Label();
-				numOfFood.setText(String.valueOf(Collections.frequency(foodItems, tmp_food_name)));
-				numOfFood.setPrefWidth(80);
-				numOfFood.setAlignment(Pos.CENTER);
-				final Label energy = new Label();
+				/* get List<String> foodItems of food and keyItems of key */
+				List<String> foodItems = new LinkedList<String>();
+				List<String> keyItems = new LinkedList<String>();
 				for(Item item: bag){
-					final String foodString = item.getItemID().replaceAll("[0-9]","");
-					if(foodString.toString().equals(tmp_food_name)){
-						final Food food = (Food)item;
-						energy.setText(String.valueOf(food.getEnergy()));
-						break;
+					if(item.getType()=="food"){
+						String foodString = item.getItemID().replaceAll("[0-9]","");
+						foodItems.add(foodString);
+					}
+					else if(item.getType()=="key"){
+						String keyString = item.getItemID().replaceAll("[0-9]","");
+						keyItems.add(keyString.toString());
 					}
 				}
-				energy.setPrefWidth(100);
-				energy.setAlignment(Pos.CENTER);
-				final GridPane foodBox = new GridPane();
-				foodBox.add(food_item_img,0,0);
-				foodBox.add(numOfFood,1,0);
-				foodBox.add(energy,2,0);
-				bagFoodVbox.getChildren().add(foodBox);
-				gridPaneFoodList.add(foodBox);
-				food_item_img.setOnMouseClicked(new EventHandler<MouseEvent>() {
-					@Override
-					public void handle(MouseEvent mouseEvent) {
-						if(food_item_img.getEffect()==effect){
-							food_item_img.setEffect(null);
-							selectedItemId = null;
-						}
-						else{
-							cleanSelect(bagFoodVbox,gridPaneFoodList);
-							food_item_img.setEffect(effect);
-							//set selectedItemId
-							for(Item item: bag){
-								String foodString = item.getItemID().replaceAll("[0-9]","");
-								if(foodString.toString().equals(tmp_food_name)){
-									selectedItemId = item.getItemID();
-									break;
-								}
+
+				/* preparation for displaysing */
+				final GaussianBlur effect = new GaussianBlur();
+
+				/* display food in the bag */
+				if(foodItems != null){
+					Set<String> uniqueFoodSet = new HashSet<String>(foodItems);
+					for (final String tmp_food_name : uniqueFoodSet){
+
+						final ImageView food_item_img = new ImageView();
+						URL url = this.getClass().getResource("/images/" + tmp_food_name + ".png");
+						final Image food_image = new Image(url.toString(), image_h, image_w, false, false);
+						food_item_img.setImage(food_image);
+						final Label numOfFood = new Label();
+						numOfFood.setText(String.valueOf(Collections.frequency(foodItems, tmp_food_name)));
+						numOfFood.setPrefWidth(80);
+						numOfFood.setAlignment(Pos.CENTER);
+						final Label energy = new Label();
+						for(Item item: bag){
+							final String foodString = item.getItemID().replaceAll("[0-9]","");
+							if(foodString.toString().equals(tmp_food_name)){
+								final Food food = (Food)item;
+								energy.setText(String.valueOf(food.getEnergy()));
+								break;
 							}
 						}
+						energy.setPrefWidth(100);
+						energy.setAlignment(Pos.CENTER);
+						final GridPane foodBox = new GridPane();
+						foodBox.add(food_item_img,0,0);
+						foodBox.add(numOfFood,1,0);
+						foodBox.add(energy,2,0);
+						bagFoodVbox.getChildren().add(foodBox);
+						gridPaneFoodList.add(foodBox);
+						food_item_img.setOnMouseClicked(new EventHandler<MouseEvent>() {
+							@Override
+							public void handle(MouseEvent mouseEvent) {
+								if(food_item_img.getEffect()==effect){
+									food_item_img.setEffect(null);
+									selectedItemId = null;
+								}
+								else{
+									cleanSelect(bagFoodVbox,gridPaneFoodList);
+									food_item_img.setEffect(effect);
+									//set selectedItemId
+									for(Item item: bag){
+										String foodString = item.getItemID().replaceAll("[0-9]","");
+										if(foodString.toString().equals(tmp_food_name)){
+											selectedItemId = item.getItemID();
+											break;
+										}
+									}
+								}
+							}
+						});
+
+					}
+				}
+
+
+				/* display keys in the bag */
+				if(keyItems != null){
+					Set<String> uniqueKeySet = new HashSet<String>(keyItems);
+					for (final String tmp_key_name : uniqueKeySet){
+
+						final Label blank = new Label();
+						blank.setPrefWidth(25);
+						final ImageView key_item_img = new ImageView();
+						URL url = this.getClass().getResource("/images/" + tmp_key_name + ".png");
+						final Image key_image = new Image(url.toString(), image_h, image_w, false, false);
+						key_item_img.setImage(key_image);
+						final Label numOfKey = new Label();
+						numOfKey.setText(String.valueOf(Collections.frequency(keyItems, tmp_key_name)));
+						numOfKey.setPrefWidth(180);
+						numOfKey.setAlignment(Pos.CENTER);
+
+						final GridPane keyBox = new GridPane();
+						keyBox.add(blank,0,0);
+						keyBox.add(key_item_img,1,0);
+						keyBox.add(numOfKey,2,0);
+						bagKeysVbox.getChildren().add(keyBox);
+						gridPaneKeyList.add(keyBox);
+						key_item_img.setOnMouseClicked(new EventHandler<MouseEvent>() {
+							@Override
+							public void handle(MouseEvent mouseEvent) {
+								if(key_item_img.getEffect()==effect){
+									key_item_img.setEffect(null);
+									selectedItemId = null;
+								}
+								else{
+									cleanSelect(bagKeysVbox,gridPaneKeyList);
+									key_item_img.setEffect(effect);
+									//set selectedItemId
+									for(Item item: bag){
+										String keyString = item.getItemID().replaceAll("[0-9]","");
+										if(keyString.toString().equals(tmp_key_name)){
+											selectedItemId = item.getItemID();
+											break;
+										}
+									}
+								}
+							}
+						});
+
+
+					}
+				}
+
+				eatFood.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent actionEvent) {
+						eatCommand.execute(selectedItemId);
 					}
 				});
 
-			}
-		}
-
-
-		/* display keys in the bag */
-		if(keyItems != null){
-			Set<String> uniqueKeySet = new HashSet<String>(keyItems);
-			for (final String tmp_key_name : uniqueKeySet){
-
-				final Label blank = new Label();
-				blank.setPrefWidth(25);
-				final ImageView key_item_img = new ImageView();
-				URL url = this.getClass().getResource("/images/" + tmp_key_name + ".png");
-				final Image key_image = new Image(url.toString(), image_h, image_w, false, false);
-				key_item_img.setImage(key_image);
-				final Label numOfKey = new Label();
-				numOfKey.setText(String.valueOf(Collections.frequency(keyItems, tmp_key_name)));
-				numOfKey.setPrefWidth(180);
-				numOfKey.setAlignment(Pos.CENTER);
-
-				final GridPane keyBox = new GridPane();
-				keyBox.add(blank,0,0);
-				keyBox.add(key_item_img,1,0);
-				keyBox.add(numOfKey,2,0);
-				bagKeysVbox.getChildren().add(keyBox);
-				gridPaneKeyList.add(keyBox);
-				key_item_img.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				putDownFood.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
-					public void handle(MouseEvent mouseEvent) {
-						if(key_item_img.getEffect()==effect){
-							key_item_img.setEffect(null);
-							selectedItemId = null;
-						}
-						else{
-							cleanSelect(bagKeysVbox,gridPaneKeyList);
-							key_item_img.setEffect(effect);
-							//set selectedItemId
-							for(Item item: bag){
-								String keyString = item.getItemID().replaceAll("[0-9]","");
-								if(keyString.toString().equals(tmp_key_name)){
-									selectedItemId = item.getItemID();
-									break;
-								}
-							}
-						}
+					public void handle(ActionEvent actionEvent) {
+						putDownCommand.execute(selectedItemId);
 					}
 				});
 
-
-			}
-		}
-
-		eatFood.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent actionEvent) {
-				eatCommand.execute(selectedItemId);
+				putDownKey.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent actionEvent) {
+						putDownCommand.execute(selectedItemId);
+					}
+				});
 			}
 		});
 
-		putDownFood.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent actionEvent) {
-				putDownCommand.execute(selectedItemId);
-			}
-		});
-
-		putDownKey.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent actionEvent) {
-				putDownCommand.execute(selectedItemId);
-			}
-		});
 
 	}
 

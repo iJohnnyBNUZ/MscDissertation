@@ -15,12 +15,12 @@ public class Shop extends Observable {
     public void comeIn(String name){
         personSet.add(name);
         pcount = personSet.size();
-        notifyObserver(IN, name, pcount);
+        //notifyObserver(IN, name, pcount);
     }
 
     public void getOut(String name){
         personSet.remove(name);
         pcount = personSet.size();
-        notifyObserver(OUT, name, pcount);    //通知观察者
+        //notifyObserver(OUT, name, pcount);    //通知观察者
     }
 }

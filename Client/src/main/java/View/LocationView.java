@@ -35,10 +35,11 @@ public class LocationView{
 	 * */
 
     public void update(Map<Coordinate, String> tiles) {
+    	System.out.println("update location");
 		if(tiles.size() != 0) {
 			Platform.runLater(new Runnable() {
                 @Override public void run() {
-                	view.initialBeforeDraw();
+                	view.initialCanvas();
                     for (Coordinate cor : tiles.keySet()) {
                         view.draw(tiles.get(cor), cor);
         			}
@@ -80,7 +81,7 @@ public class LocationView{
 	}
 	
 	public void showAvaliable(Coordinate cor) {
-		AnchorPane forImage = view.getForImage();
+		AnchorPane forImage = view.getForItem();
 		forImage.setMouseTransparent(true);
 		
 		Map<String,Double>boundary =view.drawRectangle(cor);

@@ -16,7 +16,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-public class EntityView{
+public class EntityView {
 	
 	private View view = null;
 	private ProgressBar energy = null;
@@ -31,68 +31,16 @@ public class EntityView{
 		this.view = view;
 		
 	}
-	/*
-	public void test() {
-		Map<String,Coordinate> tmp = new HashMap<String,Coordinate>();
-		int num=0;
-		for(int i=0;i<row/2;i++) {
-			for(int j=0;j<column/5;j++) {
-				Coordinate tmp_cor = new Coordinate(i, j);
-				if(j%2 == 0 && i%2 == 0) {
-					tmp.put("lemon"+num, tmp_cor);
-				}else {
-					tmp.put("apple"+num, tmp_cor);
-				}
-				
-				num++;
+
+	public void initialBeforeDraw(){
+		Platform.runLater(new Runnable() {
+			@Override public void run() {
+				view.initialForEntity();
 			}
-		}
-		System.out.println("tiles size"+ tmp.size());
-		updateNPC(tmp);
+		});
+
 	}
-	
-	public void testStore() {
-		Map<String,Coordinate> tmp = new HashMap<String,Coordinate>();
-		int num=0;
-		for(int i=5;i<row;i++) {
-			for(int j=5;j<column;j++) {
-				Coordinate tmp_cor = new Coordinate(i, j);
-				tmp.put("store"+num, tmp_cor);
-				num++;
-			}
-		}
-		System.out.println("tiles size"+ tmp.size());
-		updateStore(tmp);
-	}
-	
-	public void testUsers() {
-		Map<String,Coordinate> tmp = new HashMap<String,Coordinate>();
-		int num=0;
-		for(int i=2;i<5;i++) {
-			for(int j=3;j<5;j++) {
-				Coordinate tmp_cor = new Coordinate(i, j);
-				tmp.put("user"+num, tmp_cor);
-				num++;
-			}
-		}
-		System.out.println("tiles size"+ tmp.size());
-		updateUser(tmp);
-	}
-	
-	public void testNPC() {
-		Map<String,Coordinate> tmp = new HashMap<String,Coordinate>();
-		int num=0;
-		for(int i=4;i<6;i++) {
-			for(int j=4;j<7;j++) {
-				Coordinate tmp_cor = new Coordinate(i, j);
-				tmp.put("npcs"+num, tmp_cor);
-				num++;
-			}
-		}
-		System.out.println("tiles size"+ tmp.size());
-		updateNPC(tmp);
-	}*/
-	
+
 	public void updateNPC(final Map<String,Coordinate> npcs) {
 		
 		if(npcs.size() <= 100) {
@@ -122,7 +70,7 @@ public class EntityView{
 	}
 	
 	public void updateUser(Map<String,Coordinate> users) {
-		
+		System.out.println("update usersssssssssssssa");
 		if(users.size() <= 100) {
 			for(String name: users.keySet()) {
 				Platform.runLater(new Runnable() {

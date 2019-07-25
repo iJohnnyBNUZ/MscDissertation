@@ -18,11 +18,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class View {
 
@@ -33,7 +36,10 @@ public class View {
 	private Canvas mapView;
 
 	@FXML
-	private AnchorPane forImage;
+	private AnchorPane forItem;
+
+	@FXML
+	private AnchorPane forEntity;
 
 	@FXML
 	private ImageView userImage;
@@ -139,6 +145,8 @@ public class View {
 	private LogOutCommand logOutCommand= null;
 	private OpenDoorCommand openDoorCommand = null;
 
+	private List<String> directions = new ArrayList<String>();
+
 
 	// This method is automatically invoked by the FXMLLoader - it's magic
 	// This method must be public
@@ -146,13 +154,14 @@ public class View {
 		System.out.println("initializeeeeeeeeeeeeeeeeeeee!!!!!!");
 		setCoinImage();
 		setUserImage();
+
 	}
 	public AnchorPane getPage() { return page; }
 
 	public Canvas getMapView() { return mapView; }
 
 
-	public AnchorPane getForImage() { return forImage; }
+	public AnchorPane getForItem() { return forItem; }
 
 
 	public ImageView getUserImage() { return userImage; }
@@ -215,7 +224,9 @@ public class View {
 
 	public Button getCloseMyBag() { return closeMyBag; }
 
-
+	public AnchorPane getForEntity() {
+		return forEntity;
+	}
 
 	public double getTileWidth() {
 		return tileWidth;
@@ -252,8 +263,66 @@ public class View {
 		mapView.widthProperty().bind(scene.widthProperty().subtract(10));
 		System.out.println(scene.getHeight());
 		System.out.println(mapView.getHeight());
-		initialBeforeDraw();
+		initialKeyAction(scene);
+		addTimer();
 
+	}
+
+	public void initialKeyAction(Scene scence){
+		scence.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent k) {
+				System.out.println(k.getCode().getName());
+				/*try {
+					if(k.getCode().getName().equals("Left") || k.getCode().getName().equals("Right")||k.getCode().getName().equals("Up")|| k.getCode().getName().equals("Down"))
+						moveCommand.excute(k.getCode().getName());
+					else if (k.getCode().getName().equals("o") || k.getCode().getName().equals("O"))
+						openDoorCommand.excute(k.getCode().getName());
+				} catch (IOException e) {
+					e.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				}*/
+				directions.add(k.getCode().getName());
+				System.out.println("add");
+			}
+
+		});
+
+
+	}
+
+	private void addTimer(){
+		TimerTask timerTask = new TimerTask() {
+			@Override
+			public void run() {
+				int size = directions.size();
+				//System.out.println(size);
+				if (size>0){
+					String action = directions.get(0);
+					try {
+						if(action.equals("Left") || action.equals("Right")||action.equals("Up")|| action.equals("Down")) {
+							moveCommand.excute(action);
+							directions.remove(action);
+						}
+						else if (action.equals("o") || action.equals("O")){
+							openDoorCommand.excute(action);
+							directions.remove(action);
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					}
+
+				}
+			}
+		};
+		Timer timer = new Timer();
+		long delay = 0;
+		long intevalPeriod = 30;
+		// schedules the task to be run in an interval
+		timer.scheduleAtFixedRate(timerTask, delay, intevalPeriod);
 	}
 
 
@@ -290,31 +359,26 @@ public class View {
 		ImageView imgView = new ImageView();
 		URL url = this.getClass().getResource("/images/" + fileName + ".png");
 
+		imgView.setLayoutX(position.getyPosition()*tileWidth);
+		imgView.setLayoutY(position.getxPostion()*tileHeight);
+
 		if(!isItemTile) {
 			Image image = new Image(url.toString(), image_h, image_w, false, false);
 			imgView.setImage(image);
-			System.out.println("creat image of: "+ fileName);
+			forEntity.getChildren().add(imgView);
 		}else {
 			Image image = new Image(url.toString(), image_h/2, image_w/2, false, false);
 			imgView.setImage(image);
-			System.out.println("creat image of: "+ fileName);
+			forItem.getChildren().add(imgView);
 
 		}
 
-		imgView.setLayoutX(position.getyPosition()*tileWidth);
-		imgView.setLayoutY(position.getxPostion()*tileHeight);
-		System.out.println(forImage.getChildren().size());
-		forImage.getChildren().add(imgView);
-		System.out.println("draw clickable: "+ fileName);
+
 		return imgView;
 	}
 
-	public void initialBeforeDraw() {
-		initialCanvas();
-		initialForImage();
-	}
-
 	public void initialCanvas() {
+		//initial canvas
 		GraphicsContext gContext = mapView.getGraphicsContext2D();
 
 		gContext.save();
@@ -326,31 +390,21 @@ public class View {
 		gContext.setStroke(Color.BLACK);
 
 
+
 	}
 
+	public void initialForItem(){
+		System.out.println("initial forItem");
+		forItem.getChildren().clear();
 
-	public void initialForImage() {
-		System.out.println("initial forImage");
-		forImage.getChildren().clear();
-		forImage.requestFocus();
-		forImage.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent k) {
-				System.out.println(k.getCode().getName());
-				try {
-					if(k.getCode().getName().equals("Left") || k.getCode().getName().equals("Right")||k.getCode().getName().equals("Up")|| k.getCode().getName().equals("Down"))
-						moveCommand.excute(k.getCode().getName());
-					else if (k.getCode().getName().equals("o") || k.getCode().getName().equals("O"))
-						openDoorCommand.excute(k.getCode().getName());
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				}
-			}
-
-		});
 	}
+
+	public void initialForEntity(){
+		System.out.println("initial forEntity");
+		forEntity.getChildren().clear();
+		forEntity.setPickOnBounds(false);
+	}
+
 
 	public void setMoveCommand(Command command) {
 		moveCommand = (MoveCommand) command;
@@ -397,35 +451,6 @@ public class View {
 	}
 
 
-
-
-	/*
-	 * This method is used to draw a rectangle to show where is available to drop the item.
-	 * @param  cor the position of the current user
-	 * @return square vertex coordinates
-	 */
-	/*
-	public Map<String,Double> drawRectangle(Coordinate cor) {
-
-
-		GraphicsContext gContext = mapView.getGraphicsContext2D();
-		tileWidth=mapView.getWidth()/10;
-		tileHeight = mapView.getHeight()/10;
-		gContext.beginPath();
-		double beginX=(cor.getxPostion()-1)*tileWidth;
-		double beginY=(cor.getyPosition()-1)*tileHeight;
-
-		gContext.setStroke(Color.RED);
-		gContext.setLineWidth(2.0);
-		gContext.strokeRect(beginX, beginY, 3*tileWidth, 3*tileHeight);
-		Map<String,Double> boundary = new HashMap<String,Double>();
-		boundary.put("beginX", beginX);
-		boundary.put("beginY", beginY);
-		boundary.put("endX", beginX + 3*tileWidth);
-		boundary.put("endY", beginY+ 3*tileHeight);
-		System.out.println(beginX+"   "+beginY+"   "+3*tileWidth+"   "+3*tileHeight);
-		return boundary;
-	}*/
 
 	public void showAlert(String message){
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION,message,new ButtonType("Cancel", ButtonBar.ButtonData.NO),

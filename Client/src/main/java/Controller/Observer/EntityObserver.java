@@ -21,8 +21,8 @@ public class EntityObserver implements Observer {
 	}
 
 	@Override
-	public void takeAction(Object... msg) {
-		if (msg[0].equals("changeEntity")) {
+	public void update() {
+		//if (msg[0].equals("changeEntity")) {
 			String uId = clientMediator.getUserName();
 			Location curLocation = clientMediator.getWorld().getEntityLocation(uId);
 
@@ -43,11 +43,12 @@ public class EntityObserver implements Observer {
 			}
 
 			EntityView entityView = clientMediator.getEntityView();
+			entityView.initialBeforeDraw();
 			entityView.updateCoin(coins);
 			entityView.updateEnergy(energyPoints);
 			entityView.updateNPC(npcs);
 			entityView.updateStore(stores);
 			entityView.updateUser(users);
-		}
+		//}
 	}
 }

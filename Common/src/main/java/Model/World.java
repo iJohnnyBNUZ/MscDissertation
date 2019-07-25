@@ -125,4 +125,10 @@ public class World implements Serializable {
 		messageList.add(message);
 	}
 
+	public boolean equals(World newWorld){
+		Boolean result = false;
+
+		return result;
+	}
+
 }

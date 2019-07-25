@@ -3,6 +3,8 @@ package View;
 import Controller.Command.Command;
 import Controller.Command.PostCommand;
 import Controller.CommunicationController;
+import Model.Location.Coordinate;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -55,16 +57,21 @@ public class ChatView{
 	}
 
 	public void updateChat(List<String> messageList){
-		messageBox.getChildren().clear();
-		//add messages to chatView
-		int size = messageList.size();
-		for(int i =0 ; i< size; i++){
-			Label messageLabel = new Label();
-			messageLabel.setPrefWidth(288);
-			messageLabel.setPrefHeight(27);
-			messageLabel.setText(messageList.get(i));
-			messageBox.getChildren().add(messageLabel);
-		}
+		Platform.runLater(new Runnable() {
+			@Override public void run() {
+				messageBox.getChildren().clear();
+				//add messages to chatView
+				int size = messageList.size();
+				for(int i =0 ; i< size; i++){
+					Label messageLabel = new Label();
+					messageLabel.setPrefWidth(288);
+					messageLabel.setPrefHeight(27);
+					messageLabel.setText(messageList.get(i));
+					messageBox.getChildren().add(messageLabel);
+				}
+			}
+		});
+
 
 	}
 

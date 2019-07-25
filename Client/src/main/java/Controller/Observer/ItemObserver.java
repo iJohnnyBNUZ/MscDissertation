@@ -17,8 +17,8 @@ public class ItemObserver implements Observer {
 	}
 
 	@Override
-	public void takeAction(Object... msg) {
-		if (msg[0].equals("changeItem")){
+	public void update() {
+		//if (msg[0].equals("changeItem")){
 			String uId = clientMediator.getUserName();
 			// TODO cannot get curLocation,  because the entities is null
 			Location curLocation = clientMediator.getWorld().getEntityLocation(uId);
@@ -28,8 +28,7 @@ public class ItemObserver implements Observer {
 				items.put(curLocation.getItems().get(cor).getItemID(), cor);
 
 			}
-
 			clientMediator.getItemView().update(items);
-		}
+		//}
 	}
 }

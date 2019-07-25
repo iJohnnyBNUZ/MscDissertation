@@ -12,11 +12,11 @@ public class BagObserver implements Observer {
         this.clientMediator = clientMediator;
     }
 
-    public void takeAction(Object... msg){
-        if (msg[0].equals("changeBag")){
+    public void update(){
+        //if (msg[0].equals("changeBag")){
             userID = this.clientMediator.getUserName();
             clientMediator.getBagView().updateBag(this.clientMediator.getWorld().getEntity(userID).getBag(),this.clientMediator.getWorld().getEntity(userID).getCoin());
-        }
+        //}
     }
 
 }

@@ -63,7 +63,7 @@
       <ProgressBar fx:id="energy" layoutX="168.0" layoutY="453.0" prefWidth="200.0" progress="0.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="150.0" />
       <ImageView fx:id="coinIcon" fitHeight="20.0" fitWidth="20.0" layoutX="405.0" layoutY="453.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="380.0" />
       <Label fx:id="coin" layoutX="443.0" layoutY="455.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="400.0" />
-      <AnchorPane fx:id="forImage" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="40.0" />
+      <AnchorPane fx:id="forItem" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="40.0" />
       <AnchorPane fx:id="chatView" layoutX="10.0" layoutY="32.0" prefHeight="387.0" prefWidth="324.0" style="-fx-background-color: #F5F5F5;" visible="false">
          <children>
             <Button fx:id="closeChatView" layoutX="259.0" layoutY="353.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="55.0" text="Close" />
@@ -190,6 +190,7 @@
             </Tab>
          </tabs>
       </TabPane>
+      <AnchorPane fx:id="forEntity" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="40.0" />
       <!--
       <fx:include fx:id="bagView" source="bag.fxml" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="50.0" />
       -->

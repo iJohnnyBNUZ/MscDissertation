@@ -17,8 +17,8 @@ public class LocationObserver implements Observer {
 	}
 
 	@Override
-	public void takeAction(Object... msg) {
-		if (msg[0].equals("changeLocation")){
+	public void update() {
+		//if (msg[0].equals("changeLocation")){
 			String uId = clientMediator.getUserName();
 			Location curLocation = clientMediator.getWorld().getEntityLocation(uId);
 			Map<Coordinate, String> tiles = new HashMap<Coordinate, String>();
@@ -27,6 +27,6 @@ public class LocationObserver implements Observer {
 				tiles.put(cor, curLocation.getTiles().get(cor).getTerrain());
 			}
 			clientMediator.getLocationView().update(tiles);
-		}
+		//}
 	}
 }
