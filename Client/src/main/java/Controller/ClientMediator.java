@@ -3,8 +3,12 @@ package Controller;
 import Controller.Command.*;
 import Controller.Network.Client;
 import Controller.Observer.*;
-import Controller.Observer.Observer;
+//import Controller.Observer.Observer;
 import Controller.Save.SaveUser;
+import Model.Entity.Entity;
+import Model.Entity.NPC;
+import Model.Entity.Shop;
+import Model.Entity.User;
 import Model.Location.Coordinate;
 import Model.Location.Location;
 import Model.World;
@@ -20,9 +24,11 @@ import java.net.URL;
 import java.util.*;
 
 public class ClientMediator implements GameMediator {
-	private World world;
+	private World world = new World();
 	private Client client = null;
 	private String userName = null;
+
+	private Boolean isInit = Boolean.FALSE;
 	
 	private ArrayList<Observer> observers  = new ArrayList<Observer>();
 	private ArrayList<String> queue = new ArrayList<String>(); //User actions waiting to be send to the sever.
@@ -39,7 +45,7 @@ public class ClientMediator implements GameMediator {
     private TransactionView tansactionView = null;
     
 	private Stage primaryStage = null;
-	
+
 	private LocationController locationController =null;
 	private ItemController itemController= null;
 	private CommunicationController communicationController= null;
@@ -48,11 +54,11 @@ public class ClientMediator implements GameMediator {
 	private SaveUser saveUser = null;
 	
 	
-	private Observer locationObserver = null;
-	private Observer itemObserver= null;
-	private Observer communicationObserver= null;
-	private Observer entityObserver = null;
-	private Observer bagObserver = null;
+	private LocationObserver locationObserver = null;
+	private ItemObserver itemObserver= null;
+	private CommunicationObserver communicationObserver= null;
+	private EntityObserver entityObserver = null;
+	private BagObserver bagObserver = null;
 	
 	private MoveCommand moveCommand = null;   
 	private PickUpCommand pickUpCommand = null;
@@ -87,6 +93,38 @@ public class ClientMediator implements GameMediator {
 		return world;
 	}
 
+	public void initWorld(World newWorld){
+		// add location observer
+		for (Location newLocation: newWorld.getLocations()){
+			this.world.getLocations().add(new Location(newLocation.getLocationID()));
+		}
+		for(Location location: this.world.getLocations()){
+			location.addObserver(locationObserver);
+			location.addObserver(itemObserver);
+		}
+
+		// add entity observer
+		for(Entity newEntity: newWorld.getEntities()){
+			if (newEntity instanceof NPC){
+				this.world.getEntities().add(new NPC(newEntity.getEntityID()));
+			}
+			else if (newEntity instanceof Shop){
+				this.world.getEntities().add(new Shop(newEntity.getEntityID()));
+			}
+			else {
+				this.world.getEntities().add(new User(newEntity.getEntityID()));
+			}
+		}
+		for (Entity entity: this.world.getEntities()){
+			entity.addObserver(bagObserver);
+			entity.addObserver(entityObserver);
+		}
+
+		// init world data
+		this.world.setLocations(newWorld.getLocations());
+		this.world.setEntities(newWorld.getEntities());
+	}
+
 	/**
 	 * If the world is changed, the observers will be notified to update views.
 	 * If the user have not been created, the view won't be updated.
@@ -94,13 +132,18 @@ public class ClientMediator implements GameMediator {
 	 */
 	public void setWorld(World newWorld) {
 		if(newWorld.getEntityLocation(userName)!=null){
-			if(!this.world.equals(newWorld)) {
-				this.world = newWorld;
-				this.notifyObservers();
+			if(!this.world.equals(newWorld)) { //TODO override equals and hasHash
+
+				this.world.setLocations(newWorld.getLocations());
+				this.world.setEntities(newWorld.getEntities());
+//				this.world = newWorld;
+//				this.notifyObservers();
 			}
-			
+//
 		}else{
-			this.world = newWorld;
+//			this.world = newWorld;
+			this.world.setLocations(newWorld.getLocations());
+			this.world.setEntities(newWorld.getEntities());
 		}
 
 
@@ -118,14 +161,13 @@ public class ClientMediator implements GameMediator {
 	 * Tell all observers to update views.
 	 */
 	private void notifyObservers() {
-		// TODO Auto-generated method stub
 		/*for(Observer observer: observers) {
 			observer.update();
 		}*/
 		
-		locationObserver.update();
-		itemObserver.update();
-		entityObserver.update();
+//		locationObserver.update();
+//		itemObserver.update();
+//		entityObserver.update();
 	}
 
 	public IndexView getIndexView() {
@@ -259,27 +301,27 @@ public class ClientMediator implements GameMediator {
 		this.userController = userController;
 	}
 
-	public Observer getLocationObserver() {
+	public LocationObserver getLocationObserver() {
 		return locationObserver;
 	}
 
-	public void setLocationObserver(Observer locationObserver) {
+	public void setLocationObserver(LocationObserver locationObserver) {
 		this.locationObserver = locationObserver;
 	}
 
-	public Observer getItemObserver() {
+	public ItemObserver getItemObserver() {
 		return itemObserver;
 	}
 
-	public void setItemObserver(Observer itemObserver) {
+	public void setItemObserver(ItemObserver itemObserver) {
 		this.itemObserver = itemObserver;
 	}
 
-	public Observer getCommunicationObserverr() {
+	public CommunicationObserver getCommunicationObserverr() {
 		return communicationObserver;
 	}
 
-	public void setCommunicationObserverr(Observer communicationObserverr) {
+	public void setCommunicationObserverr(CommunicationObserver communicationObserverr) {
 		this.communicationObserver = communicationObserverr;
 	}
 
@@ -398,6 +440,7 @@ public class ClientMediator implements GameMediator {
 	 */
 	public void initialController() {
 		this.locationController = new LocationController(this);
+//		this.locationController = new ClientLocationController(this);
 		this.itemController = new ItemController(this);
 		this.communicationController = new CommunicationController(this);
 		this.userController = new UserController(this);
@@ -408,13 +451,13 @@ public class ClientMediator implements GameMediator {
 		this.itemObserver = new ItemObserver(this);
 		this.communicationObserver = new CommunicationObserver(this);
 		this.entityObserver = new EntityObserver(this);
-		this.bagObserver = new BagObserver(this);
+		this.bagObserver =  new BagObserver(this);
 		
-		observers.add(this.locationObserver);
-		observers.add(this.itemObserver);
-		observers.add(this.communicationObserver);
-		observers.add(this.entityObserver);
-		observers.add(this.bagObserver);
+//		observers.add(this.locationObserver);
+//		observers.add(this.itemObserver);
+//		observers.add(this.communicationObserver);
+//		observers.add(this.entityObserver);
+//		observers.add(this.bagObserver);
 		
 		
 		this.moveCommand = new MoveCommand(locationController,this);

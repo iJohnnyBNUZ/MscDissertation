@@ -44,7 +44,6 @@ public class BagView{
 	private List<GridPane> gridPaneKeyList = new LinkedList<GridPane>();
 
 	public BagView(View view) {
-		// TODO Auto-generated constructor stub
 		this.numOfCoins = view.getNumOfCoins();
 		this.tabBagView = view.getTabBagView();
 		this.eatFood = view.getEatFood();

@@ -248,7 +248,6 @@ public class View {
 
 
 	public void bindScene(Scene scene) {
-		// TODO Auto-generated method stub
 		mapView.heightProperty().bind(scene.heightProperty().subtract(100));
 		mapView.widthProperty().bind(scene.widthProperty().subtract(10));
 		System.out.println(scene.getHeight());
@@ -337,7 +336,6 @@ public class View {
 		forImage.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent k) {
-				// TODO Auto-generated method stub
 				System.out.println(k.getCode().getName());
 				try {
 					if(k.getCode().getName().equals("Left") || k.getCode().getName().equals("Right")||k.getCode().getName().equals("Up")|| k.getCode().getName().equals("Down"))
@@ -373,12 +371,10 @@ public class View {
 	 * @param primaryStage
 	 */
 	public void setWindowsCloseAction(Stage primaryStage) {
-		// TODO Auto-generated method stub
 		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
 			@Override
 			public void handle(WindowEvent w) {
-				// TODO Auto-generated method stub
 				Alert alert = new Alert(AlertType.CONFIRMATION);
 				alert.setTitle("Exit game");
 				alert.setHeaderText("Are your sure to exit game");
@@ -412,7 +408,6 @@ public class View {
 	public Map<String,Double> drawRectangle(Coordinate cor) {
 
 
-		// TODO Auto-generated method stub
 		GraphicsContext gContext = mapView.getGraphicsContext2D();
 		tileWidth=mapView.getWidth()/10;
 		tileHeight = mapView.getHeight()/10;

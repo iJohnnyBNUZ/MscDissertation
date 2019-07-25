@@ -33,7 +33,6 @@ public class EntityView{
 	}
 	/*
 	public void test() {
-		// TODO Auto-generated method stub
 		Map<String,Coordinate> tmp = new HashMap<String,Coordinate>();
 		int num=0;
 		for(int i=0;i<row/2;i++) {
@@ -53,7 +52,6 @@ public class EntityView{
 	}
 	
 	public void testStore() {
-		// TODO Auto-generated method stub
 		Map<String,Coordinate> tmp = new HashMap<String,Coordinate>();
 		int num=0;
 		for(int i=5;i<row;i++) {
@@ -68,7 +66,6 @@ public class EntityView{
 	}
 	
 	public void testUsers() {
-		// TODO Auto-generated method stub
 		Map<String,Coordinate> tmp = new HashMap<String,Coordinate>();
 		int num=0;
 		for(int i=2;i<5;i++) {
@@ -83,7 +80,6 @@ public class EntityView{
 	}
 	
 	public void testNPC() {
-		// TODO Auto-generated method stub
 		Map<String,Coordinate> tmp = new HashMap<String,Coordinate>();
 		int num=0;
 		for(int i=4;i<6;i++) {
@@ -109,7 +105,6 @@ public class EntityView{
 	    				imgView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 	    					public void handle(MouseEvent m) {
-	    						// TODO Auto-generated method stub
 	    						System.out.println("npc ID: "+ imgView.getId());
 	    						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	    						communication.execute(imgView.getId(),df.format(new Date()).toString());
@@ -138,7 +133,6 @@ public class EntityView{
 	    				imgView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 	    					public void handle(MouseEvent m) {
-	    						// TODO Auto-generated method stub
 	    						System.out.println("user ID: " + imgView.getId());
 	    						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	    						communication.execute(imgView.getId(),df.format(new Date()).toString());
@@ -168,7 +162,6 @@ public class EntityView{
 	    				imgView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 	    					public void handle(MouseEvent m) {
-	    						// TODO Auto-generated method stub
 	    						System.out.println("storeId"+imgView.getId());
 	    						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	    						communication.execute(imgView.getId(),df.format(new Date()).toString());

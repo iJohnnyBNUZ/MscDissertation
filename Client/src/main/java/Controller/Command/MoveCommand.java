@@ -19,7 +19,6 @@ public class MoveCommand implements Command {
     }
 
     public void excute(String direction) throws IOException, ClassNotFoundException {
-        // TODO pass userName to MoveTO()
     	ResourceBundle rb = ResourceBundle.getBundle("config");
 		//String uName = rb.getString("userName");
         String uName = clientMediator.getClient().getUserName();

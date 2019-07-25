@@ -10,7 +10,6 @@ public class PickUpCommand implements Command {
 		this.itemController = (ItemController) itemController2;
 	}
 	public void execute(String id) {
-		// TODO Auto-generated method stub
 		System.out.println("Pick up"+id);
 	}
 }

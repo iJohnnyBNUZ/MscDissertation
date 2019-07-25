@@ -27,7 +27,6 @@ public class ChatView{
 
 
 	public ChatView(View view) {
-		// TODO Auto-generated constructor stub
 		this.chatView = view.getChatView();
 		this.closeChatView = view.getCloseChatView();
 		this.messageWindow = view.getMessageWindow();

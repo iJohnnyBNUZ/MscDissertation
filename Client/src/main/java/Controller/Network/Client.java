@@ -107,10 +107,12 @@ public class Client implements Runnable {
 			getWorldFromServer();
 			Object input = objectInputStream.readObject();
 			if(input instanceof World) {
-				updateWorld((World)input);
+				clientMediator.initWorld((World)input);
+//				updateWorld((World)input);
 			}
 			new Thread(this).start();
 		} catch (Exception ex){
+			ex.printStackTrace();
 			canRun=false;
 		}
 		

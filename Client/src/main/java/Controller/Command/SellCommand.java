@@ -14,7 +14,6 @@ public class SellCommand implements Command {
     private String userID;
 
     public SellCommand(Controller messageController) {
-		// TODO Auto-generated constructor stub
     	this.messageController = (MessageController) messageController;
 	}
 

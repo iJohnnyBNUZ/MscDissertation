@@ -24,7 +24,6 @@ public class ItemView{
 	}
 	/*
 	public void test() {
-		// TODO Auto-generated method stub
 		Map<String,Coordinate> tmp = new HashMap<String,Coordinate>();
 		int num=0;
 		for(int i=0;i<row/2;i++) {
@@ -44,7 +43,6 @@ public class ItemView{
 	}
 	
 	public void test2() {
-		// TODO Auto-generated method stub
 		Map<String,Coordinate> tmp = new HashMap<String,Coordinate>();
 		int num=0;
 		for(int i=0;i<row/5;i++) {
@@ -77,7 +75,6 @@ public class ItemView{
 	    				imgView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 	    					public void handle(MouseEvent m) {
-	    						// TODO Auto-generated method stub
 	    						System.out.println("Item ID: " + imgView.getId());
 	    						
 	    						//Coordinate sCoordinate = new Coordinate(positionX,positionY);

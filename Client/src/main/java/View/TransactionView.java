@@ -50,7 +50,6 @@ public class TransactionView {
 	private SellCommand sellCommand;
 
 	public TransactionView(View view) {
-		// TODO Auto-generated constructor stub
 		this.user_shop = view.getUser_shop();
 		this.closeUserShop = view.getCloseUserShop();
 		this.Transaction = view.getNewTransaction();

@@ -1,6 +1,8 @@
 package Model;
 
 import Model.Entity.Entity;
+import Model.Entity.NPC;
+import Model.Entity.User;
 import Model.Item.Key;
 import Model.Location.Coordinate;
 import Model.Location.Location;
@@ -25,7 +27,16 @@ public class World implements Serializable {
 	}
 
 	public void setLocations(List<Location> locations) {
-		Locations = (ArrayList<Location>) locations;
+		for (Location newLocation: locations){
+			for (Location localLocation: getLocations()){
+				if (localLocation.getLocationID().equals(newLocation.getLocationID())){
+					localLocation.setTiles(newLocation.getTiles());
+					localLocation.setEntities(newLocation.getEntities());
+					localLocation.setItems(newLocation.getItems());
+				}
+			}
+		}
+//		Locations = (ArrayList<Location>) locations;
 	}
 
 	public List<Entity> getEntities() {
@@ -33,7 +44,16 @@ public class World implements Serializable {
 	}
 
 	public void setEntities(List<Entity> entities) {
-		Entities = (ArrayList<Entity>) entities;
+//		Entities = (ArrayList<Entity>) entities;
+		for (Entity newEntity: entities){
+			for (Entity localEntity: getEntities()){
+				if (localEntity.getEntityID().equals(newEntity.getEntityID())){
+					localEntity.setEnergy(newEntity.getEnergy());
+					localEntity.setCoin(newEntity.getCoin());
+					localEntity.setBag(newEntity.getBag());
+				}
+			}
+		}
 	}
 
 	public void addLocation(Location location) {

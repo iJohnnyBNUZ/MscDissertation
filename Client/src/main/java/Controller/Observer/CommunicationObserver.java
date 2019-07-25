@@ -1,6 +1,7 @@
 package Controller.Observer;
 
 import Controller.ClientMediator;
+import Utils.Observer;
 
 public class CommunicationObserver implements Observer {
 
@@ -11,7 +12,7 @@ public class CommunicationObserver implements Observer {
 	}
 
 	@Override
-	public void update() {
+	public void takeAction(Object... msg) {
 		clientMediator.getChatView().updateChat(this.clientMediator.getWorld().getMessageList());
 	}
 }

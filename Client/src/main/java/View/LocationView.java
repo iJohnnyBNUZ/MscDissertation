@@ -20,7 +20,6 @@ public class LocationView{
 
 	
 	public LocationView(View view) {
-		// TODO Auto-generated constructor stub
 		this.view = view;
 	}
 
@@ -55,7 +54,6 @@ public class LocationView{
 	/*
 	 *
 	 * public void test() {
-		// TODO Auto-generated method stub
 		Map<String,Coordinate> tmp = new HashMap<String,Coordinate>();
 		int num=0;
 		for(int i=0;i<row;i++) {
@@ -91,7 +89,6 @@ public class LocationView{
 
 			@Override
 			public void handle(MouseEvent m) {
-				// TODO Auto-generated method stub
 				if(m.getX()>boundary.get("beginX")&& m.getX()<boundary.get("endX")&&
 						m.getY()>boundary.get("beginY")&& m.getY()<boundary.get("endY")) {
 					System.out.println("put down item at :" + m.getX()+m.getY());
