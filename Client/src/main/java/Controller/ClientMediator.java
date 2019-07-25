@@ -142,9 +142,9 @@ public class ClientMediator implements GameMediator {
 				this.world = newWorld;
 				initWorld(newWorld);
 			}else{
-				//this.world.setLocations(newWorld.getLocations());
-				//this.world.setEntities(newWorld.getEntities());
-				this.world = newWorld;
+				this.world.setLocations(newWorld.getLocations());
+				this.world.setEntities(newWorld.getEntities());
+//				this.world = newWorld;
 			}
             this.notifyObservers();
 

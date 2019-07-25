@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class World implements Serializable {
 
@@ -75,10 +76,16 @@ public class World implements Serializable {
 	public Location getEntityLocation(String userName){
 		Location location = null;
 		for(Location l:this.getLocations()) {
-			if(l.getEntities().get(this.getEntity(userName)) != null){
-				location = l;
-				break;
+			for(Map.Entry<Entity, Coordinate> entry : l.getEntities().entrySet()){
+				if (entry.getKey().getEntityID().equals(userName)){
+					location = l;
+					break;
+				}
 			}
+//			if(l.getEntities().get(this.getEntity(userName)) != null){
+//				location = l;
+//				break;
+//			}
 		}
 		return location;
 	}

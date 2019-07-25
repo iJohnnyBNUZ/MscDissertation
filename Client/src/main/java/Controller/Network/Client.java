@@ -172,8 +172,8 @@ public class Client implements Runnable {
 
 			} catch (Exception ex) {
 				canRun = false;
-				System.exit(0);
 				ex.printStackTrace();
+				System.exit(0);
 			}
 		}
 	}
