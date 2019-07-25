@@ -6,8 +6,8 @@ import Controller.LocationController;
 import java.io.IOException;
 
 public class OpenDoorCommand implements Command {
-    LocationController locationController;
-    ClientMediator clientMediator;
+    private LocationController locationController;
+    private ClientMediator clientMediator;
 
     public OpenDoorCommand(LocationController locationController, ClientMediator clientMediator){
         this.locationController = locationController;

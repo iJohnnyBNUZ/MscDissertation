@@ -1,6 +1,6 @@
 [
   {
-	"id": "location0",
+	"id": "location1",
 	"tiles": [
 	  {
 		"terrain": "grass",
@@ -85,7 +85,8 @@
 		"energyCost": 1,
 		"xCoordinate": 2,
 		"yCoordinate": 3,
-		"nextLocationID": "location1"
+		"currentLocationID": "location1",
+		"nextLocationID": "location0"
 	  }
 	],
 	"items": [

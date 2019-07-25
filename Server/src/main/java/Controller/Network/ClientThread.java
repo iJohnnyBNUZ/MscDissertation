@@ -4,8 +4,6 @@ import Controller.LocationController;
 import Controller.ServerMediator;
 import Model.Entity.Entity;
 import Model.Entity.User;
-import Model.Location.Coordinate;
-import Model.World;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -33,22 +31,7 @@ public class ClientThread extends Thread implements Runnable {
 	public void run() {
 		while (canRun) {
 			try {
-				System.out.println("Tock");
-				Object input = objectInput.readObject();
-				if (input instanceof Entity) {
-					handleEntity((User) input);
-				}
-				else if (input instanceof String) {
-					handleString((String) input);
-				}
-				else {
-					System.out.println("Unknown object type");
-				}
-				try {
-					server.updateClients();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				getInputFromClient();
 			}
 			catch(Exception ex) {
 				canRun = false;
@@ -63,13 +46,25 @@ public class ClientThread extends Thread implements Runnable {
 		}
 	}
 
-	void sendMessage(Object msg) {
-		System.out.println("Sending message to user: " + userName);
-		if (msg instanceof World) {
-			for (Entity entity : ((World) msg).getEntities()) {
-				System.out.println(entity);
-			}
+	public void getInputFromClient() throws IOException, ClassNotFoundException {
+		Object input = objectInput.readObject();
+		if (input instanceof Entity) {
+			handleEntity((User) input);
 		}
+		else if (input instanceof String) {
+			handleString((String) input);
+		}
+		else {
+			System.out.println("Unknown object type");
+		}
+		try {
+			server.updateClients();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	void sendMessage(Object msg) {
 		try {
 			objectOutput.writeObject(msg);
 		} catch (IOException e) {
@@ -106,9 +101,7 @@ public class ClientThread extends Thread implements Runnable {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				System.out.println("Change " + userName + "'s coordinate to" + "[" +
-						serverMediator.getWorld().getEntityLocation(userName).getEntities().get(serverMediator.getWorld().getEntity(userName)).getxPostion()
-						+ "," + serverMediator.getWorld().getEntityLocation(userName).getEntities().get(serverMediator.getWorld().getEntity(userName)).getyPosition() + "]");
+				System.out.println("Change " + userName + "'s coordinate to" + "[" + serverMediator.getWorld().getEntityLocation(userName).getEntities().get(serverMediator.getWorld().getEntity(userName)).getxPostion() + "," + serverMediator.getWorld().getEntityLocation(userName).getEntities().get(serverMediator.getWorld().getEntity(userName)).getyPosition() + "]");
 				break;
 			case "OpenDoor":
 				locationController.openDoor(this.userName);
@@ -121,7 +114,6 @@ public class ClientThread extends Thread implements Runnable {
 			case "getWorld":
 				try {
 					objectOutput.writeObject(serverMediator.getWorld());
-					System.out.println("user get the world object when they login");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

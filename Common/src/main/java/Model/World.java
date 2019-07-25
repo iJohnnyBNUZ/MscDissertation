@@ -1,7 +1,6 @@
 package Model;
 
 import Model.Entity.Entity;
-import Model.Item.Key;
 import Model.Location.Coordinate;
 import Model.Location.Location;
 
@@ -65,14 +64,13 @@ public class World implements Serializable {
 
 
 	public void initEntityLocation(String userName){
-		//this.setEntityLocation(userName, "location0");
 		int max =2,min =0;
 		int positionX = min + (int)(Math.random() * (max-min+1));
 		int positionY = min + (int)(Math.random() * (max-min+1));
 
 		for(Coordinate coordinate: this.getLocations().get(0).getTiles().keySet()){
 			if(coordinate.getxPostion() == positionX && coordinate.getyPosition() == positionY){
-				this.getLocations().get(0).addEntity(this.getEntity(userName),coordinate);
+				this.getLocations().get(0).addEntity(this.getEntity(userName), coordinate);
 				System.out.println("gives user:"+userName+" an initial coordinate! ["+positionX+","+positionY+"]");
 				break;
 			}

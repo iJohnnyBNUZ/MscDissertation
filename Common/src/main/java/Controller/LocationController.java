@@ -46,18 +46,14 @@ public class LocationController implements Controller{
 
 	}
 
-	public void changeUserCoordinate(int positionx,int positiony,String userid){
-		Location location = gameMediator.getWorld().getEntityLocation(userid);
+	public void changeUserCoordinate(int xCoordinate, int yCoordinate, String userID){
+		Location location = gameMediator.getWorld().getEntityLocation(userID);
 		for(Coordinate c: location.getTiles().keySet()){
-			if(c.getxPostion() == positionx && c.getyPosition() == positiony){
+			if(c.getxPostion() == xCoordinate && c.getyPosition() == yCoordinate){
 				if (location.getTiles().get(c).isMovable()){
-					gameMediator.getWorld().getEntityLocation(userid).changeUserCoordinate(gameMediator.getWorld().getEntity(userid), c);
-					//decrease the energy for this tile
-					gameMediator.getWorld().getEntity(userid).decreaseEnergy(location.getTiles().get(c).getEnergyCost());
-					return;
-				}else
-					return;
-
+					gameMediator.getWorld().getEntityLocation(userID).changeUserCoordinate(gameMediator.getWorld().getEntity(userID), c);
+					gameMediator.getWorld().getEntity(userID).decreaseEnergy(location.getTiles().get(c).getEnergyCost());
+				}
 			}
 		}
 
