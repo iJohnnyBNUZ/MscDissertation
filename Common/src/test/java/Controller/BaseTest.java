@@ -54,15 +54,12 @@ public class BaseTest {
         Entity e2 = new NPC("npc2");
         Coordinate n_cor2 = new Coordinate(8, 4);
 
-        gameMediator.getWorld().addEntity(e1);
-        l1.addEntity("npc1", n_cor1);
-        gameMediator.getWorld().addEntity(e2);
-        l1.addEntity("npc2", n_cor2);
+        l1.addEntity(e1, n_cor1);
+        l1.addEntity(e2, n_cor2);
 
         Entity e3 = new Shop("store1");
         Coordinate n_cor3 = new Coordinate(0, 4);
-        l1.addEntity("store1", n_cor3);
-        gameMediator.getWorld().addEntity(e3);
+        l1.addEntity(e3, n_cor3);
 
         User user = new User("testUser");
 
@@ -79,7 +76,7 @@ public class BaseTest {
         user.addToBag(item7);
 
         Coordinate n_cor4 = new Coordinate(0, 0);
-        l1.addEntity("testUser", n_cor4);
+        l1.addEntity(user, n_cor4);
         gameMediator.getWorld().addEntity(user);
 
         User user2 = new User("testUser2");
