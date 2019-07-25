@@ -1,8 +1,5 @@
 package Controller.Observer;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import Controller.ClientMediator;
 import Model.Entity.Entity;
 import Model.Entity.NPC;
@@ -11,6 +8,9 @@ import Model.Entity.User;
 import Model.Location.Coordinate;
 import Model.Location.Location;
 import View.EntityView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class EntityObserver implements Observer{
 	private ClientMediator clientMediator;
@@ -22,7 +22,7 @@ public class EntityObserver implements Observer{
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		
+
 		String uId = clientMediator.getUserName();
 		Location curLocation = clientMediator.getWorld().getEntityLocation(uId);
 		

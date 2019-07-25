@@ -1,7 +1,6 @@
 package Controller.Network;
 
 import Controller.ClientMediator;
-import Model.Entity.Entity;
 import Model.Entity.User;
 import Model.World;
 
@@ -21,7 +20,7 @@ public class Client implements Runnable {
 
 	private boolean canRun = true;
 	private String userName;
-	private Socket s;
+	private Socket socket;
 	private ClientMediator clientMediator;
 	
 	private String IP = "";
@@ -31,6 +30,94 @@ public class Client implements Runnable {
 		this.clientMediator = clientMediator;
 	}
 	
+	public Boolean connectToServer(String ip) {
+		try{
+			ResourceBundle resourceBundle = ResourceBundle.getBundle("config");
+			IP = ip;
+			PORT = Integer.parseInt(resourceBundle.getString("port"));
+		}
+		catch (MissingResourceException e) {
+			e.printStackTrace();
+		}
+
+		try{
+		    socket = new Socket(IP, PORT);
+			in = new Scanner(socket.getInputStream());
+			this.objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+			this.objectInputStream = new ObjectInputStream((socket.getInputStream()));
+			getWorldFromServer();
+			new Thread(this).start();
+		} catch (Exception ex) {
+			canRun=false;
+		}
+		
+		return canRun;
+	}
+
+	@Override
+	public void run() {
+		while(canRun) {
+			try {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException ie) {
+					ie.printStackTrace();
+				}
+				getWorldFromServer();
+			} catch (Exception ex) {
+				canRun = false;
+				System.exit(0);
+				ex.printStackTrace();
+			}
+		}
+	}
+
+	private void getWorldFromServer() throws IOException, ClassNotFoundException {
+		objectOutputStream.writeObject("getWorld");
+		Object input = objectInputStream.readObject();
+		if(input instanceof World) {
+			updateWorld((World)input);
+		}
+		else if(input instanceof String) {
+			handleString((String)input);
+		}
+		else {
+			System.out.println("Received unknown object from server");
+		}
+	}
+
+	private void handleString(String input) {
+		System.out.println((input));
+		clientMediator.getIndexView().showMessage("Cannot connect to the server");
+	}
+
+	private void updateWorld(World world) {
+		clientMediator.setWorld(world);
+	}
+
+	public void login(String type, String uName) throws IOException, ClassNotFoundException {
+		this.userName = uName;
+		if(type.equals("new")) {
+			createUser(uName);
+		}else if(type.equals("continue")) {
+			((User) clientMediator.getWorld().getEntity(uName)).setOnline(true);
+			objectOutputStream.writeObject(clientMediator.getWorld().getEntity(uName));
+		}
+		
+	}
+
+	public void MoveTo(String command)throws IOException, ClassNotFoundException {
+		if(command != null)
+			objectOutputStream.writeObject((Object) command);
+	}
+
+	public void OpenDoor(String command)throws IOException, ClassNotFoundException{
+		if(command.equals("o")) objectOutputStream.writeObject((Object) "OpenDoor");
+	}
+	
+	private void createUser(String userName) throws IOException, ClassNotFoundException {
+		objectOutputStream.writeObject(new User(userName));
+	}
 
 	public Scanner getIn() {
 		return in;
@@ -72,12 +159,12 @@ public class Client implements Runnable {
 		this.userName = userName;
 	}
 
-	public Socket getS() {
-		return s;
+	public Socket getSocket() {
+		return socket;
 	}
 
-	public void setS(Socket s) {
-		this.s = s;
+	public void setSocket(Socket socket) {
+		this.socket = socket;
 	}
 
 	public ClientMediator getClientMediator() {
@@ -87,107 +174,4 @@ public class Client implements Runnable {
 	public void setClientMediator(ClientMediator clientMediator) {
 		this.clientMediator = clientMediator;
 	}
-
-	
-	public Boolean connectToServer(String Ip) {
-		try{
-			ResourceBundle rb = ResourceBundle.getBundle("config");
-			IP = Ip;
-			PORT = Integer.parseInt(rb.getString("port"));
-		}
-		catch (MissingResourceException e) {
-			e.printStackTrace();
-		}
-
-		try{
-		    s = new Socket(IP, PORT);
-			in = new Scanner(s.getInputStream());
-			this.objectOutputStream = new ObjectOutputStream(s.getOutputStream());
-			this.objectInputStream = new ObjectInputStream((s.getInputStream()));
-			getWorldFromServer();
-			Object input = objectInputStream.readObject();
-			if(input instanceof World) {
-				updateWorld((World)input);
-			}
-			new Thread(this).start();
-		} catch (Exception ex){
-			canRun=false;
-		}
-		
-		return canRun;
-	}
-		
-	public void getWorldFromServer() throws IOException, ClassNotFoundException {
-		objectOutputStream.writeObject("getWorld");
-	}
-	
-	public void login(String type, String uName) throws IOException, ClassNotFoundException {
-		this.userName = uName;
-		if(type.equals("new")) {
-			createUser(uName);
-			//getWorldFromServer();
-		}else if(type.equals("continue")) {
-			//if (!((User) clientMediator.getWorld().getEntity(uName)).getOnline()){
-				((User) clientMediator.getWorld().getEntity(uName)).setOnline(true);
-				objectOutputStream.writeObject(clientMediator.getWorld().getEntity(uName));
-			//}
-		}
-		
-	}
-
-	public void MoveTo(String command)throws IOException, ClassNotFoundException {
-		if(command != null)
-			objectOutputStream.writeObject((Object) command);
-	}
-
-	public void OpenDoor(String command)throws IOException, ClassNotFoundException{
-		if(command != null || command.equals("o")) objectOutputStream.writeObject((Object) "OpenDoor");
-	}
-	
-	private void createUser(String userName) throws IOException, ClassNotFoundException {
-		objectOutputStream.writeObject(new User(userName));
-	}
-
-	@Override
-	public void run() {
-		while(canRun) {
-			try {
-				System.out.println("Tick");
-			    Object input = objectInputStream.readObject();
-			    if(input instanceof World) {
-			    	updateWorld((World)input);
-			    }
-			    else if(input instanceof String) {
-					handleString((String)input);
-			    }
-			    else {
-				    System.out.println("Received unknown object from server");
-			    }
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException ie) {
-					ie.printStackTrace();
-				}
-
-			} catch (Exception ex) {
-				canRun = false;
-				System.exit(0);
-				ex.printStackTrace();
-			}
-		}
-	}
-
-	private void handleString(String input) {
-		System.out.println((input));
-		clientMediator.getIndexView().showMessage("Cannot connect to the server");
-	}
-
-	private void updateWorld(World world) {
-		clientMediator.setWorld(world);
-		System.out.print("Entity in the world:");
-		for (Entity entity : world.getEntities()) {
-			System.out.print(entity.getEntityID()+", ");
-		}
-	}
-
 }

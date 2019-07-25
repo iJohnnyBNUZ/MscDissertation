@@ -2,11 +2,6 @@ package Controller.Network;
 
 import Controller.ServerMediator;
 import Model.Entity.Entity;
-import Model.Entity.NPC;
-import Model.Entity.Shop;
-import Model.Item.Food;
-import Model.Item.Item;
-import Model.Location.*;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -26,14 +21,13 @@ public class Server implements Runnable{
 	}
 
 	public void run() {
-		System.out.println("Server is running");
+		System.out.println("Server is ready");
 		try{
 			while(true){
 				Socket socket = serverSocket.accept();
-				ClientThread ct = new ClientThread(socket, this, serverMediator);
-				clients.add(ct);
-				System.out.println("new Thread in Server!");
-				ct.start();
+				ClientThread clientThread = new ClientThread(socket, this, serverMediator);
+				clients.add(clientThread);
+				clientThread.start();
 			}
 		}catch (Exception ex){
 			ex.printStackTrace();
@@ -47,9 +41,9 @@ public class Server implements Runnable{
 
 	void updateClients() throws IOException {
 		for(ClientThread ct:clients) {
-			System.out.println("Responding to client");
+			System.out.println("-----Updating clients-----");
 			for (Entity entity : serverMediator.getWorld().getEntities()) {
-				System.out.println(entity);
+				System.out.println(entity.getEntityID());
 			}
 			ct.sendMessage(serverMediator.getWorld());
 		}

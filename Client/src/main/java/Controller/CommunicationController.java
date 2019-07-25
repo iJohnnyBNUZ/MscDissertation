@@ -1,9 +1,5 @@
 package Controller;
 
-import View.ChatView;
-
-import java.util.List;
-
 public class CommunicationController implements Controller {
 
     private ClientMediator clientMediator;
@@ -30,13 +26,13 @@ public class CommunicationController implements Controller {
 	private void withUser(String id) {
 		// TODO Auto-generated method stub
 		userID = this.clientMediator.getUserName();
-		this.clientMediator.getTansactionView().updateTransaction(this.clientMediator.getWorld().getEntity(id).getBag(),id,this.clientMediator.getWorld().getEntity(userID).getBag(),this.clientMediator.getWorld().getEntity(userID).getCoin());
+		this.clientMediator.getTransactionView().updateTransaction(this.clientMediator.getWorld().getEntity(id).getBag(),id,this.clientMediator.getWorld().getEntity(userID).getBag(),this.clientMediator.getWorld().getEntity(userID).getCoin());
 	}
 
 	private void withStore(String id) {
 		// TODO Auto-generated method stub
 		userID = this.clientMediator.getUserName();
-		this.clientMediator.getTansactionView().updateTransaction(this.clientMediator.getWorld().getEntity(id).getBag(),id,this.clientMediator.getWorld().getEntity(userID).getBag(),this.clientMediator.getWorld().getEntity(userID).getCoin());
+		this.clientMediator.getTransactionView().updateTransaction(this.clientMediator.getWorld().getEntity(id).getBag(),id,this.clientMediator.getWorld().getEntity(userID).getBag(),this.clientMediator.getWorld().getEntity(userID).getCoin());
 	}
 
 	private void withNPC(String id,String time) {

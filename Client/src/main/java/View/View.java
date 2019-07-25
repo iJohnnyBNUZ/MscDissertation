@@ -1,9 +1,5 @@
 package View;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.Optional;
-
 import Controller.Command.*;
 import Model.Location.Coordinate;
 import javafx.event.EventHandler;
@@ -18,11 +14,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.Optional;
 
 public class View {
 
@@ -134,10 +133,10 @@ public class View {
 
 	private double image_w = 64.0;
 
-	private MoveCommand moveCommand = null;
-	private SaveGameCommand saveGameCommand = null;
-	private LogOutCommand logOutCommand= null;
-	private OpenDoorCommand openDoorCommand = null;
+	private MoveCommand moveCommand;
+	private SaveGameCommand saveGameCommand;
+	private LogOutCommand logOutCommand;
+	private OpenDoorCommand openDoorCommand;
 
 
 	// This method is automatically invoked by the FXMLLoader - it's magic
@@ -341,7 +340,7 @@ public class View {
 				System.out.println(k.getCode().getName());
 				try {
 					if(k.getCode().getName().equals("Left") || k.getCode().getName().equals("Right")||k.getCode().getName().equals("Up")|| k.getCode().getName().equals("Down"))
-						moveCommand.excute(k.getCode().getName());
+						moveCommand.execute(k.getCode().getName());
 					else if (k.getCode().getName().equals("o") || k.getCode().getName().equals("O"))
 						openDoorCommand.excute(k.getCode().getName());
 				} catch (IOException e) {
