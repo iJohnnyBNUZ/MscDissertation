@@ -40,8 +40,10 @@ public class LoadEntity {
 		switch (entityObject.get("type").getAsString()) {
 			case "user":
 				entity = new User(entityObject.get("id").getAsString());
+				break;
 			case "shop":
 				entity = new Shop(entityObject.get("id").getAsString());
+				break;
 			case "npc":
 				entity = new NPC(entityObject.get("id").getAsString());
 				break;
