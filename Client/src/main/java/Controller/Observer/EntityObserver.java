@@ -35,9 +35,9 @@ public class EntityObserver implements Observer{
 		for(Entity entity: curLocation.getEntities().keySet()) {
 			if(entity instanceof User) {
 				users.put(entity.getEntityID(), curLocation.getEntities().get(entity));
-			}else if(entity.getEntityID().contains("npc")) {
+			}else if(entity instanceof NPC) {
 				npcs.put(entity.getEntityID(), curLocation.getEntities().get(entity));
-			}else if(entity.getEntityID().contains("store")){
+			}else if(entity instanceof Shop){
 				stores.put(entity.getEntityID(), curLocation.getEntities().get(entity));
 			}
 		}
