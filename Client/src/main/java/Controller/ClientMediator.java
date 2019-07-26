@@ -433,6 +433,14 @@ public class ClientMediator implements GameMediator {
 	public void addAction(String action) {
 		this.queue.add(action);
 	}
+
+	/**
+	 * remove the user's action to the queue.
+	 * @param action the user intended action (may plus the item ID).
+	 */
+	public void removeAction(String action) {
+		this.queue.remove(action);
+	}
 	
 	/**
 	 * Clean the actions stored in the queue.
