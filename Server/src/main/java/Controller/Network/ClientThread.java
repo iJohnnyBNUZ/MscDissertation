@@ -127,7 +127,7 @@ public class ClientThread extends Thread implements Runnable {
 
 	private void logout() {
 		Entity entity =  serverMediator.getWorld().getEntity(userName);
-		System.out.println("Logging out " + userName);
+		System.out.println("User " + userName+" Logout!");
 		if (entity instanceof User){
 			((User) entity).logout();
 			((User) entity).setOnline(false);

@@ -486,6 +486,7 @@ public class ClientMediator implements GameMediator {
 		this.postCommand = new PostCommand(communicationController);
 		this.saveGameCommand = new SaveGameCommand(this.saveUser);
 		this.logOutCommand = new LogOutCommand(this);
+
 	}
 	
 	/**
