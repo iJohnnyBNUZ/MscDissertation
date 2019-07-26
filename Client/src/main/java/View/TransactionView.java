@@ -82,7 +82,7 @@ public class TransactionView {
 
 
 	public void updateTransaction(List<Item> user__shop, String userShopName, List<Item> bag, int money){
-		//Transaction.setVisible(true);
+		Transaction.setVisible(true);
 		user_shop.setText(userShopName);
 		totalValue.setText("0");
 

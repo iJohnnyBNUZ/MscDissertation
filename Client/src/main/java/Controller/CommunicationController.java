@@ -1,5 +1,7 @@
 package Controller;
 
+import Model.Entity.Entity;
+
 public class CommunicationController implements Controller {
 
     private ClientMediator clientMediator;
@@ -11,6 +13,7 @@ public class CommunicationController implements Controller {
 
     public void addMessages(String message){
     	this.clientMediator.getWorld().addMessage(message);
+    	System.out.println(this.clientMediator.getWorld().getMessageList());
     }
 
 	public void communicateWith(String id,String time) {
@@ -29,7 +32,15 @@ public class CommunicationController implements Controller {
 
 	private void withStore(String id) {
 		userID = this.clientMediator.getUserName();
-		this.clientMediator.getTransactionView().updateTransaction(this.clientMediator.getWorld().getEntity(id).getBag(),id,this.clientMediator.getWorld().getEntity(userID).getBag(),this.clientMediator.getWorld().getEntity(userID).getCoin());
+		for(Entity entity: this.clientMediator.getWorld().getEntityLocation(userID).getEntities().keySet()){
+			if(entity.getEntityID() == id){
+				//System.out.println("shop是 " + entity.getEntityID());
+				//System.out.println("shop是 " + entity);
+				this.clientMediator.getTansactionView().updateTransaction(entity.getBag(),id,this.clientMediator.getWorld().getEntity(userID).getBag(),this.clientMediator.getWorld().getEntity(userID).getCoin());
+				break;
+			}
+		}
+		//this.clientMediator.getTransactionView().updateTransaction(this.clientMediator.getWorld().getEntity(id).getBag(),id,this.clientMediator.getWorld().getEntity(userID).getBag(),this.clientMediator.getWorld().getEntity(userID).getCoin());
 	}
 
 	private void withNPC(String id,String time) {
