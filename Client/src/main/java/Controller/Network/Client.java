@@ -25,6 +25,7 @@ public class Client implements Runnable {
 	
 	private String IP = "";
 	private int PORT = 0;
+	private int SLEEP_TIME = 500;
 	
 	public Client(ClientMediator clientMediator){
 		this.clientMediator = clientMediator;
@@ -59,7 +60,7 @@ public class Client implements Runnable {
 		while(canRun) {
 			try {
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(SLEEP_TIME);
 				} catch (InterruptedException ie) {
 					ie.printStackTrace();
 				}
