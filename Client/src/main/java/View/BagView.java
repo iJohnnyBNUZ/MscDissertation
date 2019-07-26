@@ -89,6 +89,7 @@ public class BagView{
 	public void updateBag(List<Item> bag,int money){
 		Platform.runLater(new Runnable() {
 			@Override public void run() {
+				System.out.println("背包里有" + bag);
 				System.out.println("在更新bag");
 				bagFoodVbox.getChildren().clear();
 				bagKeysVbox.getChildren().clear();

@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import Controller.Command.*;
 import Model.Location.Coordinate;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -487,11 +488,16 @@ public class View {
 
 
 	public void showAlert(String message){
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Information");
-		alert.setHeaderText("");
-		alert.setContentText(message);
-		alert.show();
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Information");
+				alert.setHeaderText("");
+				alert.setContentText(message);
+				alert.show();
+			}
+		});
 	}
 
 }
