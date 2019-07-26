@@ -2,7 +2,10 @@ package Controller.Load;
 
 import Controller.ServerMediator;
 import Model.Entity.Entity;
+import Model.Item.Coin;
+import Model.Item.Food;
 import Model.Item.Item;
+import Model.Item.Key;
 import Model.Location.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -63,10 +66,33 @@ class LoadLocation {
 	private void addItems(Location location, JsonArray items) {
 		for (int i = 0; i < items.size(); i++) {
 			JsonObject item = items.get(i).getAsJsonObject();
-			Item newItem = new Item(item.get("id").getAsString(), item.get("value").getAsInt(), item.get("type").getAsString());
-			newItem.setCollectible(item.get("isCollectible").getAsBoolean());
-			newItem.setEdible(item.get("isEdible").getAsBoolean());
-			location.addItem(new Coordinate(item.get("xCoordinate").getAsInt(), item.get("yCoordinate").getAsInt()), newItem);
+			switch(item.get("type").getAsString()){
+				case "food":
+					Food newFood = new Food(item.get("id").getAsString(),item.get("energy").getAsInt(),item.get("value").getAsInt(),item.get("type").getAsString());
+					newFood.setCollectible(item.get("isCollectible").getAsBoolean());
+					newFood.setEdible(item.get("isEdible").getAsBoolean());
+					location.addItem(new Coordinate(item.get("xCoordinate").getAsInt(),item.get("yCoordinate").getAsInt()),newFood);
+					System.out.println("load 食物" + newFood);
+					break;
+				case "key":
+					Key newKey = new Key(item.get("id").getAsString(),item.get("value").getAsInt(),item.get("type").getAsString());
+					newKey.setCollectible(item.get("isCollectible").getAsBoolean());
+					newKey.setEdible(item.get("isEdible").getAsBoolean());
+					location.addItem(new Coordinate(item.get("xCoordinate").getAsInt(),item.get("yCoordinate").getAsInt()),newKey);
+					System.out.println("load 钥匙" + newKey);
+					break;
+				case "coin":
+					Coin newCoin = new Coin(item.get("id").getAsString(),item.get("value").getAsInt(),item.get("type").getAsString());
+					newCoin.setCollectible(item.get("isCollectible").getAsBoolean());
+					newCoin.setEdible(item.get("isEdible").getAsBoolean());
+					location.addItem(new Coordinate(item.get("xCoordinate").getAsInt(),item.get("yCoordinate").getAsInt()),newCoin);
+					System.out.println("load 硬币" + newCoin);
+					break;
+			}
+			//Item newItem = new Item(item.get("id").getAsString(), item.get("value").getAsInt(), item.get("type").getAsString());
+			//newItem.setCollectible(item.get("isCollectible").getAsBoolean());
+			//newItem.setEdible(item.get("isEdible").getAsBoolean());
+			//location.addItem(new Coordinate(item.get("xCoordinate").getAsInt(), item.get("yCoordinate").getAsInt()), newItem);
 		}
 	}
 
