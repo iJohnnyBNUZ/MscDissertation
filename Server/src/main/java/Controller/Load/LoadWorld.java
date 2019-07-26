@@ -21,7 +21,8 @@ public class LoadWorld {
 	public void loadLocations() throws IOException {
 		File[] fileList = getFileList(filePath + "/Locations");
 		if(fileList != null) {
-			for (File child : fileList) {
+			for (int i = 0; i < fileList.length; i++){
+				File child = new File(filePath + "/Locations/DefaultLocation" + i + ".json");
 				serverMediator.getWorld().addLocation(loadLocation.buildLocation(child));
 				System.out.println("Location size: " + serverMediator.getWorld().getLocations().size());
 			}
