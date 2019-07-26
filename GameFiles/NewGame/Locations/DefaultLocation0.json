@@ -864,7 +864,31 @@
 		],
 		"xCoordinate": 0,
 		"yCoordinate": 6
-	  }
+	  },
+		{
+			"id": "npc1",
+			"type": "npc",
+			"energy": 200,
+			"coin": 100,
+			"bag": [
+				{
+					"id": "orange00",
+					"type": "food",
+					"value": 10,
+					"isCollectible": true,
+					"isEdible": true
+				},
+				{
+					"id": "key_red00",
+					"type": "key",
+					"value": 100,
+					"isCollectible": true,
+					"isEdible": true
+				}
+			],
+			"xCoordinate": 4,
+			"yCoordinate": 3
+		}
 	]
   }
 ]

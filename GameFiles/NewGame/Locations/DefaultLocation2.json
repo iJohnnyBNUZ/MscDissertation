@@ -481,15 +481,15 @@
 				"yCoordinate": 6
 			},
 			{
-				"terrain": "stone",
+				"terrain": "water",
 				"isMovable": false,
 				"energyCost": 1,
 				"xCoordinate": 8,
 				"yCoordinate": 6
 			},
 			{
-				"terrain": "grass",
-				"isMovable": true,
+				"terrain": "water",
+				"isMovable": false,
 				"energyCost": 1,
 				"xCoordinate": 9,
 				"yCoordinate": 6
@@ -551,28 +551,28 @@
 				"yCoordinate": 7
 			},
 			{
-				"terrain": "stone",
+				"terrain": "water",
 				"isMovable": false,
 				"energyCost": 1,
 				"xCoordinate": 8,
 				"yCoordinate": 7
 			},
 			{
-				"terrain": "stone",
+				"terrain": "water",
 				"isMovable": false,
 				"energyCost": 1,
 				"xCoordinate": 9,
 				"yCoordinate": 7
 			},
 			{
-				"terrain": "stone",
+				"terrain": "water",
 				"isMovable": false,
 				"energyCost": 2,
 				"xCoordinate": 0,
 				"yCoordinate": 8
 			},
 			{
-				"terrain": "stone",
+				"terrain": "water",
 				"isMovable": false,
 				"energyCost": 2,
 				"xCoordinate": 1,
@@ -838,8 +838,8 @@
 				"value": 100,
 				"isCollectible": true,
 				"isEdible": true,
-				"xCoordinate": 9,
-				"yCoordinate": 6
+				"xCoordinate": 7,
+				"yCoordinate": 1
 			}
 		],
 		"entities": [
@@ -864,8 +864,32 @@
 						"isEdible": true
 					}
 				],
+				"xCoordinate": 0,
+				"yCoordinate": 9
+			},
+			{
+				"id": "npc0",
+				"type": "npc",
+				"energy": 50,
+				"coin": 100,
+				"bag": [
+					{
+						"id": "lemon8",
+						"type": "food",
+						"value": 10,
+						"isCollectible": true,
+						"isEdible": true
+					},
+					{
+						"id": "key_green3",
+						"type": "key",
+						"value": 100,
+						"isCollectible": true,
+						"isEdible": true
+					}
+				],
 				"xCoordinate": 4,
-				"yCoordinate": 2
+				"yCoordinate": 3
 			}
 		]
 	}
