@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Entity.Entity;
+import Model.Item.Coin;
 import Model.Item.Food;
 import Model.Item.Item;
 import Model.Location.Coordinate;
@@ -36,9 +37,16 @@ public class ItemController implements Controller{
             item = location.getItems().get(coordinate);
             location.removeItem(coordinate);
         }
-        // add to user's bag
         Entity entity = this.gameMediator.getWorld().getEntity(userID);
-        entity.pickUp(item);
+        if (entity == null)
+            return;
+        if (item instanceof Coin){
+            Coin coin = (Coin) item;
+            entity.setCoin(entity.getCoin() + coin.getCoinValue());
+        }
+        else{
+            entity.pickUp(item);  // add to user's bag
+        }
     }
 
     public void drop(String userID,String itemID){
