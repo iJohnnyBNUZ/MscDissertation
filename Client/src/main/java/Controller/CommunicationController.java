@@ -45,8 +45,8 @@ public class CommunicationController implements Controller {
 
 	private void withNPC(String id,String time) {
 		userID = this.clientMediator.getUserName();
-		this.clientMediator.getWorld().getEntity(userID).reactTo(this.clientMediator.getWorld().getEntity(id));
-		String message = "You are communicate with "+ id + ", and you lose 20 energy at " + time;
+		this.clientMediator.getWorld().getEntity(userID).reactTo(this.clientMediator.getWorld().getEntity(userID));
+		String message = "You are communicate with "+ id + ", and you lose 30 energy at " + time;
 		this.clientMediator.getNPCView().updateNpcView(message);
 	}
 }
