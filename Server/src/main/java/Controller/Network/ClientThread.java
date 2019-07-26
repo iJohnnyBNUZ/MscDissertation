@@ -1,9 +1,11 @@
 package Controller.Network;
 
+import Controller.ItemController;
 import Controller.LocationController;
 import Controller.ServerMediator;
 import Model.Entity.Entity;
 import Model.Entity.User;
+import Model.Item.Item;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -18,6 +20,7 @@ public class ClientThread extends Thread implements Runnable {
 	private String userName = null;
 	private ServerMediator serverMediator;
 	private LocationController locationController;
+	private ItemController itemController;
 
 	ClientThread(Socket socket, Server server, ServerMediator serverMediator) throws Exception{
 		this.server = server;
@@ -25,6 +28,7 @@ public class ClientThread extends Thread implements Runnable {
 		objectOutput = new ObjectOutputStream(socket.getOutputStream());
 		this.serverMediator = serverMediator;
 		this.locationController = new LocationController(this.serverMediator);
+		this.itemController = new ItemController(this.serverMediator);
 	}
 
 	@Override
@@ -89,6 +93,7 @@ public class ClientThread extends Thread implements Runnable {
 
 
 	private void handleString(String command) {
+		System.out.println("receive +:" +command);
 		switch (command) {
 			case "left":
 			case "right":
@@ -103,7 +108,7 @@ public class ClientThread extends Thread implements Runnable {
 				}
 				System.out.println("Change " + userName + "'s coordinate to" + "[" + serverMediator.getWorld().getEntityLocation(userName).getEntities().get(serverMediator.getWorld().getEntity(userName)).getxPostion() + "," + serverMediator.getWorld().getEntityLocation(userName).getEntities().get(serverMediator.getWorld().getEntity(userName)).getyPosition() + "]");
 				break;
-			case "OpenDoor":
+			case "openDoor":
 				locationController.openDoor(this.userName);
 				try {
 					objectOutput.writeObject(serverMediator.getWorld());
@@ -112,6 +117,15 @@ public class ClientThread extends Thread implements Runnable {
 				}
 				break;
 			case "getWorld":
+				try {
+					objectOutput.writeObject(serverMediator.getWorld());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				break;
+
+			case "pickUp":
+				itemController.pickUp(this.userName);
 				try {
 					objectOutput.writeObject(serverMediator.getWorld());
 				} catch (IOException e) {
