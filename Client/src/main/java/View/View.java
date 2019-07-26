@@ -306,7 +306,7 @@ public class View {
 					e.printStackTrace();
 				}*/
 				directions.add(k.getCode().getName());
-				System.out.println("add");
+				System.out.println("add: "+k.getCode().getName());
 			}
 
 		});
@@ -324,11 +324,15 @@ public class View {
 					String action = directions.get(0);
 					try {
 						if(action.equals("Left") || action.equals("Right")||action.equals("Up")|| action.equals("Down")) {
+							System.out.println("view keyEvent: "+ action);
 							moveCommand.excute(action);
 							directions.remove(action);
 						}
 						else if (action.equals("o") || action.equals("O")){
+							System.out.println("view keyEvent: "+ action);
 							openDoorCommand.excute(action);
+							directions.remove(action);
+						}else{
 							directions.remove(action);
 						}
 					} catch (IOException e) {
