@@ -131,7 +131,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab fx:id="coins" text="Coins">
+            <Tab fx:id="coins" text="Money">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #F5F5F5;">
                      <children>
