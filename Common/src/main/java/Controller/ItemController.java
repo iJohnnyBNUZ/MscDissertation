@@ -20,9 +20,17 @@ public class ItemController implements Controller{
         this.gameMediator = gameMediator;
     }
 
-    public void pickUp(String userID, Coordinate coordinate){
+    public void pickUp(String userID){
+
         // delete from location
         Location location = this.gameMediator.getWorld().getEntityLocation(userID);
+        Coordinate coordinate = null;
+
+        for(Map.Entry<Entity, Coordinate> entry : location.getEntities().entrySet()){
+            if (entry.getKey().getEntityID().equals(userID))
+                coordinate = entry.getValue();
+        }
+
         Item item = null;
         if (location.getItems().get(coordinate) != null){
             item = location.getItems().get(coordinate);
