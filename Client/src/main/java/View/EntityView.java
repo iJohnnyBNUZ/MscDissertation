@@ -50,15 +50,15 @@ public class EntityView {
 	                @Override public void run() {
 	                	ImageView imgView = view.drawClickable("npc", npcs.get(name), false);
 	    				imgView.setId(name);
-	    				imgView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+	    				/*imgView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 	    					public void handle(MouseEvent m) {
 	    						System.out.println("npc ID: "+ imgView.getId());
 	    						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	    						communication.execute(imgView.getId(),df.format(new Date()).toString());
+	    						communication.execute();
 	    					}
 	    					
-	    				});
+	    				});*/
 	    			}
 				});
 				
@@ -78,15 +78,15 @@ public class EntityView {
 	                	ImageView imgView = view.drawClickable("player", users.get(name), false);
 	    				imgView.setId(name);
 	    				System.out.println(imgView.getId());
-	    				imgView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+	    				/*imgView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 	    					public void handle(MouseEvent m) {
 	    						System.out.println("user ID: " + imgView.getId());
 	    						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	    						communication.execute(imgView.getId(),df.format(new Date()).toString());
+	    						communication.execute();
 	    					}
 	    					
-	    				});
+	    				});*/
 	    			}
 				});
 			}
@@ -107,15 +107,15 @@ public class EntityView {
 	                @Override public void run() {
 	                	ImageView imgView = view.drawClickable("store", stores.get(name), false);
 	    				imgView.setId(name);
-	    				imgView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+	    				/*imgView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 	    					public void handle(MouseEvent m) {
 	    						System.out.println("storeId"+imgView.getId());
 	    						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	    						communication.execute(imgView.getId(),df.format(new Date()).toString());
+	    						communication.execute();
 	    					}
 	    					
-	    				});
+	    				});*/
 	    			}
 				});
 				

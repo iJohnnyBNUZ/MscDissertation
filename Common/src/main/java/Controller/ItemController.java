@@ -22,7 +22,7 @@ public class ItemController implements Controller{
     }
 
     public void pickUp(String userID){
-
+        System.out.println("itemController");
         // delete from location
         Location location = this.gameMediator.getWorld().getEntityLocation(userID);
         Coordinate coordinate = null;

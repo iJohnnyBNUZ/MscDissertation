@@ -480,7 +480,7 @@ public class ClientMediator implements GameMediator {
 		this.putDownCommand = new PutDownCommand(itemController,this);
 		this.eatCommand = new EatCommand(itemController,this);
 		this.pickUpCommand = new PickUpCommand(itemController,this);
-		this.communicationCommand = new CommunicationCommand(communicationController);
+		this.communicationCommand = new CommunicationCommand(communicationController,this);
 		this.buyCommand = new BuyCommand(messageController);
 		this.sellCommand = new SellCommand(messageController);
 		this.postCommand = new PostCommand(communicationController);
@@ -516,6 +516,8 @@ public class ClientMediator implements GameMediator {
 	 */
 	public void bindViewCommand() {
 		view.setMoveCommand(moveCommand);
+		view.setPickUpCommand(pickUpCommand);
+		view.setCommunicationCommand(communicationCommand);
 		view.setOpenDoorCommand(openDoorCommand);
 		view.setSaveGameCommand(saveGameCommand);
 		view.setLogOutCommand(logOutCommand);

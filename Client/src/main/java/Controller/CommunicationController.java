@@ -1,6 +1,13 @@
 package Controller;
 
 import Model.Entity.Entity;
+import Model.Entity.NPC;
+import Model.Entity.Shop;
+import Model.Entity.User;
+import Model.Location.Coordinate;
+import Model.Location.Location;
+
+import java.util.Map;
 
 public class CommunicationController implements Controller {
 
@@ -16,21 +23,58 @@ public class CommunicationController implements Controller {
     	System.out.println(this.clientMediator.getWorld().getMessageList());
     }
 
-	public void communicateWith(String id,String time) {
-		String name = id.replaceAll("[0-9]", "");
-		switch(name) {
-		case "npc": System.out.println("Talk with NPC:" + id );withNPC(id,time);break;
-		case "store": System.out.println("Talk with STORE:" + id );withStore(id);break;
-		case "user" : System.out.println("Talk with USER:" + id );withUser(id);break;
+	public boolean communicateWith() {
+    	System.out.println("communication Controller!!!!!!!!!!!1");
+    	boolean isAvaliable=false;
+		userID = clientMediator.getUserName();
+		Location location = this.clientMediator.getWorld().getEntityLocation(userID);
+		Coordinate coordinate = null;
+		for(Map.Entry<Entity, Coordinate> entry : location.getEntities().entrySet()){
+			if (entry.getKey().getEntityID().equals(userID))
+				coordinate = entry.getValue();
 		}
+
+		String id = null;
+		String name = null;
+		for(Entity entity:location.getEntities().keySet()){
+			if(location.getEntities().get(entity).equals(coordinate)&&!entity.getEntityID().equals(userID)){
+				id=entity.getEntityID();
+				System.out.println("talk with :"+id);
+				if(entity instanceof NPC){
+					name="npc";
+				}else if(entity instanceof User){
+					name ="user";
+				}else if(entity instanceof Shop){
+					name = "shop";
+				}
+				isAvaliable=true;
+			}
+		}
+
+		//Coordinate uCor = clientMediator.getWorld().get
+		if(name!=null){
+			switch(name) {
+				//add queue
+				case "npc": System.out.println("Talk with NPC:" + id );withNPC(id);break;
+				case "shop": System.out.println("Talk with SHOP:" + id );withShop(id);break;
+				case "user" : System.out.println("Talk with USER:" + id );withUser(id);break;
+				default:break;
+			}
+		}
+
+
+		return isAvaliable;
 	}
 
 	private void withUser(String id) {
 		userID = this.clientMediator.getUserName();
-		this.clientMediator.getTransactionView().updateTransaction(this.clientMediator.getWorld().getEntity(id).getBag(),id,this.clientMediator.getWorld().getEntity(userID).getBag(),this.clientMediator.getWorld().getEntity(userID).getCoin());
+		if(!id.equals(userID))
+			this.clientMediator.getTransactionView().updateTransaction(this.clientMediator.getWorld().getEntity(id).getBag(),id,this.clientMediator.getWorld().getEntity(userID).getBag(),this.clientMediator.getWorld().getEntity(userID).getCoin());
+
 	}
 
-	private void withStore(String id) {
+	private void withShop(String id) {
+    	System.out.println("with shop+{}" + id);
 		userID = this.clientMediator.getUserName();
 		for(Entity entity: this.clientMediator.getWorld().getEntityLocation(userID).getEntities().keySet()){
 			if(entity.getEntityID() == id){
@@ -43,10 +87,10 @@ public class CommunicationController implements Controller {
 		//this.clientMediator.getTransactionView().updateTransaction(this.clientMediator.getWorld().getEntity(id).getBag(),id,this.clientMediator.getWorld().getEntity(userID).getBag(),this.clientMediator.getWorld().getEntity(userID).getCoin());
 	}
 
-	private void withNPC(String id,String time) {
+	private void withNPC(String id) {
 		userID = this.clientMediator.getUserName();
 		this.clientMediator.getWorld().getEntity(userID).reactTo(this.clientMediator.getWorld().getEntity(userID));
-		String message = "You are communicate with "+ id + ", and you lose 30 energy at " + time;
+		String message = "You are communicate with "+ id + ", and you lose 30 energy. " ;
 		this.clientMediator.getNPCView().updateNpcView(message);
 	}
 }

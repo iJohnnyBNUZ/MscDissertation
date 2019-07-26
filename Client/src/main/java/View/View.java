@@ -170,6 +170,8 @@ public class View {
 	private SaveGameCommand saveGameCommand = null;
 	private LogOutCommand logOutCommand= null;
 	private OpenDoorCommand openDoorCommand = null;
+	private PickUpCommand pickUpCommand= null;
+	private CommunicationCommand communicationCommand= null;
 
 	private List<String> directions = new ArrayList<String>();
 
@@ -295,16 +297,6 @@ public class View {
 			@Override
 			public void handle(KeyEvent k) {
 				System.out.println(k.getCode().getName());
-				/*try {
-					if(k.getCode().getName().equals("Left") || k.getCode().getName().equals("Right")||k.getCode().getName().equals("Up")|| k.getCode().getName().equals("Down"))
-						moveCommand.excute(k.getCode().getName());
-					else if (k.getCode().getName().equals("o") || k.getCode().getName().equals("O"))
-						openDoorCommand.excute(k.getCode().getName());
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				}*/
 				directions.add(k.getCode().getName());
 				System.out.println("add: "+k.getCode().getName());
 			}
@@ -328,11 +320,19 @@ public class View {
 							moveCommand.excute(action);
 							directions.remove(action);
 						}
-						else if (action.equals("o") || action.equals("O")){
+						/*else if (action.equals("o") || action.equals("O")){
 							System.out.println("view keyEvent: "+ action);
-							openDoorCommand.excute(action);
+							openDoorCommand.excute();
 							directions.remove(action);
-						}else{
+						}*/
+						else if(action.equals("Enter")){
+							System.out.println("enter key envent");
+							pickUpCommand.execute();
+							openDoorCommand.excute();
+							communicationCommand.execute();
+							directions.remove(action);
+						}
+						else{
 							directions.remove(action);
 						}
 					} catch (IOException e) {
@@ -437,6 +437,13 @@ public class View {
 		moveCommand = (MoveCommand) command;
 	}
 
+	public void setPickUpCommand(Command command){
+		pickUpCommand = (PickUpCommand) command;
+	}
+
+	public void setCommunicationCommand(Command command){
+		communicationCommand = (CommunicationCommand) command;
+	}
 	public void setSaveGameCommand(Command command) {
 		saveGameCommand = (SaveGameCommand) command;
 	}

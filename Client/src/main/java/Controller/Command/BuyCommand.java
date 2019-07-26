@@ -19,6 +19,7 @@ public class BuyCommand implements Command {
 
 	public void execute(String usershopName,HashMap<String,Integer> buyList, int buyValue){
 		System.out.println("several items are bought, it costs "+ buyValue +" coins");
+		//add queue
 		messageController.buyMessage(usershopName,buyList,buyValue);
 	}
 }
