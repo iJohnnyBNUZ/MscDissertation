@@ -128,26 +128,53 @@ public class Client implements Runnable {
 			createUser(uName);
 			//getWorldFromServer();
 		}else if(type.equals("continue")) {
-			//if (!((User) clientMediator.getWorld().getEntity(uName)).getOnline()){
+			if (!((User) clientMediator.getWorld().getEntity(uName)).getOnline()){
 				((User) clientMediator.getWorld().getEntity(uName)).setOnline(true);
 				objectOutputStream.writeObject(clientMediator.getWorld().getEntity(uName));
-			//}
+			}
 		}
 		
 	}
 
-	public void MoveTo(String command)throws IOException, ClassNotFoundException {
-		if(command != null)
-			objectOutputStream.writeObject((Object) command);
+	public void MoveTo(String command){
+		if(command != null) {
+            try {
+                objectOutputStream.writeObject((Object) command);
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("exception from MoveTo in Client");
+            }
+        }
 	}
 
-	public void OpenDoor(String command)throws IOException, ClassNotFoundException{
-		if(command != null || command.equals("o")) objectOutputStream.writeObject((Object) "OpenDoor");
+	public void OpenDoor(String command){
+		if(command != null || command.equals("o")) {
+            try {
+                objectOutputStream.writeObject((Object) "OpenDoor");
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("exception from OpenDoor in Client");
+            }
+        }
 	}
 	
-	private void createUser(String userName) throws IOException, ClassNotFoundException {
-		objectOutputStream.writeObject(new User(userName));
-	}
+	private void createUser(String userName) {
+        try {
+            objectOutputStream.writeObject(new User(userName));
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("exception from createUser in Client");
+        }
+    }
+
+	public void logout(){
+        try {
+            objectOutputStream.writeObject("logout");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("exception from logout in Client");
+        }
+    }
 
 	@Override
 	public void run() {

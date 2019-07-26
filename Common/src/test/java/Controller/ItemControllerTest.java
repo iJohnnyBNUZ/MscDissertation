@@ -17,17 +17,19 @@ import java.util.HashMap;
 import static org.junit.Assert.assertEquals;
 
 public class ItemControllerTest extends BaseTest {
-    GameMediator gameMediator = new GameMediator() {
-        @Override
-        public World getWorld() {
-            return new World();
-        }
-    };
+    GameMediator gameMediator = null;
     private ItemController itemController = null;
     private Location location = null;
 
     @Before
     public void set_up() {
+        World world = new World();
+        gameMediator = new GameMediator() {
+            @Override
+            public World getWorld() {
+                return world;
+            }
+        };
         itemController = new ItemController(gameMediator);
         super.initWorld(gameMediator);
 
@@ -46,7 +48,7 @@ public class ItemControllerTest extends BaseTest {
         int beforeSize = location.getItems().size();
         int beforeBag = entity.getBag().size();
 
-        itemController.pickUp("testUser", new Coordinate(0, 0));
+        itemController.pickUp("testUser");
 
         assertEquals(location.getItems().size(), beforeSize - 1);
         assertEquals(entity.getBag().size(), beforeBag + 1);
