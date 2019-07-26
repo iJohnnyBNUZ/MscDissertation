@@ -36,7 +36,18 @@ public class ItemController implements Controller{
         if (location.getItems().get(coordinate) != null){
             item = location.getItems().get(coordinate);
             location.removeItem(coordinate);
+            Entity entity = this.gameMediator.getWorld().getEntity(userID);
+            if (entity == null)
+                return;
+            if (item instanceof Coin){
+                Coin coin = (Coin) item;
+                entity.setCoin(entity.getCoin() + coin.getCoinValue());
+            }
+            else{
+                entity.pickUp(item);  // add to user's bag
+            }
         }
+        /*
         Entity entity = this.gameMediator.getWorld().getEntity(userID);
         if (entity == null)
             return;
@@ -47,6 +58,7 @@ public class ItemController implements Controller{
         else{
             entity.pickUp(item);  // add to user's bag
         }
+        */
     }
 
     public void drop(String userID,String itemID){
