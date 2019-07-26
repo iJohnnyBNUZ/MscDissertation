@@ -274,10 +274,6 @@ public class View {
 		chatView.setVisible(true);
 	}
 
-	public void showTransaction() {
-		newTransaction.setVisible(true);
-	}
-
 
 	public void saveGame() {
 		saveGameCommand.execute();
@@ -480,10 +476,10 @@ public class View {
 
 
 	public void showAlert(String message){
-		Alert alert = new Alert(Alert.AlertType.CONFIRMATION,message,new ButtonType("Cancel", ButtonBar.ButtonData.NO),
-				new ButtonType("Confirm", ButtonBar.ButtonData.YES));
+		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Information");
 		alert.setHeaderText("");
+		alert.setContentText(message);
 		alert.show();
 	}
 

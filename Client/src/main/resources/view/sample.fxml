@@ -44,11 +44,6 @@
                   <MenuItem fx:id="openChat" mnemonicParsing="false" onAction="#showChat" text="Open the chat" />
                </items>
             </Menu>
-            <Menu fx:id="Bag1111" mnemonicParsing="false" text="Transaction">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#showTransaction" text="Open the transaction" />
-               </items>
-            </Menu>
             <!--
             <Menu mnemonicParsing="false" text="ItemPosition">
                 <items>
@@ -143,7 +138,7 @@
             </Tab>
          </tabs>
       </TabPane>
-      <TabPane fx:id="newTransaction" layoutX="10.0" layoutY="32.0" prefHeight="409.0" prefWidth="479.0" tabClosingPolicy="UNAVAILABLE" visible="false">
+      <TabPane fx:id="newTransaction" layoutX="200.0" layoutY="100.0" prefHeight="409.0" prefWidth="479.0" tabClosingPolicy="UNAVAILABLE" visible="false">
          <tabs>
             <Tab fx:id="user_shop" text="User_Shop">
                <content>
@@ -179,7 +174,7 @@
                            </content>
                         </ScrollPane>
                         <Button fx:id="sell" layoutX="285.0" layoutY="337.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="55.0" text="Sell" />
-                        <Label layoutX="34.0" layoutY="337.0" prefHeight="27.0" prefWidth="59.0" text="My coins:" />
+                        <Label layoutX="30.0" layoutY="337.0" prefHeight="27.0" prefWidth="70.0" text="My money:" />
                         <Label fx:id="numOfMyCoins" layoutX="99.0" layoutY="337.0" prefHeight="27.0" prefWidth="55.0" text="Label" />
                         <Button fx:id="closeMyBag" layoutX="376.0" layoutY="337.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="55.0" text="Close" />
                         <Label layoutX="151.0" layoutY="337.0" prefHeight="27.0" prefWidth="78.0" text="Total value:" />

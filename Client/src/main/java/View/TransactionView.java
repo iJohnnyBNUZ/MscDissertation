@@ -178,7 +178,15 @@ public class TransactionView {
 		buy.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
-				buyCommand.execute(userShopName,buyList,buyValue);
+				for(Integer buyItemNum: buyList.values()){
+					if(buyItemNum != 0){
+						buyCommand.execute(userShopName,buyList,buyValue);
+						break;
+					}
+				}
+                //System.out.println("BuyList是" + buyList.values());
+                //System.out.println("OldByNum是" + oldBuyNum);
+
 			}
 		});
 
@@ -277,7 +285,12 @@ public class TransactionView {
 		sell.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
-				sellCommand.execute(userShopName, sellList,sellValue);
+				for(Integer sellItemNum: sellList.values()){
+					if(sellItemNum != 0){
+						sellCommand.execute(userShopName, sellList,sellValue);
+						break;
+					}
+				}
 			}
 		});
 	}
