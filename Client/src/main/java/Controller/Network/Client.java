@@ -128,43 +128,21 @@ public class Client implements Runnable {
 			createUser(uName);
 			//getWorldFromServer();
 		}else if(type.equals("continue")) {
-			if (!((User) clientMediator.getWorld().getEntity(uName)).getOnline()){
+			//if (!((User) clientMediator.getWorld().getEntity(uName)).getOnline()){
 				((User) clientMediator.getWorld().getEntity(uName)).setOnline(true);
 				objectOutputStream.writeObject(clientMediator.getWorld().getEntity(uName));
-			}
+			//}
 		}
 		
 	}
 
-	public void MoveTo(String command){
-		if(command != null) {
-			try {
-				objectOutputStream.writeObject((Object) command);
-			} catch (IOException e) {
-				e.printStackTrace();
-				System.out.println("exception in MoveTo method in client");
-			}
-		}
+	public void MoveTo(String command)throws IOException, ClassNotFoundException {
+		if(command != null)
+			objectOutputStream.writeObject((Object) command);
 	}
 
-	public void OpenDoor(String command){
-		if(command != null || command.equals("o")) {
-			try {
-				objectOutputStream.writeObject((Object) "OpenDoor");
-			} catch (IOException e) {
-				e.printStackTrace();
-				System.out.println("exception in openDoor method in client");
-			}
-		}
-	}
-
-	public void logout(){
-		try {
-			objectOutputStream.writeObject((Object)"logout");
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.out.println("exception in logout function from client");
-		}
+	public void OpenDoor(String command)throws IOException, ClassNotFoundException{
+		if(command != null || command.equals("o")) objectOutputStream.writeObject((Object) "OpenDoor");
 	}
 	
 	private void createUser(String userName) throws IOException, ClassNotFoundException {
