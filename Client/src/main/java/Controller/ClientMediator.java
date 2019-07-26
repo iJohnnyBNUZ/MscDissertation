@@ -146,8 +146,10 @@ public class ClientMediator implements GameMediator {
 				this.world.setEntities(newWorld.getEntities());
 //				this.world = newWorld;
 			}
+			long startTime=System.currentTimeMillis();   //start time
             this.notifyObservers();
-
+			long endTime=System.currentTimeMillis(); //end time
+			System.out.println("Time to notify ---->"+(endTime-startTime));
 		}else{
 			this.world = newWorld;
 		}
@@ -483,7 +485,8 @@ public class ClientMediator implements GameMediator {
 		this.sellCommand = new SellCommand(messageController);
 		this.postCommand = new PostCommand(communicationController);
 		this.saveGameCommand = new SaveGameCommand(this.saveUser);
-		this.logOutCommand = new LogOutCommand();
+		this.logOutCommand = new LogOutCommand(this);
+
 	}
 	
 	/**
