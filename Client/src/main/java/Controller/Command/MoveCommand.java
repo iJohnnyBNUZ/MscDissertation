@@ -24,7 +24,8 @@ public class MoveCommand implements Command {
         String uName = clientMediator.getClient().getUserName();
         System.out.println(uName+"Move to in Command-> "+direction);
         locationController.moveTo(uName, direction.toLowerCase());
-		clientMediator.getClient().MoveTo(direction.toLowerCase());
+		//clientMediator.getClient().MoveTo(direction.toLowerCase());
+        clientMediator.addAction(direction.toLowerCase());
     }
 
 }
