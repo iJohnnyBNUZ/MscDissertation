@@ -26,6 +26,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Optional;
+
+import Controller.Command.*;
+import Model.Location.Coordinate;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class View {
 
@@ -396,13 +422,14 @@ public class View {
 	public void initialForItem(){
 		System.out.println("initial forItem");
 		forItem.getChildren().clear();
+		forItem.setPickOnBounds(false);
 
 	}
 
 	public void initialForEntity(){
 		System.out.println("initial forEntity");
 		forEntity.getChildren().clear();
-		forEntity.setPickOnBounds(false);
+
 	}
 
 
