@@ -130,6 +130,7 @@ public class ClientThread extends Thread implements Runnable {
 		System.out.println("Logging out " + userName);
 		if (entity instanceof User){
 			((User) entity).logout();
+			((User) entity).setOnline(false);
 			server.removeClient(this);
 		}
 	}
