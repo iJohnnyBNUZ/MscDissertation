@@ -88,6 +88,7 @@ public class BagView{
 	public void updateBag(List<Item> bag,int money){
 		Platform.runLater(new Runnable() {
 			@Override public void run() {
+				System.out.println("在更新bag");
 				bagFoodVbox.getChildren().clear();
 				bagKeysVbox.getChildren().clear();
 				numOfCoins.setText(String.valueOf(money));
@@ -96,11 +97,11 @@ public class BagView{
 				List<String> foodItems = new LinkedList<String>();
 				List<String> keyItems = new LinkedList<String>();
 				for(Item item: bag){
-					if(item.getType()=="food"){
+					if(item.getType().equals("food")){
 						String foodString = item.getItemID().replaceAll("[0-9]","");
 						foodItems.add(foodString);
 					}
-					else if(item.getType()=="key"){
+					else if(item.getType().equals("key")){
 						String keyString = item.getItemID().replaceAll("[0-9]","");
 						keyItems.add(keyString.toString());
 					}
