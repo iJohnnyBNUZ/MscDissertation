@@ -62,7 +62,7 @@ public class Client implements Runnable {
 	}
 
 	//run with timer.
-	@Override
+	/*@Override
 	public void run() {
 		while(canRun) {
 			try {
@@ -77,6 +77,36 @@ public class Client implements Runnable {
 				canRun = false;
 				System.exit(0);
 				ex.printStackTrace();
+			}
+		}
+	}*/
+
+	//run in local
+	@Override
+	public void run() {
+		while(canRun) {
+			try {
+				System.out.println("Tick");
+				Object input = objectInputStream.readObject();
+				if(input instanceof World) {
+					updateWorld((World)input);
+				}
+				else if(input instanceof String) {
+					handleString((String)input);
+				}
+				else {
+					System.out.println("Received unknown object from server");
+				}
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException ie) {
+					ie.printStackTrace();
+				}
+
+			} catch (Exception ex) {
+				canRun = false;
+				ex.printStackTrace();
+				System.exit(0);
 			}
 		}
 	}
