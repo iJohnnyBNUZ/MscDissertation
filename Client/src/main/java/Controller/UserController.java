@@ -32,15 +32,17 @@ public class UserController implements Controller {
 				}else {
 					System.out.println("Create new user," + uName);
 					clientMediator.setUserName(uName);
-					clientMediator.getClient().login("new",uName);
 					clientMediator.enterGame();
+					clientMediator.getClient().login("new",uName);
+
 				}
 			} else if(Objects.equals(type, "continue")) {
 				if(result) {
 					System.out.println("Continue the game:  "+ uName +" "+IP);
 					clientMediator.setUserName(uName);
-					clientMediator.getClient().login("continue",uName);
 					clientMediator.enterGame();
+					clientMediator.getClient().login("continue",uName);
+
 				}else {
 					System.out.println("User is not exist, please try again!");
 					clientMediator.getIndexView().showMessage("User is not exist, please try again!");
