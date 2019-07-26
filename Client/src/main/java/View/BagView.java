@@ -4,6 +4,7 @@ import Controller.Command.EatCommand;
 import Controller.Command.PutDownCommand;
 import Model.Item.Food;
 import Model.Item.Item;
+import Model.Item.Key;
 import Model.Location.Coordinate;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -97,11 +98,11 @@ public class BagView{
 				List<String> foodItems = new LinkedList<String>();
 				List<String> keyItems = new LinkedList<String>();
 				for(Item item: bag){
-					if(item.getType().equals("food")){
+					if(item instanceof Food){
 						String foodString = item.getItemID().replaceAll("[0-9]","");
 						foodItems.add(foodString);
 					}
-					else if(item.getType().equals("key")){
+					else if(item instanceof Key){
 						String keyString = item.getItemID().replaceAll("[0-9]","");
 						keyItems.add(keyString.toString());
 					}

@@ -13,7 +13,7 @@ public class PickUpCommand implements Command {
 		this.itemController = (ItemController) itemController2;
 		this.clientMediator = (ClientMediator) clientMediator;
 	}
-	public void execute(Coordinate cor) {
+	public void execute() {
 		String uName = clientMediator.getUserName();
 		itemController.pickUp(uName);
 		clientMediator.addAction("pickUp");

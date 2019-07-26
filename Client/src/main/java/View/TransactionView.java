@@ -3,6 +3,8 @@ package View;
 import Controller.Command.BuyCommand;
 import Controller.Command.SellCommand;
 import Model.Item.Item;
+import Model.Location.Coordinate;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -82,78 +84,80 @@ public class TransactionView {
 
 
 	public void updateTransaction(List<Item> user__shop, String userShopName, List<Item> bag, int money){
-		Transaction.setVisible(true);
-		user_shop.setText(userShopName);
-		totalValue.setText("0");
+		Platform.runLater(new Runnable() {
+			@Override public void run() {
+				Transaction.setVisible(true);
+				user_shop.setText(userShopName);
+				totalValue.setText("0");
 
-		/* update User_ShopTab */
-		usershopVbox.getChildren().clear();
-		List<String> usershopItems = new LinkedList<String>();
-		for (Item item : user__shop) {
-			String usershopType = item.getItemID().replaceAll("[0-9]","");
-			usershopItems.add(usershopType);
-		}
-		if(usershopItems != null){
-			Set<String> uniqueUserShopSet = new HashSet<String>(usershopItems);
-			for (final String tmp_name : uniqueUserShopSet){
-				final ImageView usershop_item_img = new ImageView();
-				final Label numOfItems = new Label();
-				numOfItems.setPrefWidth(100);
-				numOfItems.setAlignment(Pos.CENTER);
-				final Label coins = new Label();
-				coins.setPrefWidth(100);
-				coins.setAlignment(Pos.CENTER);
-				final Label blank = new Label();
-				blank.setPrefWidth(60);
-				final BorderPane numBuyPane = new BorderPane();
-				final ChoiceBox numBuy = new ChoiceBox();
-				final ArrayList<Integer> numBuyList = new ArrayList<Integer>();
-				//final TextField numBuy = new TextField();
-				oldBuyNum.put(numBuy,0);
-				//numBuy.setText("0");
-				numBuy.setPrefWidth(50);
-				numBuyPane.setCenter(numBuy);
+				/* update User_ShopTab */
+				usershopVbox.getChildren().clear();
+				List<String> usershopItems = new LinkedList<String>();
+				for (Item item : user__shop) {
+					String usershopType = item.getItemID().replaceAll("[0-9]","");
+					usershopItems.add(usershopType);
+				}
+				if(usershopItems != null){
+					Set<String> uniqueUserShopSet = new HashSet<String>(usershopItems);
+					for (final String tmp_name : uniqueUserShopSet){
+						final ImageView usershop_item_img = new ImageView();
+						final Label numOfItems = new Label();
+						numOfItems.setPrefWidth(100);
+						numOfItems.setAlignment(Pos.CENTER);
+						final Label coins = new Label();
+						coins.setPrefWidth(100);
+						coins.setAlignment(Pos.CENTER);
+						final Label blank = new Label();
+						blank.setPrefWidth(60);
+						final BorderPane numBuyPane = new BorderPane();
+						final ChoiceBox numBuy = new ChoiceBox();
+						final ArrayList<Integer> numBuyList = new ArrayList<Integer>();
+						//final TextField numBuy = new TextField();
+						oldBuyNum.put(numBuy,0);
+						//numBuy.setText("0");
+						numBuy.setPrefWidth(50);
+						numBuyPane.setCenter(numBuy);
 
-				//set the image
-				URL url = this.getClass().getResource("/images/" + tmp_name + ".png");
-				final Image image = new Image(url.toString(), image_h, image_w, false, false);
-				usershop_item_img.setImage(image);
-				//set the number of items
-				numOfItems.setText(String.valueOf(Collections.frequency(usershopItems, tmp_name)));
-				for(int i = 0; i<= Collections.frequency(usershopItems, tmp_name); i++){
-                    numBuyList.add(i);
-				}
-				numBuy.setItems(FXCollections.observableArrayList(numBuyList));
-				//set the coins of each item
-				for(Item item: user__shop){
-					String itemString = item.getItemID().replaceAll("[0-9]","");
-					if(itemString.equals(tmp_name)){
-						coins.setText(String.valueOf(item.getCoinValue()));
-						break;
-					}
-				}
-				//set the initial number to buy
-				final GridPane itemBox = new GridPane();
-				itemBox.add(usershop_item_img,0,0);
-				itemBox.add(numOfItems,1,0);
-				itemBox.add(coins,2,0);
-				itemBox.add(blank,3,0);
-				itemBox.add(numBuyPane,4,0);
-				usershopVbox.getChildren().add(itemBox);
-				buyList.put(tmp_name,0);
-				numBuy.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-					@Override
-					public void changed(ObservableValue observableValue, Object o, Object t1) {
-						buyValue = Integer.parseInt(totalValue.getText())-oldBuyNum.get(numBuy)+Integer.parseInt(coins.getText())*Integer.parseInt(numBuy.getValue().toString());
-						totalValue.setText(String.valueOf(buyValue));
-						if(buyList.containsKey(tmp_name)){
-							buyList.put(tmp_name,Integer.parseInt(numBuy.getValue().toString()));
+						//set the image
+						URL url = this.getClass().getResource("/images/" + tmp_name + ".png");
+						final Image image = new Image(url.toString(), image_h, image_w, false, false);
+						usershop_item_img.setImage(image);
+						//set the number of items
+						numOfItems.setText(String.valueOf(Collections.frequency(usershopItems, tmp_name)));
+						for(int i = 0; i<= Collections.frequency(usershopItems, tmp_name); i++){
+							numBuyList.add(i);
 						}
-						if(oldBuyNum.containsKey(numBuy)){
-							oldBuyNum.put(numBuy,Integer.parseInt(numBuy.getValue().toString())*Integer.parseInt(coins.getText()));
+						numBuy.setItems(FXCollections.observableArrayList(numBuyList));
+						//set the coins of each item
+						for(Item item: user__shop){
+							String itemString = item.getItemID().replaceAll("[0-9]","");
+							if(itemString.equals(tmp_name)){
+								coins.setText(String.valueOf(item.getCoinValue()));
+								break;
+							}
 						}
-					}
-				});
+						//set the initial number to buy
+						final GridPane itemBox = new GridPane();
+						itemBox.add(usershop_item_img,0,0);
+						itemBox.add(numOfItems,1,0);
+						itemBox.add(coins,2,0);
+						itemBox.add(blank,3,0);
+						itemBox.add(numBuyPane,4,0);
+						usershopVbox.getChildren().add(itemBox);
+						buyList.put(tmp_name,0);
+						numBuy.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+							@Override
+							public void changed(ObservableValue observableValue, Object o, Object t1) {
+								buyValue = Integer.parseInt(totalValue.getText())-oldBuyNum.get(numBuy)+Integer.parseInt(coins.getText())*Integer.parseInt(numBuy.getValue().toString());
+								totalValue.setText(String.valueOf(buyValue));
+								if(buyList.containsKey(tmp_name)){
+									buyList.put(tmp_name,Integer.parseInt(numBuy.getValue().toString()));
+								}
+								if(oldBuyNum.containsKey(numBuy)){
+									oldBuyNum.put(numBuy,Integer.parseInt(numBuy.getValue().toString())*Integer.parseInt(coins.getText()));
+								}
+							}
+						});
 				/*
 				numBuy.textProperty().addListener(new ChangeListener<String>() {
 					@Override
@@ -171,96 +175,96 @@ public class TransactionView {
 					}
 				});
 				*/
-			}
-
-		}
-
-		buy.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent actionEvent) {
-				for(Integer buyItemNum: buyList.values()){
-					if(buyItemNum != 0){
-						buyCommand.execute(userShopName,buyList,buyValue);
-						break;
 					}
+
 				}
-                //System.out.println("BuyList是" + buyList.values());
-                //System.out.println("OldByNum是" + oldBuyNum);
 
-			}
-		});
-
-
-		/* update MyBagTab */
-		myBagVbox.getChildren().clear();
-		numOfMyCoins.setText(String.valueOf(money));
-		totalSellValue.setText("0");
-		List<String> mybagItems = new LinkedList<String>();
-		for (Item item : bag) {
-			String mybagType = item.getItemID().replaceAll("[0-9]","");
-			mybagItems.add(mybagType);
-		}
-		if(mybagItems != null){
-			Set<String> uniqueMyBagSet = new HashSet<String>(mybagItems);
-			for (final String tmp_bag_name : uniqueMyBagSet){
-				final ImageView mybag_item_img = new ImageView();
-				final Label numOfMyBagItems = new Label();
-				numOfMyBagItems.setPrefWidth(100);
-				numOfMyBagItems.setAlignment(Pos.CENTER);
-				final Label mybagcoins = new Label();
-				mybagcoins.setPrefWidth(100);
-				mybagcoins.setAlignment(Pos.CENTER);
-				final Label mybagblank = new Label();
-				mybagblank.setPrefWidth(60);
-				final BorderPane numSellPane = new BorderPane();
-				//final TextField numSell = new TextField();
-				final ChoiceBox numSell = new ChoiceBox();
-				final ArrayList<Integer> numSellList = new ArrayList<Integer>();
-				oldSellNum.put(numSell,0);
-				//numSell.setText("0");
-				numSell.setPrefWidth(50);
-				numSellPane.setCenter(numSell);
-
-				//set the image
-				URL url = this.getClass().getResource("/images/" + tmp_bag_name + ".png");
-				final Image image = new Image(url.toString(), image_h, image_w, false, false);
-				mybag_item_img.setImage(image);
-				//set the number of items
-				numOfMyBagItems.setText(String.valueOf(Collections.frequency(mybagItems, tmp_bag_name)));
-				for(int i = 0; i<= Collections.frequency(mybagItems, tmp_bag_name); i++){
-					numSellList.add(i);
-				}
-				numSell.setItems(FXCollections.observableArrayList(numSellList));
-				//set the coins of each item
-				for(Item item: bag){
-					String itemString = item.getItemID().replaceAll("[0-9]","");
-					if(itemString.equals(tmp_bag_name)){
-						mybagcoins.setText(String.valueOf(item.getCoinValue()));
-						break;
-					}
-				}
-				//set the initial number to sell
-				final GridPane itemMyBagBox = new GridPane();
-				itemMyBagBox.add(mybag_item_img,0,0);
-				itemMyBagBox.add(numOfMyBagItems,1,0);
-				itemMyBagBox.add(mybagcoins,2,0);
-				itemMyBagBox.add(mybagblank,3,0);
-				itemMyBagBox.add(numSellPane,4,0);
-				myBagVbox.getChildren().add(itemMyBagBox);
-				sellList.put(tmp_bag_name,0);
-				numSell.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+				buy.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
-					public void changed(ObservableValue observableValue, Object o, Object t1) {
-						sellValue = Integer.parseInt(totalSellValue.getText())-oldSellNum.get(numSell)+Integer.parseInt(mybagcoins.getText())*Integer.parseInt(numSell.getValue().toString());
-						totalSellValue.setText(String.valueOf(sellValue));
-						if(buyList.containsKey(tmp_bag_name)){
-							buyList.put(tmp_bag_name,Integer.parseInt(numSell.getValue().toString()));
+					public void handle(ActionEvent actionEvent) {
+						for(Integer buyItemNum: buyList.values()){
+							if(buyItemNum != 0){
+								buyCommand.execute(userShopName,buyList,buyValue);
+								break;
+							}
 						}
-						if(oldSellNum.containsKey(numSell)){
-							oldSellNum.put(numSell,Integer.parseInt(numSell.getValue().toString())*Integer.parseInt(mybagcoins.getText()));
-						}
+						//System.out.println("BuyList是" + buyList.values());
+						//System.out.println("OldByNum是" + oldBuyNum);
+
 					}
 				});
+
+
+				/* update MyBagTab */
+				myBagVbox.getChildren().clear();
+				numOfMyCoins.setText(String.valueOf(money));
+				totalSellValue.setText("0");
+				List<String> mybagItems = new LinkedList<String>();
+				for (Item item : bag) {
+					String mybagType = item.getItemID().replaceAll("[0-9]","");
+					mybagItems.add(mybagType);
+				}
+				if(mybagItems != null){
+					Set<String> uniqueMyBagSet = new HashSet<String>(mybagItems);
+					for (final String tmp_bag_name : uniqueMyBagSet){
+						final ImageView mybag_item_img = new ImageView();
+						final Label numOfMyBagItems = new Label();
+						numOfMyBagItems.setPrefWidth(100);
+						numOfMyBagItems.setAlignment(Pos.CENTER);
+						final Label mybagcoins = new Label();
+						mybagcoins.setPrefWidth(100);
+						mybagcoins.setAlignment(Pos.CENTER);
+						final Label mybagblank = new Label();
+						mybagblank.setPrefWidth(60);
+						final BorderPane numSellPane = new BorderPane();
+						//final TextField numSell = new TextField();
+						final ChoiceBox numSell = new ChoiceBox();
+						final ArrayList<Integer> numSellList = new ArrayList<Integer>();
+						oldSellNum.put(numSell,0);
+						//numSell.setText("0");
+						numSell.setPrefWidth(50);
+						numSellPane.setCenter(numSell);
+
+						//set the image
+						URL url = this.getClass().getResource("/images/" + tmp_bag_name + ".png");
+						final Image image = new Image(url.toString(), image_h, image_w, false, false);
+						mybag_item_img.setImage(image);
+						//set the number of items
+						numOfMyBagItems.setText(String.valueOf(Collections.frequency(mybagItems, tmp_bag_name)));
+						for(int i = 0; i<= Collections.frequency(mybagItems, tmp_bag_name); i++){
+							numSellList.add(i);
+						}
+						numSell.setItems(FXCollections.observableArrayList(numSellList));
+						//set the coins of each item
+						for(Item item: bag){
+							String itemString = item.getItemID().replaceAll("[0-9]","");
+							if(itemString.equals(tmp_bag_name)){
+								mybagcoins.setText(String.valueOf(item.getCoinValue()));
+								break;
+							}
+						}
+						//set the initial number to sell
+						final GridPane itemMyBagBox = new GridPane();
+						itemMyBagBox.add(mybag_item_img,0,0);
+						itemMyBagBox.add(numOfMyBagItems,1,0);
+						itemMyBagBox.add(mybagcoins,2,0);
+						itemMyBagBox.add(mybagblank,3,0);
+						itemMyBagBox.add(numSellPane,4,0);
+						myBagVbox.getChildren().add(itemMyBagBox);
+						sellList.put(tmp_bag_name,0);
+						numSell.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+							@Override
+							public void changed(ObservableValue observableValue, Object o, Object t1) {
+								sellValue = Integer.parseInt(totalSellValue.getText())-oldSellNum.get(numSell)+Integer.parseInt(mybagcoins.getText())*Integer.parseInt(numSell.getValue().toString());
+								totalSellValue.setText(String.valueOf(sellValue));
+								if(buyList.containsKey(tmp_bag_name)){
+									buyList.put(tmp_bag_name,Integer.parseInt(numSell.getValue().toString()));
+								}
+								if(oldSellNum.containsKey(numSell)){
+									oldSellNum.put(numSell,Integer.parseInt(numSell.getValue().toString())*Integer.parseInt(mybagcoins.getText()));
+								}
+							}
+						});
 				/*
 				numSell.textProperty().addListener(new ChangeListener<String>() {
 					@Override
@@ -278,21 +282,24 @@ public class TransactionView {
 					}
 				});
 				*/
-			}
-
-		}
-
-		sell.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent actionEvent) {
-				for(Integer sellItemNum: sellList.values()){
-					if(sellItemNum != 0){
-						sellCommand.execute(userShopName, sellList,sellValue);
-						break;
 					}
+
 				}
+
+				sell.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent actionEvent) {
+						for(Integer sellItemNum: sellList.values()){
+							if(sellItemNum != 0){
+								sellCommand.execute(userShopName, sellList,sellValue);
+								break;
+							}
+						}
+					}
+				});
 			}
 		});
+
 	}
 
 	public void setBuyCommand(BuyCommand buyCommand){

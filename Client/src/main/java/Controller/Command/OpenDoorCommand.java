@@ -14,7 +14,7 @@ public class OpenDoorCommand implements Command {
         this.clientMediator = clientMediator;
     }
 
-    public void excute(String commandString) throws IOException, ClassNotFoundException {
+    public void excute() throws IOException, ClassNotFoundException {
         System.out.println("opendoorCommand");
         locationController.openDoor(clientMediator.getClient().getUserName());
         //clientMediator.getClient().OpenDoor(commandString.toLowerCase());

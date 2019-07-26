@@ -2,16 +2,23 @@ package Controller.Command;
 
 import Controller.CommunicationController;
 import Controller.Controller;
+import Controller.ClientMediator;
 
 public class CommunicationCommand implements Command {
 	private CommunicationController communicationController = null;
+	private ClientMediator clientMediator=null;
 	
-	public CommunicationCommand(Controller communicationController2) {
+	public CommunicationCommand(Controller communicationController2, ClientMediator clientMediator) {
 		this.communicationController = (CommunicationController) communicationController2;
+		this.clientMediator = clientMediator;
 	}
 
-	public void execute(String id,String time) {
-		System.out.println("Communicate with " + id);
-		communicationController.communicateWith(id,time);
+	//There are something wrong since the communication between two user and between user and shop will only
+	//open the transaction view, the model won't changed, but the interaction between user and npc will change the user energy,
+	//this action need to be added to the queue.
+	public void execute() {
+		if(communicationController.communicateWith())
+			clientMediator.addAction("communication");
+
 	}
 }

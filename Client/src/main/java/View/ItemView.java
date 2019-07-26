@@ -43,7 +43,7 @@ public class ItemView{
 								//Coordinate sCoordinate = new Coordinate(positionX,positionY);
 								System.out.println("Position: "+ items.get(name).getxPostion()+" "
 										+items.get(name).getyPosition());
-								pickUp.execute(items.get(name));
+								pickUp.execute();
 							}
 
 						});
