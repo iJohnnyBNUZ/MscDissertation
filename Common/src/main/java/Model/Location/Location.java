@@ -3,13 +3,14 @@ package Model.Location;
 import Model.Entity.Entity;
 import Model.Entity.User;
 import Model.Item.Item;
+import Utils.Observable;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Location implements Serializable {
+public class Location extends Observable implements Serializable {
     private String locationID;
     private HashMap<Coordinate, Tile> Tiles = new HashMap<Coordinate, Tile>();
     private HashMap<Coordinate, Item> Items = new HashMap<Coordinate, Item>();
@@ -29,6 +30,7 @@ public class Location implements Serializable {
 
     public void setItems(HashMap<Coordinate, Item> items) {
         Items = items;
+        notifyObserver();
     }
 
     public Map<Entity, Coordinate> getEntities() {
@@ -37,6 +39,10 @@ public class Location implements Serializable {
 
     public void setEntities(Map<Entity, Coordinate> entities) {
         Entities = entities;
+        if (entities.size() != this.getEntities().size())
+            notifyObserver(); // notify entity change Location
+        else
+            notifyObserver(); // notify entity move
     }
 
     public Location(String id) {
@@ -53,10 +59,12 @@ public class Location implements Serializable {
 
     public void addItem(Coordinate c, Item i) {
         this.Items.put(c, i);
+        notifyObserver();
     }
 
     public Item removeItem(Coordinate c) {
         this.Items.remove(c);
+        notifyObserver();
         return this.Items.get(c);
     }
 
@@ -77,6 +85,12 @@ public class Location implements Serializable {
     }
 
     public void changeUserCoordinate(Entity entity, Coordinate coordinate) {
-        Entities.put(entity, coordinate);
+        Map<Entity, Coordinate> entities_temp = getEntities();
+        if (entities_temp == null)
+            return;
+
+        entities_temp.put(entity, coordinate);
+        setEntities(entities_temp);
     }
+
 }

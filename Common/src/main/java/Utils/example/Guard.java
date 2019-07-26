@@ -1,4 +1,4 @@
-package Utils.example;
+/*package Utils.example;
 
 import Utils.Observer;
 
@@ -17,4 +17,4 @@ public class Guard implements Observer {
             System.out.println(this.name + " say：" + msg[1] + " come out！");
         }
     }
-}
+}*/

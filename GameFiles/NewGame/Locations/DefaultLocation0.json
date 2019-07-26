@@ -841,12 +841,19 @@
 		"coin": 100,
 		"bag": [
 		  {
-			  "id": "apple0",
+			  "id": "apple11",
 			"type": "food",
 			"value": 10,
 			"isCollectible": true,
 			"isEdible": true
-		  }
+		  },
+			{
+				"id": "key_green0",
+				"type": "key",
+				"value": 100,
+				"isCollectible": true,
+				"isEdible": true
+			}
 		],
 		"xCoordinate": 0,
 		"yCoordinate": 6

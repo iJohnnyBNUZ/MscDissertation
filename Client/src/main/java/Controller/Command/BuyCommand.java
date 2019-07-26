@@ -14,7 +14,6 @@ public class BuyCommand implements Command {
 	private String userID;
 
     public BuyCommand(Controller messageController) {
-		// TODO Auto-generated constructor stub
     	this.messageController = (MessageController) messageController;
 	}
 

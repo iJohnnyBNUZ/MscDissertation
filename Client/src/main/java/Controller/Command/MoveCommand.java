@@ -1,12 +1,13 @@
 package Controller.Command;
 
 
-import Controller.ClientMediator;
-import Controller.Controller;
-import Controller.LocationController;
-
 import java.io.IOException;
 import java.util.ResourceBundle;
+
+import Controller.Controller;
+import Controller.LocationController;
+import Controller.Network.Client;
+import Controller.ClientMediator;
 
 public class MoveCommand implements Command {
 	LocationController locationController;
@@ -17,8 +18,7 @@ public class MoveCommand implements Command {
         this.clientMediator = clientMediator;
     }
 
-    public void execute(String direction) throws IOException, ClassNotFoundException {
-        // TODO pass userName to MoveTO()
+    public void excute(String direction) throws IOException, ClassNotFoundException {
     	ResourceBundle rb = ResourceBundle.getBundle("config");
 		//String uName = rb.getString("userName");
         String uName = clientMediator.getClient().getUserName();

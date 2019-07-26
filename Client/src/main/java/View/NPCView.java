@@ -7,7 +7,6 @@ public class NPCView{
 	private View view;
 
 	public NPCView(View view) {
-		// TODO Auto-generated constructor stub
 		this.view = view;
 	}
 

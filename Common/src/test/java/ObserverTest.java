@@ -1,4 +1,4 @@
-import Utils.example.Camera;
+/*import Utils.example.Camera;
 import Utils.example.Guard;
 import Utils.example.Shop;
 import org.junit.Test;
@@ -38,4 +38,4 @@ public class ObserverTest {
         shop.getOut("CSDN");
 
     }
-}
+}*/

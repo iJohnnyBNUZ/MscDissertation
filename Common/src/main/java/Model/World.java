@@ -1,6 +1,9 @@
 package Model;
 
 import Model.Entity.Entity;
+import Model.Entity.NPC;
+import Model.Entity.User;
+import Model.Item.Key;
 import Model.Location.Coordinate;
 import Model.Location.Location;
 
@@ -8,6 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class World implements Serializable {
 
@@ -24,7 +28,16 @@ public class World implements Serializable {
 	}
 
 	public void setLocations(List<Location> locations) {
-		Locations = (ArrayList<Location>) locations;
+		for (Location newLocation: locations){
+			for (Location localLocation: getLocations()){
+				if (localLocation.getLocationID().equals(newLocation.getLocationID())){
+					localLocation.setTiles(newLocation.getTiles());
+					localLocation.setEntities(newLocation.getEntities());
+					localLocation.setItems(newLocation.getItems());
+				}
+			}
+		}
+//		Locations = (ArrayList<Location>) locations;
 	}
 
 	public List<Entity> getEntities() {
@@ -32,7 +45,16 @@ public class World implements Serializable {
 	}
 
 	public void setEntities(List<Entity> entities) {
-		Entities = (ArrayList<Entity>) entities;
+//		Entities = (ArrayList<Entity>) entities;
+		for (Entity newEntity: entities){
+			for (Entity localEntity: getEntities()){
+				if (localEntity.getEntityID().equals(newEntity.getEntityID())){
+					localEntity.setEnergy(newEntity.getEnergy());
+					localEntity.setCoin(newEntity.getCoin());
+					localEntity.setBag(newEntity.getBag());
+				}
+			}
+		}
 	}
 
 	public void addLocation(Location location) {
@@ -54,23 +76,30 @@ public class World implements Serializable {
 	public Location getEntityLocation(String userName){
 		Location location = null;
 		for(Location l:this.getLocations()) {
-			if(l.getEntities().get(this.getEntity(userName)) != null){
-				location = l;
-				break;
+			for(Map.Entry<Entity, Coordinate> entry : l.getEntities().entrySet()){
+				if (entry.getKey().getEntityID().equals(userName)){
+					location = l;
+					break;
+				}
 			}
+//			if(l.getEntities().get(this.getEntity(userName)) != null){
+//				location = l;
+//				break;
+//			}
 		}
 		return location;
 	}
 
 
 	public void initEntityLocation(String userName){
+		//this.setEntityLocation(userName, "location0");
 		int max =2,min =0;
 		int positionX = min + (int)(Math.random() * (max-min+1));
 		int positionY = min + (int)(Math.random() * (max-min+1));
 
 		for(Coordinate coordinate: this.getLocations().get(0).getTiles().keySet()){
 			if(coordinate.getxPostion() == positionX && coordinate.getyPosition() == positionY){
-				this.getLocations().get(0).addEntity(this.getEntity(userName), coordinate);
+				this.getLocations().get(0).addEntity(this.getEntity(userName),coordinate);
 				System.out.println("gives user:"+userName+" an initial coordinate! ["+positionX+","+positionY+"]");
 				break;
 			}
@@ -101,6 +130,12 @@ public class World implements Serializable {
 
 	public void addMessage(String message){
 		messageList.add(message);
+	}
+
+	public boolean equals(World newWorld){
+		Boolean result = false;
+
+		return result;
 	}
 
 }

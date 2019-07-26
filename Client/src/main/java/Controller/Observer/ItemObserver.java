@@ -2,6 +2,7 @@ package Controller.Observer;
 
 import java.util.HashMap;
 import java.util.Map;
+import Utils.Observer;
 
 import Controller.ClientMediator;
 import Model.Location.Coordinate;
@@ -17,18 +18,17 @@ public class ItemObserver implements Observer {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-		
-		String uId = clientMediator.getUserName();
-		Location curLocation = clientMediator.getWorld().getEntityLocation(uId);
-		Map<String, Coordinate> items = new HashMap<String,Coordinate>();
-		System.out.println(curLocation.getItems().keySet().size());
-		for(Coordinate cor: curLocation.getItems().keySet()) {
-			items.put(curLocation.getItems().get(cor).getItemID(), cor);
-			
-		}
-		
-		clientMediator.getItemView().update(items);
+		//if (msg[0].equals("changeItem")){
+			String uId = clientMediator.getUserName();
+			// TODO cannot get curLocation,  because the entities is null
+			Location curLocation = clientMediator.getWorld().getEntityLocation(uId);
+			Map<String, Coordinate> items = new HashMap<String,Coordinate>();
+			System.out.println(curLocation.getItems().keySet().size());
+			for(Coordinate cor: curLocation.getItems().keySet()) {
+				items.put(curLocation.getItems().get(cor).getItemID(), cor);
 
+			}
+			clientMediator.getItemView().update(items);
+		//}
 	}
 }

@@ -1,6 +1,7 @@
 package Controller.Observer;
 
 import Controller.ClientMediator;
+import Utils.Observer;
 
 public class CommunicationObserver implements Observer {
 

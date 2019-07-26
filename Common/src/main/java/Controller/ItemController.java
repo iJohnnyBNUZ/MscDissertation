@@ -26,9 +26,8 @@ public class ItemController implements Controller{
         Item item = null;
         if (location.getItems().get(coordinate) != null){
             item = location.getItems().get(coordinate);
-            location.getItems().remove(coordinate);
+            location.removeItem(coordinate);
         }
-
         // add to user's bag
         Entity entity = this.gameMediator.getWorld().getEntity(userID);
         entity.pickUp(item);

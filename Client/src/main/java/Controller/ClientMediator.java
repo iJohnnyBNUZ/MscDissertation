@@ -3,11 +3,15 @@ package Controller;
 import Controller.Command.*;
 import Controller.Network.Client;
 import Controller.Observer.*;
-import Controller.Observer.Observer;
 import Controller.Save.SaveUser;
+import Model.Entity.Entity;
+import Model.Entity.NPC;
+import Model.Entity.Shop;
+import Model.Entity.User;
 import Model.Location.Coordinate;
 import Model.Location.Location;
 import Model.World;
+import Utils.Observer;
 import View.*;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
@@ -20,52 +24,56 @@ import java.net.URL;
 import java.util.*;
 
 public class ClientMediator implements GameMediator {
-	private World world;
-	private Client client;
-	private String userName;
-	
-	private ArrayList<Observer> observers  = new ArrayList<Observer>();
+	private World world = new World();
+	private Client client = null;
+	private String userName = null;
+
+	private Boolean isInit = Boolean.FALSE;
+
+	private Set<Observer> observerSet = new HashSet<>();
 	private ArrayList<String> queue = new ArrayList<String>(); //User actions waiting to be send to the sever.
 	
 	
-	private IndexView indexView;
-	private View view;
-	private LocationView locationView;
-    private BagView bagView;
-    private ChatView chatView;
-    private EntityView entityView;
-    private ItemView itemView;
-    private NPCView npsView;
-    private TransactionView transactionView;
+	private IndexView indexView= null;
+	private View view = null;
+	private LocationView locationView = null;
+    private BagView bagView = null;
+    private ChatView chatView = null;
+    private EntityView entityView = null;
+    private ItemView itemView = null;
+    private NPCView npsView = null;
+    private TransactionView tansactionView = null;
     
-	private Stage primaryStage;
+	private Stage primaryStage = null;
+
+	private LocationController locationController =null;
+	private ItemController itemController= null;
+	private CommunicationController communicationController= null;
+	private UserController userController= null;
+	private MessageController messageController = null;
+	private SaveUser saveUser = null;
 	
-	private LocationController locationController;
-	private ItemController itemController;
-	private CommunicationController communicationController;
-	private UserController userController;
-	private MessageController messageController;
-	private SaveUser saveUser;
 	
+	private LocationObserver locationObserver = null;
+	private ItemObserver itemObserver= null;
+	private CommunicationObserver communicationObserver= null;
+	private EntityObserver entityObserver = null;
+	private BagObserver bagObserver = null;
 	
-	private Observer locationObserver;
-	private Observer itemObserver;
-	private Observer communicationObserver;
-	private Observer entityObserver;
-	private Observer bagObserver;
-	
-	private MoveCommand moveCommand;
-	private PickUpCommand pickUpCommand;
-	private PutDownCommand putDownCommand;
-	private EatCommand eatCommand;
-	private BuyCommand buyCommand;
-	private SellCommand sellCommand;
-	private CommunicationCommand communicationCommand;
-	private PostCommand postCommand;
-	private StartGameCommand startGameCommand;
-	private SaveGameCommand saveGameCommand;
-	private LogOutCommand logOutCommand;
-	private OpenDoorCommand openDoorCommand;
+	private MoveCommand moveCommand = null;   
+	private PickUpCommand pickUpCommand = null;
+	private PutDownCommand putDownCommand = null;
+	private EatCommand eatCommand = null;
+	private BuyCommand buyCommand = null;
+	private SellCommand sellCommand = null;
+	private CommunicationCommand communicationCommand = null;
+	private PostCommand postCommand = null;
+	private StartGameCommand startGameCommand = null;
+	private SaveGameCommand saveGameCommand = null;
+	private LogOutCommand logOutCommand = null;
+	private OpenDoorCommand openDoorCommand = null;
+
+	private boolean haveObservers = false;
 
 	public ClientMediator() {
 		this.world = new World();
@@ -87,6 +95,42 @@ public class ClientMediator implements GameMediator {
 		return world;
 	}
 
+	public void initWorld(World newWorld){
+		// add location observer
+		/*for (Location newLocation: newWorld.getLocations()){
+			this.world.getLocations().add(new Location(newLocation.getLocationID()));
+		}*/
+		for(Location location: this.world.getLocations()){
+			//location.addObserver(locationObserver);
+			//location.addObserver(itemObserver);
+			location.setObserverSet(observerSet);
+		}
+
+		// add entity observer
+		/*for(Entity newEntity: newWorld.getEntities()){
+			if (newEntity instanceof NPC){
+				this.world.getEntities().add(new NPC(newEntity.getEntityID()));
+			}
+			else if (newEntity instanceof Shop){
+				this.world.getEntities().add(new Shop(newEntity.getEntityID()));
+			}
+			else {
+				this.world.getEntities().add(new User(newEntity.getEntityID()));
+			}
+		}*/
+		for (Entity entity: this.world.getEntities()){
+			//entity.addObserver(bagObserver);
+			//entity.addObserver(entityObserver);
+			entity.setObserverSet(observerSet);
+		}
+
+		// init world data
+		//this.world.setLocations(newWorld.getLocations());
+		//this.world.setEntities(newWorld.getEntities());
+		this.haveObservers=true;
+		System.out.println("initial finished!!!!!!!!!!!!!!!!");
+	}
+
 	/**
 	 * If the world is changed, the observers will be notified to update views.
 	 * If the user have not been created, the view won't be updated.
@@ -94,11 +138,16 @@ public class ClientMediator implements GameMediator {
 	 */
 	public void setWorld(World newWorld) {
 		if(newWorld.getEntityLocation(userName)!=null){
-			if(!this.world.equals(newWorld)) {
+			if(!this.haveObservers){
 				this.world = newWorld;
-				this.notifyObservers();
+				initWorld(newWorld);
+			}else{
+				this.world.setLocations(newWorld.getLocations());
+				this.world.setEntities(newWorld.getEntities());
+//				this.world = newWorld;
 			}
-			
+            this.notifyObservers();
+
 		}else{
 			this.world = newWorld;
 		}
@@ -118,158 +167,12 @@ public class ClientMediator implements GameMediator {
 	 * Tell all observers to update views.
 	 */
 	private void notifyObservers() {
-		// TODO Auto-generated method stub
 		/*for(Observer observer: observers) {
 			observer.update();
 		}*/
-		
 		locationObserver.update();
 		itemObserver.update();
 		entityObserver.update();
-	}
-	
-	public ArrayList<String> getQueue() {
-		return queue;
-	}
-
-	/**
-	 * Add the user's action to the queue.
-	 * @param action the user intended action (may plus the item ID).
-	 */
-	public void addAction(String action) {
-		this.queue.add(action);
-	}
-	
-	/**
-	 * Clean the actions stored in the queue.
-	 */
-	public void cleanQueue() {
-		this.queue.clear();
-	}
-
-	/**
-	 * Create the instances of controllers, observers and commands.
-	 * The controller is the parameter of the Command's constructor.
-	 */
-	public void initialController() {
-		this.locationController = new LocationController(this);
-		this.itemController = new ItemController(this);
-		this.communicationController = new CommunicationController(this);
-		this.userController = new UserController(this);
-		this.messageController = new MessageController(this);
-		this.saveUser = new SaveUser(this);
-		
-		this.locationObserver = new LocationObserver(this);
-		this.itemObserver = new ItemObserver(this);
-		this.communicationObserver = new CommunicationObserver(this);
-		this.entityObserver = new EntityObserver(this);
-		this.bagObserver = new BagObserver(this);
-		
-		observers.add(this.locationObserver);
-		observers.add(this.itemObserver);
-		observers.add(this.communicationObserver);
-		observers.add(this.entityObserver);
-		observers.add(this.bagObserver);
-		
-		
-		this.moveCommand = new MoveCommand(locationController,this);
-		this.openDoorCommand = new OpenDoorCommand(locationController,this);
-		this.startGameCommand = new StartGameCommand(userController);
-		this.putDownCommand = new PutDownCommand(itemController,this);
-		this.eatCommand = new EatCommand(itemController,this);
-		this.pickUpCommand = new PickUpCommand(itemController);
-		this.communicationCommand = new CommunicationCommand(communicationController);
-		this.buyCommand = new BuyCommand(messageController);
-		this.sellCommand = new SellCommand(messageController);
-		this.postCommand = new PostCommand(communicationController);
-		this.saveGameCommand = new SaveGameCommand(this.saveUser);
-		this.logOutCommand = new LogOutCommand();
-	}
-	
-	/**
-	 * bind the Command to the index view
-	 */
-	public void bindIndexCommand() {
-		indexView.setStartGame(startGameCommand);
-	}
-	
-
-	/**
-	 * Initial the view related to the game.
-	 */
-	public void initialGameView() {
-		locationView = new LocationView(this.view);
-    	bagView = new BagView(this.view);
-    	chatView = new ChatView(this.view);
-    	entityView = new EntityView(this.view);
-    	itemView = new ItemView(this.view);
-    	npsView = new NPCView(this.view);
-    	transactionView = new TransactionView(this.view);
-
-	}
-
-	/**
-	 * Bind the commands to the views (related to the game).
-	 */
-	public void bindViewCommand() {
-		view.setMoveCommand(moveCommand);
-		view.setOpenDoorCommand(openDoorCommand);
-		view.setSaveGameCommand(saveGameCommand);
-		view.setLogOutCommand(logOutCommand);
-		itemView.setPickUpCommand(pickUpCommand);
-		entityView.setCommunicationCommand(communicationCommand);
-		bagView.setEatCommand(eatCommand);
-		bagView.setPutDownCommand(putDownCommand);
-		chatView.setPostCommand(postCommand);
-		transactionView.setBuyCommand(buyCommand);
-		transactionView.setSellCommand(sellCommand);
-	}
-
-	/**
-	 * Show the game interface.
-	 * @throws IOException
-	 */
-
-	public void	enterGame() throws IOException {
-		URL location = View.class.getResource("/view/sample.fxml");
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(location);
-        fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
-        Parent root = fxmlLoader.load();
-        this.primaryStage.setScene(new Scene(root, 900, 720));
-        this.view = (View) fxmlLoader.getController();
-        //Used for get the screen size and set to canvas.
-        this.view.bindScene(this.primaryStage.getScene());
-        this.view.setWindowsCloseAction(this.primaryStage);
-        this.primaryStage.show();
-        
-        initialGameView();
-        bindViewCommand();
-        //setTestData();
-	}
-
-	public void setTestData() {
-		Location l1 = new Location("location1");
-		this.getWorld().addLocation(l1);
-
-		
-		Map<String,Coordinate> tmp = new HashMap<String,Coordinate>();
-		int num=0;
-		for(int i=0;i<10;i++) {
-			for(int j=0;j<10;j++) {
-				Coordinate tmp_cor = new Coordinate(i, j);
-				if(j%2 == 0 && i%2 == 0) {
-					tmp.put("water"+num, tmp_cor);
-				}else {
-					tmp.put("grass"+num, tmp_cor);
-				}
-				
-				num++;
-			}
-		}
-		System.out.println("tiles size"+ tmp.size());
-        //locationView.update(tmp);
-		
 	}
 
 	public IndexView getIndexView() {
@@ -287,8 +190,8 @@ public class ClientMediator implements GameMediator {
 	public void setView(View view) {
 		this.view = view;
 	}
-
-
+	
+	
 	public Stage getPrimaryStage() {
 		return primaryStage;
 	}
@@ -297,7 +200,7 @@ public class ClientMediator implements GameMediator {
 		this.primaryStage = primaryStage;
 	}
 
-
+	
 	public LocationView getLocationView() {
 		return locationView;
 	}
@@ -346,6 +249,15 @@ public class ClientMediator implements GameMediator {
 		this.npsView = nps;
 	}
 
+	public TransactionView getTransactionView() {
+		return tansactionView;
+	}
+
+	public void setTransactionView(TransactionView tansaction) {
+		this.tansactionView = tansaction;
+	}
+
+
 	public NPCView getNpsView() {
 		return npsView;
 	}
@@ -354,12 +266,12 @@ public class ClientMediator implements GameMediator {
 		this.npsView = npsView;
 	}
 
-	public TransactionView getTransactionView() {
-		return transactionView;
+	public TransactionView getTansactionView() {
+		return tansactionView;
 	}
 
-	public void setTransactionView(TransactionView transactionView) {
-		this.transactionView = transactionView;
+	public void setTansactionView(TransactionView tansactionView) {
+		this.tansactionView = tansactionView;
 	}
 
 	public LocationController getLocationController() {
@@ -394,27 +306,27 @@ public class ClientMediator implements GameMediator {
 		this.userController = userController;
 	}
 
-	public Observer getLocationObserver() {
+	public LocationObserver getLocationObserver() {
 		return locationObserver;
 	}
 
-	public void setLocationObserver(Observer locationObserver) {
+	public void setLocationObserver(LocationObserver locationObserver) {
 		this.locationObserver = locationObserver;
 	}
 
-	public Observer getItemObserver() {
+	public ItemObserver getItemObserver() {
 		return itemObserver;
 	}
 
-	public void setItemObserver(Observer itemObserver) {
+	public void setItemObserver(ItemObserver itemObserver) {
 		this.itemObserver = itemObserver;
 	}
 
-	public Observer getCommunicationObserverr() {
+	public CommunicationObserver getCommunicationObserverr() {
 		return communicationObserver;
 	}
 
-	public void setCommunicationObserverr(Observer communicationObserverr) {
+	public void setCommunicationObserverr(CommunicationObserver communicationObserverr) {
 		this.communicationObserver = communicationObserverr;
 	}
 
@@ -506,6 +418,156 @@ public class ClientMediator implements GameMediator {
 		this.saveGameCommand = saveGameCommand;
 	}
 
+	
+	
+	public ArrayList<String> getQueue() {
+		return queue;
+	}
 
+	/**
+	 * Add the user's action to the queue.
+	 * @param action the user intended action (may plus the item ID).
+	 */
+	public void addAction(String action) {
+		this.queue.add(action);
+	}
+	
+	/**
+	 * Clean the actions stored in the queue.
+	 */
+	public void cleanQueue() {
+		this.queue.clear();
+	}
+
+	/**
+	 * Create the instances of controllers, observers and commands.
+	 * The controller is the parameter of the Command's constructor.
+	 */
+	public void initialController() {
+		this.locationController = new LocationController(this);
+		this.itemController = new ItemController(this);
+		this.communicationController = new CommunicationController(this);
+		this.userController = new UserController(this);
+		this.messageController = new MessageController(this);
+		this.saveUser = new SaveUser(this);
+		
+		this.locationObserver = new LocationObserver(this);
+		this.itemObserver = new ItemObserver(this);
+		this.communicationObserver = new CommunicationObserver(this);
+		this.entityObserver = new EntityObserver(this);
+		this.bagObserver =  new BagObserver(this);
+		
+		observerSet.add(this.locationObserver);
+		observerSet.add(this.itemObserver);
+		observerSet.add(this.communicationObserver);
+		observerSet.add(this.entityObserver);
+		observerSet.add(this.bagObserver);
+		
+		
+		this.moveCommand = new MoveCommand(locationController,this);
+		this.openDoorCommand = new OpenDoorCommand(locationController,this);
+		this.startGameCommand = new StartGameCommand(userController);
+		this.putDownCommand = new PutDownCommand(itemController,this);
+		this.eatCommand = new EatCommand(itemController,this);
+		this.pickUpCommand = new PickUpCommand(itemController,this);
+		this.communicationCommand = new CommunicationCommand(communicationController);
+		this.buyCommand = new BuyCommand(messageController);
+		this.sellCommand = new SellCommand(messageController);
+		this.postCommand = new PostCommand(communicationController);
+		this.saveGameCommand = new SaveGameCommand(this.saveUser);
+		this.logOutCommand = new LogOutCommand();
+	}
+	
+	/**
+	 * bind the Command to the index view
+	 */
+	public void bindIndexCommand() {
+		indexView.setStartGame(startGameCommand);
+	}
+	
+	
+	/**
+	 * Initial the view related to the game.
+	 */
+	public void initialGameView() {
+		locationView = new LocationView(this.view);
+    	bagView = new BagView(this.view);
+    	chatView = new ChatView(this.view);
+    	entityView = new EntityView(this.view);
+    	itemView = new ItemView(this.view);
+    	npsView = new NPCView(this.view);
+    	tansactionView = new TransactionView(this.view);
+
+	}
+	
+	/**
+	 * Bind the commands to the views (related to the game).
+	 */
+	public void bindViewCommand() {
+		view.setMoveCommand(moveCommand);
+		view.setOpenDoorCommand(openDoorCommand);
+		view.setSaveGameCommand(saveGameCommand);
+		view.setLogOutCommand(logOutCommand);
+		itemView.setPickUpCommand(pickUpCommand);
+		entityView.setCommunicationCommand(communicationCommand);
+		bagView.setEatCommand(eatCommand);
+		bagView.setPutDownCommand(putDownCommand);
+		chatView.setPostCommand(postCommand);
+		tansactionView.setBuyCommand(buyCommand);
+		tansactionView.setSellCommand(sellCommand);
+	}
+	
+	/**
+	 * Show the game interface.
+	 * @throws IOException
+	 */
+	
+	public void	enterGame() throws IOException {
+		URL location = View.class.getResource("/view/sample.fxml");
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(location);
+        fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
+        Parent root = fxmlLoader.load();
+        this.primaryStage.setScene(new Scene(root, 900, 720));
+        this.view = (View) fxmlLoader.getController();
+        //Used for get the screen size and set to canvas.
+        this.view.bindScene(this.primaryStage.getScene());
+        this.view.setWindowsCloseAction(this.primaryStage);
+        this.primaryStage.show();
+        
+        initialGameView();
+        bindViewCommand();
+        //setTestData();
+	}
+
+	
+
+	/**
+	 * only for testing!
+	 */
+	public void setTestData() {
+		Location l1 = new Location("location1");
+		this.getWorld().addLocation(l1);
+
+		
+		Map<String,Coordinate> tmp = new HashMap<String,Coordinate>();
+		int num=0;
+		for(int i=0;i<10;i++) {
+			for(int j=0;j<10;j++) {
+				Coordinate tmp_cor = new Coordinate(i, j);
+				if(j%2 == 0 && i%2 == 0) {
+					tmp.put("water"+num, tmp_cor);
+				}else {
+					tmp.put("grass"+num, tmp_cor);
+				}
+				
+				num++;
+			}
+		}
+		System.out.println("tiles size"+ tmp.size());
+        //locationView.update(tmp);
+		
+	}
+	
 
 }

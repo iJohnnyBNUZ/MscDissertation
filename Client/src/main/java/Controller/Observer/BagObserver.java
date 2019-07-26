@@ -1,6 +1,7 @@
 package Controller.Observer;
 
 import Controller.ClientMediator;
+import Utils.Observer;
 
 public class BagObserver implements Observer {
 
@@ -12,8 +13,10 @@ public class BagObserver implements Observer {
     }
 
     public void update(){
-        userID = this.clientMediator.getUserName();
-        clientMediator.getBagView().updateBag(this.clientMediator.getWorld().getEntity(userID).getBag(),this.clientMediator.getWorld().getEntity(userID).getCoin());
+        //if (msg[0].equals("changeBag")){
+            userID = this.clientMediator.getUserName();
+            clientMediator.getBagView().updateBag(this.clientMediator.getWorld().getEntity(userID).getBag(),this.clientMediator.getWorld().getEntity(userID).getCoin());
+        //}
     }
 
 }

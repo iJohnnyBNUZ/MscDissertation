@@ -1,12 +1,13 @@
 package Model.Entity;
 
 import Model.Item.Item;
+import Utils.Observable;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Entity implements Serializable {
+public abstract class Entity extends Observable implements Serializable {
     private String entityID;
     private int energy=100;
     private int coin=100;
@@ -26,6 +27,7 @@ public abstract class Entity implements Serializable {
 
     public void setBag(List<Item> bag) {
         Bag = bag;
+        notifyObserver();
     }
 
     public void interactWith(Entity entity) {
@@ -50,14 +52,17 @@ public abstract class Entity implements Serializable {
 
     public void setEnergy(int energy) {
         this.energy = energy;
+        notifyObserver();
     }
 
     public void increaseEnergy(int amount) {
         energy += amount;
+        notifyObserver();
     }
 
     public void decreaseEnergy(int amount) {
         energy -= amount;
+        notifyObserver();
     }
 
     public int getCoin() {
@@ -66,14 +71,16 @@ public abstract class Entity implements Serializable {
 
     public void setCoin(int coin) {
         this.coin = coin;
+        notifyObserver();
     }
 
-    public void increaseCoin(int amount) { coin += amount; }
+    public void increaseCoin(int amount) { coin += amount; notifyObserver();}
 
-    public void decreaseCoin(int amount) { coin -= amount; }
+    public void decreaseCoin(int amount) { coin -= amount; notifyObserver();}
 
     public void pickUp(Item item) {
         this.Bag.add(item);
+        notifyObserver();
     }
 
     public Item putDown(String id) {
@@ -83,12 +90,15 @@ public abstract class Entity implements Serializable {
                 return item;
             }
         }
+        notifyObserver();
         return null;
     }
 
     public void removeFromBag(Item item){
         this.Bag.remove(item);
+        notifyObserver();
     }
 
-    public void addToBag(Item item) { this.Bag.add(item); }
+    public void addToBag(Item item) { this.Bag.add(item);
+        notifyObserver();}
 }
