@@ -1,11 +1,10 @@
 package Controller.Network;
 
-import Controller.ItemController;
 import Controller.LocationController;
 import Controller.ServerMediator;
 import Model.Entity.Entity;
 import Model.Entity.User;
-import Model.Item.Item;
+import Network.Event;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -23,6 +22,7 @@ public class ClientThread extends Thread implements Runnable {
 	private ItemController itemController;
 
 	ClientThread(Socket socket, Server server, ServerMediator serverMediator) throws Exception{
+		socket.setTcpNoDelay(true);
 		this.server = server;
 		objectInput = new ObjectInputStream(socket.getInputStream());
 		objectOutput = new ObjectOutputStream(socket.getOutputStream());
@@ -61,39 +61,29 @@ public class ClientThread extends Thread implements Runnable {
 		else {
 			System.out.println("Unknown object type");
 		}
-		try {
-			server.updateClients();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
-	void sendMessage(Object msg) {
+	void sendMessage(Event event) {
 		try {
-			objectOutput.writeObject(msg);
+			objectOutput.writeObject(event);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	private void handleEntity(User user) {
-		//old users, continue the game
 		if (serverMediator.getWorld().getEntity(user.getUserId()) != null){
 			System.out.println("User "+ user.getEntityID()+" exist, continue game.");
 			((User)serverMediator.getWorld().getEntity(user.getEntityID())).setOnline(true);
 			this.userName = user.getUserId();
 		}else{
-			//new user
 			serverMediator.getWorld().addEntity(user);
 			this.userName = user.getEntityID();
 			serverMediator.getWorld().initEntityLocation(userName);
 		}
 	}
 
-
-
-	private void handleString(String command) {
-		System.out.println("receive +:" +command);
+	private void handleString(String command) throws IOException {
 		switch (command) {
 			case "left":
 			case "right":
@@ -107,6 +97,10 @@ public class ClientThread extends Thread implements Runnable {
 					e.printStackTrace();
 				}
 				System.out.println("Change " + userName + "'s coordinate to" + "[" + serverMediator.getWorld().getEntityLocation(userName).getEntities().get(serverMediator.getWorld().getEntity(userName)).getxPostion() + "," + serverMediator.getWorld().getEntityLocation(userName).getEntities().get(serverMediator.getWorld().getEntity(userName)).getyPosition() + "]");
+				server.addActionToQueue(new Event(userName, serverMediator.getWorld().getEntityLocation(userName).getLocationID(), command, "none"));
+				break;
+			case "getUpdates":
+				server.updateClients();
 				break;
 			case "openDoor":
 				locationController.openDoor(this.userName);
@@ -136,7 +130,6 @@ public class ClientThread extends Thread implements Runnable {
 				logout();
 				break;
 		}
-
 	}
 
 	private void logout() {

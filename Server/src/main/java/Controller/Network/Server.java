@@ -1,17 +1,19 @@
 package Controller.Network;
 
 import Controller.ServerMediator;
-import Model.Entity.Entity;
+import Network.Event;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Server implements Runnable{
 	private ServerSocket serverSocket;
 	private ArrayList<ClientThread> clients = new ArrayList<ClientThread>();
 	private ServerMediator serverMediator;
+	private LinkedList<Event> EventQueue = new LinkedList<>();
 
 	public Server(ServerMediator serverMediator) throws Exception{
 		serverSocket = new ServerSocket(7777);
@@ -39,13 +41,18 @@ public class Server implements Runnable{
 		clients.remove(client);
 	}
 
+	void addActionToQueue(Event event) {
+		EventQueue.add(event);
+	}
+
 	void updateClients() throws IOException {
 		for(ClientThread ct:clients) {
-			System.out.println("-----Updating clients-----");
-			for (Entity entity : serverMediator.getWorld().getEntities()) {
-				System.out.println(entity.getEntityID());
+			if (!EventQueue.isEmpty()) {
+				ct.sendMessage(EventQueue.remove());
 			}
-			ct.sendMessage(serverMediator.getWorld());
+			else {
+				System.out.println("No events in queue");
+			}
 		}
 	}
 }

@@ -1,7 +1,6 @@
 package Controller.Network;
 
 import Controller.ClientMediator;
-import Model.Entity.Entity;
 import Model.Entity.User;
 import Model.World;
 
@@ -15,7 +14,6 @@ import java.util.Scanner;
 
 public class Client implements Runnable {
 
-	private Scanner in;
 	private ObjectOutputStream objectOutputStream;
 	private ObjectInputStream objectInputStream;
 
@@ -27,7 +25,7 @@ public class Client implements Runnable {
 	private String IP = "";
 	private int PORT = 0;
 	private int SLEEP_TIME = 500;
-	
+
 	public Client(ClientMediator clientMediator){
 		this.clientMediator = clientMediator;
 	}
@@ -44,14 +42,11 @@ public class Client implements Runnable {
 
 		try{
 		    socket = new Socket(IP, PORT);
-			in = new Scanner(socket.getInputStream());
+			socket.setTcpNoDelay(true);
+			Scanner in = new Scanner(socket.getInputStream());
 			this.objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-			this.objectInputStream = new ObjectInputStream((socket.getInputStream()));
-			getWorldFromServer();
-			Object input = objectInputStream.readObject();
-			if(input instanceof World) {
-				updateWorld((World)input);
-			}
+			this.objectInputStream = new ObjectInputStream(socket.getInputStream());
+			sendMessageToServer("getWorld");
 			new Thread(this).start();
 		} catch (Exception ex){
 			ex.printStackTrace();
@@ -62,7 +57,7 @@ public class Client implements Runnable {
 	}
 
 	//run with timer.
-	/*@Override
+	@Override
 	public void run() {
 		while(canRun) {
 			try {
@@ -77,36 +72,6 @@ public class Client implements Runnable {
 				canRun = false;
 				System.exit(0);
 				ex.printStackTrace();
-			}
-		}
-	}*/
-
-	//run in local
-	@Override
-	public void run() {
-		while(canRun) {
-			try {
-				System.out.println("Tick");
-				Object input = objectInputStream.readObject();
-				if(input instanceof World) {
-					updateWorld((World)input);
-				}
-				else if(input instanceof String) {
-					handleString((String)input);
-				}
-				else {
-					System.out.println("Received unknown object from server");
-				}
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException ie) {
-					ie.printStackTrace();
-				}
-
-			} catch (Exception ex) {
-				canRun = false;
-				ex.printStackTrace();
-				System.exit(0);
 			}
 		}
 	}
@@ -144,6 +109,7 @@ public class Client implements Runnable {
 	}
 
 	private void updateWorld(World world) {
+		System.out.println("Got new world");
 		clientMediator.setWorld(world);
 	}
 

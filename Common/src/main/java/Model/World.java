@@ -1,9 +1,6 @@
 package Model;
 
 import Model.Entity.Entity;
-import Model.Entity.NPC;
-import Model.Entity.User;
-import Model.Item.Key;
 import Model.Location.Coordinate;
 import Model.Location.Location;
 
@@ -82,10 +79,6 @@ public class World implements Serializable {
 					break;
 				}
 			}
-//			if(l.getEntities().get(this.getEntity(userName)) != null){
-//				location = l;
-//				break;
-//			}
 		}
 		return location;
 	}
@@ -134,7 +127,6 @@ public class World implements Serializable {
 
 	public boolean equals(World newWorld){
 		Boolean result = false;
-
 		return result;
 	}
 
