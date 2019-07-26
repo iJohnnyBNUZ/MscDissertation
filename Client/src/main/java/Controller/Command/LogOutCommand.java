@@ -9,7 +9,7 @@ public class LogOutCommand implements Command{
 	}
 
 	public void execute() {
-		clientMediator.getClient().logout();
+		clientMediator.addAction("logOut");
 		System.out.println("log out!");
 	}
 }
