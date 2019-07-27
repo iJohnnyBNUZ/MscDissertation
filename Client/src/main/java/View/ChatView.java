@@ -26,6 +26,8 @@ public class ChatView{
 	private TextField messageWindow = null;
 	private Button send = null;
 	private VBox messageBox = null;
+	private AnchorPane chatScrolPane = null;
+	private double lastLabelHeight = 0;
 
 
 	public ChatView(View view) {
@@ -34,6 +36,7 @@ public class ChatView{
 		this.messageWindow = view.getMessageWindow();
 		this.send = view.getSend();
 		this.messageBox = view.getMessageBox();
+		this.chatScrolPane = view.getChatScrolPane();
 
 		closeChatView.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -59,7 +62,8 @@ public class ChatView{
 	public void updateChat(List<String> messageList){
 		Platform.runLater(new Runnable() {
 			@Override public void run() {
-				messageBox.getChildren().clear();
+				chatScrolPane.getChildren().clear();
+				//messageBox.getChildren().clear();
 				//add messages to chatView
 				int size = messageList.size();
 				for(int i =0 ; i< size; i++){
@@ -67,7 +71,11 @@ public class ChatView{
 					messageLabel.setPrefWidth(288);
 					messageLabel.setPrefHeight(27);
 					messageLabel.setText(messageList.get(i));
-					messageBox.getChildren().add(messageLabel);
+					messageLabel.setLayoutX(20);
+					messageLabel.setLayoutY(10+30*i);
+					messageLabel.setWrapText(true);
+					//messageBox.getChildren().add(messageLabel);
+					chatScrolPane.getChildren().add(messageLabel);
 				}
 			}
 		});
