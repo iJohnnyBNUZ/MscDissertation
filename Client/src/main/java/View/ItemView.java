@@ -24,7 +24,7 @@ public class ItemView{
 	}
 
 	
-	public void update(Map<String,Coordinate> items) {
+	/*public void update(Map<String,Coordinate> items) {
 		System.out.println("update item!");
 		if(items!=null && items.size() <= 100) {
 			Platform.runLater(new Runnable() {
@@ -52,6 +52,34 @@ public class ItemView{
 					}
 				}
 			});
+
+		}else {
+			System.out.println("Wrong tiles size");
+		}
+	}*/
+
+	public void update(Map<String,Coordinate> items) {
+		System.out.println("update item!");
+		if(items!=null && items.size() <= 100) {
+			view.initialForItem();
+			for(String name: items.keySet()) {
+
+				String fileName = name.replaceAll("[0-9]", "");
+				ImageView imgView = view.drawClickable(fileName, items.get(name), true);
+				imgView.setId(name);
+				imgView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+					public void handle(MouseEvent m) {
+						System.out.println("Item ID: " + imgView.getId());
+
+						System.out.println("Position: "+ items.get(name).getxPostion()+" "
+								+items.get(name).getyPosition());
+						pickUp.execute();
+					}
+
+				});
+
+			}
 
 		}else {
 			System.out.println("Wrong tiles size");

@@ -33,35 +33,15 @@ public class EntityView {
 	}
 
 	public void initialBeforeDraw(){
-		Platform.runLater(new Runnable() {
-			@Override public void run() {
-				view.initialForEntity();
-			}
-		});
-
+		view.initialForEntity();
 	}
 
 	public void updateNPC(final Map<String,Coordinate> npcs) {
-		
+
 		if(npcs.size() <= 100) {
 			for(String name: npcs.keySet()) {
-				
-				Platform.runLater(new Runnable() {
-	                @Override public void run() {
-	                	ImageView imgView = view.drawClickable("npc", npcs.get(name), false);
-	    				imgView.setId(name);
-	    				/*imgView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-	    					public void handle(MouseEvent m) {
-	    						System.out.println("npc ID: "+ imgView.getId());
-	    						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	    						communication.execute();
-	    					}
-	    					
-	    				});*/
-	    			}
-				});
-				
+				ImageView imgView = view.drawClickable("npc", npcs.get(name), false);
+				imgView.setId(name);
 			}
 		}else {
 			System.out.println("Wrong tiles size");
@@ -73,22 +53,9 @@ public class EntityView {
 		System.out.println("update usersssssssssssssa");
 		if(users.size() <= 100) {
 			for(String name: users.keySet()) {
-				Platform.runLater(new Runnable() {
-	                @Override public void run() {
-	                	ImageView imgView = view.drawClickable("player", users.get(name), false);
-	    				imgView.setId(name);
-	    				System.out.println(imgView.getId());
-	    				/*imgView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-	    					public void handle(MouseEvent m) {
-	    						System.out.println("user ID: " + imgView.getId());
-	    						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	    						communication.execute();
-	    					}
-	    					
-	    				});*/
-	    			}
-				});
+				ImageView imgView = view.drawClickable("player", users.get(name), false);
+				imgView.setId(name);
+				System.out.println(imgView.getId());
 			}
 				
 		}else {
@@ -102,22 +69,9 @@ public class EntityView {
 		
 		if(stores.size() <= 100) {
 			for(String name: stores.keySet()) {
-				
-				Platform.runLater(new Runnable() {
-	                @Override public void run() {
-	                	ImageView imgView = view.drawClickable("store", stores.get(name), false);
-	    				imgView.setId(name);
-	    				/*imgView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
-	    					public void handle(MouseEvent m) {
-	    						System.out.println("storeId"+imgView.getId());
-	    						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	    						communication.execute();
-	    					}
-	    					
-	    				});*/
-	    			}
-				});
+				ImageView imgView = view.drawClickable("store", stores.get(name), false);
+				imgView.setId(name);
 				
 			}
 		}else {
@@ -129,11 +83,7 @@ public class EntityView {
 	public void updateEnergy(int energyPoints) {
 		
 		if(energyPoints <= 100 && energyPoints >= 0) {
-			Platform.runLater(new Runnable() {
-                @Override public void run() {
-                	energy.setProgress((double)energyPoints/100);
-    			}
-			});
+			energy.setProgress((double)energyPoints/100);
 			
 		}else {
 			System.out.println("Wrong energy value!");
@@ -144,11 +94,7 @@ public class EntityView {
 	public void updateCoin(int coins) {
 		
 		if(coins > 0) {
-			Platform.runLater(new Runnable() {
-                @Override public void run() {
-                	coin.setText(""+coins);
-    			}
-			});
+			coin.setText(""+coins);
 			
 		}else {
 			System.out.println("Wrong coin value!");
