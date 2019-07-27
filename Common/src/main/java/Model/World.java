@@ -3,6 +3,7 @@ package Model;
 import Model.Entity.Entity;
 import Model.Location.Coordinate;
 import Model.Location.Location;
+import Utils.Observable;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class World implements Serializable {
+public class World extends Observable implements Serializable {
 
 	private ArrayList<Location> Locations = new ArrayList<Location>();
 	private ArrayList<Entity> Entities = new ArrayList<Entity>();
@@ -123,6 +124,7 @@ public class World implements Serializable {
 
 	public void addMessage(String message){
 		messageList.add(message);
+		notifyObserver();
 	}
 
 	public boolean equals(World newWorld){

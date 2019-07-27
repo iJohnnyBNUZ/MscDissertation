@@ -96,6 +96,9 @@ public class View {
 	private VBox messageBox;
 
 	@FXML
+	private AnchorPane chatScrolPane;
+
+	@FXML
 	private TabPane tabBagView;
 
 	@FXML
@@ -210,6 +213,8 @@ public class View {
 	public Button getSend() { return send; }
 
 	public VBox getMessageBox() { return messageBox; }
+
+	public AnchorPane getChatScrolPane() { return chatScrolPane; }
 
 	public TabPane getTabBagView() { return tabBagView; }
 
@@ -381,11 +386,9 @@ public class View {
 	public ImageView drawClickable(String fileName, Coordinate position, Boolean isItemTile) {
 		tileWidth=mapView.getWidth()/10;
 		tileHeight = mapView.getHeight()/10;
-
 		//create ImageView  to each of the items
 		ImageView imgView = new ImageView();
 		URL url = this.getClass().getResource("/images/" + fileName + ".png");
-
 		imgView.setLayoutX(position.getyPosition()*tileWidth);
 		imgView.setLayoutY(position.getxPostion()*tileHeight);
 

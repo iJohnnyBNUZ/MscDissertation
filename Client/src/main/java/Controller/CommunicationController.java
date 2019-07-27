@@ -18,7 +18,10 @@ public class CommunicationController implements Controller {
         this.clientMediator = clientMediator;
     }
 
-    public void addMessages(String message){
+    public void addMessages(String sentence){
+    	//add queue
+    	userID = this.clientMediator.getUserName();
+    	String message = userID + " : " + sentence;
     	this.clientMediator.getWorld().addMessage(message);
     	System.out.println(this.clientMediator.getWorld().getMessageList());
     }
