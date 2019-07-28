@@ -255,8 +255,8 @@ public class TransactionView {
 					public void changed(ObservableValue observableValue, Object o, Object t1) {
 						sellValue = Integer.parseInt(totalSellValue.getText())-oldSellNum.get(numSell)+Integer.parseInt(mybagcoins.getText())*Integer.parseInt(numSell.getValue().toString());
 						totalSellValue.setText(String.valueOf(sellValue));
-						if(buyList.containsKey(tmp_bag_name)){
-							buyList.put(tmp_bag_name,Integer.parseInt(numSell.getValue().toString()));
+						if(sellList.containsKey(tmp_bag_name)){
+							sellList.put(tmp_bag_name,Integer.parseInt(numSell.getValue().toString()));
 						}
 						if(oldSellNum.containsKey(numSell)){
 							oldSellNum.put(numSell,Integer.parseInt(numSell.getValue().toString())*Integer.parseInt(mybagcoins.getText()));

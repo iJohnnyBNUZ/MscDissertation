@@ -59,7 +59,6 @@ public class ClientMediator implements GameMediator {
 	private CommunicationObserver communicationObserver= null;
 	private EntityObserver entityObserver = null;
 	private BagObserver bagObserver = null;
-	private ChatObserver chatObserver = null;
 	
 	private MoveCommand moveCommand = null;   
 	private PickUpCommand pickUpCommand = null;
@@ -468,14 +467,13 @@ public class ClientMediator implements GameMediator {
 		this.communicationObserver = new CommunicationObserver(this);
 		this.entityObserver = new EntityObserver(this);
 		this.bagObserver =  new BagObserver(this);
-		this.chatObserver = new ChatObserver(this);
 		
 		observerSet.add(this.locationObserver);
 		observerSet.add(this.itemObserver);
 		observerSet.add(this.communicationObserver);
 		observerSet.add(this.entityObserver);
 		observerSet.add(this.bagObserver);
-		observerSet.add(this.chatObserver);
+
 		
 		
 		this.moveCommand = new MoveCommand(locationController,this);

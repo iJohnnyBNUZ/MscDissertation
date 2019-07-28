@@ -123,7 +123,7 @@ public class ItemControllerTest extends BaseTest {
 
         int beforeSellerCoin = testUser.getCoin();
         int beforeSellerBagSize = testUser.getBag().size();
-        itemController.exchange("testUser2", "testUser", list, 30);
+        //itemController.exchange("testUser2", "testUser", list, 30);
 
         assertEquals(testUser2.getCoin(), beforeBuyerCoin - 30);
         assertEquals(testUser.getCoin(), beforeSellerCoin + 30);
