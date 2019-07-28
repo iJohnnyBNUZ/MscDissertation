@@ -1,6 +1,7 @@
 package View;
 
 import Controller.Command.BuyCommand;
+import Controller.Command.CloseTransactionCommand;
 import Controller.Command.SellCommand;
 import Model.Item.Item;
 import Model.Location.Coordinate;
@@ -50,6 +51,7 @@ public class TransactionView {
 
 	private BuyCommand buyCommand;
 	private SellCommand sellCommand;
+	private CloseTransactionCommand closeTransactionCommand;
 
 	public TransactionView(View view) {
 		this.user_shop = view.getUser_shop();
@@ -70,6 +72,7 @@ public class TransactionView {
 			@Override
 			public void handle(ActionEvent actionEvent) {
 				Transaction.setVisible(false);
+				closeTransactionCommand.execute();
 			}
 		});
 
@@ -77,6 +80,7 @@ public class TransactionView {
 			@Override
 			public void handle(ActionEvent actionEvent) {
 				Transaction.setVisible(false);
+				closeTransactionCommand.execute();;
 			}
 		});
 
@@ -304,6 +308,10 @@ public class TransactionView {
 
 	public void setSellCommand(SellCommand sellCommand){
 		this.sellCommand = sellCommand;
+	}
+
+	public void setCloseTransactionCommand(CloseTransactionCommand closeTransactionCommand){
+		this.closeTransactionCommand = closeTransactionCommand;
 	}
 
 

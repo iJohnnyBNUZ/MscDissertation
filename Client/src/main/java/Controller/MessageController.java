@@ -20,6 +20,7 @@ public class MessageController implements Controller{
     }
 
     public void buyMessage(String usershopName, HashMap<String,Integer> buyList, int buyValue){
+        this.clientMediator.setTransactionWith(usershopName);
         String userID = clientMediator.getUserName();
         if(clientMediator.getWorld().getEntity(userID).getCoin()>=buyValue){
             showMessage("You have enough money to buy the items");
@@ -31,6 +32,7 @@ public class MessageController implements Controller{
     }
 
     public void sellMessage(String usershopName, HashMap<String, Integer> sellList, int sellVale){
+        this.clientMediator.setTransactionWith(usershopName);
         String userID = clientMediator.getUserName();
         Location currLocation = clientMediator.getWorld().getEntityLocation(userID);
         for(Map.Entry<Entity, Coordinate> entry : currLocation.getEntities().entrySet()){
