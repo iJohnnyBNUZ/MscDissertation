@@ -53,6 +53,19 @@ public class LocationController implements Controller{
 			case "s":
 				changeUserCoordinate(entityCoordinate.getxPostion()+1, entityCoordinate.getyPosition() , uName);
 				break;
+
+			case "left":
+				changeUserCoordinate(entityCoordinate.getxPostion() , entityCoordinate.getyPosition()-1, uName);
+				break;
+			case "right":
+				changeUserCoordinate(entityCoordinate.getxPostion() , entityCoordinate.getyPosition()+1, uName);
+				break;
+			case "up":
+				changeUserCoordinate(entityCoordinate.getxPostion()-1, entityCoordinate.getyPosition() , uName);
+				break;
+			case "down":
+				changeUserCoordinate(entityCoordinate.getxPostion()+1, entityCoordinate.getyPosition() , uName);
+				break;
 			default:
 		}
 
