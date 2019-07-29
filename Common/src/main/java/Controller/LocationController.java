@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Entity.Entity;
 import Model.Entity.User;
 import Model.Item.Item;
 import Model.Item.Key;
@@ -8,6 +9,7 @@ import Model.Location.Door;
 import Model.Location.Location;
 import Model.Location.Tile;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class LocationController implements Controller{
@@ -23,8 +25,12 @@ public class LocationController implements Controller{
 
 		Location entityLocation = gameMediator.getWorld().getEntityLocation(uName);
 
-		Coordinate entityCoordinate = entityLocation.getEntities().get(gameMediator.getWorld().getEntity(uName));
-
+		Coordinate entityCoordinate = null;
+		for ( Map.Entry<Entity, Coordinate> coordinateMap: entityLocation.getEntities().entrySet()){
+			if (coordinateMap.getKey().getEntityID().equals(uName)) {
+				entityCoordinate = coordinateMap.getValue();
+			}
+		}
 		if (entityCoordinate == null)
 			return;
 
