@@ -321,7 +321,7 @@ public class View {
 				if (size>0){
 					String action = directions.get(0);
 					try {
-						if(action.equals("Left") || action.equals("Right")||action.equals("Up")|| action.equals("Down")) {
+						if(action.equals("A") || action.equals("D")||action.equals("W")|| action.equals("S")) {
 							System.out.println("view keyEvent: "+ action);
 							moveCommand.excute(action);
 							directions.remove(action);

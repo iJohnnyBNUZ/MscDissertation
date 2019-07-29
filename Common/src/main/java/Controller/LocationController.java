@@ -41,16 +41,16 @@ public class LocationController implements Controller{
 			return "Cannot find user's coordinate";
 
 		switch (direction) {
-			case "left":
+			case "a":
 				changeUserCoordinate(entityCoordinate.getxPostion() , entityCoordinate.getyPosition()-1, uName);
 				break;
-			case "right":
+			case "d":
 				changeUserCoordinate(entityCoordinate.getxPostion() , entityCoordinate.getyPosition()+1, uName);
 				break;
-			case "up":
+			case "w":
 				changeUserCoordinate(entityCoordinate.getxPostion()-1, entityCoordinate.getyPosition() , uName);
 				break;
-			case "down":
+			case "s":
 				changeUserCoordinate(entityCoordinate.getxPostion()+1, entityCoordinate.getyPosition() , uName);
 				break;
 			default:
@@ -113,7 +113,7 @@ public class LocationController implements Controller{
 				return "The keys in bag are all used or there is no key in the bag!";
 			}
 		}else
-			return "door is none!";
+			return null;
 		}
 
 
