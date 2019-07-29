@@ -68,7 +68,12 @@ public class ItemController implements Controller{
 
         //add to location
         Location location = this.gameMediator.getWorld().getEntityLocation(userID);
-        Coordinate userCoordinate = location.getEntities().get(userID);
+        Coordinate userCoordinate = null;
+        for(Map.Entry<Entity, Coordinate> entry : location.getEntities().entrySet()){
+            if (entry.getKey().getEntityID().equals(userID))
+                userCoordinate = entry.getValue();
+        }
+
         if (item != null){
             location.addItem(userCoordinate, item);
         }

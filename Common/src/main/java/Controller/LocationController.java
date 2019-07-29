@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Entity.Entity;
 import Model.Entity.User;
 import Model.Item.Item;
 import Model.Item.Key;
@@ -8,6 +9,7 @@ import Model.Location.Door;
 import Model.Location.Location;
 import Model.Location.Tile;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class LocationController implements Controller{
@@ -17,16 +19,26 @@ public class LocationController implements Controller{
 		this.gameMediator = gameMediator;
 	}
 
-	public void moveTo(String uName, String direction){
+	public String moveTo(String uName, String direction){
 	    if(gameMediator.getWorld().getEntity(uName)==null)
-	        return;
+	        return "Cannot find user";
 
 		Location entityLocation = gameMediator.getWorld().getEntityLocation(uName);
 
-		Coordinate entityCoordinate = entityLocation.getEntities().get(gameMediator.getWorld().getEntity(uName));
+		Coordinate entityCoordinate = null;
+		Entity user = null;
+		for ( Map.Entry<Entity, Coordinate> coordinateMap: entityLocation.getEntities().entrySet()){
+			if (coordinateMap.getKey().getEntityID().equals(uName)) {
+			    user = coordinateMap.getKey();
+				entityCoordinate = coordinateMap.getValue();
+			}
+		}
 
+		if (user.getEnergy() <= 0){
+		    return "There is no energy!";
+        }
 		if (entityCoordinate == null)
-			return;
+			return "Cannot find user's coordinate";
 
 		switch (direction) {
 			case "left":
@@ -44,6 +56,7 @@ public class LocationController implements Controller{
 			default:
 		}
 
+		return null;
 	}
 
 	public void changeUserCoordinate(int xCoordinate, int yCoordinate, String userID){
@@ -59,11 +72,15 @@ public class LocationController implements Controller{
 
 	}
 
-	public void openDoor(String userid){
+	public String openDoor(String userid){
 		Key key;
 		Door door = null;
 		Location currentLocation = gameMediator.getWorld().getEntityLocation(userid);
 		Coordinate coordinate = currentLocation.getEntities().get(gameMediator.getWorld().getEntity(userid));
+
+		if (gameMediator.getWorld().getEntity(userid).getEnergy() <= 0){
+			return "There is no energy!";
+		}
 
 		//find the door for nextLocation
 		if(currentLocation.getTiles().get(coordinate) instanceof Door){
@@ -77,7 +94,7 @@ public class LocationController implements Controller{
 				//user have already opened this door,only to give a initial coordinate in next location
 				moveUserToNextLocation(door,userid);
 				((User)gameMediator.getWorld().getEntity(userid)).addOpenedDoors(door.getCurrentLocationId());
-				return;
+				return null;
 			}else{
 				for(Item item: gameMediator.getWorld().getEntity(userid).getBag()){
 					if(item instanceof Key){
@@ -88,15 +105,15 @@ public class LocationController implements Controller{
 							key.setUsed(true);
 							//add opened door for user
 							((User)gameMediator.getWorld().getEntity(userid)).addOpenedDoors(door.getCurrentLocationId());
-							System.out.println("The key is used now!");
-							return;
+
+							return null;
 						}
 					}
 				}
-				System.out.println("There is no Key object in the bag!");
+				return "The keys in bag are all used or there is no key in the bag!";
 			}
 		}else
-			System.out.println("door is none!");
+			return "door is none!";
 		}
 
 
