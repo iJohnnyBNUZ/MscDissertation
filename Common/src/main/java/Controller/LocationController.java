@@ -150,7 +150,10 @@ public class LocationController implements Controller{
 							gameMediator.getWorld().getLocation(nextLocationId).addEntity(gameMediator.getWorld().getEntity(userid),c);
 							System.out.println("USer->"+ userid+" open the door and moves to the new Location");
 							//decrease user energy
-							gameMediator.getWorld().getEntity(userid).decreaseEnergy(nextLocation.getTiles().get(c).getEnergyCost());
+							if(gameMediator.getWorld().getEntity(userid).getEnergy()<=nextLocation.getTiles().get(c).getEnergyCost())
+								gameMediator.getWorld().getEntity(userid).setEnergy(0);
+							else
+								gameMediator.getWorld().getEntity(userid).decreaseEnergy(nextLocation.getTiles().get(c).getEnergyCost());
 
 							return;
 						}
@@ -159,7 +162,10 @@ public class LocationController implements Controller{
 							gameMediator.getWorld().getLocation(nextLocationId).addEntity(gameMediator.getWorld().getEntity(userid), c);
 							System.out.println("USer->" + userid + "open the door and moves to the new Location");
 							//decrease user energy
-							gameMediator.getWorld().getEntity(userid).decreaseEnergy(nextLocation.getTiles().get(c).getEnergyCost());
+							if(gameMediator.getWorld().getEntity(userid).getEnergy()<=nextLocation.getTiles().get(c).getEnergyCost())
+								gameMediator.getWorld().getEntity(userid).setEnergy(0);
+							else
+								gameMediator.getWorld().getEntity(userid).decreaseEnergy(nextLocation.getTiles().get(c).getEnergyCost());
 
 							return;
 						}
