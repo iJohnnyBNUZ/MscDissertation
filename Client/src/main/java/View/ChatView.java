@@ -60,25 +60,21 @@ public class ChatView{
 	}
 
 	public void updateChat(List<String> messageList){
-		Platform.runLater(new Runnable() {
-			@Override public void run() {
-				chatScrolPane.getChildren().clear();
-				//messageBox.getChildren().clear();
-				//add messages to chatView
-				int size = messageList.size();
-				for(int i =0 ; i< size; i++){
-					Label messageLabel = new Label();
-					messageLabel.setPrefWidth(288);
-					messageLabel.setPrefHeight(27);
-					messageLabel.setText(messageList.get(i));
-					messageLabel.setLayoutX(20);
-					messageLabel.setLayoutY(10+30*i);
-					messageLabel.setWrapText(true);
-					//messageBox.getChildren().add(messageLabel);
-					chatScrolPane.getChildren().add(messageLabel);
-				}
-			}
-		});
+		chatScrolPane.getChildren().clear();
+		//messageBox.getChildren().clear();
+		//add messages to chatView
+		int size = messageList.size();
+		for(int i =0 ; i< size; i++){
+			Label messageLabel = new Label();
+			messageLabel.setPrefWidth(288);
+			messageLabel.setPrefHeight(27);
+			messageLabel.setText(messageList.get(i));
+			messageLabel.setLayoutX(20);
+			messageLabel.setLayoutY(10+30*i);
+			messageLabel.setWrapText(true);
+			//messageBox.getChildren().add(messageLabel);
+			chatScrolPane.getChildren().add(messageLabel);
+		}
 
 
 	}

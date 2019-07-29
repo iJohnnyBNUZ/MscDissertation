@@ -370,16 +370,20 @@ public class View {
 		userImage.setImage(image);
 	}
 
-	public void draw(String fileName, Coordinate position) {
+	public boolean draw(String fileName, Coordinate position) {
+		boolean drawed=false;
 		GraphicsContext gContext = mapView.getGraphicsContext2D();
 		tileWidth=mapView.getWidth()/10;
 		tileHeight = mapView.getHeight()/10;
 		//create Image to each of the items
 		URL url = this.getClass().getResource("/images/" + fileName + ".png");
 		Image image = new Image(url.toString(), image_h, image_w, false, false);
-
-		gContext.drawImage(image,0, 0,image_h,image_w, position.getyPosition()*tileWidth,
-				position.getxPostion()*tileHeight,tileWidth,tileHeight);
+		if(image!= null){
+			gContext.drawImage(image,0, 0,image_h,image_w, position.getyPosition()*tileWidth,
+					position.getxPostion()*tileHeight,tileWidth,tileHeight);
+			drawed=true;
+		}
+		return drawed;
 
 	}
 

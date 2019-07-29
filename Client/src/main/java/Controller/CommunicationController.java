@@ -6,6 +6,8 @@ import Model.Entity.Shop;
 import Model.Entity.User;
 import Model.Location.Coordinate;
 import Model.Location.Location;
+import View.TransactionView;
+import javafx.concurrent.Task;
 
 import java.util.Map;
 
@@ -70,31 +72,97 @@ public class CommunicationController implements Controller {
 	}
 
 	private void withUser(String id) {
-		userID = this.clientMediator.getUserName();
-		if(!id.equals(userID))
-			this.clientMediator.getTransactionView().updateTransaction(this.clientMediator.getWorld().getEntity(id).getBag(),id,this.clientMediator.getWorld().getEntity(userID).getBag(),this.clientMediator.getWorld().getEntity(userID).getCoin());
 
+		Task<Void> progressTask = new Task<Void>(){
+			boolean isAvaliable=false;
+			@Override
+			protected Void call() throws Exception {
+				userID = clientMediator.getUserName();
+				if(!id.equals(userID))
+					isAvaliable=true;
+				return null;
+			}
+
+			@Override
+			protected void succeeded() {
+				super.succeeded();
+				if(isAvaliable)
+					clientMediator.getTransactionView().updateTransaction(clientMediator.getWorld().getEntity(id).getBag(),id,clientMediator.getWorld().getEntity(userID).getBag(),clientMediator.getWorld().getEntity(userID).getCoin());
+
+			}
+
+		};
+
+		new Thread(progressTask).start();
 	}
 
+
+
+
 	private void withShop(String id) {
-    	System.out.println("with shop+{}" + id);
-		userID = this.clientMediator.getUserName();
-		for(Entity entity: this.clientMediator.getWorld().getEntityLocation(userID).getEntities().keySet()){
-			if(entity.getEntityID() == id){
-				//System.out.println("shop是 " + entity.getEntityID());
-				//System.out.println("shop是 " + entity);
-				this.clientMediator.getTansactionView().updateTransaction(entity.getBag(),id,this.clientMediator.getWorld().getEntity(userID).getBag(),this.clientMediator.getWorld().getEntity(userID).getCoin());
-				break;
+		Task<Void> progressTask = new Task<Void>(){
+			boolean isAvaliable=false;
+			Entity selectedEntity = null;
+			@Override
+			protected Void call() throws Exception {
+				userID = clientMediator.getUserName();
+				for(Entity entity: clientMediator.getWorld().getEntityLocation(userID).getEntities().keySet()){
+					if(entity.getEntityID() == id){
+						selectedEntity=entity;
+						isAvaliable=true;
+						break;
+					}
+				}
+				return null;
 			}
-		}
-		//this.clientMediator.getTransactionView().updateTransaction(this.clientMediator.getWorld().getEntity(id).getBag(),id,this.clientMediator.getWorld().getEntity(userID).getBag(),this.clientMediator.getWorld().getEntity(userID).getCoin());
+
+			@Override
+			protected void succeeded() {
+				super.succeeded();
+				if(isAvaliable)
+					clientMediator.getTansactionView().updateTransaction(selectedEntity.getBag(),id,clientMediator.getWorld().getEntity(userID).getBag(),clientMediator.getWorld().getEntity(userID).getCoin());
+
+			}
+
+		};
+
+		new Thread(progressTask).start();
+
+
+
 	}
 
 	private void withNPC(String id) {
-		userID = this.clientMediator.getUserName();
-		this.clientMediator.getWorld().getEntity(userID).reactTo(this.clientMediator.getWorld().getEntity(userID));
-		String message = "You are communicate with "+ id + ", and you lose 30 energy. " ;
-		this.clientMediator.getNPCView().updateNpcView(message);
+		Task<Void> progressTask = new Task<Void>(){
+			boolean isAvaliable=false;
+			String message = null;
+			@Override
+			protected Void call() throws Exception {
+				userID = clientMediator.getUserName();
+				for(Entity entity: clientMediator.getWorld().getEntityLocation(userID).getEntities().keySet()){
+					if(entity.getEntityID() == id){
+						clientMediator.getWorld().getEntity(userID).reactTo(clientMediator.getWorld().getEntity(userID));
+						message = "You are communicate with "+ id + ", and you lose 30 energy. " ;
+						isAvaliable=true;
+						break;
+					}
+				}
+
+				return null;
+			}
+
+			@Override
+			protected void succeeded() {
+				super.succeeded();
+				if(isAvaliable)
+					clientMediator.getNPCView().updateNpcView(message);
+
+			}
+
+		};
+
+		new Thread(progressTask).start();
+
 	}
 }
 

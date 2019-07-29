@@ -75,15 +75,44 @@ public class ItemController implements Controller{
 
     }
 
-    public void exchange(String buyerID,String sellerID, HashMap<String, Integer> buyList, int value) {
+    public void exchange(String buyerID,String sellerID, HashMap<String, Integer> buyList, int value,String userID) {
 
-        Entity buyer = this.gameMediator.getWorld().getEntity(buyerID);
+        Location currLocation = this.gameMediator.getWorld().getEntityLocation(userID);
+
+        String buyerType = buyerID.replaceAll("[0-9]","");
+        Entity buyer = null;
+        if(buyerType.equals("store")){
+            for(Map.Entry<Entity, Coordinate> entry : currLocation.getEntities().entrySet()){
+                if(entry.getKey().getEntityID().equals(buyerID)){
+                    buyer = entry.getKey();
+                    break;
+                }
+            }
+        }
+        else{
+            buyer = this.gameMediator.getWorld().getEntity(buyerID);
+        }
         if (buyer == null)
             return;
 
-        Entity seller = this.gameMediator.getWorld().getEntity(sellerID);
+
+        String sellerType = sellerID.replaceAll("[0-9]","");
+        Entity seller = null;
+        if(sellerType.equals("store")){
+            for(Map.Entry<Entity, Coordinate> entry : currLocation.getEntities().entrySet()){
+                if(entry.getKey().getEntityID().equals(sellerID)){
+                    seller = entry.getKey();
+                    break;
+                }
+            }
+        }
+        else{
+            seller = this.gameMediator.getWorld().getEntity(sellerID);
+        }
         if (seller == null)
             return;
+
+
 
         //exchange items
         for (Map.Entry<String, Integer> entry : buyList.entrySet()) {
@@ -111,9 +140,7 @@ public class ItemController implements Controller{
 
 
         //buyer decrease money
-        if (buyer.getCoin() >= value) {
-            this.gameMediator.getWorld().getEntity(buyerID).decreaseCoin(value);
-        }
+        buyer.decreaseCoin(value);
 
         //seller increase money
         seller.increaseCoin(value);

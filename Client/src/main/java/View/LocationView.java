@@ -34,7 +34,7 @@ public class LocationView{
 	 *  Picture need to be refined after the functions are implemented.
 	 * */
 
-    public void update(Map<Coordinate, String> tiles) {
+    /*public void update(Map<Coordinate, String> tiles) {
     	System.out.println("update location");
 		if(tiles.size() != 0) {
 			Platform.runLater(new Runnable() {
@@ -50,6 +50,21 @@ public class LocationView{
 			System.out.println("Wrong tiles size");
 		}
 		
+	}*/
+
+	public int update(Map<Coordinate, String> tiles) {
+		int count=0;
+		System.out.println("update location");
+		if(tiles.size() != 0) {
+			view.initialCanvas();
+			for (Coordinate cor : tiles.keySet()) {
+				if(view.draw(tiles.get(cor), cor))
+					count++;
+			}
+		}else {
+			System.out.println("Wrong tiles size");
+		}
+		return count;
 	}
 
 	/*

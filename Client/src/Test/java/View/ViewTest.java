@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
@@ -77,6 +78,6 @@ public class ViewTest extends ApplicationTest {
             }
         }
         LocationView locationView = new LocationView(view);
-//        assertEquals(tmp.size(), locationView.update(tmp));
+        assertEquals(tmp.size(), locationView.update(tmp) );
     }
 }

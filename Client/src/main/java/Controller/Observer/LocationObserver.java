@@ -7,6 +7,7 @@ import Utils.Observer;
 
 import java.util.HashMap;
 import java.util.Map;
+import javafx.concurrent.Task;
 
 public class LocationObserver implements Observer {
 
@@ -16,7 +17,7 @@ public class LocationObserver implements Observer {
 		this.clientMediator = clientMediator;
 	}
 
-	@Override
+	/*@Override
 	public void update() {
 		//if (msg[0].equals("changeLocation")){
 			String uId = clientMediator.getUserName();
@@ -28,5 +29,31 @@ public class LocationObserver implements Observer {
 			}
 			clientMediator.getLocationView().update(tiles);
 		//}
+	}*/
+
+	@Override
+	public void update() {
+		Map<Coordinate, String> tiles = new HashMap<Coordinate, String>();
+		Task<Void> progressTask = new Task<Void>(){
+
+			@Override
+			protected Void call() throws Exception {
+				String uId = clientMediator.getUserName();
+				Location curLocation = clientMediator.getWorld().getEntityLocation(uId);
+				for(Coordinate cor: curLocation.getTiles().keySet()) {
+					tiles.put(cor, curLocation.getTiles().get(cor).getTerrain());
+				}
+				return null;
+			}
+
+			@Override
+			protected void succeeded() {
+				super.succeeded();
+				clientMediator.getLocationView().update(tiles);
+			}
+
+		};
+
+		new Thread(progressTask).start();
 	}
 }
