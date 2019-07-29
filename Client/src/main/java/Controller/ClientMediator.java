@@ -119,12 +119,10 @@ public class ClientMediator implements GameMediator {
 				this.world = newWorld;
 				initWorld(newWorld);
 			}else{
-				this.world = newWorld;
+				this.world.setLocations(newWorld.getLocations());
+				this.world.setEntities(newWorld.getEntities());
 			}
-			long startTime=System.currentTimeMillis();   //start time
             this.notifyObservers();
-			long endTime=System.currentTimeMillis(); //end time
-			System.out.println("Time to notify ---->"+(endTime-startTime));
 		}else{
 			System.out.println("two");
 			this.world = newWorld;
