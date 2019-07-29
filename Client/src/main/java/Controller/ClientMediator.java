@@ -5,9 +5,6 @@ import Controller.Network.Client;
 import Controller.Observer.*;
 import Controller.Save.SaveUser;
 import Model.Entity.Entity;
-import Model.Entity.NPC;
-import Model.Entity.Shop;
-import Model.Entity.User;
 import Model.Location.Coordinate;
 import Model.Location.Location;
 import Model.World;
@@ -32,7 +29,7 @@ public class ClientMediator implements GameMediator {
 	private Boolean isInit = Boolean.FALSE;
 
 	private Set<Observer> observerSet = new HashSet<>();
-	private ArrayList<String> queue = new ArrayList<String>(); //User actions waiting to be send to the sever.
+	private LinkedList<String> actionQueue = new LinkedList<>(); //User actions waiting to be send to the sever.
 	
 	
 	private IndexView indexView= null;
@@ -99,38 +96,13 @@ public class ClientMediator implements GameMediator {
 	}
 
 	public void initWorld(World newWorld){
-		// add location observer
-		/*for (Location newLocation: newWorld.getLocations()){
-			this.world.getLocations().add(new Location(newLocation.getLocationID()));
-		}*/
 		this.world.setObserverSet(observerSet);
 		for(Location location: this.world.getLocations()){
-			//location.addObserver(locationObserver);
-			//location.addObserver(itemObserver);
 			location.setObserverSet(observerSet);
 		}
-
-		// add entity observer
-		/*for(Entity newEntity: newWorld.getEntities()){
-			if (newEntity instanceof NPC){
-				this.world.getEntities().add(new NPC(newEntity.getEntityID()));
-			}
-			else if (newEntity instanceof Shop){
-				this.world.getEntities().add(new Shop(newEntity.getEntityID()));
-			}
-			else {
-				this.world.getEntities().add(new User(newEntity.getEntityID()));
-			}
-		}*/
 		for (Entity entity: this.world.getEntities()){
-			//entity.addObserver(bagObserver);
-			//entity.addObserver(entityObserver);
 			entity.setObserverSet(observerSet);
 		}
-
-		// init world data
-		//this.world.setLocations(newWorld.getLocations());
-		//this.world.setEntities(newWorld.getEntities());
 		this.haveObservers=true;
 		System.out.println("initial finished!!!!!!!!!!!!!!!!");
 	}
@@ -142,19 +114,19 @@ public class ClientMediator implements GameMediator {
 	 */
 	public void setWorld(World newWorld) {
 		if(newWorld.getEntityLocation(userName)!=null){
-			if(!this.haveObservers){
+			System.out.println("one");
+			if(!this.haveObservers) {
 				this.world = newWorld;
 				initWorld(newWorld);
 			}else{
-				this.world.setLocations(newWorld.getLocations());
-				this.world.setEntities(newWorld.getEntities());
-//				this.world = newWorld;
+				this.world = newWorld;
 			}
 			long startTime=System.currentTimeMillis();   //start time
             this.notifyObservers();
 			long endTime=System.currentTimeMillis(); //end time
 			System.out.println("Time to notify ---->"+(endTime-startTime));
 		}else{
+			System.out.println("two");
 			this.world = newWorld;
 		}
 
@@ -179,7 +151,7 @@ public class ClientMediator implements GameMediator {
 	/**
 	 * Tell all observers to update views.
 	 */
-	private void notifyObservers() {
+	public void notifyObservers() {
 		/*for(Observer observer: observers) {
 			observer.update();
 		}*/
@@ -441,8 +413,8 @@ public class ClientMediator implements GameMediator {
 
 	
 	
-	public ArrayList<String> getQueue() {
-		return queue;
+	public LinkedList<String> getActionQueue() {
+		return actionQueue;
 	}
 
 	/**
@@ -450,7 +422,7 @@ public class ClientMediator implements GameMediator {
 	 * @param action the user intended action (may plus the item ID).
 	 */
 	public void addAction(String action) {
-		this.queue.add(action);
+		this.actionQueue.add(action);
 	}
 
 	/**
@@ -458,14 +430,14 @@ public class ClientMediator implements GameMediator {
 	 * @param action the user intended action (may plus the item ID).
 	 */
 	public void removeAction(String action) {
-		this.queue.remove(action);
+		this.actionQueue.remove(action);
 	}
 	
 	/**
 	 * Clean the actions stored in the queue.
 	 */
 	public void cleanQueue() {
-		this.queue.clear();
+		this.actionQueue.clear();
 	}
 
 	/**

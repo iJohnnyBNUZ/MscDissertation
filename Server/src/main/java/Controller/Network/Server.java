@@ -46,13 +46,30 @@ public class Server implements Runnable{
 	}
 
 	void updateClients() throws IOException {
+		if (!EventQueue.isEmpty()) {
+			for(ClientThread ct:clients) {
+				if(!EventQueue.getFirst().getEntityID().equals(ct.getUserName())) {
+					ct.sendMessage(EventQueue.getFirst());
+					System.out.println("Event sent to user");
+				}
+				else {
+					System.out.println("Event not sent to user");
+					ct.sendMessage("None");
+				}
+			}
+			EventQueue.remove();
+		}
+		else {
+			for (ClientThread ct:clients) {
+				ct.sendMessage("None");
+			}
+		}
+	}
+
+	public void sendWorldToClients() {
+		System.out.println("Sending world to all clients");
 		for(ClientThread ct:clients) {
-			if (!EventQueue.isEmpty()) {
-				ct.sendMessage(EventQueue.remove());
-			}
-			else {
-				System.out.println("No events in queue");
-			}
+			ct.sendWorld();
 		}
 	}
 }

@@ -3,11 +3,14 @@ package Controller.Network;
 import Controller.ClientMediator;
 import Model.Entity.User;
 import Model.World;
+import Network.Event;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -21,15 +24,16 @@ public class Client implements Runnable {
 	private String userName;
 	private Socket socket;
 	private ClientMediator clientMediator;
-	
+
 	private String IP = "";
 	private int PORT = 0;
-	private int SLEEP_TIME = 500;
+	private int SLEEP_TIME = 5000;
+
 
 	public Client(ClientMediator clientMediator){
 		this.clientMediator = clientMediator;
 	}
-	
+
 	public Boolean connectToServer(String ip) {
 		try{
 			ResourceBundle resourceBundle = ResourceBundle.getBundle("config");
@@ -39,7 +43,6 @@ public class Client implements Runnable {
 		catch (MissingResourceException e) {
 			e.printStackTrace();
 		}
-
 		try{
 		    socket = new Socket(IP, PORT);
 			socket.setTcpNoDelay(true);
@@ -52,48 +55,53 @@ public class Client implements Runnable {
 			ex.printStackTrace();
 			canRun=false;
 		}
-		
+
 		return canRun;
 	}
 
-	//run with timer.
 	@Override
 	public void run() {
+		try {
+			Thread.sleep(SLEEP_TIME);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		while(canRun) {
 			try {
-				try {
-					Thread.sleep(SLEEP_TIME);
-				} catch (InterruptedException ie) {
-					ie.printStackTrace();
-				}
-				sendCommand();
-				getWorldFromServer();
+				talkToServer();
 			} catch (Exception ex) {
 				canRun = false;
-				System.exit(0);
 				ex.printStackTrace();
+				System.exit(0);
+			}
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
 		}
 	}
 
-	public void sendCommand() throws IOException{
-		try{
-			if(clientMediator.getQueue().size()>0){
-				String command = clientMediator.getQueue().get(0);
-				System.out.println("send command: +" + command);
-				objectOutputStream.writeObject((Object) command);
-				clientMediator.removeAction(command);
-			}
-		}catch (IOException ie){
-			ie.getStackTrace();
+	private void talkToServer() throws IOException, ClassNotFoundException {
+		if(clientMediator.getActionQueue().isEmpty()) {
+			sendMessageToServer("getUpdates");
+		}
+		else {
+			sendMessageToServer(clientMediator.getActionQueue().remove());
 		}
 	}
 
-	private void getWorldFromServer() throws IOException, ClassNotFoundException {
-		objectOutputStream.writeObject("getWorld");
+	private void sendMessageToServer(String message) throws IOException, ClassNotFoundException {
+		System.out.println(message);
+		objectOutputStream.writeObject(message);
 		Object input = objectInputStream.readObject();
-		if(input instanceof World) {
+		if (input instanceof Event) {
+			handleEvent((Event)input);
+			System.out.println("receiving event: " + new SimpleDateFormat("HH:mm:ss").format(new Date()));
+		}
+		else if(input instanceof World) {
 			updateWorld((World)input);
+			System.out.println("receiving world" + new SimpleDateFormat("HH:mm:ss").format(new Date()));
 		}
 		else if(input instanceof String) {
 			handleString((String)input);
@@ -103,13 +111,17 @@ public class Client implements Runnable {
 		}
 	}
 
+	private void handleEvent(Event event) {
+		System.out.println("Got new event");
+		clientMediator.getLocationController().moveTo((event).getEntityID(), (event).getDirection());
+		}
+
 	private void handleString(String input) {
 		System.out.println((input));
-		clientMediator.getIndexView().showMessage("Cannot connect to the server");
+		System.out.println("No new events");
 	}
 
 	private void updateWorld(World world) {
-		System.out.println("Got new world");
 		clientMediator.setWorld(world);
 	}
 
@@ -121,7 +133,6 @@ public class Client implements Runnable {
 			((User) clientMediator.getWorld().getEntity(uName)).setOnline(true);
 			objectOutputStream.writeObject(clientMediator.getWorld().getEntity(uName));
 		}
-		
 	}
 
 	public void MoveTo(String command)throws IOException, ClassNotFoundException {
@@ -130,35 +141,12 @@ public class Client implements Runnable {
 	}
 
 	public void OpenDoor(String command)throws IOException, ClassNotFoundException{
-		if(command.equals("o")) objectOutputStream.writeObject((Object) "OpenDoor");
+		if(command.equals("o")) objectOutputStream.writeObject("openDoor");
 	}
-	
+
 	private void createUser(String userName) throws IOException, ClassNotFoundException {
 		objectOutputStream.writeObject(new User(userName));
-	}
-
-	public Scanner getIn() {
-		return in;
-	}
-
-	public void setIn(Scanner in) {
-		this.in = in;
-	}
-
-	public ObjectOutputStream getObjectOutputStream() {
-		return objectOutputStream;
-	}
-
-	public void setObjectOutputStream(ObjectOutputStream objectOutputStream) {
-		this.objectOutputStream = objectOutputStream;
-	}
-
-	public ObjectInputStream getObjectInputStream() {
-		return objectInputStream;
-	}
-
-	public void setObjectInputStream(ObjectInputStream objectInputStream) {
-		this.objectInputStream = objectInputStream;
+		sendMessageToServer("getWorld");
 	}
 
 	public boolean isCanRun() {
@@ -171,25 +159,5 @@ public class Client implements Runnable {
 
 	public String getUserName() {
 		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public Socket getSocket() {
-		return socket;
-	}
-
-	public void setSocket(Socket socket) {
-		this.socket = socket;
-	}
-
-	public ClientMediator getClientMediator() {
-		return clientMediator;
-	}
-
-	public void setClientMediator(ClientMediator clientMediator) {
-		this.clientMediator = clientMediator;
 	}
 }
