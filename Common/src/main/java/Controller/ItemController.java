@@ -62,11 +62,17 @@ public class ItemController implements Controller{
     }
 
     public String drop(String userID,String itemID){
-        // delete from bag
-        Entity entity = this.gameMediator.getWorld().getEntity(userID);
-        Item item = entity.putDown(itemID);
 
         Location location = this.gameMediator.getWorld().getEntityLocation(userID);
+        Entity entity = this.gameMediator.getWorld().getEntity(userID);
+        Item item = null;
+        for (Item item1 : entity.getBag()){
+            if (item1.getItemID().equals(itemID)){
+                item = item1;
+                break;
+            }
+        }
+
         //find user's coordinate
         Coordinate userCoordinate = null;
         for(Map.Entry<Entity, Coordinate> entry : location.getEntities().entrySet()){
@@ -74,9 +80,11 @@ public class ItemController implements Controller{
                 userCoordinate = entry.getValue();
         }
 
-        //add to location
         if (item != null){
             if(location.getItems().get(userCoordinate) == null){
+                // delete from bag
+                entity.putDown(itemID);
+                //add to location
                 location.addItem(userCoordinate, item);
             }
             else{
