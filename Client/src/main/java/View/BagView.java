@@ -11,7 +11,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.GaussianBlur;
+import javafx.scene.effect.Glow;
+import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -107,7 +110,7 @@ public class BagView{
 		}
 
 		/* preparation for displaysing */
-		final GaussianBlur effect = new GaussianBlur();
+		final DropShadow effect = new DropShadow();
 
 		/* display food in the bag */
 		if (foodItems != null) {
