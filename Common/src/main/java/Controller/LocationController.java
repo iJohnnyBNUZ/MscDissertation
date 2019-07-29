@@ -19,20 +19,26 @@ public class LocationController implements Controller{
 		this.gameMediator = gameMediator;
 	}
 
-	public void moveTo(String uName, String direction){
+	public String moveTo(String uName, String direction){
 	    if(gameMediator.getWorld().getEntity(uName)==null)
-	        return;
+	        return "Cannot find user";
 
 		Location entityLocation = gameMediator.getWorld().getEntityLocation(uName);
 
 		Coordinate entityCoordinate = null;
+		Entity user = null;
 		for ( Map.Entry<Entity, Coordinate> coordinateMap: entityLocation.getEntities().entrySet()){
 			if (coordinateMap.getKey().getEntityID().equals(uName)) {
+			    user = coordinateMap.getKey();
 				entityCoordinate = coordinateMap.getValue();
 			}
 		}
+
+		if (user.getEnergy() == 0){
+		    return "There is no energy!";
+        }
 		if (entityCoordinate == null)
-			return;
+			return "Cannot find user's coordinate";
 
 		switch (direction) {
 			case "left":
@@ -50,6 +56,7 @@ public class LocationController implements Controller{
 			default:
 		}
 
+		return "";
 	}
 
 	public void changeUserCoordinate(int xCoordinate, int yCoordinate, String userID){
