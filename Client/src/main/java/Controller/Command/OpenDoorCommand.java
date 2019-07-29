@@ -17,7 +17,7 @@ public class OpenDoorCommand implements Command {
     public void excute() throws IOException, ClassNotFoundException {
         System.out.println("opendoorCommand");
         String message = locationController.openDoor(clientMediator.getClient().getUserName());
-        if(!message.equals(null))
+        if(message!=null)
             clientMediator.getView().showAlert(message);
         //clientMediator.getClient().OpenDoor(commandString.toLowerCase());
         clientMediator.addAction("openDoor");

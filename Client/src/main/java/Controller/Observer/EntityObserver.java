@@ -68,7 +68,7 @@ public class EntityObserver implements Observer {
 			protected Void call() throws Exception {
 				System.out.println(curLocation.getEntities().keySet().size());
 				for(Entity entity: curLocation.getEntities().keySet()) {
-					if(entity instanceof User) {
+					if(entity instanceof User && ((User) entity).getOnline()) {
 						users.put(entity.getEntityID(), curLocation.getEntities().get(entity));
 					}else if(entity.getEntityID().contains("npc")) {
 						npcs.put(entity.getEntityID(), curLocation.getEntities().get(entity));
