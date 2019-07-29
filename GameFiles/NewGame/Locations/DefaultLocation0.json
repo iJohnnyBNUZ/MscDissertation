@@ -852,7 +852,8 @@
 			"type": "food",
 			"value": 10,
 			"isCollectible": true,
-			"isEdible": true
+			"isEdible": true,
+			  "energy": 10
 		  },
 			{
 				"id": "key_green0",
@@ -876,7 +877,8 @@
 					"type": "food",
 					"value": 10,
 					"isCollectible": true,
-					"isEdible": true
+					"isEdible": true,
+					"energy": 10
 				},
 				{
 					"id": "key_red00",
