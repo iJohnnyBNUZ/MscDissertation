@@ -36,7 +36,7 @@
                   <MenuItem fx:id="saveGame" mnemonicParsing="false" onAction="#saveGame" text="Save Game" />
                </items>
             </Menu>
-            <Menu fx:id="Bag111" mnemonicParsing="false" text="Chat">
+            <Menu fx:id="Chat" mnemonicParsing="false" text="Chat">
                <items>
                   <MenuItem fx:id="openChat" mnemonicParsing="false" onAction="#showChat" text="Open the chat" />
                </items>

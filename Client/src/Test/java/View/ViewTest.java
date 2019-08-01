@@ -57,12 +57,14 @@ public class ViewTest extends ApplicationTest {
         FxAssert.verifyThat("#chatView", NodeMatchers.isVisible());
     }
 
+    /*
     @Test
     public void showTransactionTest() {
         clickOn("#Transaction");
         clickOn("#openTransaction");
         FxAssert.verifyThat("#newTransaction", NodeMatchers.isVisible());
     }
+    */
 
     @Test
     public void updateLocation() {

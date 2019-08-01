@@ -58,9 +58,10 @@ public class MessageController implements Controller{
         */
     }
 
-    public void showMessage(String message){
+    public Boolean showMessage(String message){
         view = clientMediator.getView();
         view.showAlert(message);
+        return true;
     }
 
 
