@@ -2,10 +2,7 @@ package Controller.Network;
 
 import Controller.ClientMediator;
 import Model.World;
-import Network.Events.CommunicationEvent;
-import Network.Events.MovementEvent;
-import Network.Events.OpenDoorEvent;
-import Network.Events.PickUpEvent;
+import Network.Events.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -63,6 +60,8 @@ public class ClientListener implements Runnable {
 		}
 		else if (input instanceof CommunicationEvent) {
 			handleCommunicationEvent((CommunicationEvent) input);
+		}else if(input instanceof ChatEvent){
+			handleChatEvent((ChatEvent) input);
 		}
 		else if(input instanceof World) {
 			updateWorld((World)input);
@@ -90,6 +89,10 @@ public class ClientListener implements Runnable {
 	private void handleMovementEvent(MovementEvent event) {
 		System.out.println("Moving " + event.getEntityID() + " " + event.getDirection());
 		clientMediator.getLocationController().moveTo(event.getEntityID(), event.getDirection());
+	}
+
+	private void handleChatEvent(ChatEvent event){
+		clientMediator.getCommunicationController().addMessages(event.getcommunicateMessage());
 	}
 
 	private void handleString(String input) {

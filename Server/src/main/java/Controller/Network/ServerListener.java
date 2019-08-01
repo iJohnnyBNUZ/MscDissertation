@@ -66,6 +66,8 @@ public class ServerListener extends Thread implements Runnable {
 		}
 		else if (input instanceof LogoutEvent) {
 			logout();
+		}else if (input instanceof ChatEvent){
+			handleChatEvent((ChatEvent) input);
 		}
 		else if (input instanceof String) {
 			handleString((String) input);
@@ -100,6 +102,13 @@ public class ServerListener extends Thread implements Runnable {
 		server.addEventToQueue(input);
 		server.updateOtherClients(this);
 		System.out.println(this.userName + " location is " + serverMediator.getWorld().getEntityLocation(this.userName));
+	}
+
+	private void handleChatEvent(ChatEvent input){
+		System.out.println(input.getEntityID()+"send chat message"+input.getcommunicateMessage());
+		//TODO add CommunicationController after this controller move to Common
+		server.addEventToQueue(input);
+		server.updateOtherClients(this);
 	}
 
 	private void handleEntity(User user) {

@@ -143,7 +143,12 @@ public class LocationController implements Controller{
 
 				int positionX=0,positionY=0;
 				//initial user coordinate to nextLocation, near the door
-				Location nextLocation = gameMediator.getWorld().getLocation(nextLocationId);
+				Location nextLocation;
+				if(gameMediator.getWorld().getLocation(nextLocationId) != null)
+					nextLocation = gameMediator.getWorld().getLocation(nextLocationId);
+				else
+					return;
+
 				for (Map.Entry<Coordinate, Tile> entry : nextLocation.getTiles().entrySet()) {
 					if(entry.getValue() instanceof Door){
 						if(((Door)entry.getValue()).getNextLocationId().equals(door.getCurrentLocationId())){
