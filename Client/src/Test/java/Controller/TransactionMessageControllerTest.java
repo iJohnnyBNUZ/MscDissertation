@@ -5,47 +5,31 @@ import Model.Item.Food;
 import Model.Item.Item;
 import Model.Item.Key;
 import Model.World;
-import View.View;
-import javafx.concurrent.Task;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.JavaFXBuilderFactory;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import org.junit.Before;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
-import org.testfx.api.FxAssert;
 
-import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
-public class MessageControllerTest extends ApplicationTest{
+public class TransactionMessageControllerTest extends ApplicationTest{
 
     private ClientMediator clientMediator;
-    private MessageController messageController;
-    private ItemController itemController;
-    private View view;
+    private TransactionMessageController transactionMessageController;
     private List<Item> usershopBag;
     private List<Item> userBag;
     private HashMap<String, Integer> list = new HashMap<String,Integer>();
 
     @Before
     public void setUp() throws  Exception{
-        View view = new View();
         clientMediator = new ClientMediator();
-        itemController = new ItemController(clientMediator);
-        clientMediator.setItemController(itemController);
-        clientMediator.setView(view);
-        messageController = new MessageController(clientMediator);
+        transactionMessageController = new TransactionMessageController(clientMediator);
         World world = new World();
         clientMediator.setWorld(world);
-        clientMediator.setView(view);
-        System.out.println(clientMediator.getView());
+
 
         User user = new User("user");
         clientMediator.getWorld().addEntity(user);
@@ -68,24 +52,28 @@ public class MessageControllerTest extends ApplicationTest{
 
     @Test
     public void buyMessageTest() {
-        //assertEquals(clientMediator.getView().showAlert("test showalert"));
-        //clientMediator.getWorld().getEntity("user0").setCoin(120);
-        messageController.buyMessage("user",list,120);
-        assertEquals(clientMediator.getWorld().getEntity("user").getCoin(),100);
-        assertEquals(clientMediator.getWorld().getEntity("currUser").getCoin(),100);
-        messageController.buyMessage("user",list,100);
-        assertNotEquals(clientMediator.getWorld().getEntity("user").getCoin(),100);
-        assertNotEquals(clientMediator.getWorld().getEntity("currUser").getCoin(),100);
-        messageController.buyMessage("user",list,90);
-        assertNotEquals(clientMediator.getWorld().getEntity("user").getCoin(),100);
-        assertNotEquals(clientMediator.getWorld().getEntity("currUser").getCoin(),100);
+        Boolean bool;
+        bool = transactionMessageController.buyMessage("user",list,120);
+        assertEquals(false,bool);
+        bool = transactionMessageController.buyMessage("user",list,100);
+        assertEquals(true,bool);
+        bool = transactionMessageController.buyMessage("user",list,90);
+        assertEquals(true,bool);
     }
 
     @Test
-    public void showAlertTest() {
-        Boolean bool = messageController.showMessage("hello hello hello");
+    public void sellMessageTest() {
+        //assertEquals(clientMediator.getView().showAlert("test showalert"));
+        //clientMediator.getWorld().getEntity("user0").setCoin(120);
+        Boolean bool;
+        bool = transactionMessageController.sellMessage("user",list,120);
+        assertEquals(false,bool);
+        bool = transactionMessageController.sellMessage("user",list,100);
+        assertEquals(true,bool);
+        bool = transactionMessageController.sellMessage("user",list,90);
         assertEquals(true,bool);
     }
+
 
 }
 

@@ -4,6 +4,7 @@ import Model.Entity.Entity;
 import Model.Item.Coin;
 import Model.Item.Food;
 import Model.Item.Item;
+import Model.Item.Key;
 import Model.Location.Coordinate;
 import Model.Location.Location;
 
@@ -155,6 +156,8 @@ public class ItemController implements Controller{
 
                     //add to buyer's bag
                     if (item != null)
+                        if(item instanceof Key)
+                            ((Key) item).setUsed(false);
                         buyer.pickUp(item);
                     sellNum += 1;
                 }
