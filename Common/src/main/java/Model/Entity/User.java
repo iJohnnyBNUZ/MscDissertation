@@ -23,8 +23,10 @@ public class User extends Entity {
         this.openedDoors = new ArrayList<String>();
     }
 
-    public void reactTo(Entity entity) {
+    public String reactTo(Entity entity) {
         entity.decreaseEnergy(30);
+        notifyObserver();
+        return  "decrease 30 energy";
     }
 
     public String getUserId() {

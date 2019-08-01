@@ -34,8 +34,9 @@ public abstract class Entity extends Observable implements Serializable {
         entity.reactTo(this);
     }
 
-    public void reactTo(Entity entity) {
+    public String reactTo(Entity entity) {
         entity.increaseEnergy(20);
+        return "increase 20 energy";
     }
 
     public String getEntityID() {
@@ -57,11 +58,15 @@ public abstract class Entity extends Observable implements Serializable {
 
     public void increaseEnergy(int amount) {
         energy += amount;
+        if(energy>100)
+            energy=100;
         notifyObserver();
     }
 
     public void decreaseEnergy(int amount) {
         energy -= amount;
+        if(energy<0)
+            energy=0;
         notifyObserver();
     }
 

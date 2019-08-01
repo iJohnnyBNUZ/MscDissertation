@@ -61,18 +61,41 @@ public class ItemController implements Controller{
         */
     }
 
-    public void drop(String userID,String itemID){
-        // delete from bag
-        Entity entity = this.gameMediator.getWorld().getEntity(userID);
-        Item item = entity.putDown(itemID);
+    public String drop(String userID,String itemID){
 
-        //add to location
         Location location = this.gameMediator.getWorld().getEntityLocation(userID);
-        Coordinate userCoordinate = location.getEntities().get(userID);
-        if (item != null){
-            location.addItem(userCoordinate, item);
+        Entity entity = this.gameMediator.getWorld().getEntity(userID);
+        Item item = null;
+        for (Item item1 : entity.getBag()){
+            if (item1.getItemID().equals(itemID)){
+                item = item1;
+                break;
+            }
         }
 
+        //find user's coordinate
+        Coordinate userCoordinate = null;
+        for(Map.Entry<Entity, Coordinate> entry : location.getEntities().entrySet()){
+            if (entry.getKey().getEntityID().equals(userID))
+                userCoordinate = entry.getValue();
+        }
+
+        if (item != null){
+            if(location.getItems().get(userCoordinate) == null){
+                // delete from bag
+                entity.putDown(itemID);
+                //add to location
+                location.addItem(userCoordinate, item);
+            }
+            else{
+                return "Current tile already exists item";
+            }
+        }
+        else{
+          return "Cannot find Item by item id";
+        }
+
+        return null;
     }
 
     public void exchange(String buyerID,String sellerID, HashMap<String, Integer> buyList, int value,String userID) {

@@ -5,7 +5,10 @@ import Model.Entity.Entity;
 import Model.Entity.NPC;
 import Model.Entity.Shop;
 import Model.Entity.User;
+import Model.Item.Coin;
+import Model.Item.Food;
 import Model.Item.Item;
+import Model.Item.Key;
 import Model.Location.Coordinate;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -45,7 +48,7 @@ public class LoadEntity {
 				entity = new Shop(entityObject.get("id").getAsString());
 				break;
 			case "npc":
-				entity = new NPC(entityObject.get("id").getAsString());
+				entity = new NPC(entityObject.get("id").getAsString(),entityObject.get("isFriendly").getAsBoolean());
 				break;
 			default:
 				throw new IllegalStateException("Unexpected value: " + entityObject.get("type").getAsString());
@@ -61,10 +64,32 @@ public class LoadEntity {
 	private void createBag(Entity entity, JsonArray bag) {
 		for (int i = 0; i < bag.size(); i++) {
 			JsonObject item = bag.get(i).getAsJsonObject();
+			switch(item.get("type").getAsString()){
+				case "food":
+					Food newFood = new Food(item.get("id").getAsString(),item.get("energy").getAsInt(),item.get("value").getAsInt(),item.get("type").getAsString());
+					newFood.setCollectible(item.get("isCollectible").getAsBoolean());
+					newFood.setEdible(item.get("isEdible").getAsBoolean());
+					entity.addToBag(newFood);
+					break;
+				case "key":
+					Key newKey = new Key(item.get("id").getAsString(),item.get("value").getAsInt(),item.get("type").getAsString());
+					newKey.setCollectible(item.get("isCollectible").getAsBoolean());
+					newKey.setEdible(item.get("isEdible").getAsBoolean());
+					entity.addToBag(newKey);
+					break;
+				case "coin":
+					Coin newCoin = new Coin(item.get("id").getAsString(),item.get("value").getAsInt(),item.get("type").getAsString());
+					newCoin.setCollectible(item.get("isCollectible").getAsBoolean());
+					newCoin.setEdible(item.get("isEdible").getAsBoolean());
+					entity.addToBag(newCoin);
+					break;
+			}
+			/*
 			Item newItem = new Item(item.get("id").getAsString(), item.get("value").getAsInt(), item.get("type").getAsString());
 			newItem.setCollectible(item.get("isCollectible").getAsBoolean());
 			newItem.setEdible(item.get("isEdible").getAsBoolean());
 			entity.addToBag(newItem);
+			*/
 		}
 	}
 }

@@ -852,7 +852,8 @@
 			"type": "food",
 			"value": 10,
 			"isCollectible": true,
-			"isEdible": true
+			"isEdible": true,
+			  "energy": 10
 		  },
 			{
 				"id": "key_green0",
@@ -868,6 +869,7 @@
 		{
 			"id": "npc1",
 			"type": "npc",
+			"isFriendly": false,
 			"energy": 200,
 			"coin": 100,
 			"bag": [
@@ -876,7 +878,8 @@
 					"type": "food",
 					"value": 10,
 					"isCollectible": true,
-					"isEdible": true
+					"isEdible": true,
+					"energy": 10
 				},
 				{
 					"id": "key_red00",
