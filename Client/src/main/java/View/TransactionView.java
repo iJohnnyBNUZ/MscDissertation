@@ -1,11 +1,10 @@
 package View;
 
 import Controller.Command.BuyCommand;
-import Controller.Command.CloseTransactionCommand;
+import Controller.Command.CloseReactToCommand;
 import Controller.Command.SellCommand;
+import Controller.Command.TransactionCommand;
 import Model.Item.Item;
-import Model.Location.Coordinate;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -49,9 +48,8 @@ public class TransactionView {
 	private String soldItemId = null;
 	private int soldMoney = 0;
 
-	private BuyCommand buyCommand;
-	private SellCommand sellCommand;
-	private CloseTransactionCommand closeTransactionCommand;
+	private TransactionCommand transactionCommand;
+	private CloseReactToCommand closeReactToCommand;
 
 	public TransactionView(View view) {
 		this.user_shop = view.getUser_shop();
@@ -65,14 +63,12 @@ public class TransactionView {
 		this.totalSellValue = view.getTotalSellValue();
 		this.sell = view.getSell();
 		this.closeMyBag = view.getCloseMyBag();
-		this.buyCommand = buyCommand;
-		this.sellCommand = sellCommand;
 
 		closeUserShop.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
 				Transaction.setVisible(false);
-				closeTransactionCommand.execute();
+				closeReactToCommand.execute();
 			}
 		});
 
@@ -80,7 +76,7 @@ public class TransactionView {
 			@Override
 			public void handle(ActionEvent actionEvent) {
 				Transaction.setVisible(false);
-				closeTransactionCommand.execute();;
+				closeReactToCommand.execute();;
 			}
 		});
 
@@ -186,7 +182,8 @@ public class TransactionView {
 			public void handle(ActionEvent actionEvent) {
 				for(Integer buyItemNum: buyList.values()){
 					if(buyItemNum != 0){
-						buyCommand.execute(userShopName,buyList,buyValue);
+						//buyCommand.execute(userShopName,buyList,buyValue);
+						transactionCommand.execute(userShopName,buyList,buyValue,"buy");
 						break;
 					}
 				}
@@ -293,7 +290,8 @@ public class TransactionView {
 			public void handle(ActionEvent actionEvent) {
 				for(Integer sellItemNum: sellList.values()){
 					if(sellItemNum != 0){
-						sellCommand.execute(userShopName, sellList,sellValue);
+						//sellCommand.execute(userShopName, sellList,sellValue);
+						transactionCommand.execute(userShopName, sellList, sellValue, "sell");
 						break;
 					}
 				}
@@ -302,16 +300,12 @@ public class TransactionView {
 
 	}
 
-	public void setBuyCommand(BuyCommand buyCommand){
-		this.buyCommand = buyCommand;
+	public void setTransactionCommand(TransactionCommand transactionCommand) {
+		this.transactionCommand = transactionCommand;
 	}
 
-	public void setSellCommand(SellCommand sellCommand){
-		this.sellCommand = sellCommand;
-	}
-
-	public void setCloseTransactionCommand(CloseTransactionCommand closeTransactionCommand){
-		this.closeTransactionCommand = closeTransactionCommand;
+	public void setCloseReactToCommand(CloseReactToCommand closeReactToCommand){
+		this.closeReactToCommand = closeReactToCommand;
 	}
 
 

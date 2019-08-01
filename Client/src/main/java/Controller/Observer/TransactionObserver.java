@@ -30,23 +30,23 @@ public class TransactionObserver implements Observer {
             @Override
             protected void succeeded() {
                 super.succeeded();
-                if(clientMediator.getTransactionWith() != null){
-                    String userID = clientMediator.getUserName();
-                    String transactionwithType = clientMediator.getTransactionWith().replaceAll("[0-9]","");
+                if(clientMediator.getReactTo() != null){
+                    userID = clientMediator.getUserName();
+                    String transactionwithType = clientMediator.getReactTo().replaceAll("[0-9]","");
                     Location currLocation = clientMediator.getWorld().getEntityLocation(userID);
                     Entity transactionwith = null;
                     if(transactionwithType.equals("store")){
                         for(Map.Entry<Entity, Coordinate> entry : currLocation.getEntities().entrySet()){
-                            if(entry.getKey().getEntityID().equals(clientMediator.getTransactionWith())){
+                            if(entry.getKey().getEntityID().equals(clientMediator.getReactTo())){
                                 transactionwith = entry.getKey();
                                 break;
                             }
                         }
                     }
                     else{
-                        transactionwith = clientMediator.getWorld().getEntity(clientMediator.getTransactionWith());
+                        transactionwith = clientMediator.getWorld().getEntity(clientMediator.getReactTo());
                     }
-                    clientMediator.getTransactionView().updateTransaction(transactionwith.getBag(),clientMediator.getTransactionWith(),clientMediator.getWorld().getEntity(userID).getBag(),clientMediator.getWorld().getEntity(userID).getCoin());
+                    clientMediator.getTransactionView().updateTransaction(transactionwith.getBag(),clientMediator.getReactTo(),clientMediator.getWorld().getEntity(userID).getBag(),clientMediator.getWorld().getEntity(userID).getCoin());
                 }
             }
 

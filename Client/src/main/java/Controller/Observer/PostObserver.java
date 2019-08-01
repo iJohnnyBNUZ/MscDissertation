@@ -7,11 +7,11 @@ import javafx.concurrent.Task;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CommunicationObserver implements Observer {
+public class PostObserver implements Observer {
 
 	private ClientMediator clientMediator;
 
-	public CommunicationObserver(ClientMediator clientMediator) {
+	public PostObserver(ClientMediator clientMediator) {
 		this.clientMediator = clientMediator;
 	}
 
@@ -31,7 +31,7 @@ public class CommunicationObserver implements Observer {
 			@Override
 			protected void succeeded() {
 				super.succeeded();
-				clientMediator.getChatView().updateChat(messageList);
+				clientMediator.getPostView().updatePost(messageList);
 			}
 
 		};

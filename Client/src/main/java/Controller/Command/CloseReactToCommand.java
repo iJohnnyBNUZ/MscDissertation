@@ -2,15 +2,15 @@ package Controller.Command;
 
 import Controller.ClientMediator;
 
-public class CloseTransactionCommand implements Command {
+public class CloseReactToCommand implements Command {
 
     private ClientMediator clientMediator = null;
 
-    public CloseTransactionCommand(ClientMediator clientMediator){
+    public CloseReactToCommand(ClientMediator clientMediator){
         this.clientMediator = clientMediator;
     }
 
     public void execute(){
-        this.clientMediator.setTransactionWith(null);
+        this.clientMediator.setReactTo(null);
     }
 }

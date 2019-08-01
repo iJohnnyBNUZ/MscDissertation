@@ -1,8 +1,6 @@
 package Controller.Network;
 
-import Controller.ItemController;
-import Controller.LocationController;
-import Controller.ServerMediator;
+import Controller.*;
 import Model.Entity.Entity;
 import Model.Entity.User;
 import Network.Events.*;
@@ -20,6 +18,8 @@ public class ServerListener extends Thread implements Runnable {
 	private ServerMediator serverMediator;
 	private LocationController locationController;
 	private ItemController itemController;
+	private PostController postController;
+	private ReactToNpcController reactToNpcController;
 	private ServerUpdater serverUpdater;
 
 	ServerListener(Socket socket, Server server, ServerMediator serverMediator) throws Exception {
@@ -29,6 +29,7 @@ public class ServerListener extends Thread implements Runnable {
 		this.serverMediator = serverMediator;
 		this.locationController = new LocationController(this.serverMediator);
 		this.itemController = new ItemController(this.serverMediator);
+		this.postController = new PostController(this.serverMediator);
 		this.serverUpdater = new ServerUpdater(objectOutputStream, serverMediator);
 		serverUpdater.start();
 	}
@@ -61,13 +62,16 @@ public class ServerListener extends Thread implements Runnable {
 		else if (input instanceof OpenDoorEvent) {
 			handleOpenDoorEvent((OpenDoorEvent) input);
 		}
-		else if (input instanceof CommunicationEvent) {
-			handleCommunicationEvent((CommunicationEvent) input);
+		else if (input instanceof ReactToEvent) {
+			handleReactToEvent((ReactToEvent) input);
 		}
 		else if (input instanceof LogoutEvent) {
 			logout();
-		}else if (input instanceof ChatEvent){
-			handleChatEvent((ChatEvent) input);
+		}else if (input instanceof PostEvent){
+			handlePostEvent((PostEvent) input);
+		}
+		else if(input instanceof ReactToEvent){
+			handleReactToEvent((ReactToEvent) input);
 		}
 		else if (input instanceof String) {
 			handleString((String) input);
@@ -81,10 +85,6 @@ public class ServerListener extends Thread implements Runnable {
 		else {
 			System.out.println("Unknown object type");
 		}
-	}
-
-	private void handleCommunicationEvent(CommunicationEvent input) {
-		System.out.println("Unhandled communication");
 	}
 
 	private void handleOpenDoorEvent(OpenDoorEvent input) {
@@ -107,11 +107,16 @@ public class ServerListener extends Thread implements Runnable {
 		System.out.println(this.userName + " location is " + serverMediator.getWorld().getEntityLocation(this.userName));
 	}
 
-	private void handleChatEvent(ChatEvent input){
-		System.out.println(input.getEntityID()+"send chat message"+input.getcommunicateMessage());
+	private void handlePostEvent(PostEvent input){
+		System.out.println(input.getEntityID()+"send post message"+input.getPostMessage());
 		//TODO add CommunicationController after this controller move to Common
+		postController.addPostMessage(input.getPostMessage());
 		server.addEventToQueue(input);
 		server.updateOtherClients(this);
+	}
+
+	public void handleReactToEvent(ReactToEvent input){
+		reactToNpcController.reactToNpc(input.getReactToID(),input.getEntityID());
 	}
 
 	private void handleEntity(User user) {
@@ -144,7 +149,7 @@ public class ServerListener extends Thread implements Runnable {
 
 	private void handleTransactionEvent(TransactionEvent input){
 		System.out.println(input.getEntityID() + " is buying or selling...");
-		itemController.exchange(input.getCurrUser(),input.getUsershopname(),input.getTransactionList(),input.getValue(),input.getEntityID());
+		itemController.exchange(input.getBuyerID(),input.getSellerID(),input.getTranList(),input.getValue(),input.getEntityID());
 		server.addEventToQueue(input);
 		server.updateOtherClients(this);
 	}

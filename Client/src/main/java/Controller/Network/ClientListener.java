@@ -58,13 +58,13 @@ public class ClientListener implements Runnable {
 		else if (input instanceof OpenDoorEvent) {
 			handleOpenDoorEvent((OpenDoorEvent) input);
 		}
-		else if (input instanceof CommunicationEvent) {
-			handleCommunicationEvent((CommunicationEvent) input);
+		else if (input instanceof ReactToEvent) {
+			handleReactToEvent((ReactToEvent) input);
 		}
 		else if(input instanceof TransactionEvent){
 			handleTransactionEvent((TransactionEvent) input);
-		}else if(input instanceof ChatEvent){
-			handleChatEvent((ChatEvent) input);
+		}else if(input instanceof PostEvent){
+			handlePostEvent((PostEvent) input);
 		}
 		else if(input instanceof World) {
 			updateWorld((World)input);
@@ -77,8 +77,9 @@ public class ClientListener implements Runnable {
 		}
 	}
 
-	private void handleCommunicationEvent(CommunicationEvent input) {
-		System.out.println("Unhandled communication event");
+	private void handleReactToEvent(ReactToEvent input) {
+		//System.out.println("Unhandled communication event");
+		clientMediator.getReactToNpcController().reactToNpc(input.getReactToID(),input.getEntityID());
 	}
 
 	private void handleOpenDoorEvent(OpenDoorEvent input) {
@@ -95,11 +96,11 @@ public class ClientListener implements Runnable {
 	}
 
 	private void handleTransactionEvent(TransactionEvent event) {
-		clientMediator.getItemController().exchange(event.getCurrUser(),event.getUsershopname(),event.getTransactionList(),event.getValue(),event.getEntityID());
+		clientMediator.getItemController().exchange(event.getBuyerID(),event.getSellerID(),event.getTranList(),event.getValue(),event.getEntityID());
 	}
 
-	private void handleChatEvent(ChatEvent event){
-		clientMediator.getCommunicationController().addMessages(event.getcommunicateMessage());
+	private void handlePostEvent(PostEvent event){
+		clientMediator.getPostController().addPostMessage(event.getPostMessage());
 	}
 
 	private void handleString(String input) {

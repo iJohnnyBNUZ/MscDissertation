@@ -1,27 +1,21 @@
 package View;
 
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import Controller.Command.Command;
-import Controller.Command.CommunicationCommand;
+import Controller.Command.ReactToCommand;
 import Model.Location.Coordinate;
-import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 
 public class EntityView {
 	
 	private View view = null;
 	private ProgressBar energy = null;
 	private Label coin = null;
-	private CommunicationCommand communication= null;
+	private ReactToCommand communication= null;
 	private int row=10;
 	private int column=10;
 	
@@ -103,7 +97,7 @@ public class EntityView {
 	}
 	
 	public void setCommunicationCommand(Command command) {
-		communication = (CommunicationCommand) command;
+		communication = (ReactToCommand) command;
 	}
 	
 }

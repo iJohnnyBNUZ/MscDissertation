@@ -30,13 +30,20 @@ public abstract class Entity extends Observable implements Serializable {
         notifyObserver();
     }
 
+    /*
     public void interactWith(Entity entity) {
         entity.reactTo(this);
     }
 
+
     public String reactTo(Entity entity) {
         entity.increaseEnergy(20);
         return "increase 20 energy";
+    }
+    */
+
+    public void reactTo() {
+        notifyObserver();
     }
 
     public String getEntityID() {

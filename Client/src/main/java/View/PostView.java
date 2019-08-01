@@ -2,9 +2,6 @@ package View;
 
 import Controller.Command.Command;
 import Controller.Command.PostCommand;
-import Controller.CommunicationController;
-import Model.Location.Coordinate;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -17,7 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class ChatView{
+public class PostView {
 
 	private PostCommand postCommand = null;
 
@@ -30,7 +27,7 @@ public class ChatView{
 	private double lastLabelHeight = 0;
 
 
-	public ChatView(View view) {
+	public PostView(View view) {
 		this.chatView = view.getChatView();
 		this.closeChatView = view.getCloseChatView();
 		this.messageWindow = view.getMessageWindow();
@@ -59,7 +56,7 @@ public class ChatView{
 
 	}
 
-	public void updateChat(List<String> messageList){
+	public void updatePost(List<String> messageList){
 		chatScrolPane.getChildren().clear();
 		//messageBox.getChildren().clear();
 		//add messages to chatView

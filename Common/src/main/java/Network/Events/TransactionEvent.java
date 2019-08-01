@@ -5,30 +5,30 @@ import java.util.HashMap;
 
 public class TransactionEvent implements Event, Serializable {
 
-    private String currUser;
-    private String usershopname;
-    private HashMap<String,Integer> transactionList;
+    private String buyerID;
+    private String sellerID;
+    private HashMap<String,Integer> tranList;
     private int value;
     private String EntityID;
 
-    public TransactionEvent(String currUser, String usershopName, HashMap<String,Integer> transactionList, int value, String user){
-        this.currUser = currUser;
-        this.usershopname =usershopName;
-        this.transactionList = transactionList;
+    public TransactionEvent(String buyerID, String sellerID, HashMap<String,Integer> tranList, int value, String EntityID){
+        this.buyerID = buyerID;
+        this.sellerID =sellerID;
+        this.tranList = tranList;
         this.value = value;
-        this.EntityID = user;
+        this.EntityID = EntityID;
     }
 
-    public String getCurrUser(){
-        return currUser;
+    public String getBuyerID(){
+        return buyerID;
     }
 
-    public String getUsershopname(){
-        return usershopname;
+    public String getSellerID(){
+        return sellerID;
     }
 
-    public HashMap<String,Integer> getTransactionList() {
-        return transactionList;
+    public HashMap<String,Integer> getTranList() {
+        return tranList;
     }
 
     public int getValue(){

@@ -103,40 +103,25 @@ public class ItemController implements Controller{
 
         Location currLocation = this.gameMediator.getWorld().getEntityLocation(userID);
 
-        String buyerType = buyerID.replaceAll("[0-9]","");
         Entity buyer = null;
-        if(buyerType.equals("store")){
-            for(Map.Entry<Entity, Coordinate> entry : currLocation.getEntities().entrySet()){
-                if(entry.getKey().getEntityID().equals(buyerID)){
-                    buyer = entry.getKey();
-                    break;
-                }
+        for(Map.Entry<Entity, Coordinate> entry : currLocation.getEntities().entrySet()){
+            if(entry.getKey().getEntityID().equals(buyerID)){
+                buyer = entry.getKey();
+                break;
             }
-        }
-        else{
-            buyer = this.gameMediator.getWorld().getEntity(buyerID);
         }
         if (buyer == null)
             return;
 
-
-        String sellerType = sellerID.replaceAll("[0-9]","");
         Entity seller = null;
-        if(sellerType.equals("store")){
-            for(Map.Entry<Entity, Coordinate> entry : currLocation.getEntities().entrySet()){
-                if(entry.getKey().getEntityID().equals(sellerID)){
-                    seller = entry.getKey();
-                    break;
-                }
+        for(Map.Entry<Entity, Coordinate> entry : currLocation.getEntities().entrySet()){
+            if(entry.getKey().getEntityID().equals(sellerID)){
+                seller = entry.getKey();
+                break;
             }
-        }
-        else{
-            seller = this.gameMediator.getWorld().getEntity(sellerID);
         }
         if (seller == null)
             return;
-
-
 
         //exchange items
         for (Map.Entry<String, Integer> entry : buyList.entrySet()) {

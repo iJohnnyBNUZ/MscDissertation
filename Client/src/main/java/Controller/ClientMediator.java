@@ -4,6 +4,7 @@ import Controller.Command.*;
 import Controller.Network.ClientUpdater;
 import Controller.Network.ClientListener;
 import Controller.Observer.*;
+import Controller.ReactToNpcController;
 import Controller.Save.SaveUser;
 import Model.Entity.Entity;
 import Model.Location.Coordinate;
@@ -27,7 +28,7 @@ public class ClientMediator implements GameMediator {
 	private ClientUpdater clientUpdater;
 	private ClientListener clientListener;
 	private String userName = null;
-	private String transactionWith = null;
+	private String reactTo = null;
 
 	private Boolean isInit = Boolean.FALSE;
 
@@ -39,7 +40,7 @@ public class ClientMediator implements GameMediator {
 	private View view = null;
 	private LocationView locationView = null;
     private BagView bagView = null;
-    private ChatView chatView = null;
+    private PostView postView = null;
     private EntityView entityView = null;
     private ItemView itemView = null;
     private NPCView npsView = null;
@@ -49,32 +50,38 @@ public class ClientMediator implements GameMediator {
 
 	private LocationController locationController =null;
 	private ItemController itemController= null;
-	private CommunicationController communicationController= null;
+	//private CommunicationController communicationController= null;
 	private UserController userController= null;
 	private TransactionMessageController transactionMessageController = null;
+	private PostController postController = null;
+	private ReactToController reactToController = null;
+	private ReactToNpcController reactToNpcController = null;
 	private SaveUser saveUser = null;
 	
 	
 	private LocationObserver locationObserver = null;
 	private ItemObserver itemObserver= null;
-	private CommunicationObserver communicationObserver= null;
+	private PostObserver postObserver = null;
 	private EntityObserver entityObserver = null;
 	private BagObserver bagObserver = null;
 	private TransactionObserver transactionObserver = null;
+	private ReactToObserver reactToObserver = null;
 	
 	private MoveCommand moveCommand = null;   
 	private PickUpCommand pickUpCommand = null;
 	private PutDownCommand putDownCommand = null;
 	private EatCommand eatCommand = null;
-	private BuyCommand buyCommand = null;
-	private SellCommand sellCommand = null;
-	private CloseTransactionCommand closeTransactionCommand = null;
-	private CommunicationCommand communicationCommand = null;
+	private TransactionCommand transactionCommand = null;
+	//private BuyCommand buyCommand = null;
+	//private SellCommand sellCommand = null;
+	private CloseReactToCommand closeReactToCommand = null;
+	private ReactToCommand reactToCommand = null;
 	private PostCommand postCommand = null;
 	private StartGameCommand startGameCommand = null;
 	private SaveGameCommand saveGameCommand = null;
 	private LogOutCommand logOutCommand = null;
 	private OpenDoorCommand openDoorCommand = null;
+
 
 	private boolean haveObservers = false;
 
@@ -135,12 +142,12 @@ public class ClientMediator implements GameMediator {
 		this.userName = userName;
 	}
 
-	public String getTransactionWith() {
-		return transactionWith;
+	public String getReactTo() {
+		return reactTo;
 	}
 
-	public void setTransactionWith(String transactionWith) {
-		this.transactionWith = transactionWith;
+	public void setReactTo(String reactTo) {
+		this.reactTo = reactTo;
 	}
 	/**
 	 * Tell all observers to update views.
@@ -196,12 +203,12 @@ public class ClientMediator implements GameMediator {
 		this.bagView = bag;
 	}
 
-	public ChatView getChatView() {
-		return chatView;
+	public PostView getPostView() {
+		return postView;
 	}
 
-	public void setChatView(ChatView chat) {
-		this.chatView = chat;
+	public void setPostView(PostView chat) {
+		this.postView = chat;
 	}
 
 	public EntityView getEntityView() {
@@ -269,6 +276,7 @@ public class ClientMediator implements GameMediator {
 		this.itemController = itemController;
 	}
 
+	/*
 	public CommunicationController getCommunicationController() {
 		return communicationController;
 	}
@@ -276,9 +284,34 @@ public class ClientMediator implements GameMediator {
 	public void setCommunicationController(CommunicationController communicationController) {
 		this.communicationController = communicationController;
 	}
+	*/
+
+	public PostController getPostController() {
+		return postController;
+	}
+
+	public void setPostController(PostController postController){
+		this.postController = postController;
+	}
 
 	public UserController getUserController() {
 		return userController;
+	}
+
+	public ReactToController getReactToController() {
+		return reactToController;
+	}
+
+	public void setReactToController(ReactToController reactToController){
+		this.reactToController = reactToController;
+	}
+
+	public ReactToNpcController getReactToNpcController() {
+		return reactToNpcController;
+	}
+
+	public void setReactToNpcController(ReactToNpcController reactToNpcController){
+		this.reactToNpcController = reactToNpcController;
 	}
 
 	public void setUserController(UserController userController) {
@@ -301,12 +334,20 @@ public class ClientMediator implements GameMediator {
 		this.itemObserver = itemObserver;
 	}
 
-	public CommunicationObserver getCommunicationObserverr() {
-		return communicationObserver;
+	public PostObserver getCommunicationObserverr() {
+		return postObserver;
 	}
 
-	public void setCommunicationObserverr(CommunicationObserver communicationObserverr) {
-		this.communicationObserver = communicationObserverr;
+	public void setCommunicationObserverr(PostObserver postObserverr) {
+		this.postObserver = postObserverr;
+	}
+
+	public ReactToObserver getReactToObserver() {
+		return reactToObserver;
+	}
+
+	public void setReactToController(ReactToObserver reactToController) {
+		this.reactToObserver = reactToObserver;
 	}
 
 	public MoveCommand getMoveCommand() {
@@ -341,6 +382,15 @@ public class ClientMediator implements GameMediator {
 		this.eatCommand = eatCommand;
 	}
 
+	public TransactionCommand getTransactionCommand() {
+		return transactionCommand;
+	}
+
+	public void setTransactionCommand(TransactionCommand transactionCommand){
+		this.transactionCommand = transactionCommand;
+	}
+
+	/*
 	public BuyCommand getBuyCommand() {
 		return buyCommand;
 	}
@@ -356,21 +406,22 @@ public class ClientMediator implements GameMediator {
 	public void setSellCommand(SellCommand sellCommand) {
 		this.sellCommand = sellCommand;
 	}
+	*/
 
-	public CloseTransactionCommand getCloseTransactionCommand() {
-		return closeTransactionCommand;
+	public CloseReactToCommand getCloseReactToCommand() {
+		return closeReactToCommand;
 	}
 
-	public void setCloseTransactionCommand(CloseTransactionCommand closeTransactionCommand){
-		this.closeTransactionCommand =closeTransactionCommand;
+	public void setCloseReactToCommand(CloseReactToCommand closeReactToCommand){
+		this.closeReactToCommand = closeReactToCommand;
 	}
 
-	public CommunicationCommand getCommunicationCommand() {
-		return communicationCommand;
+	public ReactToCommand getReactToCommand() {
+		return reactToCommand;
 	}
 
-	public void setCommunicationCommand(CommunicationCommand communicationCommand) {
-		this.communicationCommand = communicationCommand;
+	public void setReactToCommand(ReactToCommand reactToCommand) {
+		this.reactToCommand = reactToCommand;
 	}
 
 	public PostCommand getPostCommand() {
@@ -416,26 +467,30 @@ public class ClientMediator implements GameMediator {
 	public void initialController() {
 		this.locationController = new LocationController(this);
 		this.itemController = new ItemController(this);
-		this.communicationController = new CommunicationController(this);
+		//this.communicationController = new CommunicationController(this);
 		this.userController = new UserController(this);
 		this.transactionMessageController = new TransactionMessageController(this);
+		this.postController = new PostController(this);
+		this.reactToController = new ReactToController(this);
+		this.reactToNpcController = new ReactToNpcController(this);
 		this.saveUser = new SaveUser(this);
 		
 		this.locationObserver = new LocationObserver(this);
 		this.itemObserver = new ItemObserver(this);
-		this.communicationObserver = new CommunicationObserver(this);
+		this.postObserver = new PostObserver(this);
 		this.entityObserver = new EntityObserver(this);
 		this.bagObserver =  new BagObserver(this);
 		this.transactionObserver = new TransactionObserver(this);
+		this.reactToObserver = new ReactToObserver(this);
 		
 		observerSet.add(this.locationObserver);
 		observerSet.add(this.itemObserver);
-		observerSet.add(this.communicationObserver);
+		observerSet.add(this.postObserver);
 		observerSet.add(this.entityObserver);
 		observerSet.add(this.bagObserver);
-		observerSet.add(this.transactionObserver);
+		//observerSet.add(this.transactionObserver);
+		observerSet.add(this.reactToObserver);
 
-		
 		
 		this.moveCommand = new MoveCommand(locationController,this);
 		this.openDoorCommand = new OpenDoorCommand(locationController,this);
@@ -443,11 +498,12 @@ public class ClientMediator implements GameMediator {
 		this.putDownCommand = new PutDownCommand(itemController,this);
 		this.eatCommand = new EatCommand(itemController,this);
 		this.pickUpCommand = new PickUpCommand(itemController,this);
-		this.communicationCommand = new CommunicationCommand(communicationController,this);
-		this.buyCommand = new BuyCommand(transactionMessageController,itemController,this);
-		this.sellCommand = new SellCommand(transactionMessageController,itemController,this);
-		this.closeTransactionCommand = new CloseTransactionCommand(this);
-		this.postCommand = new PostCommand(communicationController,this);
+		this.reactToCommand = new ReactToCommand(reactToController,this);
+		this.transactionCommand = new TransactionCommand(transactionMessageController,itemController,this);
+		//this.buyCommand = new BuyCommand(transactionMessageController,itemController,this);
+		//this.sellCommand = new SellCommand(transactionMessageController,itemController,this);
+		this.closeReactToCommand = new CloseReactToCommand(this);
+		this.postCommand = new PostCommand(postController,this);
 		this.saveGameCommand = new SaveGameCommand(this.saveUser);
 		this.logOutCommand = new LogOutCommand(this);
 
@@ -467,7 +523,7 @@ public class ClientMediator implements GameMediator {
 	public void initialGameView() {
 		locationView = new LocationView(this.view);
     	bagView = new BagView(this.view);
-    	chatView = new ChatView(this.view);
+    	postView = new PostView(this.view);
     	entityView = new EntityView(this.view);
     	itemView = new ItemView(this.view);
     	npsView = new NPCView(this.view);
@@ -481,18 +537,20 @@ public class ClientMediator implements GameMediator {
 	public void bindViewCommand() {
 		view.setMoveCommand(moveCommand);
 		view.setPickUpCommand(pickUpCommand);
-		view.setCommunicationCommand(communicationCommand);
+		view.setReactToCommand(reactToCommand);
 		view.setOpenDoorCommand(openDoorCommand);
 		view.setSaveGameCommand(saveGameCommand);
 		view.setLogOutCommand(logOutCommand);
 		itemView.setPickUpCommand(pickUpCommand);
-		entityView.setCommunicationCommand(communicationCommand);
+		entityView.setCommunicationCommand(reactToCommand);
 		bagView.setEatCommand(eatCommand);
 		bagView.setPutDownCommand(putDownCommand);
-		chatView.setPostCommand(postCommand);
-		tansactionView.setBuyCommand(buyCommand);
-		tansactionView.setSellCommand(sellCommand);
-		tansactionView.setCloseTransactionCommand(closeTransactionCommand);
+		postView.setPostCommand(postCommand);
+		tansactionView.setTransactionCommand(transactionCommand);
+		//tansactionView.setBuyCommand(buyCommand);
+		//tansactionView.setSellCommand(sellCommand);
+		tansactionView.setCloseReactToCommand(closeReactToCommand);
+		npsView.setCloseReactToCommand(closeReactToCommand);
 	}
 	
 	/**
