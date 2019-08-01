@@ -1,9 +1,8 @@
 package Controller.Network;
 
 import Controller.ServerMediator;
-import Network.Event;
+import Network.Events.Event;
 
-import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -11,9 +10,9 @@ import java.util.LinkedList;
 
 public class Server implements Runnable{
 	private ServerSocket serverSocket;
-	private ArrayList<ClientThread> clients = new ArrayList<ClientThread>();
+	private ArrayList<ServerListener> clients = new ArrayList<ServerListener>();
 	private ServerMediator serverMediator;
-	private LinkedList<Event> EventQueue = new LinkedList<>();
+	private LinkedList<Event> eventQueue = new LinkedList<>();
 
 	public Server(ServerMediator serverMediator) throws Exception{
 		serverSocket = new ServerSocket(7777);
@@ -27,9 +26,9 @@ public class Server implements Runnable{
 		try{
 			while(true){
 				Socket socket = serverSocket.accept();
-				ClientThread clientThread = new ClientThread(socket, this, serverMediator);
-				clients.add(clientThread);
-				clientThread.start();
+				ServerListener serverListener = new ServerListener(socket, this, serverMediator);
+				clients.add(serverListener);
+				serverListener.start();
 			}
 		}catch (Exception ex){
 			ex.printStackTrace();
@@ -37,39 +36,29 @@ public class Server implements Runnable{
 		}
 	}
 
-	void removeClient(ClientThread client) {
+	void removeClient(ServerListener client) {
 		clients.remove(client);
 	}
 
-	void addActionToQueue(Event event) {
-		EventQueue.add(event);
+	void addEventToQueue(Event event) {
+		eventQueue.add(event);
 	}
 
-	void updateClients() throws IOException {
-		if (!EventQueue.isEmpty()) {
-			for(ClientThread ct:clients) {
-				if(!EventQueue.getFirst().getEntityID().equals(ct.getUserName())) {
-					ct.sendMessage(EventQueue.getFirst());
-					System.out.println("Event sent to user");
-				}
-				else {
-					System.out.println("Event not sent to user");
-					ct.sendMessage("None");
+	void updateOtherClients(ServerListener eventCreator) {
+		if (!eventQueue.isEmpty()) {
+			for(ServerListener client : clients) {
+				if(client != eventCreator) {
+					client.sendMessage(eventQueue.getFirst());
 				}
 			}
-			EventQueue.remove();
-		}
-		else {
-			for (ClientThread ct:clients) {
-				ct.sendMessage("None");
-			}
+			eventQueue.remove();
 		}
 	}
 
-	public void sendWorldToClients() {
+	void sendWorldToClients() {
 		System.out.println("Sending world to all clients");
-		for(ClientThread ct:clients) {
-			ct.sendWorld();
+		for(ServerListener client : clients) {
+			client.updateMyClient();
 		}
 	}
 }

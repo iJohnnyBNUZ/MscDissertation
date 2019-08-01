@@ -3,6 +3,7 @@ package Controller.Command;
 import Controller.CommunicationController;
 import Controller.Controller;
 import Controller.ClientMediator;
+import Network.Events.CommunicationEvent;
 
 public class CommunicationCommand implements Command {
 	private CommunicationController communicationController = null;
@@ -18,7 +19,6 @@ public class CommunicationCommand implements Command {
 	//this action need to be added to the queue.
 	public void execute() {
 		if(communicationController.communicateWith())
-			clientMediator.addAction("communication");
-
+			clientMediator.getEventQueue().add(new CommunicationEvent(clientMediator.getUserName(), communicationController.communicateWith()));
 	}
 }

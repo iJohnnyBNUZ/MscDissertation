@@ -2,6 +2,7 @@ package Controller.Command;
 
 import Controller.ClientMediator;
 import Controller.LocationController;
+import Network.Events.OpenDoorEvent;
 
 import java.io.IOException;
 
@@ -16,8 +17,8 @@ public class OpenDoorCommand implements Command {
 
     public void excute() throws IOException, ClassNotFoundException {
         System.out.println("opendoorCommand");
-        locationController.openDoor(clientMediator.getClient().getUserName());
+        locationController.openDoor(clientMediator.getClientUpdater().getUserName());
         //clientMediator.getClient().OpenDoor(commandString.toLowerCase());
-        clientMediator.addAction("openDoor");
+        clientMediator.getEventQueue().add(new OpenDoorEvent(clientMediator.getUserName()));
     }
 }

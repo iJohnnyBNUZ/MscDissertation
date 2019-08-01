@@ -1,13 +1,13 @@
 package Controller.Command;
 
 
-import java.io.IOException;
-import java.util.ResourceBundle;
-
+import Controller.ClientMediator;
 import Controller.Controller;
 import Controller.LocationController;
-import Controller.Network.Client;
-import Controller.ClientMediator;
+import Network.Events.MovementEvent;
+
+import java.io.IOException;
+import java.util.ResourceBundle;
 
 public class MoveCommand implements Command {
 	LocationController locationController;
@@ -21,10 +21,10 @@ public class MoveCommand implements Command {
     public void excute(String direction) throws IOException, ClassNotFoundException {
     	ResourceBundle rb = ResourceBundle.getBundle("config");
 		//String uName = rb.getString("userName");
-        String uName = clientMediator.getClient().getUserName();
+        String uName = clientMediator.getClientUpdater().getUserName();
         System.out.println(uName+"Move to in Command-> "+direction);
         locationController.moveTo(uName, direction.toLowerCase());
-        clientMediator.addAction(direction.toLowerCase());
+        clientMediator.getEventQueue().add(new MovementEvent(clientMediator.getUserName(), direction));
     }
 
 }

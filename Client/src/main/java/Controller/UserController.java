@@ -23,7 +23,7 @@ public class UserController implements Controller {
 	}
 
 	public void startGame(String type, String uName, String IP) throws IOException, ClassNotFoundException {
-		if(clientMediator.getClient().connectToServer(IP)) {
+		if(clientMediator.getClientUpdater().connectToServer(IP)) {
 			Boolean result = isUserExist(uName);
 			if(Objects.equals(type, "new")) {
 				if(result) {
@@ -33,7 +33,7 @@ public class UserController implements Controller {
 					System.out.println("Create new user," + uName);
 					clientMediator.setUserName(uName);
 					clientMediator.enterGame();
-					clientMediator.getClient().login("new",uName);
+					clientMediator.getClientUpdater().login("new",uName);
 
 				}
 			} else if(Objects.equals(type, "continue")) {
@@ -41,7 +41,7 @@ public class UserController implements Controller {
 					System.out.println("Continue the game:  "+ uName +" "+IP);
 					clientMediator.setUserName(uName);
 					clientMediator.enterGame();
-					clientMediator.getClient().login("continue",uName);
+					clientMediator.getClientUpdater().login("continue",uName);
 
 				}else {
 					System.out.println("User is not exist, please try again!");

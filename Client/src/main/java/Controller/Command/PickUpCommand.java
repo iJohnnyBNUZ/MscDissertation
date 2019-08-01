@@ -1,9 +1,9 @@
 package Controller.Command;
 
+import Controller.ClientMediator;
 import Controller.Controller;
 import Controller.ItemController;
-import Controller.ClientMediator;
-import Model.Location.Coordinate;
+import Network.Events.PickUpEvent;
 
 public class PickUpCommand implements Command {
 	private ItemController itemController = null;
@@ -16,6 +16,6 @@ public class PickUpCommand implements Command {
 	public void execute() {
 		String uName = clientMediator.getUserName();
 		itemController.pickUp(uName);
-		clientMediator.addAction("pickUp");
+		clientMediator.getEventQueue().add(new PickUpEvent(clientMediator.getUserName()));
 	}
 }

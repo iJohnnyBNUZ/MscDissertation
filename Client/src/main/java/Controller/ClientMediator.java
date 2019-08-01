@@ -1,13 +1,15 @@
 package Controller;
 
 import Controller.Command.*;
-import Controller.Network.Client;
+import Controller.Network.ClientUpdater;
+import Controller.Network.ClientListener;
 import Controller.Observer.*;
 import Controller.Save.SaveUser;
 import Model.Entity.Entity;
 import Model.Location.Coordinate;
 import Model.Location.Location;
 import Model.World;
+import Network.Events.Event;
 import Utils.Observer;
 import View.*;
 import javafx.fxml.FXMLLoader;
@@ -22,14 +24,15 @@ import java.util.*;
 
 public class ClientMediator implements GameMediator {
 	private World world = new World();
-	private Client client = null;
+	private ClientUpdater clientUpdater;
+	private ClientListener clientListener;
 	private String userName = null;
 	private String transactionWith = null;
 
 	private Boolean isInit = Boolean.FALSE;
 
 	private Set<Observer> observerSet = new HashSet<>();
-	private LinkedList<String> actionQueue = new LinkedList<>(); //User actions waiting to be send to the sever.
+	private LinkedList<Event> eventQueue = new LinkedList<>(); //User actions waiting to be send to the sever.
 	
 	
 	private IndexView indexView= null;
@@ -79,16 +82,16 @@ public class ClientMediator implements GameMediator {
 		this.world = new World();
 	}
 
-	public void createClient(ClientMediator clientMediator) throws Exception{
-		client = new Client(clientMediator);
+	public void createClient() throws Exception{
+		clientUpdater = new ClientUpdater(this);
 	}
 
-	public Client getClient() {
-		return client;
+	public ClientUpdater getClientUpdater() {
+		return clientUpdater;
 	}
 
-	public void setClient(Client client) {
-		this.client = client;
+	public void setClientUpdater(ClientUpdater clientUpdater) {
+		this.clientUpdater = clientUpdater;
 	}
 
 	public World getWorld() {
@@ -113,22 +116,15 @@ public class ClientMediator implements GameMediator {
 	 * @param newWorld the world received from the server 
 	 */
 	public void setWorld(World newWorld) {
-		if(newWorld.getEntityLocation(userName)!=null){
+		if(newWorld.getEntityLocation(userName)!= null){
 			System.out.println("one");
-			if(!this.haveObservers) {
-				this.world = newWorld;
-				initWorld(newWorld);
-			}else{
-				this.world.setLocations(newWorld.getLocations());
-				this.world.setEntities(newWorld.getEntities());
-			}
+			this.world = newWorld;
+			initWorld(newWorld);
             this.notifyObservers();
 		}else{
 			System.out.println("two");
 			this.world = newWorld;
 		}
-
-
 	}
 
 	public String getUserName() {
@@ -409,33 +405,8 @@ public class ClientMediator implements GameMediator {
 		this.saveGameCommand = saveGameCommand;
 	}
 
-	
-	
-	public LinkedList<String> getActionQueue() {
-		return actionQueue;
-	}
-
-	/**
-	 * Add the user's action to the queue.
-	 * @param action the user intended action (may plus the item ID).
-	 */
-	public void addAction(String action) {
-		this.actionQueue.add(action);
-	}
-
-	/**
-	 * remove the user's action to the queue.
-	 * @param action the user intended action (may plus the item ID).
-	 */
-	public void removeAction(String action) {
-		this.actionQueue.remove(action);
-	}
-	
-	/**
-	 * Clean the actions stored in the queue.
-	 */
-	public void cleanQueue() {
-		this.actionQueue.clear();
+	public LinkedList<Event> getEventQueue() {
+		return eventQueue;
 	}
 
 	/**
@@ -575,6 +546,4 @@ public class ClientMediator implements GameMediator {
         //locationView.update(tmp);
 		
 	}
-	
-
 }

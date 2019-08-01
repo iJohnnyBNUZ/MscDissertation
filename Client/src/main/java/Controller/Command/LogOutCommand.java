@@ -1,6 +1,7 @@
 package Controller.Command;
 
 import Controller.ClientMediator;
+import Network.Events.LogoutEvent;
 
 public class LogOutCommand implements Command{
 	ClientMediator clientMediator;
@@ -9,7 +10,7 @@ public class LogOutCommand implements Command{
 	}
 
 	public void execute() {
-		clientMediator.addAction("logOut");
+		clientMediator.getEventQueue().add(new LogoutEvent(clientMediator.getUserName()));
 		System.out.println("log out!");
 	}
 }

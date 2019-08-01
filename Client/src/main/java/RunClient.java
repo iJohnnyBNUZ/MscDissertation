@@ -39,7 +39,7 @@ public class RunClient extends Application {
 		clientMediator.bindIndexCommand();
 		
 		//create client used for network communication.
-		clientMediator.createClient(clientMediator);
+		clientMediator.createClient();
 	}
 
 
