@@ -68,10 +68,6 @@ public class ServerListener extends Thread implements Runnable {
 		else if (input instanceof ReactToEvent) {
 			handleReactToEvent((ReactToEvent) input);
 		}
-		else if(input instanceof NPCEvent){
-			handleNPCEvent((NPCEvent) input);
-		}
-
 		else if (input instanceof LogoutEvent) {
 			logout();
 		}else if (input instanceof PostEvent){
@@ -110,10 +106,6 @@ public class ServerListener extends Thread implements Runnable {
 		itemController.drop(input.getEntityID(),input.getItemID());
 		server.addEventToQueue(input);
 		server.updateOtherClients(this);
-	}
-
-	private void handleNPCEvent(NPCEvent input){
-
 	}
 
 	private void handleMovementEvent(MovementEvent input) {
