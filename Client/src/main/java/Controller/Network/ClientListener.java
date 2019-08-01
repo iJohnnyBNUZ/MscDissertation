@@ -60,8 +60,9 @@ public class ClientListener implements Runnable {
 		}
 		else if (input instanceof CommunicationEvent) {
 			handleCommunicationEvent((CommunicationEvent) input);
-		}else if(input instanceof ChatEvent){
-			handleChatEvent((ChatEvent) input);
+		}
+		else if(input instanceof TransactionEvent){
+			handleTransactionEvent((TransactionEvent) input);
 		}
 		else if(input instanceof World) {
 			updateWorld((World)input);
@@ -91,8 +92,8 @@ public class ClientListener implements Runnable {
 		clientMediator.getLocationController().moveTo(event.getEntityID(), event.getDirection());
 	}
 
-	private void handleChatEvent(ChatEvent event){
-		clientMediator.getCommunicationController().addMessages(event.getcommunicateMessage());
+	private void handleTransactionEvent(TransactionEvent event) {
+		clientMediator.getItemController().exchange(event.getCurrUser(),event.getUsershopname(),event.getTransactionList(),event.getValue(),event.getEntityID());
 	}
 
 	private void handleString(String input) {

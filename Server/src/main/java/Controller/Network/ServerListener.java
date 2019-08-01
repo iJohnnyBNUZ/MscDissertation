@@ -75,6 +75,9 @@ public class ServerListener extends Thread implements Runnable {
 		else if (input instanceof Entity) {
 			handleEntity((User) input);
 		}
+		else if(input instanceof TransactionEvent) {
+			handleTransactionEvent((TransactionEvent) input);
+		}
 		else {
 			System.out.println("Unknown object type");
 		}
@@ -137,6 +140,13 @@ public class ServerListener extends Thread implements Runnable {
 			default:
 				break;
 		}
+	}
+
+	private void handleTransactionEvent(TransactionEvent input){
+		System.out.println(input.getEntityID() + " is buying or selling...");
+		itemController.exchange(input.getCurrUser(),input.getUsershopname(),input.getTransactionList(),input.getValue(),input.getEntityID());
+		server.addEventToQueue(input);
+		server.updateOtherClients(this);
 	}
 
 	private void sendWorld() {
