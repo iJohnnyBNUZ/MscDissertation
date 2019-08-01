@@ -5,6 +5,7 @@ import Controller.ItemController;
 import java.util.HashMap;
 import Controller.ClientMediator;
 import Controller.TransactionMessageController;
+import Network.Events.TransactionEvent;
 
 public class SellCommand implements Command {
 
@@ -27,6 +28,7 @@ public class SellCommand implements Command {
             clientMediator.setTransactionWith(usershopName);
             //add to the event queue
             itemController.exchange(usershopName, userID,sellList,sellVale,userID);
+            clientMediator.getEventQueue().add(new TransactionEvent(usershopName, userID,sellList,sellVale,userID));
         }
         else{
             clientMediator.getView().showAlert(usershopName + " doesn't have enough money to buy the items");
