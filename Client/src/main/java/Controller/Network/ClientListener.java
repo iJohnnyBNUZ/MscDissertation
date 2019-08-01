@@ -55,6 +55,9 @@ public class ClientListener implements Runnable {
 		else if (input instanceof PickUpEvent) {
 			handlePickUpEvent((PickUpEvent) input);
 		}
+		else if(input instanceof PutDownEvent){
+			handlePutDownEvent((PutDownEvent) input);
+		}
 		else if (input instanceof OpenDoorEvent) {
 			handleOpenDoorEvent((OpenDoorEvent) input);
 		}
@@ -87,6 +90,10 @@ public class ClientListener implements Runnable {
 
 	private void handlePickUpEvent(PickUpEvent input) {
 		clientMediator.getItemController().pickUp(input.getEntityID());
+	}
+
+	private void handlePutDownEvent(PutDownEvent input){
+		clientMediator.getItemController().drop(input.getEntityID(),input.getItemID());
 	}
 
 	private void handleMovementEvent(MovementEvent event) {
