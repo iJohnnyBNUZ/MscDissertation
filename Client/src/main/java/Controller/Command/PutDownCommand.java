@@ -18,6 +18,8 @@ public class PutDownCommand implements Command {
 	public void execute(String selectedItem){
 		userID = clientMediator.getUserName();
 		System.out.println("Item "+selectedItem+" is put down on this position by " + userID);
-		itemController.drop(userID,selectedItem);
+		String message = itemController.drop(userID,selectedItem);
+		if(message!=null)
+			clientMediator.getView().showAlert(message);
     }
 }
