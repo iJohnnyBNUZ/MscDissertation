@@ -23,8 +23,14 @@ public class MoveCommand implements Command {
 		//String uName = rb.getString("userName");
         String uName = clientMediator.getClientUpdater().getUserName();
         System.out.println(uName+"Move to in Command-> "+direction);
-        locationController.moveTo(uName, direction.toLowerCase());
-        clientMediator.getEventQueue().add(new MovementEvent(clientMediator.getUserName(), direction));
+        String message = locationController.moveTo(uName, direction.toLowerCase());
+        if(message!=null){
+            clientMediator.getView().showAlert(message);
+        }else{
+            clientMediator.getEventQueue().add(new MovementEvent(clientMediator.getUserName(), direction));
+        }
+
+
     }
 
 }
