@@ -871,6 +871,7 @@
 			{
 				"id": "npc0",
 				"type": "npc",
+				"isFriendly": true,
 				"energy": 50,
 				"coin": 100,
 				"bag": [

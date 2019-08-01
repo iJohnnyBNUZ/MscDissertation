@@ -5,7 +5,8 @@ public class Shop extends Entity {
 		super(id);
 	}
 
-	public void reactTo(Entity entity) {
+	public String reactTo(Entity entity) {
 		entity.increaseEnergy(20);
+		return "decrease 20 energy";
 	}
 }

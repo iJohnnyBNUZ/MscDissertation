@@ -1,11 +1,21 @@
 package Model.Entity;
 
 public class NPC extends Entity {
-	public NPC(String id) {
+	private boolean isFriendly;
+
+	public NPC(String id, boolean isFriendly) {
 		super(id);
+		this.isFriendly=isFriendly;
 	}
 
-	public void reactTo(Entity entity) {
-		entity.decreaseEnergy(20);
+	public String reactTo(Entity entity) {
+		if(isFriendly){
+			entity.increaseEnergy(20);
+			return "increase 20 energy";
+		}else{
+			entity.decreaseEnergy(20);
+			return "decrease 20 energy";
+		}
+
 	}
 }

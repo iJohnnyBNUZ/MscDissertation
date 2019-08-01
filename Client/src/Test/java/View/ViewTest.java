@@ -2,6 +2,7 @@ package View;
 
 import Model.Location.Coordinate;
 import Model.Location.Location;
+import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
@@ -15,6 +16,8 @@ import org.testfx.matcher.base.NodeMatchers;
 
 import java.net.URL;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.*;
@@ -79,5 +82,57 @@ public class ViewTest extends ApplicationTest {
         }
         LocationView locationView = new LocationView(view);
         assertEquals(tmp.size(), locationView.update(tmp) );
+    }
+
+    @Test
+    public void updateItemTest() {
+
+        Task<Void> progressTask = new Task<Void>(){
+            Map<String,Coordinate> items = new HashMap<String,Coordinate>();
+            @Override
+            protected Void call() throws Exception {
+
+                items.put("apple1",new Coordinate(0,1));
+                items.put("orange2",new Coordinate(1,1));
+                return null;
+            }
+
+            @Override
+            protected void succeeded() {
+                super.succeeded();
+                ItemView itemView = new ItemView(view);
+                itemView.update(items);
+                assertEquals(items.size(), view.getForItem().getChildren().size() );
+            }
+
+        };
+
+        new Thread(progressTask).start();
+
+    }
+
+    @Test
+    public void updateUserTest() {
+
+    }
+
+    @Test
+    public void updateNPCTest() {
+
+    }
+
+    @Test
+    public void updateStoreTest() {
+
+    }
+
+    @Test
+    public void updateEnergyTest() {
+
+    }
+
+    @Test
+    public void updateCoinTest() {
+
     }
 }

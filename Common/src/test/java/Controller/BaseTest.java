@@ -49,9 +49,9 @@ public class BaseTest {
         l1.addItem(cor2, item2);
         l1.addItem(cor3, item3);
 
-        Entity e1 = new NPC("npc1");
+        Entity e1 = new NPC("npc1",true);
         Coordinate n_cor1 = new Coordinate(4, 4);
-        Entity e2 = new NPC("npc2");
+        Entity e2 = new NPC("npc2",false);
         Coordinate n_cor2 = new Coordinate(8, 4);
 
         l1.addEntity(e1, n_cor1);

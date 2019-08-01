@@ -141,8 +141,8 @@ public class CommunicationController implements Controller {
 				userID = clientMediator.getUserName();
 				for(Entity entity: clientMediator.getWorld().getEntityLocation(userID).getEntities().keySet()){
 					if(entity.getEntityID() == id){
-						clientMediator.getWorld().getEntity(userID).reactTo(clientMediator.getWorld().getEntity(userID));
-						message = "You are communicate with "+ id + ", and you lose 30 energy. " ;
+						String result = ((NPC)entity).reactTo(clientMediator.getWorld().getEntity(userID));
+						message = "You are communicate with "+ id + ", and you " + result ;
 						isAvaliable=true;
 						break;
 					}

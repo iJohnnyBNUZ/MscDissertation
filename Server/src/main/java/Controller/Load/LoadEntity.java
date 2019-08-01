@@ -48,7 +48,7 @@ public class LoadEntity {
 				entity = new Shop(entityObject.get("id").getAsString());
 				break;
 			case "npc":
-				entity = new NPC(entityObject.get("id").getAsString());
+				entity = new NPC(entityObject.get("id").getAsString(),entityObject.get("isFriendly").getAsBoolean());
 				break;
 			default:
 				throw new IllegalStateException("Unexpected value: " + entityObject.get("type").getAsString());
