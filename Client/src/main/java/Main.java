@@ -1,5 +1,4 @@
 //import View.View;
-import Controller.CommunicationController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
@@ -8,8 +7,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.net.URL;
-
-import View.View;
 
 public class Main extends Application {
 

@@ -64,7 +64,6 @@ public class ClientMediator implements GameMediator {
 	private PostObserver postObserver = null;
 	private EntityObserver entityObserver = null;
 	private BagObserver bagObserver = null;
-	private TransactionObserver transactionObserver = null;
 	private ReactToObserver reactToObserver = null;
 	
 	private MoveCommand moveCommand = null;   
@@ -480,7 +479,6 @@ public class ClientMediator implements GameMediator {
 		this.postObserver = new PostObserver(this);
 		this.entityObserver = new EntityObserver(this);
 		this.bagObserver =  new BagObserver(this);
-		this.transactionObserver = new TransactionObserver(this);
 		this.reactToObserver = new ReactToObserver(this);
 		
 		observerSet.add(this.locationObserver);
@@ -488,7 +486,6 @@ public class ClientMediator implements GameMediator {
 		observerSet.add(this.postObserver);
 		observerSet.add(this.entityObserver);
 		observerSet.add(this.bagObserver);
-		//observerSet.add(this.transactionObserver);
 		observerSet.add(this.reactToObserver);
 
 		
