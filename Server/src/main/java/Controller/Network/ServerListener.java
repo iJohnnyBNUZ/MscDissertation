@@ -30,6 +30,7 @@ public class ServerListener extends Thread implements Runnable {
 		this.locationController = new LocationController(this.serverMediator);
 		this.itemController = new ItemController(this.serverMediator);
 		this.postController = new PostController(this.serverMediator);
+		this.reactToNpcController = new ReactToNpcController(this.serverMediator);
 		this.serverUpdater = new ServerUpdater(objectOutputStream, serverMediator);
 		serverUpdater.start();
 	}
@@ -65,8 +66,8 @@ public class ServerListener extends Thread implements Runnable {
 		else if (input instanceof OpenDoorEvent) {
 			handleOpenDoorEvent((OpenDoorEvent) input);
 		}
-		else if (input instanceof ReactToEvent) {
-			handleReactToEvent((ReactToEvent) input);
+		else if(input instanceof  EatEvent) {
+			handleEatEvent((EatEvent) input);
 		}
 		else if (input instanceof LogoutEvent) {
 			logout();
@@ -116,6 +117,12 @@ public class ServerListener extends Thread implements Runnable {
 		System.out.println(this.userName + " location is " + serverMediator.getWorld().getEntityLocation(this.userName));
 	}
 
+	private void handleEatEvent(EatEvent input) {
+		itemController.eat(input.getEntityID(),input.getSelectedItemID());
+		server.addEventToQueue(input);
+		server.updateOtherClients(this);
+	}
+
 	private void handlePostEvent(PostEvent input){
 		System.out.println(input.getEntityID()+"send post message"+input.getPostMessage());
 		//TODO add CommunicationController after this controller move to Common
@@ -126,6 +133,8 @@ public class ServerListener extends Thread implements Runnable {
 
 	public void handleReactToEvent(ReactToEvent input){
 		reactToNpcController.reactToNpc(input.getReactToID(),input.getEntityID());
+		server.addEventToQueue(input);
+		server.updateOtherClients(this);
 	}
 
 	private void handleEntity(User user) {

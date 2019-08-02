@@ -66,7 +66,11 @@ public class ClientListener implements Runnable {
 		}
 		else if(input instanceof TransactionEvent){
 			handleTransactionEvent((TransactionEvent) input);
-		}else if(input instanceof PostEvent){
+		}
+		else if(input instanceof  EatEvent){
+			handleEatEvent((EatEvent) input);
+		}
+		else if(input instanceof PostEvent){
 			handlePostEvent((PostEvent) input);
 		}
 		else if(input instanceof World) {
@@ -104,6 +108,10 @@ public class ClientListener implements Runnable {
 
 	private void handleTransactionEvent(TransactionEvent event) {
 		clientMediator.getItemController().exchange(event.getBuyerID(),event.getSellerID(),event.getTranList(),event.getValue(),event.getEntityID());
+	}
+
+	private void handleEatEvent(EatEvent eatEvent) {
+		clientMediator.getItemController().eat(eatEvent.getEntityID(),eatEvent.getSelectedItemID());
 	}
 
 	private void handlePostEvent(PostEvent event){

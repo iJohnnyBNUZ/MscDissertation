@@ -3,6 +3,7 @@ package Controller.Command;
 import Controller.Controller;
 import Controller.ItemController;
 import Controller.ClientMediator;
+import Network.Events.EatEvent;
 
 public class EatCommand implements Command {
 
@@ -19,5 +20,6 @@ public class EatCommand implements Command {
         userID = clientMediator.getUserName();
         System.out.println("Item "+selectedItemId+" is eatten by " + userID);
         itemController.eat(userID,selectedItemId);
+        clientMediator.getEventQueue().add(new EatEvent(userID,selectedItemId));
     }
 }
