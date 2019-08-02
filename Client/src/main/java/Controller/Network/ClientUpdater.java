@@ -76,7 +76,7 @@ public class ClientUpdater implements Runnable {
 		}
 	}
 
-	private void talkToServer() throws IOException, ClassNotFoundException {
+	private void talkToServer() {
 		if (!clientMediator.getEventQueue().isEmpty()) {
 			sendMessageToServer(clientMediator.getEventQueue().remove());
 		}

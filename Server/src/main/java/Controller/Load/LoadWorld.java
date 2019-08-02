@@ -11,7 +11,7 @@ public class LoadWorld {
 	private LoadEntity loadEntity;
 	private String filePath;
 
-	public LoadWorld(ServerMediator serverMediator, String filePath) throws IOException {
+	public LoadWorld(ServerMediator serverMediator, String filePath) {
 		this.serverMediator = serverMediator;
 		this.loadLocation = new LoadLocation(serverMediator);
 		this.loadEntity = new LoadEntity(serverMediator);
@@ -24,7 +24,6 @@ public class LoadWorld {
 			for (int i = 0; i < fileList.length; i++){
 				File child = new File(filePath + "/Locations/DefaultLocation" + i + ".json");
 				serverMediator.getWorld().addLocation(loadLocation.buildLocation(child));
-				System.out.println("Location size: " + serverMediator.getWorld().getLocations().size());
 			}
 		}
 		else {
