@@ -12,5 +12,6 @@ public class CloseReactToCommand implements Command {
 
     public void execute(){
         this.clientMediator.setReactTo(null);
+        this.clientMediator.setReactResult(null);
     }
 }

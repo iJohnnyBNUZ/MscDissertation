@@ -19,7 +19,7 @@ public class ServerListener extends Thread implements Runnable {
 	private LocationController locationController;
 	private ItemController itemController;
 	private PostController postController;
-	private ReactToNpcController reactToNpcController;
+	private ReactToController reactToController;
 	private ServerUpdater serverUpdater;
 
 	ServerListener(Socket socket, Server server, ServerMediator serverMediator) throws Exception {
@@ -30,7 +30,7 @@ public class ServerListener extends Thread implements Runnable {
 		this.locationController = new LocationController(this.serverMediator);
 		this.itemController = new ItemController(this.serverMediator);
 		this.postController = new PostController(this.serverMediator);
-		this.reactToNpcController = new ReactToNpcController(this.serverMediator);
+		this.reactToController = new ReactToController(this.serverMediator);
 		this.serverUpdater = new ServerUpdater(objectOutputStream, serverMediator);
 		serverUpdater.start();
 	}
@@ -136,7 +136,7 @@ public class ServerListener extends Thread implements Runnable {
 	}
 
 	public void handleReactToEvent(ReactToEvent input){
-		reactToNpcController.reactToNpc(input.getReactToID(),input.getEntityID());
+		reactToController.reactToEntity(input.getReactToID(),input.getEntityID());
 		server.addEventToQueue(input);
 		server.updateOtherClients(this);
 	}

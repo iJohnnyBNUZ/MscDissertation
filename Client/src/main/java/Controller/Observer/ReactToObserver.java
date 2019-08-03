@@ -11,6 +11,8 @@ import Model.Location.Location;
 import Utils.Observer;
 import javafx.concurrent.Task;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 public class ReactToObserver implements Observer {
@@ -48,12 +50,12 @@ public class ReactToObserver implements Observer {
 
                     if(entity != null){
                         if(entity instanceof NPC){
-                            String result = ((NPC)entity).reactTo(clientMediator.getWorld().getEntity(userID));
-                            String message = "You are communicate with "+ commuWith + ", and you " + result ;
-                            clientMediator.getNPCView().updateNpcView(message);
+                            String result = clientMediator.getReactResult();
+                            clientMediator.getNPCView().updateNpcView(result);
                         }
                         else if(entity instanceof User || entity instanceof Shop){
-                            clientMediator.getTransactionView().updateTransaction(entity.getBag(),clientMediator.getReactTo(),clientMediator.getWorld().getEntity(userID).getBag(),clientMediator.getWorld().getEntity(userID).getCoin());
+                            String result = clientMediator.getReactResult();
+                            clientMediator.getTransactionView().updateTransaction(entity.getBag(),clientMediator.getReactTo(),clientMediator.getWorld().getEntity(userID).getBag(),clientMediator.getWorld().getEntity(userID).getCoin(),result);
                         }
 
                     }

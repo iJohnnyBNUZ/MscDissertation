@@ -27,6 +27,7 @@ public class ClientMediator implements GameMediator {
 	private ClientListener clientListener;
 	private String userName = null;
 	private String reactTo = null;
+	private String reactResult = null;
 
 	private Boolean isInit = Boolean.FALSE;
 
@@ -143,6 +144,10 @@ public class ClientMediator implements GameMediator {
 	public void setReactTo(String reactTo) {
 		this.reactTo = reactTo;
 	}
+
+	public String getReactResult() { return reactResult; }
+
+	public void setReactResult(String reactResult) { this.reactResult = reactResult; }
 	/**
 	 * Tell all observers to update views.
 	 */

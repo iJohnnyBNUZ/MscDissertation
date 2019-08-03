@@ -85,8 +85,7 @@ public class ClientListener implements Runnable {
 	}
 
 	private void handleReactToEvent(ReactToEvent input) {
-		//System.out.println("Unhandled communication event");
-		clientMediator.getReactToNpcController().reactToNpc(input.getReactToID(),input.getEntityID());
+		clientMediator.getReactToController().reactToEntity(input.getReactToID(),input.getEntityID());
 	}
 
 	private void handleOpenDoorEvent(OpenDoorEvent input) {

@@ -5,6 +5,9 @@ import Controller.ClientMediator;
 import Controller.ReactToController;
 import Network.Events.ReactToEvent;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class ReactToCommand implements Command {
 	//private CommunicationController communicationController = null;
 	private ClientMediator clientMediator = null;
@@ -23,10 +26,13 @@ public class ReactToCommand implements Command {
 		String id = reactToController.communicateWith(userID);
 		if(id != null){
 			clientMediator.setReactTo(id);
-			reactToController.reactToEntity(userID);
-		    if(id.replaceAll("[0-9]","").equals("npc")){
-			   clientMediator.getEventQueue().add(new ReactToEvent(id,userID));
-		    }
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String message = reactToController.reactToEntity(id,userID);
+			String result = "You just interacted with " + id + ", so you " + message + " at " + df.format(new Date()).toString();
+			clientMediator.setReactResult(result);
+			clientMediator.getEventQueue().add(new ReactToEvent(id,userID));
+			//SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			//clientMediator.getView().showAlert("You just interacted with " + id + ", so you " + message + " at " + df.format(new Date()).toString());
 		}
 	}
 }

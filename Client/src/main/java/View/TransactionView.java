@@ -21,6 +21,7 @@ import java.util.*;
 
 public class TransactionView {
 
+	private View view;
 	private TabPane Transaction;
 	private Tab user_shop;
 	private VBox usershopVbox;
@@ -50,6 +51,7 @@ public class TransactionView {
 	private CloseReactToCommand closeReactToCommand;
 
 	public TransactionView(View view) {
+		this.view = view;
 		this.user_shop = view.getUser_shop();
 		this.closeUserShop = view.getCloseUserShop();
 		this.Transaction = view.getNewTransaction();
@@ -81,7 +83,8 @@ public class TransactionView {
 	}
 
 
-	public void updateTransaction(List<Item> user__shop, String userShopName, List<Item> bag, int money){
+	public void updateTransaction(List<Item> user__shop, String userShopName, List<Item> bag, int money,String result){
+		view.showAlert(result);
 		Transaction.setVisible(true);
 		user_shop.setText(userShopName);
 		totalValue.setText("0");

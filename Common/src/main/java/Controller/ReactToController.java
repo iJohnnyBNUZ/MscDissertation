@@ -47,9 +47,27 @@ public class ReactToController implements Controller{
         return id;
     }
 
-    public void reactToEntity(String userID){
+    public String reactToEntity(String id, String userID){
+        String message = null;
+        Location currLocation = gameMediator.getWorld().getEntityLocation(userID);
+        Entity reaEntity = null;
         Entity entity = gameMediator.getWorld().getEntity(userID);
-        entity.reactTo();
+        for(Map.Entry<Entity, Coordinate> entry : currLocation.getEntities().entrySet()){
+            if(entry.getKey().getEntityID().equals(id)){
+                reaEntity = entry.getKey();
+                break;
+            }
+        }
+        if(reaEntity instanceof User){
+           message = ((User)reaEntity).reactTo(entity);
+        }
+        else if(reaEntity instanceof NPC){
+           message = ((NPC)reaEntity).reactTo(entity);
+        }
+        else if(reaEntity instanceof Shop){
+           message = ((Shop)reaEntity).reactTo(entity);
+        }
+        return message;
     }
 
 
