@@ -92,7 +92,7 @@ public class World extends Observable implements Serializable {
 		int positionY = min + (int)(Math.random() * (max-min+1));
 
 		for(Coordinate coordinate: this.getLocations().get(0).getTiles().keySet()){
-			if(coordinate.getxPostion() == positionX && coordinate.getyPosition() == positionY){
+			if(coordinate.getXCoordinate() == positionX && coordinate.getYCoordinate() == positionY){
 				this.getLocations().get(0).addEntity(this.getEntity(userName),coordinate);
 				System.out.println("gives user:"+userName+" an initial coordinate! ["+positionX+","+positionY+"]");
 				break;

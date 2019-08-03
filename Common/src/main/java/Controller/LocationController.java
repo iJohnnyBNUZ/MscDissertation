@@ -9,7 +9,6 @@ import Model.Location.Door;
 import Model.Location.Location;
 import Model.Location.Tile;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class LocationController implements Controller{
@@ -42,29 +41,29 @@ public class LocationController implements Controller{
 
 		switch (direction) {
 			case "a":
-				changeUserCoordinate(entityCoordinate.getxPostion() , entityCoordinate.getyPosition()-1, uName);
+				changeUserCoordinate(entityCoordinate.getXCoordinate() , entityCoordinate.getYCoordinate()-1, uName);
 				break;
 			case "d":
-				changeUserCoordinate(entityCoordinate.getxPostion() , entityCoordinate.getyPosition()+1, uName);
+				changeUserCoordinate(entityCoordinate.getXCoordinate() , entityCoordinate.getYCoordinate()+1, uName);
 				break;
 			case "w":
-				changeUserCoordinate(entityCoordinate.getxPostion()-1, entityCoordinate.getyPosition() , uName);
+				changeUserCoordinate(entityCoordinate.getXCoordinate()-1, entityCoordinate.getYCoordinate() , uName);
 				break;
 			case "s":
-				changeUserCoordinate(entityCoordinate.getxPostion()+1, entityCoordinate.getyPosition() , uName);
+				changeUserCoordinate(entityCoordinate.getXCoordinate()+1, entityCoordinate.getYCoordinate() , uName);
 				break;
 
 			case "left":
-				changeUserCoordinate(entityCoordinate.getxPostion() , entityCoordinate.getyPosition()-1, uName);
+				changeUserCoordinate(entityCoordinate.getXCoordinate() , entityCoordinate.getYCoordinate()-1, uName);
 				break;
 			case "right":
-				changeUserCoordinate(entityCoordinate.getxPostion() , entityCoordinate.getyPosition()+1, uName);
+				changeUserCoordinate(entityCoordinate.getXCoordinate() , entityCoordinate.getYCoordinate()+1, uName);
 				break;
 			case "up":
-				changeUserCoordinate(entityCoordinate.getxPostion()-1, entityCoordinate.getyPosition() , uName);
+				changeUserCoordinate(entityCoordinate.getXCoordinate()-1, entityCoordinate.getYCoordinate() , uName);
 				break;
 			case "down":
-				changeUserCoordinate(entityCoordinate.getxPostion()+1, entityCoordinate.getyPosition() , uName);
+				changeUserCoordinate(entityCoordinate.getXCoordinate()+1, entityCoordinate.getYCoordinate() , uName);
 				break;
 			default:
 		}
@@ -75,7 +74,7 @@ public class LocationController implements Controller{
 	public void changeUserCoordinate(int xCoordinate, int yCoordinate, String userID){
 		Location location = gameMediator.getWorld().getEntityLocation(userID);
 		for(Coordinate c: location.getTiles().keySet()){
-			if(c.getxPostion() == xCoordinate && c.getyPosition() == yCoordinate){
+			if(c.getXCoordinate() == xCoordinate && c.getYCoordinate() == yCoordinate){
 				if (location.getTiles().get(c).isMovable()){
 					gameMediator.getWorld().getEntityLocation(userID).changeUserCoordinate(gameMediator.getWorld().getEntity(userID), c);
 					gameMediator.getWorld().getEntity(userID).decreaseEnergy(location.getTiles().get(c).getEnergyCost());
@@ -158,12 +157,12 @@ public class LocationController implements Controller{
 					}
 				}
 				if (appearDoor != null){
-					positionX = appearDoor.getxPostion();
-					positionY = appearDoor.getyPosition()+1;
+					positionX = appearDoor.getXCoordinate();
+					positionY = appearDoor.getYCoordinate()+1;
 				}
 
 				for(Coordinate c: nextLocation.getTiles().keySet()){
-					if(c.getxPostion() == positionX && c.getyPosition() == positionY){
+					if(c.getXCoordinate() == positionX && c.getYCoordinate() == positionY){
 						if(nextLocation.getTiles().get(c).isMovable()){
 							gameMediator.getWorld().getLocation(nextLocationId).addEntity(gameMediator.getWorld().getEntity(userid),c);
 							System.out.println("USer->"+ userid+" open the door and moves to the new Location");
@@ -175,7 +174,7 @@ public class LocationController implements Controller{
 
 							return;
 						}
-					}else if(c.getxPostion() == positionX && c.getyPosition() == positionY-2){
+					}else if(c.getXCoordinate() == positionX && c.getYCoordinate() == positionY-2){
 						if(nextLocation.getTiles().get(c).isMovable()) {
 							gameMediator.getWorld().getLocation(nextLocationId).addEntity(gameMediator.getWorld().getEntity(userid), c);
 							System.out.println("USer->" + userid + "open the door and moves to the new Location");

@@ -1,15 +1,11 @@
 package View;
 
-import java.net.URL;
-import java.util.HashMap;
 import java.util.Map;
 
 import Controller.Command.Command;
 import Controller.Command.PickUpCommand;
 import Model.Location.Coordinate;
-import javafx.application.Platform;
 import javafx.event.EventHandler;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 public class ItemView{
@@ -72,8 +68,8 @@ public class ItemView{
 					public void handle(MouseEvent m) {
 						System.out.println("Item ID: " + imgView.getId());
 
-						System.out.println("Position: "+ items.get(name).getxPostion()+" "
-								+items.get(name).getyPosition());
+						System.out.println("Position: "+ items.get(name).getXCoordinate()+" "
+								+items.get(name).getYCoordinate());
 						pickUp.execute();
 					}
 

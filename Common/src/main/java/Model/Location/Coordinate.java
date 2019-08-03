@@ -1,37 +1,36 @@
 package Model.Location;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 public class Coordinate implements Serializable {
-    private int xPosition;
-    private int yPosition;
+    private int xCoordinate;
+    private int yCoordinate;
 
     public Coordinate(int x, int y) {
-        this.xPosition = x;
-        this.yPosition = y;
+        this.xCoordinate = x;
+        this.yCoordinate = y;
     }
 
-    public int getxPostion() {
-        return xPosition;
+    public int getXCoordinate() {
+        return xCoordinate;
     }
 
-    public void setxPostion(int xPosition) {
-        this.xPosition = xPosition;
+    public void setXCoordinate(int xPosition) {
+        this.xCoordinate = xPosition;
     }
 
-    public int getyPosition() {
-        return yPosition;
+    public int getYCoordinate() {
+        return yCoordinate;
     }
 
-    public void setyPosition(int yPosition) {
-        this.yPosition = yPosition;
+    public void setYCoordinate(int yCoordinate) {
+        this.yCoordinate = yCoordinate;
     }
     @Override
     public boolean equals(Object obj) {
         if(obj instanceof Coordinate){
             Coordinate coordinate = (Coordinate) obj;
-            return coordinate.getxPostion() == this.getxPostion() && coordinate.getyPosition() == this.getyPosition();
+            return coordinate.getXCoordinate() == this.getXCoordinate() && coordinate.getYCoordinate() == this.getYCoordinate();
         }
         else {
             return false;
@@ -40,8 +39,8 @@ public class Coordinate implements Serializable {
     @Override
     public int hashCode() {
         int result = 17;
-        result = result * 31 + xPosition;
-        result = result * 31 + yPosition;
+        result = result * 31 + xCoordinate;
+        result = result * 31 + yCoordinate;
 
         return result;
     }

@@ -1,11 +1,9 @@
 package Controller;
 
 import Controller.Command.*;
-import Controller.Network.ClientUpdater;
 import Controller.Network.ClientListener;
+import Controller.Network.ClientUpdater;
 import Controller.Observer.*;
-import Controller.ReactToNpcController;
-import Controller.Save.SaveUser;
 import Model.Entity.Entity;
 import Model.Location.Coordinate;
 import Model.Location.Location;
@@ -44,7 +42,7 @@ public class ClientMediator implements GameMediator {
     private EntityView entityView = null;
     private ItemView itemView = null;
     private NPCView npsView = null;
-    private TransactionView tansactionView = null;
+    private TransactionView transactionView = null;
     
 	private Stage primaryStage = null;
 
@@ -56,8 +54,6 @@ public class ClientMediator implements GameMediator {
 	private PostController postController = null;
 	private ReactToController reactToController = null;
 	private ReactToNpcController reactToNpcController = null;
-	private SaveUser saveUser = null;
-	
 	
 	private LocationObserver locationObserver = null;
 	private ItemObserver itemObserver= null;
@@ -80,7 +76,6 @@ public class ClientMediator implements GameMediator {
 	private SaveGameCommand saveGameCommand = null;
 	private LogOutCommand logOutCommand = null;
 	private OpenDoorCommand openDoorCommand = null;
-
 
 	private boolean haveObservers = false;
 
@@ -234,15 +229,6 @@ public class ClientMediator implements GameMediator {
 		this.npsView = nps;
 	}
 
-	public TransactionView getTransactionView() {
-		return tansactionView;
-	}
-
-	public void setTransactionView(TransactionView tansaction) {
-		this.tansactionView = tansaction;
-	}
-
-
 	public NPCView getNpsView() {
 		return npsView;
 	}
@@ -251,12 +237,12 @@ public class ClientMediator implements GameMediator {
 		this.npsView = npsView;
 	}
 
-	public TransactionView getTansactionView() {
-		return tansactionView;
+	public TransactionView getTransactionView() {
+		return transactionView;
 	}
 
-	public void setTansactionView(TransactionView tansactionView) {
-		this.tansactionView = tansactionView;
+	public void setTransactionView(TransactionView transactionView) {
+		this.transactionView = transactionView;
 	}
 
 	public LocationController getLocationController() {
@@ -472,8 +458,7 @@ public class ClientMediator implements GameMediator {
 		this.postController = new PostController(this);
 		this.reactToController = new ReactToController(this);
 		this.reactToNpcController = new ReactToNpcController(this);
-		this.saveUser = new SaveUser(this);
-		
+
 		this.locationObserver = new LocationObserver(this);
 		this.itemObserver = new ItemObserver(this);
 		this.postObserver = new PostObserver(this);
@@ -501,7 +486,7 @@ public class ClientMediator implements GameMediator {
 		//this.sellCommand = new SellCommand(transactionMessageController,itemController,this);
 		this.closeReactToCommand = new CloseReactToCommand(this);
 		this.postCommand = new PostCommand(postController,this);
-		this.saveGameCommand = new SaveGameCommand(this.saveUser);
+		this.saveGameCommand = new SaveGameCommand(this);
 		this.logOutCommand = new LogOutCommand(this);
 
 	}
@@ -524,7 +509,7 @@ public class ClientMediator implements GameMediator {
     	entityView = new EntityView(this.view);
     	itemView = new ItemView(this.view);
     	npsView = new NPCView(this.view);
-    	tansactionView = new TransactionView(this.view);
+    	transactionView = new TransactionView(this.view);
 
 	}
 	
@@ -543,10 +528,10 @@ public class ClientMediator implements GameMediator {
 		bagView.setEatCommand(eatCommand);
 		bagView.setPutDownCommand(putDownCommand);
 		postView.setPostCommand(postCommand);
-		tansactionView.setTransactionCommand(transactionCommand);
+		transactionView.setTransactionCommand(transactionCommand);
 		//tansactionView.setBuyCommand(buyCommand);
 		//tansactionView.setSellCommand(sellCommand);
-		tansactionView.setCloseReactToCommand(closeReactToCommand);
+		transactionView.setCloseReactToCommand(closeReactToCommand);
 		npsView.setCloseReactToCommand(closeReactToCommand);
 	}
 	

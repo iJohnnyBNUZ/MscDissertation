@@ -1,15 +1,16 @@
 package Controller.Command;
 
-import Controller.Save.SaveUser;
+import Controller.ClientMediator;
+import Network.Events.SaveGameEvent;
 
 public class SaveGameCommand implements Command{
-	private SaveUser saveUser = null;
+	private ClientMediator clientMediator;
 	
-	public SaveGameCommand(SaveUser saveUser) {
-		this.saveUser = saveUser;
+	public SaveGameCommand(ClientMediator clientMediator) {
+		this.clientMediator = clientMediator;
 	}
-	
 	public void execute() {
-		System.out.println("Saveeeeeeeeeeeeeeeee!!!!!");
+		System.out.println("Saving Game");
+		clientMediator.getEventQueue().add(new SaveGameEvent(clientMediator.getUserName()));
 	}
 }

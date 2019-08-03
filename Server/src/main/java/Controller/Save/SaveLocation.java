@@ -21,7 +21,7 @@ public class SaveLocation {
 		this.serverMediator = serverMediator;
 	}
 
-	public JsonObject formatLocationAsJson(Location location) {
+	public JsonObject saveLocationAsJson(Location location) {
 		JsonObject locationObject = new JsonObject();
 		locationObject.addProperty("id", location.getLocationID());
 		locationObject.add("tiles", saveTiles(location.getTiles()));
@@ -34,8 +34,8 @@ public class SaveLocation {
 		JsonArray savedItems = new JsonArray();
 		for (Map.Entry<Coordinate, Item> item : items.entrySet()) {
 			JsonObject newItem = saveItem(item.getValue());
-			newItem.addProperty("xCoordinate", item.getKey().getxPostion());
-			newItem.addProperty("yCoordinate", item.getKey().getyPosition());
+			newItem.addProperty("xCoordinate", item.getKey().getXCoordinate());
+			newItem.addProperty("yCoordinate", item.getKey().getYCoordinate());
 			savedItems.add(newItem);
 		}
 		return savedItems;
@@ -48,18 +48,17 @@ public class SaveLocation {
 			savedTile.addProperty("terrain", tile.getValue().getTerrain());
 			savedTile.addProperty("isMovable", tile.getValue().isMovable());
 			savedTile.addProperty("energyCost", tile.getValue().getEnergyCost());
-			savedTile.addProperty("xCoordinate", tile.getKey().getxPostion());
-			savedTile.addProperty("yCoordinate", tile.getKey().getyPosition());
+			savedTile.addProperty("xCoordinate", tile.getKey().getXCoordinate());
+			savedTile.addProperty("yCoordinate", tile.getKey().getYCoordinate());
 			tiles.add(savedTile);
 		}
 		return tiles;
 	}
 
 	private JsonElement saveEntities(Map<Entity, Coordinate> entityMap) {
-		SaveEntity saveEntity = new SaveEntity(serverMediator);
 		JsonArray entities = new JsonArray();
 		for (Map.Entry<Entity, Coordinate> entity : entityMap.entrySet()) {
-			entities.add(saveEntity.saveEntity(entity));
+			entities.add(serverMediator.getEntitySaver().saveEntityAsJson(entity.getKey()));
 		}
 		return entities;
 	}

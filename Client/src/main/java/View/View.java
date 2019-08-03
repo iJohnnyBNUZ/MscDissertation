@@ -354,8 +354,8 @@ public class View {
 		URL url = this.getClass().getResource("/images/" + fileName + ".png");
 		Image image = new Image(url.toString(), image_h, image_w, false, false);
 		if(image!= null){
-			gContext.drawImage(image,0, 0,image_h,image_w, position.getyPosition()*tileWidth,
-					position.getxPostion()*tileHeight,tileWidth,tileHeight);
+			gContext.drawImage(image,0, 0,image_h,image_w, position.getYCoordinate()*tileWidth,
+					position.getXCoordinate()*tileHeight,tileWidth,tileHeight);
 			drawed=true;
 		}
 		return drawed;
@@ -368,8 +368,8 @@ public class View {
 		//create ImageView  to each of the items
 		ImageView imgView = new ImageView();
 		URL url = this.getClass().getResource("/images/" + fileName + ".png");
-		imgView.setLayoutX(position.getyPosition()*tileWidth);
-		imgView.setLayoutY(position.getxPostion()*tileHeight);
+		imgView.setLayoutX(position.getYCoordinate()*tileWidth);
+		imgView.setLayoutY(position.getXCoordinate()*tileHeight);
 
 		if(!isItemTile) {
 			Image image = new Image(url.toString(), image_h, image_w, false, false);

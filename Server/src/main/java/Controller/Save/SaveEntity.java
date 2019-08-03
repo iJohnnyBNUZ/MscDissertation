@@ -6,43 +6,44 @@ import Model.Entity.NPC;
 import Model.Entity.Shop;
 import Model.Entity.User;
 import Model.Item.Item;
-import Model.Location.Coordinate;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.util.List;
-import java.util.Map;
 
 public class SaveEntity {
 
 	private ServerMediator serverMediator;
+	private String saveFilePath;
 
-	public SaveEntity(ServerMediator serverMediator) {
+	public SaveEntity(ServerMediator serverMediator, String saveFilePath) {
 		this.serverMediator = serverMediator;
+		this.saveFilePath = saveFilePath;
 	}
 
-	public JsonObject formatUserAsJson(Entity entity) {
-		JsonObject userObject = new JsonObject();
-
-		return userObject;
+	public void saveSingleEntity(Entity entity) {
+		JsonArray entityArray = new JsonArray();
+		entityArray.add(saveEntityAsJson(entity));
+		WriteFile writeFile = new WriteFile();
+		writeFile.writeJsonArray(entityArray, saveFilePath + "/" + entity.getEntityID() + ".json");
 	}
 
-	public JsonObject saveEntity(Map.Entry<Entity, Coordinate> entity) {
+	public JsonObject saveEntityAsJson(Entity entity) {
 		JsonObject savedEntity = new JsonObject();
-		if (entity.getKey() instanceof User) {
+		if (entity instanceof User) {
 			savedEntity.addProperty("type", "user");
 		}
-		else if (entity.getKey() instanceof Shop) {
+		else if (entity instanceof Shop) {
 			savedEntity.addProperty("type", "shop");
 		}
-		else if (entity.getKey() instanceof NPC) {
+		else if (entity instanceof NPC) {
 			savedEntity.addProperty("type", "npc");
 		}
-		savedEntity.addProperty("id", entity.getKey().getEntityID());
-		savedEntity.addProperty("energy", entity.getKey().getEnergy());
-		savedEntity.addProperty("xCoordinate", entity.getValue().getxPostion());
-		savedEntity.addProperty("yCoordinate", entity.getValue().getyPosition());
-		savedEntity.add("bag", createBag(entity.getKey().getBag()));
+		savedEntity.addProperty("id", entity.getEntityID());
+		savedEntity.addProperty("energy", entity.getEnergy());
+		savedEntity.addProperty("xCoordinate", serverMediator.getWorld().getEntityLocation(entity.getEntityID()).getEntities().get(entity).getXCoordinate());
+		savedEntity.addProperty("yCoordinate", serverMediator.getWorld().getEntityLocation(entity.getEntityID()).getEntities().get(entity).getYCoordinate());
+		savedEntity.add("bag", createBag(entity.getBag()));
 		return savedEntity;
 	}
 

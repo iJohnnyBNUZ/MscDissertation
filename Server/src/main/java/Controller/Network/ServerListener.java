@@ -71,7 +71,8 @@ public class ServerListener extends Thread implements Runnable {
 		}
 		else if (input instanceof LogoutEvent) {
 			logout();
-		}else if (input instanceof PostEvent){
+		}
+		else if (input instanceof PostEvent){
 			handlePostEvent((PostEvent) input);
 		}
 		else if(input instanceof ReactToEvent){
@@ -85,6 +86,9 @@ public class ServerListener extends Thread implements Runnable {
 		}
 		else if(input instanceof TransactionEvent) {
 			handleTransactionEvent((TransactionEvent) input);
+		}
+		else if (input instanceof SaveGameEvent) {
+			serverMediator.saveWorld();
 		}
 		else {
 			System.out.println("Unknown object type");

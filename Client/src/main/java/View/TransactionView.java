@@ -1,8 +1,6 @@
 package View;
 
-import Controller.Command.BuyCommand;
 import Controller.Command.CloseReactToCommand;
-import Controller.Command.SellCommand;
 import Controller.Command.TransactionCommand;
 import Model.Item.Item;
 import javafx.beans.value.ChangeListener;
