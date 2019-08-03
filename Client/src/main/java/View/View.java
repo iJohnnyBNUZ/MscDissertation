@@ -340,7 +340,7 @@ public class View {
 	}
 
 	public void setUserImage() {
-		URL url = this.getClass().getResource("/images/player.png");
+		URL url = this.getClass().getResource("/images/me.png");
 		Image image = new Image(url.toString(), userImage.getFitWidth(), userImage.getFitHeight() , false, false);
 		userImage.setImage(image);
 	}

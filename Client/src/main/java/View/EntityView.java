@@ -47,7 +47,7 @@ public class EntityView {
 		System.out.println("update usersssssssssssssa");
 		if(users.size() <= 100) {
 			for(String name: users.keySet()) {
-				ImageView imgView = view.drawClickable("player", users.get(name), false);
+				ImageView imgView = view.drawClickable(name, users.get(name), false);
 				imgView.setId(name);
 				System.out.println(imgView.getId());
 			}
