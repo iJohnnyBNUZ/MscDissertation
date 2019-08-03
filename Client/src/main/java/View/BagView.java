@@ -90,8 +90,6 @@ public class BagView{
 
 
 	public void updateBag(List<Item> bag,int money) {
-		System.out.println("背包里有" + bag);
-		System.out.println("在更新bag");
 		bagFoodVbox.getChildren().clear();
 		bagKeysVbox.getChildren().clear();
 		numOfCoins.setText(String.valueOf(money));
@@ -149,7 +147,7 @@ public class BagView{
 							food_item_img.setEffect(null);
 							selectedItemId = null;
 						} else {
-							cleanSelect(bagFoodVbox, gridPaneFoodList);
+							cleanSelect(bagFoodVbox, gridPaneFoodList, 0);
 							food_item_img.setEffect(effect);
 							//set selectedItemId
 							for (Item item : bag) {
@@ -196,7 +194,7 @@ public class BagView{
 							key_item_img.setEffect(null);
 							selectedItemId = null;
 						} else {
-							cleanSelect(bagKeysVbox, gridPaneKeyList);
+							cleanSelect(bagKeysVbox, gridPaneKeyList, 1);
 							key_item_img.setEffect(effect);
 							//set selectedItemId
 							for (Item item : bag) {
@@ -238,10 +236,10 @@ public class BagView{
 	}
 
 
-	private void cleanSelect(VBox vBox, List<GridPane> gridPaneList){
+	private void cleanSelect(VBox vBox, List<GridPane> gridPaneList, int k){
 		int size = gridPaneList.size();
 		for(int i=0; i<size; i++){
-			ImageView imageView = (ImageView)gridPaneList.get(i).getChildren().get(0);
+			ImageView imageView = (ImageView)gridPaneList.get(i).getChildren().get(k);
 			if(imageView.getEffect()!=null)
 				imageView.setEffect(null);
 		}
