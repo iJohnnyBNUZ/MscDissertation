@@ -54,7 +54,6 @@ public class ClientMediator implements GameMediator {
 	private TransactionMessageController transactionMessageController = null;
 	private PostController postController = null;
 	private ReactToController reactToController = null;
-	private ReactToNpcController reactToNpcController = null;
 	
 	private LocationObserver locationObserver = null;
 	private ItemObserver itemObserver= null;
@@ -296,13 +295,6 @@ public class ClientMediator implements GameMediator {
 		this.reactToController = reactToController;
 	}
 
-	public ReactToNpcController getReactToNpcController() {
-		return reactToNpcController;
-	}
-
-	public void setReactToNpcController(ReactToNpcController reactToNpcController){
-		this.reactToNpcController = reactToNpcController;
-	}
 
 	public void setUserController(UserController userController) {
 		this.userController = userController;
@@ -462,7 +454,6 @@ public class ClientMediator implements GameMediator {
 		this.transactionMessageController = new TransactionMessageController(this);
 		this.postController = new PostController(this);
 		this.reactToController = new ReactToController(this);
-		this.reactToNpcController = new ReactToNpcController(this);
 
 		this.locationObserver = new LocationObserver(this);
 		this.itemObserver = new ItemObserver(this);
