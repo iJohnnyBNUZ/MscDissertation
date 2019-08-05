@@ -80,14 +80,8 @@ public class UserController implements Controller {
 					}
 				}
 			}
-
 		};
-
 		new Thread(progressTask).start();
-
-
-
-
 	}
 
 	public Boolean isUserExist(String uName) {

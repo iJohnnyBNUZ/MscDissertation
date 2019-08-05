@@ -54,7 +54,6 @@ public class ClientUpdater implements Runnable {
 	@Override
 	public void run() {
 		System.out.println("Running server updater");
-		sendMessageToServer("getWorld");
 		while(canRun) {
 			try {
 				talkToServer();
