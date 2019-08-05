@@ -712,46 +712,11 @@
         "yCoordinate": 0
       },
       {
-        "id": "orange2",
-        "type": "food",
-        "value": 10,
-        "xCoordinate": 6,
-        "yCoordinate": 3
-      },
-      {
-        "id": "orange3",
-        "type": "food",
-        "value": 10,
-        "xCoordinate": 8,
-        "yCoordinate": 5
-      },
-      {
-        "id": "apple1",
-        "type": "food",
-        "value": 10,
-        "xCoordinate": 1,
-        "yCoordinate": 0
-      },
-      {
-        "id": "apple3",
-        "type": "food",
-        "value": 10,
-        "xCoordinate": 5,
-        "yCoordinate": 4
-      },
-      {
         "id": "coin1",
         "type": "coin",
         "value": 30,
         "xCoordinate": 2,
         "yCoordinate": 1
-      },
-      {
-        "id": "orange0",
-        "type": "food",
-        "value": 10,
-        "xCoordinate": 2,
-        "yCoordinate": 2
       },
       {
         "id": "coin3",
@@ -761,32 +726,11 @@
         "yCoordinate": 9
       },
       {
-        "id": "lemon1",
-        "type": "food",
-        "value": 10,
-        "xCoordinate": 6,
-        "yCoordinate": 8
-      },
-      {
-        "id": "apple2",
-        "type": "food",
-        "value": 10,
-        "xCoordinate": 2,
-        "yCoordinate": 7
-      },
-      {
         "id": "coin5",
         "type": "coin",
         "value": 30,
         "xCoordinate": 0,
         "yCoordinate": 5
-      },
-      {
-        "id": "coin4",
-        "type": "coin",
-        "value": 30,
-        "xCoordinate": 2,
-        "yCoordinate": 8
       },
       {
         "id": "key_blue0",
@@ -797,14 +741,6 @@
       }
     ],
     "entities": [
-      {
-        "type": "user",
-        "id": "user",
-        "energy": 93,
-        "xCoordinate": 5,
-        "yCoordinate": 5,
-        "bag": []
-      },
       {
         "type": "npc",
         "id": "npc1",
@@ -823,6 +759,14 @@
             "value": 100
           }
         ]
+      },
+      {
+        "type": "user",
+        "id": "user0",
+        "energy": 51,
+        "xCoordinate": 0,
+        "yCoordinate": 6,
+        "bag": []
       },
       {
         "type": "shop",
@@ -2345,7 +2289,61 @@
         "energyCost": 1,
         "xCoordinate": 1,
         "yCoordinate": 5
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 1,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 1,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 2,
+        "xCoordinate": 1,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 1,
+        "yCoordinate": 9
       }
-    ]
-  }
-  ]
+    ],
+    "items": [
+      {
+        "id": "coin14",
+        "type": "coin",
+        "value": 30,
+        "xCoordinate": 9,
+        "yCoordinate": 0
+      },
+      {
+        "id": "key_green1",
+        "type": "key",
+        "value": 100,
+        "xCoordinate": 7,
+        "yCoordinate": 1
+      },
+      {
+        "id": "orange7",
+        "type": "food",
+        "value": 10,
+        "xCoordinate": 6,
+        "yCoordinate": 3
+      },
+      {
+        "id": "apple7",
+        "type": "food",
+        "value": 10,
+        "xCoordinate": 1,
+        "yCo

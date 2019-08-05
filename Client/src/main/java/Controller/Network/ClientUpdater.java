@@ -101,7 +101,7 @@ public class ClientUpdater implements Runnable {
 
 	private void createUser(String userName) {
 		sendMessageToServer(new User(userName));
-		sendMessageToServer("getWorld");
+		//sendMessageToServer("getWorld");
 	}
 
 	public String getUserName() {
