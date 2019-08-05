@@ -50,7 +50,6 @@ public class ClientMediator implements GameMediator {
 	private LocationController locationController =null;
 	private ItemController itemController= null;
 	private UserController userController= null;
-	private TransactionMessageController transactionMessageController = null;
 	private PostController postController = null;
 	private ReactToController reactToController = null;
 	
@@ -316,7 +315,6 @@ public class ClientMediator implements GameMediator {
 		this.locationController = new LocationController(this);
 		this.itemController = new ItemController(this);
 		this.userController = new UserController(this);
-		this.transactionMessageController = new TransactionMessageController(this);
 		this.postController = new PostController(this);
 		this.reactToController = new ReactToController(this);
 
@@ -342,7 +340,7 @@ public class ClientMediator implements GameMediator {
 		this.eatCommand = new EatCommand(itemController,this);
 		this.pickUpCommand = new PickUpCommand(itemController,this);
 		this.reactToCommand = new ReactToCommand(reactToController,this);
-		this.transactionCommand = new TransactionCommand(transactionMessageController,itemController,this);
+		this.transactionCommand = new TransactionCommand(itemController,this);
 		this.closeReactToCommand = new CloseReactToCommand(this);
 		this.postCommand = new PostCommand(postController,this);
 		this.saveGameCommand = new SaveGameCommand(this);

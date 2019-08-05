@@ -49,7 +49,7 @@ public class UserController implements Controller {
 
 			@Override
 			protected void succeeded() {
-				super.succeeded();
+				//super.succeeded();
 				if(type.equals("new")) {
 					if(!result){
 						clientMediator.setUserName(uName);

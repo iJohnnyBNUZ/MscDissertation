@@ -24,9 +24,8 @@ public class User extends Entity {
     }
 
     public String reactTo(Entity entity) {
-        entity.decreaseEnergy(30);
         notifyObserver();
-        return  "decrease 30 energy";
+        return  "transaction with user";
     }
 
     public String getUserId() {

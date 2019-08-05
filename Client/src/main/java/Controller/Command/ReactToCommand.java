@@ -18,9 +18,7 @@ public class ReactToCommand implements Command {
 		this.clientMediator = clientMediator;
 	}
 
-	//There are something wrong since the communication between two user and between user and shop will only
-	//open the transaction view, the model won't changed, but the interaction between user and npc will change the user energy,
-	//this action need to be added to the queue.
+
 	public void execute() {
 		String userID = clientMediator.getUserName();
 		String id = reactToController.communicateWith(userID);

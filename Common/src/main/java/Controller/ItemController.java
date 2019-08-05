@@ -125,7 +125,7 @@ public class ItemController implements Controller{
             return "Cannot find seller";
 
         if(buyer.getCoin() < value){
-            return "User donesn't have enough money";
+            return "Buyer donesn't have enough money";
         }
 
         //exchange items

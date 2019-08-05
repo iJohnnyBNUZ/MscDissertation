@@ -15,38 +15,34 @@ public class TransactionCommand {
     private ClientMediator clientMediator = null;
     private String userID;
 
-    public TransactionCommand(Controller transactionMessageController, Controller itemController, ClientMediator clientMediator){
-        this.transactionMessageController = (TransactionMessageController) transactionMessageController;
+    public TransactionCommand(Controller itemController, ClientMediator clientMediator){
         this.itemController = (ItemController) itemController;
         this.clientMediator = clientMediator;
     }
 
     public void execute(String tranUserID, HashMap<String,Integer> tranList, int value, String tranType) {
 
-        //clientMediator.setTransactionWith(tranUserID);
-        userID = clientMediator.getUserName();
-        Boolean bool;
 
+        userID = clientMediator.getUserName();
+        String message;
         if(tranType.equals("buy")){
-            bool = transactionMessageController.tranMessage(userID, tranUserID, tranList, value, userID);
-            if(bool = true){
-                clientMediator.getView().showAlert("You have enough money to buy the items");
-                itemController.exchange(userID,tranUserID,tranList,value,userID);
-                clientMediator.getEventQueue().add(new TransactionEvent(userID,tranUserID,tranList,value,userID));
+            message = itemController.exchange(userID,tranUserID,tranList,value,userID);
+            clientMediator.getEventQueue().add(new TransactionEvent(userID,tranUserID,tranList,value,userID));
+            if(message != null){
+                clientMediator.getView().showAlert(message);
             }
             else{
-                clientMediator.getView().showAlert("You don't have enough money to buy the items");
+                clientMediator.getView().showAlert("You bought successfully");
             }
         }
         else if(tranType.equals("sell")){
-            bool = transactionMessageController.tranMessage(tranUserID, userID, tranList, value, userID);
-            if(bool = true){
-                clientMediator.getView().showAlert(tranUserID + " has enough money to buy the items");
-                itemController.exchange(tranUserID, userID,tranList,value,userID);
-                clientMediator.getEventQueue().add(new TransactionEvent(tranUserID, userID,tranList,value,userID));
+            message = itemController.exchange(userID,tranUserID,tranList,value,userID);
+            clientMediator.getEventQueue().add(new TransactionEvent(userID,tranUserID,tranList,value,userID));
+            if(message != null){
+                clientMediator.getView().showAlert(message);
             }
             else{
-                clientMediator.getView().showAlert(tranUserID + " doesn't have enough money to buy the items");
+                clientMediator.getView().showAlert("You sold successfully");
             }
         }
 

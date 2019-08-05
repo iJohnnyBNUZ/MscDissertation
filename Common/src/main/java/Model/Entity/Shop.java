@@ -6,8 +6,7 @@ public class Shop extends Entity {
 	}
 
 	public String reactTo(Entity entity) {
-		//entity.increaseEnergy(20);
 		notifyObserver();
-		return "decrease 20 energy";
+		return "transaction with shop";
 	}
 }

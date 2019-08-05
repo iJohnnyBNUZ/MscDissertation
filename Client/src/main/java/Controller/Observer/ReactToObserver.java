@@ -53,8 +53,8 @@ public class ReactToObserver implements Observer {
                             clientMediator.getNPCView().updateNpcView(result);
                         }
                         else if(entity instanceof User || entity instanceof Shop){
-                            String result = clientMediator.getReactResult();
-                            clientMediator.getTransactionView().updateTransaction(entity.getBag(),clientMediator.getReactTo(),clientMediator.getWorld().getEntity(userID).getBag(),clientMediator.getWorld().getEntity(userID).getCoin(),result);
+                            //String result = clientMediator.getReactResult();
+                            clientMediator.getTransactionView().updateTransaction(entity.getBag(),clientMediator.getReactTo(),clientMediator.getWorld().getEntity(userID).getBag(),clientMediator.getWorld().getEntity(userID).getCoin());
                         }
 
                     }
