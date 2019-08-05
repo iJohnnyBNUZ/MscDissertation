@@ -5,6 +5,7 @@ import Model.Entity.Entity;
 import Model.Entity.NPC;
 import Model.Entity.Shop;
 import Model.Entity.User;
+import Model.Item.Food;
 import Model.Item.Item;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -38,9 +39,11 @@ public class SaveEntity {
 		}
 		else if (entity instanceof NPC) {
 			savedEntity.addProperty("type", "npc");
+			savedEntity.addProperty("isFriendly", ((NPC) entity).getIsFriendly());
 		}
 		savedEntity.addProperty("id", entity.getEntityID());
 		savedEntity.addProperty("energy", entity.getEnergy());
+		savedEntity.addProperty("coin", entity.getCoin());
 		savedEntity.addProperty("xCoordinate", serverMediator.getWorld().getEntityLocation(entity.getEntityID()).getEntities().get(entity).getXCoordinate());
 		savedEntity.addProperty("yCoordinate", serverMediator.getWorld().getEntityLocation(entity.getEntityID()).getEntities().get(entity).getYCoordinate());
 		savedEntity.add("bag", createBag(entity.getBag()));
@@ -60,6 +63,11 @@ public class SaveEntity {
 		savedItem.addProperty("id", item.getItemID());
 		savedItem.addProperty("type", item.getType());
 		savedItem.addProperty("value", item.getCoinValue());
+		savedItem.addProperty("isCollectible", item.isCollectible());
+		savedItem.addProperty("isEdible", item.isEdible());
+		if (item.getType().equals("food")) {
+			savedItem.addProperty("energy", ((Food)item).getEnergy());
+		}
 		return savedItem;
 	}
 }

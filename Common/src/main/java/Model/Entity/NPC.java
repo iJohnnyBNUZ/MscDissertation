@@ -20,4 +20,8 @@ public class NPC extends Entity {
 		}
 
 	}
+
+	public boolean getIsFriendly() {
+		return isFriendly;
+	}
 }

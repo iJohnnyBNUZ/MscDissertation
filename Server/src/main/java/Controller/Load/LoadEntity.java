@@ -26,15 +26,16 @@ public class LoadEntity {
 		this.serverMediator = serverMediator;
 	}
 
-	public Entity buildEntity(File file) throws IOException {
+	public void buildEntity(File file) throws IOException {
 		String saveString = readFile.readJSON(file.getAbsolutePath());
 		JsonArray entityArray = new JsonParser().parse(saveString).getAsJsonArray();
-		for(int i = 0; i < entityArray.size(); i++) {
-			Entity entity = parseEntity(entityArray.get(i).getAsJsonObject());
-			serverMediator.getWorld().addEntity(entity);
-			serverMediator.getWorld().getLocation(entityArray.get(i).getAsJsonObject().get("location").getAsString()).addEntity(entity, new Coordinate(entityArray.get(i).getAsJsonObject().get("xCoordinate").getAsInt(), entityArray.get(i).getAsJsonObject().get("yCoordinate").getAsInt()));
+		if (entityArray.size() != 0) {
+			for(int i = 0; i < entityArray.size(); i++) {
+				Entity entity = parseEntity(entityArray.get(i).getAsJsonObject());
+				serverMediator.getWorld().addEntity(entity);
+				serverMediator.getWorld().getLocation(entityArray.get(i).getAsJsonObject().get("location").getAsString()).addEntity(entity, new Coordinate(entityArray.get(i).getAsJsonObject().get("xCoordinate").getAsInt(), entityArray.get(i).getAsJsonObject().get("yCoordinate").getAsInt()));
+			}
 		}
-		return null;
 	}
 
 	public Entity parseEntity(JsonObject entityObject) {
@@ -47,7 +48,7 @@ public class LoadEntity {
 				entity = new Shop(entityObject.get("id").getAsString());
 				break;
 			case "npc":
-				entity = new NPC(entityObject.get("id").getAsString(),entityObject.get("isFriendly").getAsBoolean());
+				entity = new NPC(entityObject.get("id").getAsString(), entityObject.get("isFriendly").getAsBoolean());
 				break;
 			default:
 				throw new IllegalStateException("Unexpected value: " + entityObject.get("type").getAsString());
