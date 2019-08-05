@@ -21,7 +21,7 @@ public class ItemController implements Controller{
         this.gameMediator = gameMediator;
     }
 
-    public void pickUp(String userID){
+    public String pickUp(String userID){
         System.out.println("itemController");
         // delete from location
         Location location = this.gameMediator.getWorld().getEntityLocation(userID);
@@ -38,7 +38,7 @@ public class ItemController implements Controller{
             location.removeItem(coordinate);
             Entity entity = this.gameMediator.getWorld().getEntity(userID);
             if (entity == null)
-                return;
+                return "Item is not exist";
             if (item instanceof Coin){
                 Coin coin = (Coin) item;
                 entity.setCoin(entity.getCoin() + coin.getCoinValue());
@@ -46,6 +46,8 @@ public class ItemController implements Controller{
             else{
                 entity.pickUp(item);  // add to user's bag
             }
+        }else{
+            return "Cannot find Item in this position";
         }
         /*
         Entity entity = this.gameMediator.getWorld().getEntity(userID);
@@ -59,6 +61,7 @@ public class ItemController implements Controller{
             entity.pickUp(item);  // add to user's bag
         }
         */
+        return "";
     }
 
     public String drop(String userID,String itemID){
