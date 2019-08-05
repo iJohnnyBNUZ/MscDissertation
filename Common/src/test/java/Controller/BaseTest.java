@@ -1,6 +1,5 @@
 package Controller;
 
-import Controller.GameMediator;
 import Model.Entity.Entity;
 import Model.Entity.NPC;
 import Model.Entity.Shop;
@@ -8,7 +7,6 @@ import Model.Entity.User;
 import Model.Item.Food;
 import Model.Item.Item;
 import Model.Location.*;
-import Model.World;
 
 public class BaseTest {
 

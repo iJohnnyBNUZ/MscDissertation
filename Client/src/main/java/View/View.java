@@ -1,9 +1,5 @@
 package View;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.Optional;
-
 import Controller.Command.*;
 import Model.Location.Coordinate;
 import javafx.application.Platform;
@@ -23,10 +19,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.*;
 
 public class View {
 
@@ -151,7 +147,7 @@ public class View {
 	private PickUpCommand pickUpCommand= null;
 	private ReactToCommand reactToCommand = null;
 
-	private List<String> directions = new ArrayList<String>();
+	private List<String> operations = new ArrayList<String>();
 
 
 	// This method is automatically invoked by the FXMLLoader - it's magic
@@ -162,19 +158,12 @@ public class View {
 		setUserImage();
 
 	}
-	public AnchorPane getPage() { return page; }
-
-	public Canvas getMapView() { return mapView; }
-
 
 	public AnchorPane getForItem() { return forItem; }
 
 
-	public ImageView getUserImage() { return userImage; }
-
 	public ProgressBar getEnergy() { return energy; }
 
-	public ImageView getCoinIcon() { return coinIcon; }
 
 	public Label getCoin() { return coin; }
 
@@ -232,19 +221,6 @@ public class View {
 
 	public Button getCloseMyBag() { return closeMyBag; }
 
-	public AnchorPane getForEntity() {
-		return forEntity;
-	}
-
-	public double getTileWidth() {
-		return tileWidth;
-	}
-
-
-	public double getTileHeight() {
-		return tileHeight;
-	}
-
 
 	public void showBag() {
 		chatView.setVisible(false);
@@ -277,7 +253,7 @@ public class View {
 			@Override
 			public void handle(KeyEvent k) {
 				System.out.println(k.getCode().getName());
-				directions.add(k.getCode().getName());
+				operations.add(k.getCode().getName());
 				System.out.println("add: "+k.getCode().getName());
 			}
 
@@ -290,31 +266,25 @@ public class View {
 		TimerTask timerTask = new TimerTask() {
 			@Override
 			public void run() {
-				int size = directions.size();
-				//System.out.println(size);
+				int size = operations.size();
 				if (size>0){
-					String action = directions.get(0);
+					String action = operations.get(0);
 					try {
 						if(action.equals("A") || action.equals("D")||action.equals("W")|| action.equals("S")
 								||action.equals("Left") || action.equals("Right")||action.equals("Up")|| action.equals("Down")) {
 							System.out.println("view keyEvent: "+ action);
 							moveCommand.excute(action);
-							directions.remove(action);
+							operations.remove(action);
 						}
-						/*else if (action.equals("o") || action.equals("O")){
-							System.out.println("view keyEvent: "+ action);
-							openDoorCommand.excute();
-							directions.remove(action);
-						}*/
 						else if(action.equals("Enter")){
 							System.out.println("enter key envent");
 							pickUpCommand.execute();
 							openDoorCommand.excute();
 							reactToCommand.execute();
-							directions.remove(action);
+							operations.remove(action);
 						}
 						else{
-							directions.remove(action);
+							operations.remove(action);
 						}
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -362,7 +332,7 @@ public class View {
 
 	}
 
-	public ImageView drawClickable(String fileName, Coordinate position, Boolean isItemTile) {
+	public ImageView drawInteractive(String fileName, Coordinate position, Boolean isItemTile) {
 		tileWidth=mapView.getWidth()/10;
 		tileHeight = mapView.getHeight()/10;
 		//create ImageView  to each of the items

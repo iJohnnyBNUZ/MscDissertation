@@ -15,6 +15,7 @@ public class WriteFile {
 			Writer writer =  new FileWriter(filePath);
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			gson.toJson(jsonArray, writer);
+			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -1,8 +1,8 @@
 package Controller.Command;
 
-import Controller.PostController;
-import Controller.Controller;
 import Controller.ClientMediator;
+import Controller.Controller;
+import Controller.PostController;
 import Network.Events.PostEvent;
 
 public class PostCommand implements Command {

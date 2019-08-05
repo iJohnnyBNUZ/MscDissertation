@@ -4,10 +4,10 @@ import Controller.ClientMediator;
 import Model.Location.Coordinate;
 import Model.Location.Location;
 import Utils.Observer;
+import javafx.concurrent.Task;
 
 import java.util.HashMap;
 import java.util.Map;
-import javafx.concurrent.Task;
 
 public class LocationObserver implements Observer {
 

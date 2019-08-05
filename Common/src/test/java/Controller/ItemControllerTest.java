@@ -1,20 +1,16 @@
 package Controller;
 
-import Controller.GameMediator;
-import Controller.ItemController;
-//import Controller.ServerMediator;
 import Model.Entity.Entity;
-import Model.Entity.User;
-import Model.Location.Coordinate;
 import Model.Location.Location;
 import Model.World;
 import org.junit.Before;
 import org.junit.Test;
 
-
 import java.util.HashMap;
 
 import static org.junit.Assert.assertEquals;
+
+//import Controller.ServerMediator;
 
 public class ItemControllerTest extends BaseTest {
     GameMediator gameMediator = null;

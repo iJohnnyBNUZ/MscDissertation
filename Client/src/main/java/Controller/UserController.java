@@ -1,6 +1,10 @@
 package Controller;
 
 import Model.Entity.User;
+import Model.Location.Coordinate;
+import Model.Location.Location;
+import Network.Events.LoginEvent;
+import javafx.concurrent.Task;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -8,6 +12,8 @@ import java.util.Objects;
 public class UserController implements Controller {
 
 	private ClientMediator clientMediator;
+	private String type;
+	private String uName;
 	
 	public UserController(ClientMediator clientMediator){
 		
@@ -23,36 +29,66 @@ public class UserController implements Controller {
 	}
 
 	public void startGame(String type, String uName, String IP) throws IOException, ClassNotFoundException {
-		if(clientMediator.getClientUpdater().connectToServer(IP)) {
-			Boolean result = isUserExist(uName);
-			if(Objects.equals(type, "new")) {
-				if(result) {
-					System.out.println("User is exist, please use another name!");
-					clientMediator.getIndexView().showMessage("User is exist, please use another name!");
-				}else {
-					System.out.println("Create new user," + uName);
-					clientMediator.setUserName(uName);
-					clientMediator.enterGame();
-					clientMediator.getClientUpdater().login("new",uName);
-
-				}
-			} else if(Objects.equals(type, "continue")) {
-				if(result) {
-					System.out.println("Continue the game:  "+ uName +" "+IP);
-					clientMediator.setUserName(uName);
-					clientMediator.enterGame();
-					clientMediator.getClientUpdater().login("continue",uName);
-
-				}else {
-					System.out.println("User is not exist, please try again!");
-					clientMediator.getIndexView().showMessage("User is not exist, please try again!");
-				}
-			}
-		}else {
+		this.type = type;
+		this.uName = uName;
+		if (clientMediator.getClientUpdater().connectToServer(IP)) {
+			clientMediator.getClientUpdater().getWorld();
+		} else {
 			clientMediator.getIndexView().showMessage("Cannot Connect to the server");
 		}
 	}
-	
+
+	public void enterGame() throws IOException, ClassNotFoundException{
+		Task<Void> progressTask = new Task<Void>(){
+			boolean result = false;
+			@Override
+			protected Void call() throws Exception {
+				result = isUserExist(uName);
+				return null;
+			}
+
+			@Override
+			protected void succeeded() {
+				super.succeeded();
+				if(type.equals("new")) {
+					if(!result){
+						clientMediator.setUserName(uName);
+						try {
+							clientMediator.getClientUpdater().login(uName);
+							clientMediator.enterGame();
+						} catch (IOException e) {
+							e.printStackTrace();
+						} catch (ClassNotFoundException e) {
+							e.printStackTrace();
+						}
+					}else{
+						clientMediator.getIndexView().showMessage("Username is exist!");
+					}
+				}else if (type.equals("continue")) {
+					if (result){
+						clientMediator.setUserName(uName);
+						try {
+							clientMediator.getClientUpdater().login(uName);
+							clientMediator.enterGame();
+						} catch (IOException e) {
+							e.printStackTrace();
+						} catch (ClassNotFoundException e) {
+							e.printStackTrace();
+						}
+					}else{
+						clientMediator.getIndexView().showMessage("Username is not exist!");
+					}
+				}
+			}
+
+		};
+
+		new Thread(progressTask).start();
+
+
+
+
+	}
 
 	public Boolean isUserExist(String uName) {
 		boolean result = false;

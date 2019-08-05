@@ -1,16 +1,15 @@
 package Controller;
 
-import Model.Entity.Shop;
 import Model.Entity.User;
 import Model.Item.Food;
 import Model.Item.Key;
-import Model.Location.Location;
 import Model.World;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
+
+import static org.junit.Assert.assertEquals;
 
 public class TransactionMessageControllerTest {
 

@@ -1,9 +1,9 @@
 package Controller.Command;
 
-import java.io.IOException;
-
 import Controller.Controller;
 import Controller.UserController;
+
+import java.io.IOException;
 
 public class StartGameCommand implements Command {
 		private UserController userController = null;

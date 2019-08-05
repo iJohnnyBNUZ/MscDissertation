@@ -1,8 +1,5 @@
 package Controller;
 
-import Controller.Controller;
-import Controller.GameMediator;
-import Controller.ReactToController;
 import Model.Entity.Entity;
 import Model.Entity.NPC;
 

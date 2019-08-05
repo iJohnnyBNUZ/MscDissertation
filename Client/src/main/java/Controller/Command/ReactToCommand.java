@@ -1,7 +1,7 @@
 package Controller.Command;
 
-import Controller.Controller;
 import Controller.ClientMediator;
+import Controller.Controller;
 import Controller.ReactToController;
 import Network.Events.ReactToEvent;
 

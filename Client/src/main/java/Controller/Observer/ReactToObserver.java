@@ -1,7 +1,6 @@
 package Controller.Observer;
 
 import Controller.ClientMediator;
-import Controller.ReactToController;
 import Model.Entity.Entity;
 import Model.Entity.NPC;
 import Model.Entity.Shop;
