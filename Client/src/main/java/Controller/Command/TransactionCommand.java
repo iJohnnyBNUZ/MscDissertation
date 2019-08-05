@@ -3,14 +3,12 @@ package Controller.Command;
 import Controller.ClientMediator;
 import Controller.Controller;
 import Controller.ItemController;
-import Controller.TransactionMessageController;
 import Network.Events.TransactionEvent;
 
 import java.util.HashMap;
 
 public class TransactionCommand {
 
-    private TransactionMessageController transactionMessageController = null;
     private ItemController itemController = null;
     private ClientMediator clientMediator = null;
     private String userID;

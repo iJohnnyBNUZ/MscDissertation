@@ -32,7 +32,6 @@ class LoadLocation {
 			addTiles(location, locationObject.get("tiles").getAsJsonArray());
 			addItems(location, locationObject.get("items").getAsJsonArray());
 			addEntities(location, locationObject.get("entities").getAsJsonArray());
-
 			return location;
 		}
 		return null;

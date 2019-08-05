@@ -26,6 +26,7 @@ public class SaveWorld {
         for (Location location : serverMediator.getWorld().getLocations()) {
             savedLocations.add(serverMediator.getLocationSaver().saveLocationAsJson(location));
         }
+        System.out.println("Saving locations");
         writeFile.writeJsonArray(savedLocations, saveDirectoryPath + "/Locations/Locations.json");
     }
 
@@ -34,6 +35,7 @@ public class SaveWorld {
         for (Entity user : serverMediator.getWorld().getEntities()) {
             savedUsers.add(serverMediator.getEntitySaver().saveEntityAsJson(user));
         }
-        writeFile.writeJsonArray(savedUsers, saveDirectoryPath + "/Users/Users.json");
+        System.out.println("Saving users");
+        writeFile.writeJsonArray(savedUsers, saveDirectoryPath + "/Entities/Entities.json");
     }
 }
