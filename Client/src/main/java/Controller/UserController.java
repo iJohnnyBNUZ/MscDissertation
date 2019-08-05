@@ -25,30 +25,11 @@ public class UserController implements Controller {
 	public void startGame(String type, String uName, String IP) throws IOException, ClassNotFoundException {
 		if(clientMediator.getClientUpdater().connectToServer(IP)) {
 			Boolean result = isUserExist(uName);
-			if(Objects.equals(type, "new")) {
-				if(result) {
-					System.out.println("User is exist, please use another name!");
-					clientMediator.getIndexView().showMessage("User is exist, please use another name!");
-				}else {
-					System.out.println("Create new user," + uName);
-					clientMediator.setUserName(uName);
-					clientMediator.enterGame();
-					clientMediator.getClientUpdater().login("new",uName);
-
-				}
-			} else if(Objects.equals(type, "continue")) {
-				if(result) {
-					System.out.println("Continue the game:  "+ uName +" "+IP);
-					clientMediator.setUserName(uName);
-					clientMediator.enterGame();
-					clientMediator.getClientUpdater().login("continue",uName);
-
-				}else {
-					System.out.println("User is not exist, please try again!");
-					clientMediator.getIndexView().showMessage("User is not exist, please try again!");
-				}
-			}
-		}else {
+			clientMediator.setUserName(uName);
+			clientMediator.enterGame();
+			clientMediator.getClientUpdater().login(uName);
+		}
+		else {
 			clientMediator.getIndexView().showMessage("Cannot Connect to the server");
 		}
 	}

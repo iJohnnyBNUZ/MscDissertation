@@ -87,12 +87,30 @@ public class ServerListener extends Thread implements Runnable {
 		else if(input instanceof TransactionEvent) {
 			handleTransactionEvent((TransactionEvent) input);
 		}
+		else if (input instanceof LoginEvent) {
+			handleLoginEvent((LoginEvent) input);
+		}
 		else if (input instanceof SaveGameEvent) {
 			serverMediator.saveWorld();
 		}
 		else {
 			System.out.println("Unknown object type");
 		}
+	}
+
+	private void handleLoginEvent(LoginEvent input) {
+		System.out.println("New user being created " + input.getEntityID());
+		for(Entity entity : serverMediator.getWorld().getEntities()) {
+			if (entity.getEntityID().equals(input.getEntityID())) {
+				System.out.println("User exists");
+				sendWorld();
+				return;
+			}
+		}
+		System.out.println("User does not exist");
+		serverMediator.getWorld().addEntity(new User(input.getEntityID()));
+		serverMediator.getWorld().initEntityLocation(input.getEntityID());
+		sendWorld();
 	}
 
 	private void handleOpenDoorEvent(OpenDoorEvent input) {

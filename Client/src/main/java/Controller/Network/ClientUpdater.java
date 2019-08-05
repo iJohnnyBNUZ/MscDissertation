@@ -2,6 +2,7 @@ package Controller.Network;
 
 import Controller.ClientMediator;
 import Model.Entity.User;
+import Network.Events.LoginEvent;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -90,14 +91,9 @@ public class ClientUpdater implements Runnable {
 		}
 	}
 
-	public void login(String type, String uName) throws IOException, ClassNotFoundException {
+	public void login(String uName) throws IOException, ClassNotFoundException {
 		this.userName = uName;
-		if(type.equals("new")) {
-			createUser(uName);
-		}else if(type.equals("continue")) {
-			((User) clientMediator.getWorld().getEntity(uName)).setOnline(true);
-			objectOutputStream.writeObject(clientMediator.getWorld().getEntity(uName));
-		}
+		sendMessageToServer(new LoginEvent(uName));
 	}
 
 	private void createUser(String userName) {
