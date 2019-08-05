@@ -99,36 +99,42 @@ public class ItemController implements Controller{
         return null;
     }
 
-    public void exchange(String buyerID,String sellerID, HashMap<String, Integer> buyList, int value,String userID) {
+    public String exchange(String buyerID,String sellerID, HashMap<String, Integer> buyList, int value,String userID) {
 
         Location currLocation = this.gameMediator.getWorld().getEntityLocation(userID);
 
         Entity buyer = null;
+        Entity seller = null;
         for(Map.Entry<Entity, Coordinate> entry : currLocation.getEntities().entrySet()){
             if(entry.getKey().getEntityID().equals(buyerID)){
                 buyer = entry.getKey();
-                break;
+//                break;
             }
-        }
-        if (buyer == null)
-            return;
-
-        Entity seller = null;
-        for(Map.Entry<Entity, Coordinate> entry : currLocation.getEntities().entrySet()){
             if(entry.getKey().getEntityID().equals(sellerID)){
                 seller = entry.getKey();
-                break;
+//                break;
             }
+
+            //find out seller and buyer
+            if (seller != null && buyer != null)
+                break;
         }
+
+        if (buyer == null)
+            return "Cannot find buyer";
         if (seller == null)
-            return;
+            return "Cannot find seller";
+
+        if(buyer.getCoin() < value){
+            return "User donesn't have enough money";
+        }
 
         //exchange items
         for (Map.Entry<String, Integer> entry : buyList.entrySet()) {
 
             List<Item> bag = seller.getBag();
             if (bag == null)
-                return;
+                return "Cannot get bag";
 
             int sellNum = 0;
             for(int i = 0; i < bag.size(); i++){
@@ -155,6 +161,8 @@ public class ItemController implements Controller{
 
         //seller increase money
         seller.increaseCoin(value);
+
+        return null;
     }
 
     public void eat(String userID,String itemID){
