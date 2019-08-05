@@ -102,9 +102,9 @@ public class ClientMediator implements GameMediator {
 		this.world.setObserverSet(observerSet);
 		for(Location location: this.world.getLocations()){
 			location.setObserverSet(observerSet);
-		}
-		for (Entity entity: this.world.getEntities()){
-			entity.setObserverSet(observerSet);
+			for(Entity entity: location.getEntities().keySet()){
+				entity.setObserverSet(observerSet);
+			}
 		}
 		this.haveObservers=true;
 		System.out.println("initial finished!!!!!!!!!!!!!!!!");
