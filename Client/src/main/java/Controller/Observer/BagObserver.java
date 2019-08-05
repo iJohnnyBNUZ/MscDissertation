@@ -1,8 +1,6 @@
 package Controller.Observer;
 
 import Controller.ClientMediator;
-import Model.Location.Coordinate;
-import Model.Location.Location;
 import Utils.Observer;
 import javafx.concurrent.Task;
 

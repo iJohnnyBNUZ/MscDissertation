@@ -1,12 +1,10 @@
 package Model.Location;
 
 import Model.Entity.Entity;
-import Model.Entity.User;
 import Model.Item.Item;
 import Utils.Observable;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 

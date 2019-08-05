@@ -1,18 +1,16 @@
 package Controller.Observer;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import Controller.ClientMediator;
 import Model.Entity.Entity;
-import Model.Entity.NPC;
-import Model.Entity.Shop;
 import Model.Entity.User;
 import Model.Location.Coordinate;
 import Model.Location.Location;
 import Utils.Observer;
 import View.EntityView;
 import javafx.concurrent.Task;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class EntityObserver implements Observer {
 	private ClientMediator clientMediator;

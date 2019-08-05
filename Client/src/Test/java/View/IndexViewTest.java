@@ -1,21 +1,15 @@
 package View;
 
-import View.*;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
-import javafx.scene.input.KeyCode;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
-
-import org.testfx.api.FxAssert;
-import org.testfx.assertions.api.Assertions;
-import org.testfx.framework.junit.ApplicationTest;
-
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+import org.junit.Test;
+import org.testfx.api.FxAssert;
+import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.control.LabeledMatchers;
 
 import java.net.URL;

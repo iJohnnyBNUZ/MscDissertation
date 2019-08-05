@@ -1,6 +1,7 @@
 package Controller.Network;
 
 import Controller.ClientMediator;
+import Controller.UserController;
 import Model.World;
 import Network.Events.*;
 
@@ -10,6 +11,7 @@ import java.io.ObjectInputStream;
 public class ClientListener implements Runnable {
 
 	private ObjectInputStream objectInputStream;
+	private UserController userController;
 
 	private boolean canRun = true;
 	private ClientMediator clientMediator;
@@ -20,6 +22,7 @@ public class ClientListener implements Runnable {
 
 	ClientListener(ClientMediator clientMediator){
 		this.clientMediator = clientMediator;
+		this.userController = clientMediator.getUserController();
 	}
 
 	void connectToServer(ObjectInputStream objectInputStream) {
@@ -122,8 +125,10 @@ public class ClientListener implements Runnable {
 		System.out.println("No new events");
 	}
 
-	private void updateWorld(World world) {
+	private void updateWorld(World world) throws IOException, ClassNotFoundException{
 		System.out.println("Got new world: " + world.getEntities());
 		clientMediator.setWorld(world);
+		if(clientMediator.getUserName()==null)
+			userController.enterGame();
 	}
 }

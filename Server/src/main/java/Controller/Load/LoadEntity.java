@@ -7,7 +7,6 @@ import Model.Entity.Shop;
 import Model.Entity.User;
 import Model.Item.Coin;
 import Model.Item.Food;
-import Model.Item.Item;
 import Model.Item.Key;
 import Model.Location.Coordinate;
 import com.google.gson.JsonArray;

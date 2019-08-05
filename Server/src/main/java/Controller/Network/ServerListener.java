@@ -103,6 +103,7 @@ public class ServerListener extends Thread implements Runnable {
 		for(Entity entity : serverMediator.getWorld().getEntities()) {
 			if (entity.getEntityID().equals(input.getEntityID())) {
 				System.out.println("User exists");
+				((User)entity).setOnline(true);
 				sendWorld();
 				return;
 			}

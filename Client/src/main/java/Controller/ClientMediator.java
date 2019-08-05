@@ -49,7 +49,6 @@ public class ClientMediator implements GameMediator {
 
 	private LocationController locationController =null;
 	private ItemController itemController= null;
-	//private CommunicationController communicationController= null;
 	private UserController userController= null;
 	private TransactionMessageController transactionMessageController = null;
 	private PostController postController = null;
@@ -67,8 +66,6 @@ public class ClientMediator implements GameMediator {
 	private PutDownCommand putDownCommand = null;
 	private EatCommand eatCommand = null;
 	private TransactionCommand transactionCommand = null;
-	//private BuyCommand buyCommand = null;
-	//private SellCommand sellCommand = null;
 	private CloseReactToCommand closeReactToCommand = null;
 	private ReactToCommand reactToCommand = null;
 	private PostCommand postCommand = null;
@@ -95,6 +92,8 @@ public class ClientMediator implements GameMediator {
 		this.clientUpdater = clientUpdater;
 	}
 
+	public UserController getUserController(){return userController;}
+
 	public World getWorld() {
 		return world;
 	}
@@ -113,7 +112,8 @@ public class ClientMediator implements GameMediator {
 
 	/**
 	 * If the world is changed, the observers will be notified to update views.
-	 * If the user have not been created, the view won't be updated.
+	 * If the user have not been created, the view won't be updated. The received world is used for username checking.
+	 * If the world contain the user, bind the observers to the observable classes.
 	 * @param newWorld the world received from the server 
 	 */
 	public void setWorld(World newWorld) {
@@ -148,15 +148,12 @@ public class ClientMediator implements GameMediator {
 
 	public void setReactResult(String reactResult) { this.reactResult = reactResult; }
 	/**
-	 * Tell all observers to update views.
+	 *Tell all observers to update views.
 	 */
 	public void notifyObservers() {
-		/*for(Observer observer: observers) {
+		for(Observer observer: observerSet) {
 			observer.update();
-		}*/
-		locationObserver.update();
-		itemObserver.update();
-		entityObserver.update();
+		}
 	}
 
 	public IndexView getIndexView() {
@@ -174,11 +171,7 @@ public class ClientMediator implements GameMediator {
 	public void setView(View view) {
 		this.view = view;
 	}
-	
-	
-	public Stage getPrimaryStage() {
-		return primaryStage;
-	}
+
 
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
@@ -189,111 +182,53 @@ public class ClientMediator implements GameMediator {
 		return locationView;
 	}
 
-	public void setLocationView(LocationView location) {
-		this.locationView = location;
-	}
-
 	public BagView getBagView() {
 		return bagView;
 	}
 
-	public void setBagView(BagView bag) {
-		this.bagView = bag;
-	}
 
 	public PostView getPostView() {
 		return postView;
 	}
 
-	public void setPostView(PostView chat) {
-		this.postView = chat;
-	}
 
 	public EntityView getEntityView() {
 		return entityView;
-	}
-
-	public void setEntityView(EntityView entity) {
-		this.entityView = entity;
 	}
 
 	public ItemView getItemView() {
 		return itemView;
 	}
 
-	public void setItemView(ItemView item) {
-		this.itemView = item;
-	}
 
 	public NPCView getNPCView() {
 		return npsView;
 	}
 
-	public void setNPCView(NPCView nps) {
-		this.npsView = nps;
-	}
 
-	public NPCView getNpsView() {
-		return npsView;
-	}
 
-	public void setNpsView(NPCView npsView) {
-		this.npsView = npsView;
-	}
 
 	public TransactionView getTransactionView() {
 		return transactionView;
-	}
-
-	public void setTransactionView(TransactionView transactionView) {
-		this.transactionView = transactionView;
 	}
 
 	public LocationController getLocationController() {
 		return locationController;
 	}
 
-	public void setLocationController(LocationController locationController) {
-		this.locationController = locationController;
-	}
+	public ReactToController getReactToController(){return  reactToController;}
+
+
 
 	public ItemController getItemController() {
 		return itemController;
 	}
 
-	public void setItemController(ItemController itemController) {
-		this.itemController = itemController;
-	}
-
-	/*
-	public CommunicationController getCommunicationController() {
-		return communicationController;
-	}
-
-	public void setCommunicationController(CommunicationController communicationController) {
-		this.communicationController = communicationController;
-	}
-	*/
 
 	public PostController getPostController() {
 		return postController;
 	}
 
-	public void setPostController(PostController postController){
-		this.postController = postController;
-	}
-
-	public UserController getUserController() {
-		return userController;
-	}
-
-	public ReactToController getReactToController() {
-		return reactToController;
-	}
-
-	public void setReactToController(ReactToController reactToController){
-		this.reactToController = reactToController;
-	}
 
 
 	public void setUserController(UserController userController) {
@@ -368,75 +303,6 @@ public class ClientMediator implements GameMediator {
 		return transactionCommand;
 	}
 
-	public void setTransactionCommand(TransactionCommand transactionCommand){
-		this.transactionCommand = transactionCommand;
-	}
-
-	/*
-	public BuyCommand getBuyCommand() {
-		return buyCommand;
-	}
-
-	public void setBuyCommand(BuyCommand buyCommand) {
-		this.buyCommand = buyCommand;
-	}
-
-	public SellCommand getSellCommand() {
-		return sellCommand;
-	}
-
-	public void setSellCommand(SellCommand sellCommand) {
-		this.sellCommand = sellCommand;
-	}
-	*/
-
-	public CloseReactToCommand getCloseReactToCommand() {
-		return closeReactToCommand;
-	}
-
-	public void setCloseReactToCommand(CloseReactToCommand closeReactToCommand){
-		this.closeReactToCommand = closeReactToCommand;
-	}
-
-	public ReactToCommand getReactToCommand() {
-		return reactToCommand;
-	}
-
-	public void setReactToCommand(ReactToCommand reactToCommand) {
-		this.reactToCommand = reactToCommand;
-	}
-
-	public PostCommand getPostCommand() {
-		return postCommand;
-	}
-
-	public void setPostCommand(PostCommand postCommand) {
-		this.postCommand = postCommand;
-	}
-
-	public StartGameCommand getStartGameCommand() {
-		return startGameCommand;
-	}
-
-	public void setStartGameCommand(StartGameCommand startGameCommand) {
-		this.startGameCommand = startGameCommand;
-	}
-
-	public OpenDoorCommand getOpenDoorCommand() {
-		return openDoorCommand;
-	}
-
-	public void setOpenDoorCommand(OpenDoorCommand openDoorCommand) {
-		this.openDoorCommand = openDoorCommand;
-	}
-
-	public SaveGameCommand getSaveGameCommand() {
-		return saveGameCommand;
-	}
-
-	public void setSaveGameCommand(SaveGameCommand saveGameCommand) {
-		this.saveGameCommand = saveGameCommand;
-	}
 
 	public LinkedList<Event> getEventQueue() {
 		return eventQueue;
@@ -449,7 +315,6 @@ public class ClientMediator implements GameMediator {
 	public void initialController() {
 		this.locationController = new LocationController(this);
 		this.itemController = new ItemController(this);
-		//this.communicationController = new CommunicationController(this);
 		this.userController = new UserController(this);
 		this.transactionMessageController = new TransactionMessageController(this);
 		this.postController = new PostController(this);
@@ -478,8 +343,6 @@ public class ClientMediator implements GameMediator {
 		this.pickUpCommand = new PickUpCommand(itemController,this);
 		this.reactToCommand = new ReactToCommand(reactToController,this);
 		this.transactionCommand = new TransactionCommand(transactionMessageController,itemController,this);
-		//this.buyCommand = new BuyCommand(transactionMessageController,itemController,this);
-		//this.sellCommand = new SellCommand(transactionMessageController,itemController,this);
 		this.closeReactToCommand = new CloseReactToCommand(this);
 		this.postCommand = new PostCommand(postController,this);
 		this.saveGameCommand = new SaveGameCommand(this);
@@ -519,14 +382,10 @@ public class ClientMediator implements GameMediator {
 		view.setOpenDoorCommand(openDoorCommand);
 		view.setSaveGameCommand(saveGameCommand);
 		view.setLogOutCommand(logOutCommand);
-		itemView.setPickUpCommand(pickUpCommand);
-		entityView.setCommunicationCommand(reactToCommand);
 		bagView.setEatCommand(eatCommand);
 		bagView.setPutDownCommand(putDownCommand);
 		postView.setPostCommand(postCommand);
 		transactionView.setTransactionCommand(transactionCommand);
-		//tansactionView.setBuyCommand(buyCommand);
-		//tansactionView.setSellCommand(sellCommand);
 		transactionView.setCloseReactToCommand(closeReactToCommand);
 		npsView.setCloseReactToCommand(closeReactToCommand);
 	}

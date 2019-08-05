@@ -1,23 +1,18 @@
 package View;
 
 
-import java.util.Map;
-
-import Controller.Command.Command;
-import Controller.Command.ReactToCommand;
 import Model.Location.Coordinate;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 
+import java.util.Map;
+
 public class EntityView {
 	
-	private View view = null;
-	private ProgressBar energy = null;
-	private Label coin = null;
-	private ReactToCommand communication= null;
-	private int row=10;
-	private int column=10;
+	private View view ;
+	private ProgressBar energy;
+	private Label coin;
 	
 	public EntityView(View view) {
 		energy = view.getEnergy();
@@ -34,11 +29,11 @@ public class EntityView {
 
 		if(npcs.size() <= 100) {
 			for(String name: npcs.keySet()) {
-				ImageView imgView = view.drawClickable("npc", npcs.get(name), false);
+				ImageView imgView = view.drawInteractive("npc", npcs.get(name), false);
 				imgView.setId(name);
 			}
 		}else {
-			System.out.println("Wrong tiles size");
+			view.showAlert("Wrong tiles size");
 		}
 		
 	}
@@ -47,13 +42,13 @@ public class EntityView {
 		System.out.println("update usersssssssssssssa");
 		if(users.size() <= 100) {
 			for(String name: users.keySet()) {
-				ImageView imgView = view.drawClickable(name, users.get(name), false);
+				ImageView imgView = view.drawInteractive(name, users.get(name), false);
 				imgView.setId(name);
 				System.out.println(imgView.getId());
 			}
 				
 		}else {
-			System.out.println("Wrong tiles size");
+			view.showAlert("Wrong tiles size");
 		}
 	}
 		
@@ -64,12 +59,12 @@ public class EntityView {
 		if(stores.size() <= 100) {
 			for(String name: stores.keySet()) {
 
-				ImageView imgView = view.drawClickable("store", stores.get(name), false);
+				ImageView imgView = view.drawInteractive("store", stores.get(name), false);
 				imgView.setId(name);
 				
 			}
 		}else {
-			System.out.println("Wrong tiles size");
+			view.showAlert("Wrong tiles size");
 		}
 		
 	}
@@ -80,7 +75,7 @@ public class EntityView {
 			energy.setProgress((double)energyPoints/100);
 			
 		}else {
-			System.out.println("Wrong energy value!");
+			view.showAlert("Wrong energy value!");
 		}
 		
 	}
@@ -91,13 +86,9 @@ public class EntityView {
 			coin.setText(""+coins);
 			
 		}else {
-			System.out.println("Wrong coin value!");
+			view.showAlert("Wrong coin value!");
 		}
 		
-	}
-	
-	public void setCommunicationCommand(Command command) {
-		communication = (ReactToCommand) command;
 	}
 	
 }

@@ -1,8 +1,8 @@
 package Controller.Command;
 
+import Controller.ClientMediator;
 import Controller.Controller;
 import Controller.ItemController;
-import Controller.ClientMediator;
 import Network.Events.EatEvent;
 
 public class EatCommand implements Command {

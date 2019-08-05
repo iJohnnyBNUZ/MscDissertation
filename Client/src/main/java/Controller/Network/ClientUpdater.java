@@ -48,7 +48,6 @@ public class ClientUpdater implements Runnable {
 			ex.printStackTrace();
 			canRun=false;
 		}
-
 		return canRun;
 	}
 
@@ -94,6 +93,10 @@ public class ClientUpdater implements Runnable {
 	public void login(String uName) throws IOException, ClassNotFoundException {
 		this.userName = uName;
 		sendMessageToServer(new LoginEvent(uName));
+	}
+
+	public void getWorld(){
+		sendMessageToServer("getWorld");
 	}
 
 	private void createUser(String userName) {
