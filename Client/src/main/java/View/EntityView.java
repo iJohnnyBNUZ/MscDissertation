@@ -25,7 +25,7 @@ public class EntityView {
 		view.initialForEntity();
 	}
 
-	public void updateNPC(final Map<String,Coordinate> npcs) {
+	public void updateNPC(Map<String,Coordinate> npcs) {
 
 		if(npcs.size() <= 100) {
 			for(String name: npcs.keySet()) {

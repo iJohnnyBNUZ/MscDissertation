@@ -11,7 +11,7 @@ public class PickUpCommand implements Command {
 
 	public PickUpCommand(Controller itemController2, ClientMediator clientMediator) {
 		this.itemController = (ItemController) itemController2;
-		this.clientMediator = (ClientMediator) clientMediator;
+		this.clientMediator = clientMediator;
 	}
 	public void execute() {
 		String uName = clientMediator.getUserName();
