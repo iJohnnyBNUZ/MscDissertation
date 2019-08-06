@@ -14,9 +14,17 @@ public class NPC extends Entity {
 			notifyObserver();
 			return "increase 20 energy";
 		}else{
-			entity.decreaseEnergy(20);
-			notifyObserver();
-			return "decrease 20 energy";
+			if(entity.getEnergy()<20){
+				entity.setEnergy(0);
+				notifyObserver();
+				return "lost your remaining energy";
+			}
+			else{
+				entity.decreaseEnergy(20);
+				notifyObserver();
+				return "decrease 20 energy";
+			}
+
 		}
 
 	}
