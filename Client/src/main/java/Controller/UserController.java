@@ -31,11 +31,17 @@ public class UserController implements Controller {
 	public void startGame(String type, String uName, String IP) throws IOException, ClassNotFoundException {
 		this.type = type;
 		this.uName = uName;
-		if (clientMediator.getClientUpdater().connectToServer(IP)) {
+		if (clientMediator.getClientUpdater().getisConnectReady()!=2){
+			if (clientMediator.getClientUpdater().connectToServer(IP)) {
+				clientMediator.getClientUpdater().getWorld();
+
+			} else {
+				clientMediator.getIndexView().showMessage("Cannot Connect to the server");
+			}
+		}else{
 			clientMediator.getClientUpdater().getWorld();
-		} else {
-			clientMediator.getIndexView().showMessage("Cannot Connect to the server");
 		}
+
 	}
 
 	public void enterGame() throws IOException, ClassNotFoundException{
@@ -66,14 +72,19 @@ public class UserController implements Controller {
 					}
 				}else if (type.equals("continue")) {
 					if (result){
-						clientMediator.setUserName(uName);
-						try {
-							clientMediator.getClientUpdater().login(uName);
-							clientMediator.enterGame();
-						} catch (IOException e) {
-							e.printStackTrace();
-						} catch (ClassNotFoundException e) {
-							e.printStackTrace();
+
+						if (((User)clientMediator.getWorld().getEntity(uName)).getOnline())
+							clientMediator.getIndexView().showMessage("this user is already online");
+						else{
+							clientMediator.setUserName(uName);
+							try {
+								clientMediator.getClientUpdater().login(uName);
+								clientMediator.enterGame();
+							} catch (IOException e) {
+								e.printStackTrace();
+							} catch (ClassNotFoundException e) {
+								e.printStackTrace();
+							}
 						}
 					}else{
 						clientMediator.getIndexView().showMessage("Username is not exist!");

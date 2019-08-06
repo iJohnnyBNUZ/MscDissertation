@@ -2,8 +2,10 @@ package Controller.Save;
 
 import Controller.ServerMediator;
 import Model.Entity.Entity;
+import Model.Item.Food;
 import Model.Item.Item;
 import Model.Location.Coordinate;
+import Model.Location.Door;
 import Model.Location.Location;
 import Model.Location.Tile;
 import com.google.gson.JsonArray;
@@ -50,6 +52,10 @@ public class SaveLocation {
 			savedTile.addProperty("energyCost", tile.getValue().getEnergyCost());
 			savedTile.addProperty("xCoordinate", tile.getKey().getXCoordinate());
 			savedTile.addProperty("yCoordinate", tile.getKey().getYCoordinate());
+			if (tile.getValue().getTerrain().equals("door")) {
+				savedTile.addProperty("currentLocationID", ((Door) tile.getValue()).getCurrentLocationId());
+				savedTile.addProperty("nextLocationID", ((Door) tile.getValue()).getNextLocationId());
+			}
 			tiles.add(savedTile);
 		}
 		return tiles;
@@ -68,6 +74,11 @@ public class SaveLocation {
 		savedItem.addProperty("id", item.getItemID());
 		savedItem.addProperty("type", item.getType());
 		savedItem.addProperty("value", item.getCoinValue());
+		savedItem.addProperty("isCollectible", item.isCollectible());
+		savedItem.addProperty("isEdible", item.isEdible());
+		if (item.getType().equals("food")) {
+			savedItem.addProperty("energy", ((Food)item).getEnergy());
+		}
 		return savedItem;
 	}
 }

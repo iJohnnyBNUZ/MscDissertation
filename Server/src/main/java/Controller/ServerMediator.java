@@ -26,7 +26,7 @@ public class ServerMediator implements GameMediator{
 		Scanner scanner = new Scanner(System.in);
 		String load = scanner.nextLine();
 		if (load.charAt(0) == 'y') {
-			startGame("GameFiles/LoadGame");
+			startGame("GameFiles/SavedGames");
 		}
 		else {
 			startGame("GameFiles/NewGame");

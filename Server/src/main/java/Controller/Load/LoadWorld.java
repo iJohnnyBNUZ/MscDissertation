@@ -21,13 +21,12 @@ public class LoadWorld {
 	public void loadLocations() throws IOException {
 		File[] fileList = getFileList(filePath + "/Locations");
 		if(fileList != null) {
-			for (int i = 0; i < fileList.length; i++){
-				File child = new File(filePath + "/Locations/DefaultLocation" + i + ".json");
+			for (File child : fileList) {
 				serverMediator.getWorld().addLocation(loadLocation.buildLocation(child));
 			}
 		}
 		else {
-			System.out.println("No files in this directory");
+			System.out.println("No files in location directory");
 		}
 	}
 
@@ -35,11 +34,11 @@ public class LoadWorld {
 		File[] fileList = getFileList(filePath + "/Entities");
 		if(fileList != null) {
 			for (File child : fileList) {
-				serverMediator.getWorld().addEntity(loadEntity.buildEntity(child));
+				loadEntity.buildEntity(child);
 			}
 		}
 		else {
-			System.out.println("No files in this directory");
+			System.out.println("No files in entity directory");
 		}
 	}
 

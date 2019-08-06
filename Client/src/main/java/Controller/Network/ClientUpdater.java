@@ -20,6 +20,9 @@ public class ClientUpdater implements Runnable {
 	private ClientMediator clientMediator;
 	private ClientListener clientListener;
 
+
+	private int connectReady=0;
+
 	private String IP = "";
 	private int PORT = 0;
 
@@ -44,6 +47,8 @@ public class ClientUpdater implements Runnable {
 			ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
 			clientListener.connectToServer(objectInputStream);
 			new Thread(this).start();
+			if (connectReady !=2)
+				connectReady = 1;
 		} catch (Exception ex){
 			ex.printStackTrace();
 			canRun=false;
@@ -96,6 +101,7 @@ public class ClientUpdater implements Runnable {
 
 	public void getWorld(){
 		sendMessageToServer("getWorld");
+		connectReady = 2;
 	}
 
 	private void createUser(String userName) {
@@ -105,5 +111,10 @@ public class ClientUpdater implements Runnable {
 
 	public String getUserName() {
 		return userName;
+	}
+
+
+	public int getisConnectReady() {
+		return connectReady;
 	}
 }
