@@ -34,7 +34,7 @@ public class LocationController implements Controller{
 		}
 
 		if (user.getEnergy() <= 0){
-		    return "There is no energy!";
+		    return "There is no energy! Game Over!";
         }
 		if (entityCoordinate == null)
 			return "Cannot find user's coordinate";

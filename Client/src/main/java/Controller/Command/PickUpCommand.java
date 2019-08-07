@@ -16,9 +16,7 @@ public class PickUpCommand implements Command {
 	public void execute() {
 		String uName = clientMediator.getUserName();
 		String message=itemController.pickUp(uName);
-		if(message!=null){
-			clientMediator.getView().showAlert(message);
-		}else{
+		if(message == null){
 			clientMediator.getEventQueue().add(new PickUpEvent(clientMediator.getUserName()));
 		}
 
