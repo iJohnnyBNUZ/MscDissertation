@@ -22,7 +22,7 @@
             <TextField fx:id="IPAddress" layoutX="115.0" layoutY="90.0" text="127.0.0.1" />
             <Label fx:id="userStatus" layoutX="35.0" layoutY="173.0" prefHeight="26.0" prefWidth="250.0" text="User exists or not" />
             <Button fx:id="login" layoutX="127.0" layoutY="139.0" mnemonicParsing="false" onAction="#startGame" text="log in" />
-            <Button fx:id="login1" layoutX="200.0" layoutY="139.0" mnemonicParsing="false" onAction="#back" text="back" />
+            <Button fx:id="back" layoutX="200.0" layoutY="139.0" mnemonicParsing="false" onAction="#back" text="back" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="index" layoutX="200.0" layoutY="68.0" prefHeight="200.0" prefWidth="195.0" AnchorPane.bottomAnchor="320.0" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="200.0">
