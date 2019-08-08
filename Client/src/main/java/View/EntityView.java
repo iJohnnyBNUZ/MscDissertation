@@ -25,53 +25,77 @@ public class EntityView {
 		view.initialForEntity();
 	}
 
-	public void updateNPC(Map<String,Coordinate> npcs) {
-
+	/**
+	 * Draw the image of each npc on the user interface
+	 * @param npcs a hashmap contains the names and the coordinates of the npcs.
+	 * @return count the number of the images successfully drew.
+	 */
+	public int updateNPC(Map<String,Coordinate> npcs) {
+		int count=0;
 		if(npcs.size() <= 100) {
+
+			//iterate the key of the map
 			for(String name: npcs.keySet()) {
 				ImageView imgView = view.drawInteractive("npc", npcs.get(name), false);
-				imgView.setId(name);
+				count++;
 			}
 		}else {
-			view.showAlert("Wrong tiles size");
+			view.showAlert("Wrong npcs size");
 		}
-		
+		return count;
 	}
-	
-	public void updateUser(Map<String,Coordinate> users) {
-		System.out.println("update usersssssssssssssa");
+
+	/**
+	 * Draw the image of each user on the user interface
+	 * @param users a hashmap contains the names and the coordinates of the users.
+	 * @return count the number of the images successfully drew.
+	 */
+	public int updateUser(Map<String,Coordinate> users) {
+		int count = 0;
 		if(users.size() <= 100) {
+			//iterate the key of the map
 			for(String name: users.keySet()) {
 				ImageView imgView = view.drawInteractive(name, users.get(name), false);
-				imgView.setId(name);
-				System.out.println(imgView.getId());
+				count++;
 			}
 				
 		}else {
 			view.showAlert("Wrong tiles size");
 		}
+		return count;
 	}
-		
-		
-	
-	public void updateStore(Map<String,Coordinate> stores) {
-		
+
+
+	/**
+	 * Draw the image of each store on the user interface
+	 * @param stores a hashmap contains the names and the coordinates of the stores.
+	 * @return count the number of the images successfully drew.
+	 */
+	public int updateStore(Map<String,Coordinate> stores) {
+		int count=0;
 		if(stores.size() <= 100) {
+			//iterate the key of the map
 			for(String name: stores.keySet()) {
 
 				ImageView imgView = view.drawInteractive("store", stores.get(name), false);
-				imgView.setId(name);
+				count++;
 				
 			}
 		}else {
 			view.showAlert("Wrong tiles size");
 		}
-		
+		return count;
 	}
-	
+
+	/**
+	 * Change the value of the energy bar
+	 * @param energyPoints the energy points owned by the user
+	 */
 	public void updateEnergy(int energyPoints) {
 		
 		if(energyPoints <= 100 && energyPoints >= 0) {
+
+			//convert quantity to percentage
 			energy.setProgress((double)energyPoints/100);
 			
 		}else {
@@ -79,7 +103,11 @@ public class EntityView {
 		}
 		
 	}
-	
+
+	/**
+	 * Change the text of the label used to show the number of coins.
+	 * @param coins the number of coins owned by the user.
+	 */
 	public void updateCoin(int coins) {
 		
 		if(coins > 0) {

@@ -13,6 +13,11 @@ public class PickUpCommand implements Command {
 		this.itemController = (ItemController) itemController2;
 		this.clientMediator = clientMediator;
 	}
+
+	/**
+	 * Invoke the pickUp method in the itemController.
+	 Add the PickUpEvent to the queue if this action is processed successfully.
+	 */
 	public void execute() {
 		String uName = clientMediator.getUserName();
 		String message=itemController.pickUp(uName);

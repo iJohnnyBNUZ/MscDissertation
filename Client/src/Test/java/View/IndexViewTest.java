@@ -24,7 +24,7 @@ public class IndexViewTest extends ApplicationTest {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        URL location = View.class.getResource("/view/start.fxml");
+        URL location = View.class.getResource("/view/index.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(location);
         fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());

@@ -9,8 +9,10 @@ public class LogOutCommand implements Command{
 		this.clientMediator = clientMediator;
 	}
 
+	/**
+	 * Add LogoutEvent into the queue in clientMediator
+	 */
 	public void execute() {
 		clientMediator.getEventQueue().add(new LogoutEvent(clientMediator.getUserName()));
-		System.out.println("log out!");
 	}
 }
