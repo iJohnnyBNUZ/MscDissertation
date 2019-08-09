@@ -35,11 +35,6 @@ public class Location extends Observable implements Serializable {
         return Entities;
     }
 
-    public void setEntities(Map<Entity, Coordinate> entities) {
-        Entities = entities;
-        notifyObserver();
-    }
-
     public Location(String id) {
         this.locationID = id;
     }
@@ -80,12 +75,9 @@ public class Location extends Observable implements Serializable {
     }
 
     public void changeUserCoordinate(Entity entity, Coordinate coordinate) {
-        Map<Entity, Coordinate> entities_temp = getEntities();
-        if (entities_temp == null)
-            return;
 
-        entities_temp.put(entity, coordinate);
-        setEntities(entities_temp);
+        this.Entities.put(entity, coordinate);
+        notifyObserver();
     }
 
 }
