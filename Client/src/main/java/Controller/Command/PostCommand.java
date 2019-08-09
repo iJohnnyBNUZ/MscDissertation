@@ -7,8 +7,8 @@ import Network.Events.PostEvent;
 
 public class PostCommand implements Command {
 
-    private PostController postController = null;
-    private ClientMediator clientMediator=null;
+    private PostController postController;
+    private ClientMediator clientMediator;
 
     public PostCommand(Controller postController, ClientMediator clientMediator){
         this.postController = (PostController) postController;
@@ -20,7 +20,6 @@ public class PostCommand implements Command {
         String userID = this.clientMediator.getUserName();
         String message = userID + " : "+sentence + "  " + time;
         postController.addPostMessage(message);
-        System.out.println(message+" is posting");
-        clientMediator.getEventQueue().add(new PostEvent(clientMediator.getUserName(),message));
+        clientMediator.getEventQueue().add(new PostEvent(clientMediator.getUserName(), message));
     }
 }

@@ -8,11 +8,9 @@ import java.util.Map;
 public class LocationView{
 	
 	private View view;
-	
 	public LocationView(View view) {
 		this.view = view;
 	}
-
 
 	/**
 	 * Draw the image of each tile on the canvas to update the view of a location.
@@ -21,8 +19,7 @@ public class LocationView{
 	 */
 	public int update(Map<Coordinate, String> tiles) {
 		int count=0;
-
-		if(tiles.size() != 0 || tiles.size()>100) {
+		if(tiles.size() != 0) {
 			view.initialCanvas();
 
 			//iterate the key of the map
@@ -30,11 +27,9 @@ public class LocationView{
 				if(view.draw(tiles.get(cor), cor))
 					count++;
 			}
-		}else {
+		} else {
 			view.showAlert("Wrong tiles size");
 		}
 		return count;
 	}
-	
-	
 }

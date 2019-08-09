@@ -4,17 +4,14 @@ package Controller.Command;
 import Controller.ClientMediator;
 import Controller.Controller;
 import Controller.LocationController;
-import Model.Location.Coordinate;
-import Model.Location.Location;
 import Network.Events.MovementEvent;
 import javafx.concurrent.Task;
 
 import java.io.IOException;
-import java.util.ResourceBundle;
 
 public class MoveCommand implements Command {
-	LocationController locationController;
-    ClientMediator clientMediator;
+	private LocationController locationController;
+    private ClientMediator clientMediator;
 
     public MoveCommand(Controller locationController2, ClientMediator clientMediator){
         this.locationController = (LocationController) locationController2;

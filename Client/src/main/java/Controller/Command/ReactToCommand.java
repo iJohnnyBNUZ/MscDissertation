@@ -10,8 +10,8 @@ import java.util.Date;
 
 public class ReactToCommand implements Command {
 	//private CommunicationController communicationController = null;
-	private ClientMediator clientMediator = null;
-	private ReactToController reactToController = null;
+	private ClientMediator clientMediator;
+	private ReactToController reactToController;
 	
 	public ReactToCommand(Controller reactToController, ClientMediator clientMediator) {
 		this.reactToController = (ReactToController) reactToController;
@@ -29,8 +29,6 @@ public class ReactToCommand implements Command {
 			String result = "You just interacted with " + id + ", so you " + message + " at " + df.format(new Date()).toString();
 			clientMediator.setReactResult(result);
 			clientMediator.getEventQueue().add(new ReactToEvent(id,userID));
-			//SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			//clientMediator.getView().showAlert("You just interacted with " + id + ", so you " + message + " at " + df.format(new Date()).toString());
 		}
 	}
 }

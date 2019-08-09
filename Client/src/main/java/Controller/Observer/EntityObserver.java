@@ -78,7 +78,6 @@ public class EntityObserver implements Observer {
 				entityView.updateStore(stores);
 				entityView.updateUser(users);
 			}
-
 		};
 
 		new Thread(progressTask).start();

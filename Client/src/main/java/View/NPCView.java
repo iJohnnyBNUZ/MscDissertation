@@ -5,7 +5,7 @@ import Controller.Command.CloseReactToCommand;
 public class NPCView{
 
 	private View view;
-	private CloseReactToCommand closeReactToCommand = null;
+	private CloseReactToCommand closeReactToCommand;
 
 	public NPCView(View view) {
 		this.view = view;

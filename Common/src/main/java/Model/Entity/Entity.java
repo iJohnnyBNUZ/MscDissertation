@@ -17,8 +17,24 @@ public abstract class Entity extends Observable implements Serializable {
         this.entityID = id;
     }
 
-    public void useItem(Item item) {
-        removeFromBag(item);
+    public void pickUp(Item item) {
+        this.Bag.add(item);
+        notifyObserver();
+    }
+
+    public void putDown(String id) {
+        for(Item item: Bag) {
+            if(item.getItemID().equals(id)) {
+                this.Bag.remove(item);
+                return;
+            }
+        }
+        notifyObserver();
+    }
+
+    public String reactTo(Entity entity) {
+        entity.increaseEnergy(20);
+        return "increase 20 energy";
     }
 
     public List<Item> getBag() {
@@ -29,24 +45,6 @@ public abstract class Entity extends Observable implements Serializable {
         Bag = bag;
         notifyObserver();
     }
-
-    /*
-    public void interactWith(Entity entity) {
-        entity.reactTo(this);
-    }
-    */
-
-    public String reactTo(Entity entity) {
-        entity.increaseEnergy(20);
-        return "increase 20 energy";
-    }
-
-
-    /*
-    public void reactTo() {
-        notifyObserver();
-    }
-    */
 
     public String getEntityID() {
         return entityID;
@@ -91,22 +89,6 @@ public abstract class Entity extends Observable implements Serializable {
     public void increaseCoin(int amount) { coin += amount; notifyObserver();}
 
     public void decreaseCoin(int amount) { coin -= amount; notifyObserver();}
-
-    public void pickUp(Item item) {
-        this.Bag.add(item);
-        notifyObserver();
-    }
-
-    public Item putDown(String id) {
-        for(Item item: Bag) {
-            if(item.getItemID().equals(id)) {
-                this.Bag.remove(item);
-                return item;
-            }
-        }
-        notifyObserver();
-        return null;
-    }
 
     public void removeFromBag(Item item){
         this.Bag.remove(item);

@@ -14,7 +14,6 @@ public class RunClient extends Application {
 
 
 	public void start(Stage primaryStage) throws Exception {
-		
 		//show index page
 		URL location = View.class.getResource("/view/index.fxml");
 		FXMLLoader fxmlLoader = new FXMLLoader();
@@ -41,11 +40,7 @@ public class RunClient extends Application {
 		clientMediator.createClient();
 	}
 
-
-
-
 	public static void main(String[] args) throws Exception {
-       
         launch(args);
     }
 }

@@ -23,16 +23,26 @@ class LoadLocation {
 		this.serverMediator = serverMediator;
 	}
 
-	Location buildLocation(File file) throws IOException {
-		String saveString = readFile.readJSON(file.getAbsolutePath());
-		JsonArray locationArray = new JsonParser().parse(saveString).getAsJsonArray();
-		for(int i = 0; i < locationArray.size(); i++) {
-			JsonObject locationObject = locationArray.get(i).getAsJsonObject();
-			Location location = new Location(locationObject.get("id").getAsString());
-			addTiles(location, locationObject.get("tiles").getAsJsonArray());
-			addItems(location, locationObject.get("items").getAsJsonArray());
-			addEntities(location, locationObject.get("entities").getAsJsonArray());
-			return location;
+	Location buildLocation(File file) {
+		String saveString = null;
+		try {
+			saveString = readFile.readJSON(file.getAbsolutePath());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		JsonArray locationArray = null;
+		if (saveString != null) {
+			locationArray = new JsonParser().parse(saveString).getAsJsonArray();
+		}
+		if (locationArray != null) {
+			for(int i = 0; i < locationArray.size(); i++) {
+				JsonObject locationObject = locationArray.get(i).getAsJsonObject();
+				Location location = new Location(locationObject.get("id").getAsString());
+				addTiles(location, locationObject.get("tiles").getAsJsonArray());
+				addItems(location, locationObject.get("items").getAsJsonArray());
+				addEntities(location, locationObject.get("entities").getAsJsonArray());
+				return location;
+			}
 		}
 		return null;
 	}

@@ -43,19 +43,14 @@ public class Location extends Observable implements Serializable {
         this.Tiles.put(c, t);
     }
 
-    public void removeTile(Coordinate c) {
-        this.Tiles.remove(c);
-    }
-
     public void addItem(Coordinate c, Item i) {
         this.Items.put(c, i);
         notifyObserver();
     }
 
-    public Item removeItem(Coordinate c) {
+    public void removeItem(Coordinate c) {
         this.Items.remove(c);
         notifyObserver();
-        return this.Items.get(c);
     }
 
     public void addEntity(Entity entity, Coordinate c) {
@@ -68,10 +63,6 @@ public class Location extends Observable implements Serializable {
 
     public String getLocationID() {
         return locationID;
-    }
-
-    public void setLocationID(String locationID) {
-        this.locationID = locationID;
     }
 
     public void changeUserCoordinate(Entity entity, Coordinate coordinate) {

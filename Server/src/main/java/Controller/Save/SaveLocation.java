@@ -23,7 +23,7 @@ public class SaveLocation {
 		this.serverMediator = serverMediator;
 	}
 
-	public JsonObject saveLocationAsJson(Location location) {
+	JsonObject saveLocationAsJson(Location location) {
 		JsonObject locationObject = new JsonObject();
 		locationObject.addProperty("id", location.getLocationID());
 		locationObject.add("tiles", saveTiles(location.getTiles()));

@@ -80,7 +80,6 @@ public class TransactionView {
 
 	}
 
-
 	public void updateTransaction(List<Item> user__shop, String userShopName, List<Item> bag, int money){
 		Transaction.setVisible(true);
 		user_shop.setText(userShopName);
@@ -154,25 +153,7 @@ public class TransactionView {
 						}
 					}
 				});
-				/*
-				numBuy.textProperty().addListener(new ChangeListener<String>() {
-					@Override
-					public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-						if(numBuy.getText()!=null && !numBuy.getText().equals("") && !numBuy.getText().equals("null")){
-							buyValue = Integer.parseInt(totalValue.getText())-oldBuyNum.get(numBuy)+Integer.parseInt(coins.getText())*Integer.parseInt(numBuy.getText());
-							totalValue.setText(String.valueOf(buyValue));
-							if(buyList.containsKey(tmp_name)){
-								buyList.put(tmp_name,Integer.parseInt(numBuy.getText()));
-							}
-							if(oldBuyNum.containsKey(numBuy)){
-								oldBuyNum.put(numBuy,Integer.parseInt(numBuy.getText())*Integer.parseInt(coins.getText()));
-							}
-						}
-					}
-				});
-				*/
 			}
-
 		}
 
 		buy.setOnAction(new EventHandler<ActionEvent>() {
@@ -185,12 +166,8 @@ public class TransactionView {
 						break;
 					}
 				}
-				//System.out.println("BuyList是" + buyList.values());
-				//System.out.println("OldByNum是" + oldBuyNum);
-
 			}
 		});
-
 
 		/* update MyBagTab */
 		myBagVbox.getChildren().clear();
@@ -262,25 +239,7 @@ public class TransactionView {
 						}
 					}
 				});
-				/*
-				numSell.textProperty().addListener(new ChangeListener<String>() {
-					@Override
-					public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-						if(numSell.getText()!=null && !numSell.getText().equals("") && !numSell.getText().equals("null")){
-							sellValue = Integer.parseInt(totalSellValue.getText())-oldSellNum.get(numSell)+Integer.parseInt(mybagcoins.getText())*Integer.parseInt(numSell.getText());
-							totalSellValue.setText(String.valueOf(sellValue));
-							if(sellList.containsKey(tmp_bag_name)){
-								sellList.put(tmp_bag_name,Integer.parseInt(numSell.getText()));
-							}
-							if(oldSellNum.containsKey(numSell)){
-								oldSellNum.put(numSell,Integer.parseInt(numSell.getText())*Integer.parseInt(mybagcoins.getText()));
-							}
-						}
-					}
-				});
-				*/
 			}
-
 		}
 
 		sell.setOnAction(new EventHandler<ActionEvent>() {
@@ -295,7 +254,6 @@ public class TransactionView {
 				}
 			}
 		});
-
 	}
 
 	public void setTransactionCommand(TransactionCommand transactionCommand) {
@@ -305,7 +263,5 @@ public class TransactionView {
 	public void setCloseReactToCommand(CloseReactToCommand closeReactToCommand){
 		this.closeReactToCommand = closeReactToCommand;
 	}
-
-
 }
 

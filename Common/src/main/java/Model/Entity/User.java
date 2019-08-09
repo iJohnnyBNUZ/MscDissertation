@@ -40,17 +40,7 @@ public class User extends Entity {
         openedDoors.add(doorId);
     }
 
-    public void removeOpenedDoors(String doorId){
-        openedDoors.remove(doorId);
-    }
-
     public List<String> getOpenedDoors() {
         return openedDoors;
     }
-
-    public void setOpenedDoors(List<String> openedDoors) {
-        this.openedDoors = openedDoors;
-    }
-
-
 }

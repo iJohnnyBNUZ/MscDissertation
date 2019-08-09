@@ -2,7 +2,6 @@ package View;
 
 import Controller.Command.*;
 import Model.Location.Coordinate;
-import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -136,12 +135,12 @@ public class View {
 
 	private double image_w = 64.0;
 
-	private MoveCommand moveCommand = null;
-	private SaveGameCommand saveGameCommand = null;
-	private LogOutCommand logOutCommand= null;
-	private OpenDoorCommand openDoorCommand = null;
-	private PickUpCommand pickUpCommand= null;
-	private ReactToCommand reactToCommand = null;
+	private MoveCommand moveCommand;
+	private SaveGameCommand saveGameCommand;
+	private LogOutCommand logOutCommand;
+	private OpenDoorCommand openDoorCommand;
+	private PickUpCommand pickUpCommand;
+	private ReactToCommand reactToCommand;
 
 	private List<String> operations = new ArrayList<String>();
 
@@ -256,8 +255,6 @@ public class View {
 			}
 
 		});
-
-
 	}
 
 	/**
@@ -296,9 +293,7 @@ public class View {
 							//remove the action from queue.
 							operations.remove(action);
 						}
-					} catch (IOException e) {
-						e.printStackTrace();
-					} catch (ClassNotFoundException e) {
+					} catch (IOException | ClassNotFoundException e) {
 						e.printStackTrace();
 					}
 

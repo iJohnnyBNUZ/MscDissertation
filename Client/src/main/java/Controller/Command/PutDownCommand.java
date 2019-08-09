@@ -3,14 +3,13 @@ package Controller.Command;
 import Controller.ClientMediator;
 import Controller.Controller;
 import Controller.ItemController;
-import Network.Events.OpenDoorEvent;
 import Network.Events.PutDownEvent;
 import javafx.concurrent.Task;
 
 public class PutDownCommand implements Command {
 
-	private ItemController itemController = null;
-	private ClientMediator clientMediator = null;
+	private ItemController itemController;
+	private ClientMediator clientMediator;
 	private String userID;
 
 	public PutDownCommand(Controller controller,ClientMediator clientMediator){

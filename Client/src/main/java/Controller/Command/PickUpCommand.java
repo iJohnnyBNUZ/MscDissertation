@@ -6,8 +6,8 @@ import Controller.ItemController;
 import Network.Events.PickUpEvent;
 
 public class PickUpCommand implements Command {
-	private ItemController itemController = null;
-	private ClientMediator clientMediator = null;
+	private ItemController itemController;
+	private ClientMediator clientMediator;
 
 	public PickUpCommand(Controller itemController2, ClientMediator clientMediator) {
 		this.itemController = (ItemController) itemController2;
@@ -20,8 +20,8 @@ public class PickUpCommand implements Command {
 	 */
 	public void execute() {
 		String uName = clientMediator.getUserName();
-		String message=itemController.pickUp(uName);
-		if(message == null){
+		String message = itemController.pickUp(uName);
+		if(message == null) {
 			clientMediator.getEventQueue().add(new PickUpEvent(clientMediator.getUserName()));
 		}
 

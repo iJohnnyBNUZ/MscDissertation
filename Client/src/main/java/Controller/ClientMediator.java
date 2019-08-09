@@ -1,11 +1,9 @@
 package Controller;
 
 import Controller.Command.*;
-import Controller.Network.ClientListener;
 import Controller.Network.ClientUpdater;
 import Controller.Observer.*;
 import Model.Entity.Entity;
-import Model.Location.Coordinate;
 import Model.Location.Location;
 import Model.World;
 import Network.Events.Event;
@@ -19,183 +17,66 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Set;
 
 public class ClientMediator implements GameMediator {
 	private World world = new World();
 	private ClientUpdater clientUpdater;
-	private ClientListener clientListener;
-	private String userName = null;
-	private String reactTo = null;
-	private String reactResult = null;
-
-	private Boolean isInit = Boolean.FALSE;
+	private String userName;
+	private String reactTo;
+	private String reactResult;
 
 	private Set<Observer> observerSet = new HashSet<>();
 	private LinkedList<Event> eventQueue = new LinkedList<>(); //User actions waiting to be send to the sever.
 	
 	
-	private IndexView indexView= null;
-	private View view = null;
-	private LocationView locationView = null;
-    private BagView bagView = null;
-    private PostView postView = null;
-    private EntityView entityView = null;
-    private ItemView itemView = null;
-    private NPCView npsView = null;
-    private TransactionView transactionView = null;
+	private IndexView indexView;
+	private View view;
+	private LocationView locationView;
+    private BagView bagView;
+    private PostView postView;
+    private ItemView itemView;
+    private EntityView entityView;
+    private NPCView npcView;
+    private TransactionView transactionView;
     
-	private Stage primaryStage = null;
+	private Stage primaryStage;
 
-	private LocationController locationController =null;
-	private ItemController itemController= null;
-	private UserController userController= null;
-	private PostController postController = null;
-	private ReactToController reactToController = null;
-	
-	private LocationObserver locationObserver = null;
-	private ItemObserver itemObserver= null;
-	private PostObserver postObserver = null;
-	private EntityObserver entityObserver = null;
-	private BagObserver bagObserver = null;
-	private ReactToObserver reactToObserver = null;
-	
-	private MoveCommand moveCommand = null;   
-	private PickUpCommand pickUpCommand = null;
-	private PutDownCommand putDownCommand = null;
-	private EatCommand eatCommand = null;
-	private TransactionCommand transactionCommand = null;
-	private CloseReactToCommand closeReactToCommand = null;
-	private ReactToCommand reactToCommand = null;
-	private PostCommand postCommand = null;
-	private StartGameCommand startGameCommand = null;
-	private SaveGameCommand saveGameCommand = null;
-	private LogOutCommand logOutCommand = null;
-	private OpenDoorCommand openDoorCommand = null;
+	private LocationController locationController;
+	private ItemController itemController;
+	private UserController userController;
+	private PostController postController;
+	private ReactToController reactToController;
 
-	private boolean haveObservers = false;
+	private MoveCommand moveCommand;
+	private PickUpCommand pickUpCommand;
+	private PutDownCommand putDownCommand;
+	private EatCommand eatCommand;
+	private TransactionCommand transactionCommand;
+	private CloseReactToCommand closeReactToCommand;
+	private ReactToCommand reactToCommand;
+	private PostCommand postCommand;
+	private StartGameCommand startGameCommand;
+	private SaveGameCommand saveGameCommand;
+	private LogOutCommand logOutCommand;
+	private OpenDoorCommand openDoorCommand;
 
 	public ClientMediator() {
 		this.world = new World();
 	}
 
-	public void createClient() throws Exception{
+	public void createClient() {
 		clientUpdater = new ClientUpdater(this);
 	}
-
-	public ClientUpdater getClientUpdater() {
-		return clientUpdater;
-	}
-
-	public UserController getUserController(){return userController;}
-
-	public World getWorld() {
-		return world;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getReactTo() {
-		return reactTo;
-	}
-
-	public void setReactTo(String reactTo) {
-		this.reactTo = reactTo;
-	}
-
-	public String getReactResult() { return reactResult; }
-
-	public void setReactResult(String reactResult) { this.reactResult = reactResult; }
-
-
-	public IndexView getIndexView() {
-		return indexView;
-	}
-
-	public void setIndexView(IndexView indexView) {
-		this.indexView = indexView;
-	}
-
-	public View getView() {
-		return view;
-	}
-
-	public void setView(View view) {
-		this.view = view;
-	}
-
-
-	public void setPrimaryStage(Stage primaryStage) {
-		this.primaryStage = primaryStage;
-	}
-
-	
-	public LocationView getLocationView() {
-		return locationView;
-	}
-
-	public BagView getBagView() {
-		return bagView;
-	}
-
-
-	public PostView getPostView() {
-		return postView;
-	}
-
-
-	public EntityView getEntityView() {
-		return entityView;
-	}
-
-	public ItemView getItemView() {
-		return itemView;
-	}
-
-
-	public NPCView getNPCView() {
-		return npsView;
-	}
-
-
-	public TransactionView getTransactionView() {
-		return transactionView;
-	}
-
-	public LocationController getLocationController() {
-		return locationController;
-	}
-
-	public ReactToController getReactToController(){return  reactToController;}
-
-
-
-	public ItemController getItemController() {
-		return itemController;
-	}
-
-
-	public PostController getPostController() {
-		return postController;
-	}
-
-	public LinkedList<Event> getEventQueue() {
-		return eventQueue;
-	}
-
 
 	/**
 	 *  Set each values retrieved form the newWorld to the current world.
 	 *  Bind the observers to the observable object in the world.
 	 * @param newWorld the world instance received from the server.
 	 */
-	public void initWorld(World newWorld){
+	public void initWorld(World newWorld) {
 		this.world.setObserverSet(observerSet);
 		for(Location location: this.world.getLocations()){
 			location.setObserverSet(observerSet);
@@ -203,7 +84,6 @@ public class ClientMediator implements GameMediator {
 				entity.setObserverSet(observerSet);
 			}
 		}
-		System.out.println("initial finished!!!!!!!!!!!!!!!!");
 	}
 
 	/**
@@ -217,7 +97,7 @@ public class ClientMediator implements GameMediator {
 			this.world = newWorld;
 			initWorld(newWorld);
 			this.notifyObservers();
-		}else{
+		} else {
 			this.world = newWorld;
 		}
 	}
@@ -244,20 +124,20 @@ public class ClientMediator implements GameMediator {
 		this.reactToController = new ReactToController(this);
 
 		// create observers
-		this.locationObserver = new LocationObserver(this);
-		this.itemObserver = new ItemObserver(this);
-		this.postObserver = new PostObserver(this);
-		this.entityObserver = new EntityObserver(this);
-		this.bagObserver =  new BagObserver(this);
-		this.reactToObserver = new ReactToObserver(this);
+		LocationObserver locationObserver = new LocationObserver(this);
+		ItemObserver itemObserver = new ItemObserver(this);
+		PostObserver postObserver = new PostObserver(this);
+		EntityObserver entityObserver = new EntityObserver(this);
+		BagObserver bagObserver = new BagObserver(this);
+		ReactToObserver reactToObserver = new ReactToObserver(this);
 
 		// add the observers to the observer set
-		observerSet.add(this.locationObserver);
-		observerSet.add(this.itemObserver);
-		observerSet.add(this.postObserver);
-		observerSet.add(this.entityObserver);
-		observerSet.add(this.bagObserver);
-		observerSet.add(this.reactToObserver);
+		observerSet.add(locationObserver);
+		observerSet.add(itemObserver);
+		observerSet.add(postObserver);
+		observerSet.add(entityObserver);
+		observerSet.add(bagObserver);
+		observerSet.add(reactToObserver);
 
 		// create the commands
 		this.moveCommand = new MoveCommand(locationController,this);
@@ -272,7 +152,6 @@ public class ClientMediator implements GameMediator {
 		this.postCommand = new PostCommand(postController,this);
 		this.saveGameCommand = new SaveGameCommand(this);
 		this.logOutCommand = new LogOutCommand(this);
-
 	}
 	
 	/**
@@ -282,25 +161,23 @@ public class ClientMediator implements GameMediator {
 		indexView.setStartGame(startGameCommand);
 	}
 	
-	
 	/**
 	 * Create the views used after the user enter a game.
 	 */
-	public void initialGameView() {
+	private void initialGameView() {
 		locationView = new LocationView(this.view);
     	bagView = new BagView(this.view);
     	postView = new PostView(this.view);
     	entityView = new EntityView(this.view);
     	itemView = new ItemView(this.view);
-    	npsView = new NPCView(this.view);
+    	npcView = new NPCView(this.view);
     	transactionView = new TransactionView(this.view);
-
 	}
 	
 	/**
 	 * Bind the commands to the views.
 	 */
-	public void bindViewCommand() {
+	private void bindViewCommand() {
 		view.setMoveCommand(moveCommand);
 		view.setPickUpCommand(pickUpCommand);
 		view.setReactToCommand(reactToCommand);
@@ -312,15 +189,15 @@ public class ClientMediator implements GameMediator {
 		postView.setPostCommand(postCommand);
 		transactionView.setTransactionCommand(transactionCommand);
 		transactionView.setCloseReactToCommand(closeReactToCommand);
-		npsView.setCloseReactToCommand(closeReactToCommand);
+		npcView.setCloseReactToCommand(closeReactToCommand);
 	}
 	
 	/**
 	 * Load the fxml file used for the game, and show it on the interface to substitute the index page.
 	 * @throws IOException
 	 */
-	
-	public void	enterGame() throws IOException {
+
+	void enterGame() throws IOException {
 		URL location = View.class.getResource("/view/main.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(location);
@@ -335,10 +212,104 @@ public class ClientMediator implements GameMediator {
 
         // Show alter when the close button is clicked.
         this.view.setWindowsCloseAction(this.primaryStage);
-
         this.primaryStage.show();
-        
         initialGameView();
         bindViewCommand();
+	}
+
+	public ClientUpdater getClientUpdater() {
+		return clientUpdater;
+	}
+
+	public UserController getUserController(){return userController;}
+
+	public World getWorld() {
+		return world;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getReactTo() {
+		return reactTo;
+	}
+
+	public void setReactTo(String reactTo) {
+		this.reactTo = reactTo;
+	}
+
+	public String getReactResult() { return reactResult; }
+
+	public void setReactResult(String reactResult) { this.reactResult = reactResult; }
+
+	IndexView getIndexView() {
+		return indexView;
+	}
+
+	public void setIndexView(IndexView indexView) {
+		this.indexView = indexView;
+	}
+
+	public View getView() {
+		return view;
+	}
+
+	public void setView(View view) {
+		this.view = view;
+	}
+
+	public void setPrimaryStage(Stage primaryStage) {
+		this.primaryStage = primaryStage;
+	}
+
+	public LocationView getLocationView() {
+		return locationView;
+	}
+
+	public BagView getBagView() {
+		return bagView;
+	}
+
+	public PostView getPostView() {
+		return postView;
+	}
+
+	public EntityView getEntityView() {
+		return entityView;
+	}
+
+	public ItemView getItemView() {
+		return itemView;
+	}
+
+	public NPCView getNPCView() {
+		return npcView;
+	}
+
+	public TransactionView getTransactionView() {
+		return transactionView;
+	}
+
+	public LocationController getLocationController() {
+		return locationController;
+	}
+
+	public ReactToController getReactToController(){return  reactToController;}
+
+	public ItemController getItemController() {
+		return itemController;
+	}
+
+	public PostController getPostController() {
+		return postController;
+	}
+
+	public LinkedList<Event> getEventQueue() {
+		return eventQueue;
 	}
 }

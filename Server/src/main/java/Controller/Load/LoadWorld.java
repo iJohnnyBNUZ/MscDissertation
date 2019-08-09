@@ -3,7 +3,6 @@ package Controller.Load;
 import Controller.ServerMediator;
 
 import java.io.File;
-import java.io.IOException;
 
 public class LoadWorld {
 	private ServerMediator serverMediator;
@@ -18,7 +17,7 @@ public class LoadWorld {
 		this.filePath = filePath;
 	}
 
-	public void loadLocations() throws IOException {
+	public void loadLocations() {
 		File[] fileList = getFileList(filePath + "/Locations");
 		if(fileList != null) {
 			for (File child : fileList) {
@@ -30,7 +29,7 @@ public class LoadWorld {
 		}
 	}
 
-	public void loadEntities() throws IOException {
+	public void loadEntities() {
 		File[] fileList = getFileList(filePath + "/Entities");
 		if(fileList != null) {
 			for (File child : fileList) {

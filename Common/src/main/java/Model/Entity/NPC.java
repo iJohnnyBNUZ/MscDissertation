@@ -33,9 +33,7 @@ public class NPC extends Entity {
 				notifyObserver();
 				return "decrease 20 energy";
 			}
-
 		}
-
 	}
 
 	public boolean getIsFriendly() {

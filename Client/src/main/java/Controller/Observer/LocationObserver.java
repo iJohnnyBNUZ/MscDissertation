@@ -26,7 +26,7 @@ public class LocationObserver implements Observer {
 		Task<Void> progressTask = new Task<Void>(){
 
 			@Override
-			protected Void call() throws Exception {
+			protected Void call() {
 				//run in current thread
 				String uId = clientMediator.getUserName();
 				// find out which location the user is in

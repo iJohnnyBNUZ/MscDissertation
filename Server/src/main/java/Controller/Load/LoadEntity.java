@@ -16,21 +16,29 @@ import com.google.gson.JsonParser;
 import java.io.File;
 import java.io.IOException;
 
-public class LoadEntity {
+class LoadEntity {
 
 	private ReadFile readFile;
 	private ServerMediator serverMediator;
 
-	public LoadEntity(ServerMediator serverMediator) {
+	LoadEntity(ServerMediator serverMediator) {
 		this.readFile = new ReadFile();
 		this.serverMediator = serverMediator;
 	}
 
-	public void buildEntity(File file) throws IOException {
-		String saveString = readFile.readJSON(file.getAbsolutePath());
-		JsonArray entityArray = new JsonParser().parse(saveString).getAsJsonArray();
-		if (entityArray.size() != 0) {
-			for(int i = 0; i < entityArray.size(); i++) {
+	void buildEntity(File file) {
+		String saveString = null;
+		try {
+			saveString = readFile.readJSON(file.getAbsolutePath());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		JsonArray entityArray = null;
+		if (saveString != null) {
+			entityArray = new JsonParser().parse(saveString).getAsJsonArray();
+		}
+		if (entityArray != null && entityArray.size() != 0) {
+			for (int i = 0; i < entityArray.size(); i++) {
 				Entity entity = parseEntity(entityArray.get(i).getAsJsonObject());
 				serverMediator.getWorld().addEntity(entity);
 				serverMediator.getWorld().getLocation(entityArray.get(i).getAsJsonObject().get("location").getAsString()).addEntity(entity, new Coordinate(entityArray.get(i).getAsJsonObject().get("xCoordinate").getAsInt(), entityArray.get(i).getAsJsonObject().get("yCoordinate").getAsInt()));
@@ -38,7 +46,7 @@ public class LoadEntity {
 		}
 	}
 
-	public Entity parseEntity(JsonObject entityObject) {
+	Entity parseEntity(JsonObject entityObject) {
 		Entity entity;
 		switch (entityObject.get("type").getAsString()) {
 			case "user":
@@ -57,7 +65,6 @@ public class LoadEntity {
 		entity.setEnergy(entityObject.get("energy").getAsInt());
 		entity.setCoin(entityObject.get("coin").getAsInt());
 		createBag(entity, entityObject.get("bag").getAsJsonArray());
-
 		return entity;
 	}
 

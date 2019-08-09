@@ -4,7 +4,7 @@ import Controller.ClientMediator;
 import Network.Events.LogoutEvent;
 
 public class LogOutCommand implements Command{
-	ClientMediator clientMediator;
+	private ClientMediator clientMediator;
 	public LogOutCommand(ClientMediator clientMediator){
 		this.clientMediator = clientMediator;
 	}

@@ -109,10 +109,8 @@ public class EntityView {
 	 * @param coins the number of coins owned by the user.
 	 */
 	public void updateCoin(int coins) {
-		
 		if(coins > 0) {
 			coin.setText(""+coins);
-			
 		}else {
 			view.showAlert("Wrong coin value!");
 		}
