@@ -61,7 +61,7 @@ public class ItemController implements Controller{
             entity.pickUp(item);  // add to user's bag
         }
         */
-        return "";
+        return null;
     }
 
     public String drop(String userID,String itemID){
