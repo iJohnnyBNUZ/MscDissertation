@@ -37,10 +37,7 @@ public class Location extends Observable implements Serializable {
 
     public void setEntities(Map<Entity, Coordinate> entities) {
         Entities = entities;
-        if (entities.size() != this.getEntities().size())
-            notifyObserver(); // notify entity change Location
-        else
-            notifyObserver(); // notify entity move
+        notifyObserver();
     }
 
     public Location(String id) {
