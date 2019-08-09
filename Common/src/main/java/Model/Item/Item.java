@@ -9,7 +9,7 @@ public class Item implements Serializable {
     private int coinValue = 0;
     private boolean isEdible = false;
     private boolean isCollectible = true;
-    private String type = null;
+    private String type;
 
     public Item(String id,int coinValue,String type) {
         this.itemID = id;
@@ -21,16 +21,8 @@ public class Item implements Serializable {
         return itemID;
     }
 
-    public void setItemID(String itemID) {
-        this.itemID = itemID;
-    }
-
     public int getCoinValue() {
         return coinValue;
-    }
-
-    public void setCoinValue(int coinValue) {
-        this.coinValue = coinValue;
     }
 
     public boolean isEdible() {

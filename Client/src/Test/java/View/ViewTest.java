@@ -26,7 +26,7 @@ public class ViewTest extends ApplicationTest {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        URL location = View.class.getResource("/view/sample.fxml");
+        URL location = View.class.getResource("/view/main.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(location);
         fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
@@ -53,14 +53,6 @@ public class ViewTest extends ApplicationTest {
         FxAssert.verifyThat("#chatView", NodeMatchers.isVisible());
     }
 
-    /*
-    @Test
-    public void showTransactionTest() {
-        clickOn("#Transaction");
-        clickOn("#openTransaction");
-        FxAssert.verifyThat("#newTransaction", NodeMatchers.isVisible());
-    }
-    */
 
     @Test
     public void updateLocation() {

@@ -7,9 +7,8 @@ import Network.Events.EatEvent;
 
 public class EatCommand implements Command {
 
-    private ItemController itemController = null;
-    private ClientMediator clientMediator = null;
-    private String userID;
+    private ItemController itemController;
+    private ClientMediator clientMediator;
 
     public EatCommand(Controller controller,ClientMediator clientMediator){
         this.itemController = (ItemController) controller;
@@ -17,8 +16,7 @@ public class EatCommand implements Command {
     }
 
     public void execute(String selectedItemId){
-        userID = clientMediator.getUserName();
-        System.out.println("Item "+selectedItemId+" is eatten by " + userID);
+        String userID = clientMediator.getUserName();
         itemController.eat(userID,selectedItemId);
         clientMediator.getEventQueue().add(new EatEvent(userID,selectedItemId));
     }

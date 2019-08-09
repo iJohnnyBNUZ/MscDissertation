@@ -2,7 +2,6 @@ package View;
 
 import Controller.Command.*;
 import Model.Location.Coordinate;
-import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -33,19 +32,15 @@ public class View {
 	private Canvas mapView;
 
 	@FXML
-	private AnchorPane forItem;
+	private AnchorPane forItem; //used for drawing the items' images.
 
 	@FXML
-	private AnchorPane forEntity;
+	private AnchorPane forEntity; // used for drawing the entities' images.
 
-	@FXML
-	private ImageView userImage;
 
 	@FXML
 	private ProgressBar energy;
 
-	@FXML
-	private ImageView coinIcon;
 
 	@FXML
 	private Label coin;
@@ -140,24 +135,15 @@ public class View {
 
 	private double image_w = 64.0;
 
-	private MoveCommand moveCommand = null;
-	private SaveGameCommand saveGameCommand = null;
-	private LogOutCommand logOutCommand= null;
-	private OpenDoorCommand openDoorCommand = null;
-	private PickUpCommand pickUpCommand= null;
-	private ReactToCommand reactToCommand = null;
+	private MoveCommand moveCommand;
+	private SaveGameCommand saveGameCommand;
+	private LogOutCommand logOutCommand;
+	private OpenDoorCommand openDoorCommand;
+	private PickUpCommand pickUpCommand;
+	private ReactToCommand reactToCommand;
 
 	private List<String> operations = new ArrayList<String>();
 
-
-	// This method is automatically invoked by the FXMLLoader - it's magic
-	// This method must be public
-	public void initialize() {
-		System.out.println("initializeeeeeeeeeeeeeeeeeeee!!!!!!");
-		setCoinImage();
-		setUserImage();
-
-	}
 
 	public AnchorPane getForItem() { return forItem; }
 
@@ -237,93 +223,112 @@ public class View {
 		saveGameCommand.execute();
 	}
 
-
+	/**
+	 * Bind the mapView's property to the scene's property.
+	 * Make sure the size of the canvas changes as the window size changes.
+	 * Add the keyEvent listener and timer to the window.
+	 *
+	 * @variable mapView the canvas used to draw images on.
+	 * @param scene represents the window
+	 */
 	public void bindScene(Scene scene) {
+		// The height of the canvas is 100 lower than the height of the window.
 		mapView.heightProperty().bind(scene.heightProperty().subtract(100));
+		//The width of the canvas is 10 lower than the width of the window.
 		mapView.widthProperty().bind(scene.widthProperty().subtract(10));
-		System.out.println(scene.getHeight());
-		System.out.println(mapView.getHeight());
+
 		initialKeyAction(scene);
 		addTimer();
 
 	}
 
+	/**
+	 *  Add the user action to the queue.
+	 * @param scence represents the window
+	 */
+
 	public void initialKeyAction(Scene scence){
 		scence.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent k) {
-				System.out.println(k.getCode().getName());
 				operations.add(k.getCode().getName());
-				System.out.println("add: "+k.getCode().getName());
 			}
 
 		});
-
-
 	}
 
+	/**
+	 * Invoke the command according to the name of the key after each fixed time interval.
+	 */
 	private void addTimer(){
 		TimerTask timerTask = new TimerTask() {
 			@Override
 			public void run() {
 				int size = operations.size();
+				//When there is action in the queue.
 				if (size>0){
+					// get the first action in the queue.
 					String action = operations.get(0);
 					try {
 						if(action.equals("A") || action.equals("D")||action.equals("W")|| action.equals("S")
 								||action.equals("Left") || action.equals("Right")||action.equals("Up")|| action.equals("Down")) {
-							System.out.println("view keyEvent: "+ action);
+							// move actions
 							moveCommand.excute(action);
+
+							//remove the action from queue.
 							operations.remove(action);
 						}
 						else if(action.equals("Enter")){
-							System.out.println("enter key envent");
+							// interactive action
 							pickUpCommand.execute();
 							openDoorCommand.excute();
 							reactToCommand.execute();
+
+							//remove the action from queue.
 							operations.remove(action);
 						}
 						else{
+							// meaningless action
+
+							//remove the action from queue.
 							operations.remove(action);
 						}
-					} catch (IOException e) {
-						e.printStackTrace();
-					} catch (ClassNotFoundException e) {
+					} catch (IOException | ClassNotFoundException e) {
 						e.printStackTrace();
 					}
 
 				}
 			}
 		};
+
 		Timer timer = new Timer();
 		long delay = 0;
 		long intevalPeriod = 30;
+
 		// schedules the task to be run in an interval
 		timer.scheduleAtFixedRate(timerTask, delay, intevalPeriod);
 	}
 
-
-	public void setCoinImage() {
-		URL url = this.getClass().getResource("/images/coin.png");
-		Image image = new Image(url.toString(), coinIcon.getFitWidth(), coinIcon.getFitHeight() , false, false);
-		coinIcon.setImage(image);
-	}
-
-	public void setUserImage() {
-		URL url = this.getClass().getResource("/images/me.png");
-		Image image = new Image(url.toString(), userImage.getFitWidth(), userImage.getFitHeight() , false, false);
-		userImage.setImage(image);
-	}
-
+	/**
+	 * Draw the image on the canvas.
+	 * @param fileName the name of the image without the filename extension.
+	 * @param position the coordinate of the image need to be drawn.
+	 * @return drawed when there is images drawn on the canvas, it is true.
+	 */
 	public boolean draw(String fileName, Coordinate position) {
 		boolean drawed=false;
 		GraphicsContext gContext = mapView.getGraphicsContext2D();
+
+		// calculate the height and width of each tiles. The map is 10x10 layout.
 		tileWidth=mapView.getWidth()/10;
 		tileHeight = mapView.getHeight()/10;
-		//create Image to each of the items
+
+		//create the image
 		URL url = this.getClass().getResource("/images/" + fileName + ".png");
 		Image image = new Image(url.toString(), image_h, image_w, false, false);
+
 		if(image!= null){
+			//Draw the image on the canvas
 			gContext.drawImage(image,0, 0,image_h,image_w, position.getYCoordinate()*tileWidth,
 					position.getXCoordinate()*tileHeight,tileWidth,tileHeight);
 			drawed=true;
@@ -332,32 +337,49 @@ public class View {
 
 	}
 
+	/**
+	 * Draw the items or entities on the pane.
+	 *
+	 * @param fileName the name of the image without the filename extension.
+	 * @param position the coordinate of the image need to be drawn.
+	 * @param isItemTile whether the image is the item's image.
+	 * @return imgView the created ImageView instance.
+	 */
 	public ImageView drawInteractive(String fileName, Coordinate position, Boolean isItemTile) {
+
+		// calculate the height and width of each tiles. The map is 10x10 layout.
 		tileWidth=mapView.getWidth()/10;
 		tileHeight = mapView.getHeight()/10;
-		//create ImageView  to each of the items
+
+		//create the image view, load the image and place it on the correct position.
 		ImageView imgView = new ImageView();
 		URL url = this.getClass().getResource("/images/" + fileName + ".png");
 		imgView.setLayoutX(position.getYCoordinate()*tileWidth);
 		imgView.setLayoutY(position.getXCoordinate()*tileHeight);
 
 		if(!isItemTile) {
+			//set the image.
 			Image image = new Image(url.toString(), image_h, image_w, false, false);
 			imgView.setImage(image);
+			//add the image view to the pane used for entities.
 			forEntity.getChildren().add(imgView);
 		}else {
+			//set the image with the half size.
 			Image image = new Image(url.toString(), image_h/2, image_w/2, false, false);
 			imgView.setImage(image);
+
+			//add the image view to the pane used for items.
 			forItem.getChildren().add(imgView);
 
 		}
 
-
 		return imgView;
 	}
 
+	/**
+	 * Clean the images drawn on the canvas.
+	 */
 	public void initialCanvas() {
-		//initial canvas
 		GraphicsContext gContext = mapView.getGraphicsContext2D();
 
 		gContext.save();
@@ -367,22 +389,21 @@ public class View {
 		gContext.clearRect(0, 0, mapView.getWidth(), mapView.getHeight());
 
 		gContext.setStroke(Color.BLACK);
-
-
-
 	}
 
+	/**
+	 * Clean the image views added on the pane for items.
+	 */
 	public void initialForItem(){
-		System.out.println("initial forItem");
 		forItem.getChildren().clear();
-		forItem.setPickOnBounds(false);
 
 	}
 
+	/**
+	 * Clean the image views added on the pane for entities.
+	 */
 	public void initialForEntity(){
-		System.out.println("initial forEntity");
 		forEntity.getChildren().clear();
-
 	}
 
 
@@ -408,7 +429,8 @@ public class View {
 	public void setOpenDoorCommand(Command command){openDoorCommand = (OpenDoorCommand)command;}
 
 	/**
-	 * Before close the game, user need to choose save game or continue to play the game.
+	 * Before close the game, show alert to the user.
+	 * Let the user choose whether to continue the game or save and exit
 	 * @param primaryStage
 	 */
 	public void setWindowsCloseAction(Stage primaryStage) {
@@ -424,11 +446,13 @@ public class View {
 				alert.getButtonTypes().setAll(buttonSave, buttonCancel);
 				Optional<ButtonType> result = alert.showAndWait();
 				if (result.get() == buttonSave){
-					System.out.println("Save");
+					//save and close this game
 					saveGame();
 					logOutCommand.execute();
 					System.exit(0);
+
 				}else if(result.get() == buttonCancel){
+					// continue the game.
 					alert.close();
 					w.consume();
 				}
@@ -438,18 +462,16 @@ public class View {
 	}
 
 
-
+	/**
+	 * Show the alert dialog to the user
+	 * @param message The message need to be written in the dialog.
+	 */
 	public void showAlert(String message){
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setTitle("Information");
-				alert.setHeaderText("");
-				alert.setContentText(message);
-				alert.show();
-			}
-		});
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Information");
+		alert.setHeaderText("");
+		alert.setContentText(message);
+		alert.show();
 	}
 
 }

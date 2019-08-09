@@ -4,7 +4,7 @@ import Controller.ClientMediator;
 
 public class CloseReactToCommand implements Command {
 
-    private ClientMediator clientMediator = null;
+    private ClientMediator clientMediator;
 
     public CloseReactToCommand(ClientMediator clientMediator){
         this.clientMediator = clientMediator;

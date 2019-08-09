@@ -14,6 +14,8 @@ import org.testfx.matcher.control.LabeledMatchers;
 
 import java.net.URL;
 
+import static org.junit.Assert.assertEquals;
+
 public class IndexViewTest extends ApplicationTest {
 
     private Label userStatus;
@@ -24,7 +26,7 @@ public class IndexViewTest extends ApplicationTest {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        URL location = View.class.getResource("/view/start.fxml");
+        URL location = View.class.getResource("/view/index.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(location);
         fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
@@ -38,10 +40,10 @@ public class IndexViewTest extends ApplicationTest {
     @Test
     public void gameTypeTest() {
         clickOn("#newGame");
-//        assertEquals("new", indexView.getGameType());
+        assertEquals("new", indexView.getGameType());
         clickOn("#back");
         clickOn("#conTinue");
-//        assertEquals("continue", indexView.getGameType());
+        assertEquals("continue", indexView.getGameType());
     }
 
     @Test

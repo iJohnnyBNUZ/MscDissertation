@@ -49,18 +49,6 @@ public class ItemController implements Controller{
         }else{
             return "Cannot find Item in this position";
         }
-        /*
-        Entity entity = this.gameMediator.getWorld().getEntity(userID);
-        if (entity == null)
-            return;
-        if (item instanceof Coin){
-            Coin coin = (Coin) item;
-            entity.setCoin(entity.getCoin() + coin.getCoinValue());
-        }
-        else{
-            entity.pickUp(item);  // add to user's bag
-        }
-        */
         return null;
     }
 

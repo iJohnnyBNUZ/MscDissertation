@@ -1,7 +1,6 @@
 package Controller.Network;
 
 import Controller.ClientMediator;
-import Model.Entity.User;
 import Network.Events.LoginEvent;
 
 import java.io.IOException;
@@ -102,11 +101,6 @@ public class ClientUpdater implements Runnable {
 	public void getWorld(){
 		sendMessageToServer("getWorld");
 		connectReady = 2;
-	}
-
-	private void createUser(String userName) {
-		sendMessageToServer(new User(userName));
-		//sendMessageToServer("getWorld");
 	}
 
 	public String getUserName() {

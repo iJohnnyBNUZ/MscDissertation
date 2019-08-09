@@ -10,14 +10,11 @@ import Model.Location.Location;
 import Utils.Observer;
 import javafx.concurrent.Task;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Map;
 
 public class ReactToObserver implements Observer {
 
     private ClientMediator clientMediator;
-    private String commuWith;
     private String userID;
 
     public ReactToObserver(ClientMediator clientMediator){

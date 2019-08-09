@@ -35,14 +35,6 @@ public class Location extends Observable implements Serializable {
         return Entities;
     }
 
-    public void setEntities(Map<Entity, Coordinate> entities) {
-        Entities = entities;
-        if (entities.size() != this.getEntities().size())
-            notifyObserver(); // notify entity change Location
-        else
-            notifyObserver(); // notify entity move
-    }
-
     public Location(String id) {
         this.locationID = id;
     }
@@ -51,19 +43,14 @@ public class Location extends Observable implements Serializable {
         this.Tiles.put(c, t);
     }
 
-    public void removeTile(Coordinate c) {
-        this.Tiles.remove(c);
-    }
-
     public void addItem(Coordinate c, Item i) {
         this.Items.put(c, i);
         notifyObserver();
     }
 
-    public Item removeItem(Coordinate c) {
+    public void removeItem(Coordinate c) {
         this.Items.remove(c);
         notifyObserver();
-        return this.Items.get(c);
     }
 
     public void addEntity(Entity entity, Coordinate c) {
@@ -78,17 +65,10 @@ public class Location extends Observable implements Serializable {
         return locationID;
     }
 
-    public void setLocationID(String locationID) {
-        this.locationID = locationID;
-    }
-
     public void changeUserCoordinate(Entity entity, Coordinate coordinate) {
-        Map<Entity, Coordinate> entities_temp = getEntities();
-        if (entities_temp == null)
-            return;
 
-        entities_temp.put(entity, coordinate);
-        setEntities(entities_temp);
+        this.Entities.put(entity, coordinate);
+        notifyObserver();
     }
 
 }

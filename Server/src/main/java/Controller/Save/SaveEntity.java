@@ -29,7 +29,7 @@ public class SaveEntity {
 		writeFile.writeJsonArray(entityArray, saveFilePath + "/" + entity.getEntityID() + ".json");
 	}
 
-	public JsonObject saveEntityAsJson(Entity entity) {
+	JsonObject saveEntityAsJson(Entity entity) {
 		JsonObject savedEntity = new JsonObject();
 		if (entity instanceof User) {
 			savedEntity.addProperty("type", "user");

@@ -25,35 +25,10 @@ public class World extends Observable implements Serializable {
 		return Locations;
 	}
 
-	public void setLocations(List<Location> locations) {
-		for (Location newLocation: locations){
-			for (Location localLocation: getLocations()){
-				if (localLocation.getLocationID().equals(newLocation.getLocationID())){
-					localLocation.setTiles(newLocation.getTiles());
-					localLocation.setEntities(newLocation.getEntities());
-					localLocation.setItems(newLocation.getItems());
-				}
-			}
-		}
-//		Locations = (ArrayList<Location>) locations;
-	}
-
 	public List<Entity> getEntities() {
 		return Entities;
 	}
 
-	public void setEntities(List<Entity> entities) {
-//		Entities = (ArrayList<Entity>) entities;
-		for (Entity newEntity: entities){
-			for (Entity localEntity: getEntities()){
-				if (localEntity.getEntityID().equals(newEntity.getEntityID())){
-					localEntity.setEnergy(newEntity.getEnergy());
-					localEntity.setCoin(newEntity.getCoin());
-					localEntity.setBag(newEntity.getBag());
-				}
-			}
-		}
-	}
 
 	public void addLocation(Location location) {
 		this.Locations.add(location);

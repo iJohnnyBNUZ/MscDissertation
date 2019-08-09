@@ -17,7 +17,7 @@ public class BagObserver implements Observer {
         Task<Void> progressTask = new Task<Void>(){
 
             @Override
-            protected Void call() throws Exception {
+            protected Void call() {
                 userID = clientMediator.getUserName();
                 return null;
             }

@@ -12,8 +12,15 @@ public class StartGameCommand implements Command {
 	        this.userController = (UserController) userController2;
 	    }
 
+	/**
+	 * Invoke the startGame method in the userController.
+	 * @param type selected game type
+	 * @param uName input username
+	 * @param IP input IP address
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	    public void execute(String type, String uName, String IP) throws IOException, ClassNotFoundException{
-	        //add messages to messageList in World
 	    	userController.startGame(type,uName,IP);
 	    }
 }

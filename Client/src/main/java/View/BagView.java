@@ -36,12 +36,12 @@ public class BagView{
 
 	private EatCommand eatCommand;
 	private PutDownCommand putDownCommand;
-	private String selectedItemId = null;
+	private String selectedItemId;
 
 	private int row = 3;
 	private int column = 3;
 	private double image_h = 50.0;
-	private double image_w =50.0;
+	private double image_w = 50.0;
 	private List<GridPane> gridPaneFoodList = new LinkedList<GridPane>();
 	private List<GridPane> gridPaneKeyList = new LinkedList<GridPane>();
 
@@ -56,9 +56,6 @@ public class BagView{
 		this.closeKey= view.getCloseKey();
 		this.bagKeysVbox = view.getBagKeysVbox();
 		this.closeCoins = view.getCloseCoins();
-
-		this.eatCommand = eatCommand;
-		this.putDownCommand = putDownCommand;
 
 		closeFood.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -234,9 +231,9 @@ public class BagView{
 
 	private void cleanSelect(VBox vBox, List<GridPane> gridPaneList, int k){
 		int size = gridPaneList.size();
-		for(int i=0; i<size; i++){
-			ImageView imageView = (ImageView)gridPaneList.get(i).getChildren().get(k);
-			if(imageView.getEffect()!=null)
+		for (GridPane gridPane : gridPaneList) {
+			ImageView imageView = (ImageView) gridPane.getChildren().get(k);
+			if (imageView.getEffect() != null)
 				imageView.setEffect(null);
 		}
 	}

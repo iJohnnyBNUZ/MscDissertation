@@ -8,7 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,22 +17,16 @@ public class PostView {
 
 	private PostCommand postCommand = null;
 
-	private AnchorPane chatView = null;
-	private Button closeChatView = null;
-	private TextField messageWindow = null;
-	private Button send = null;
-	private VBox messageBox = null;
-	private AnchorPane chatScrolPane = null;
-	private double lastLabelHeight = 0;
-
+	private AnchorPane chatView;
+	private TextField messageWindow;
+	private AnchorPane chatScrollPane;
 
 	public PostView(View view) {
 		this.chatView = view.getChatView();
-		this.closeChatView = view.getCloseChatView();
+		Button closeChatView = view.getCloseChatView();
 		this.messageWindow = view.getMessageWindow();
-		this.send = view.getSend();
-		this.messageBox = view.getMessageBox();
-		this.chatScrolPane = view.getChatScrolPane();
+		Button send = view.getSend();
+		this.chatScrollPane = view.getChatScrolPane();
 
 		closeChatView.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -42,14 +35,11 @@ public class PostView {
 			}
 		});
 
-		send.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent actionEvent) {
-				if(messageWindow.getText() != null){
-					SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					postCommand.execute(messageWindow.getText(),df.format(new Date()).toString());
-					messageWindow.setText("");
-				}
+		send.setOnAction(actionEvent -> {
+			if(messageWindow.getText() != null){
+				SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				postCommand.execute(messageWindow.getText(),df.format(new Date()).toString());
+				messageWindow.setText("");
 			}
 		});
 
@@ -57,11 +47,11 @@ public class PostView {
 	}
 
 	public void updatePost(List<String> messageList){
-		chatScrolPane.getChildren().clear();
+		chatScrollPane.getChildren().clear();
 		//messageBox.getChildren().clear();
 		//add messages to chatView
 		int size = messageList.size();
-		for(int i =0 ; i< size; i++){
+		for(int i = 0 ; i < size; i++){
 			Label messageLabel = new Label();
 			messageLabel.setPrefWidth(288);
 			messageLabel.setPrefHeight(27);
@@ -70,7 +60,7 @@ public class PostView {
 			messageLabel.setLayoutY(10+30*i);
 			messageLabel.setWrapText(true);
 			//messageBox.getChildren().add(messageLabel);
-			chatScrolPane.getChildren().add(messageLabel);
+			chatScrollPane.getChildren().add(messageLabel);
 		}
 
 

@@ -8,16 +8,8 @@ public class Door extends Tile {
         return currentLocationId;
     }
 
-    public void setCurrentLocationId(String currentLocationId) {
-        this.currentLocationId = currentLocationId;
-    }
-
     public String getNextLocationId() {
         return nextLocationId;
-    }
-
-    public void setNextLocationId(String nextLocationId) {
-        this.nextLocationId = nextLocationId;
     }
 
     public Door(boolean isMovable, String terrain, int energyCost,String currentLocationId,String nextLocationId) {

@@ -9,8 +9,11 @@ public class SaveGameCommand implements Command{
 	public SaveGameCommand(ClientMediator clientMediator) {
 		this.clientMediator = clientMediator;
 	}
+
+	/**
+	 *  Add the SaveGameEvent to the queue in the clientMediator
+	 */
 	public void execute() {
-		System.out.println("Saving Game");
 		clientMediator.getEventQueue().add(new SaveGameEvent(clientMediator.getUserName()));
 	}
 }

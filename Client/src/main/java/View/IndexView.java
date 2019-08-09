@@ -31,31 +31,45 @@ public class IndexView {
 	private String gameType = null;
 	
 	private StartGameCommand startGame= null;
-	
+
+	/**
+	 * Record the user's selection and show the page used to input information.
+	 */
 	public void newGame() {
-		gameType = "new";
+		this.gameType = "new";
 		userStatus.setText("");
 		userInfo.setVisible(true);
 		index.setVisible(false);
 	}
-	
+
+	/**
+	 * Record the user's selection and show the page used to input information.
+	 */
 	public void continueGame() {
-		gameType = "continue";
+		this.gameType = "continue";
 		userStatus.setText("");
 		userInfo.setVisible(true);
 		index.setVisible(false);
 	}
-	
+
+	/**
+	 * Get the user input and invoke the start game command.
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	public void startGame() throws IOException, ClassNotFoundException {
 		String uName = userName.getText();
 		String IP = IPAddress.getText();
+
+		//ensure the input cannot be empty.
 		if(!uName.equals("")&& !IP.equals("")) {
 			showMessage("Connecting.......");
-			switch(gameType) {
-			case "new" : startGame.execute("new", uName, IP); break;
-			case "continue":startGame.execute("continue", uName, IP);  break;
-			default: showMessage("The game type is wrong");break;
+			if(!gameType.equals(null)) {
+				startGame.execute(gameType, uName, IP);
 			}
+			else
+				showMessage("The game type is wrong");
+
 		}else {
 			showMessage("Please input your info!");
 		}
@@ -83,5 +97,8 @@ public class IndexView {
 		this.startGame = startGame;
 	}
 
-	
+
+    public String getGameType() {
+		return gameType;
+    }
 }

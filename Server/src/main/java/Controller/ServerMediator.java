@@ -5,7 +5,6 @@ import Controller.Network.Server;
 import Controller.Save.SaveEntity;
 import Controller.Save.SaveLocation;
 import Controller.Save.SaveWorld;
-import Model.Entity.User;
 import Model.World;
 
 import java.io.IOException;
@@ -51,15 +50,7 @@ public class ServerMediator implements GameMediator{
 		return saveEntity;
 	}
 
-	public void saveSingleUser(User user) {
-		saveEntity.saveSingleEntity(user);
-	}
-
 	public World getWorld() {
 		return world;
-	}
-
-	public void setWorld(World newWorld) {
-		this.world = newWorld;
 	}
 }

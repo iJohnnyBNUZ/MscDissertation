@@ -21,7 +21,7 @@ public class SaveWorld {
         saveUsers();
     }
 
-    public void saveLocations() {
+    private void saveLocations() {
         JsonArray savedLocations = new JsonArray();
         for (Location location : serverMediator.getWorld().getLocations()) {
             savedLocations.add(serverMediator.getLocationSaver().saveLocationAsJson(location));
@@ -30,7 +30,7 @@ public class SaveWorld {
         writeFile.writeJsonArray(savedLocations, saveDirectoryPath + "/Locations/Locations.json");
     }
 
-    public void saveUsers() {
+    private void saveUsers() {
         JsonArray savedUsers = new JsonArray();
         for (Entity user : serverMediator.getWorld().getEntities()) {
             savedUsers.add(serverMediator.getEntitySaver().saveEntityAsJson(user));
