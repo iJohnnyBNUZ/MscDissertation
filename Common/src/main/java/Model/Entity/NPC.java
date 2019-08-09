@@ -10,9 +10,18 @@ public class NPC extends Entity {
 
 	public String reactTo(Entity entity) {
 		if(isFriendly){
-			entity.increaseEnergy(20);
-			notifyObserver();
-			return "increase 20 energy";
+			if(entity.getEnergy()<80){
+				entity.increaseEnergy(20);
+				notifyObserver();
+				return "increase 20 energy";
+			}
+			else{
+				entity.setEnergy(100);
+				notifyObserver();
+				return "have the full energy";
+			}
+
+
 		}else{
 			if(entity.getEnergy()<20){
 				entity.setEnergy(0);
