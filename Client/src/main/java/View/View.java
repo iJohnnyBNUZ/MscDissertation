@@ -58,12 +58,6 @@ public class View {
 	private Button send;
 
 	@FXML
-	private VBox messageBox;
-
-	@FXML
-	private AnchorPane chatScrolPane;
-
-	@FXML
 	private TabPane tabBagView;
 
 	@FXML
@@ -126,6 +120,18 @@ public class View {
 	@FXML
 	private Button closeMyBag;
 
+	@FXML
+	private ChoiceBox atList;
+
+	@FXML
+	private Button atBtn;
+
+	@FXML
+	private ScrollPane scrollPane;
+
+    @FXML
+	private ListView<String> messageListView;
+
 
 	private double tileWidth = 0;
 
@@ -160,10 +166,6 @@ public class View {
 	public TextField getMessageWindow() { return messageWindow; }
 
 	public Button getSend() { return send; }
-
-	public VBox getMessageBox() { return messageBox; }
-
-	public AnchorPane getChatScrolPane() { return chatScrolPane; }
 
 	public TabPane getTabBagView() { return tabBagView; }
 
@@ -206,6 +208,14 @@ public class View {
 	public Button getSell() { return sell; }
 
 	public Button getCloseMyBag() { return closeMyBag; }
+
+	public ChoiceBox getAtList() { return atList;}
+
+	public Button getAtBtn() { return atBtn; }
+
+	public ScrollPane getScrollPane() { return scrollPane; }
+
+	public ListView<String> getMessageListView() { return messageListView; }
 
 
 	public void showBag() {
@@ -466,10 +476,10 @@ public class View {
 	 * Show the alert dialog to the user
 	 * @param message The message need to be written in the dialog.
 	 */
-	public void showAlert(String message){
+	public void showAlert(String message, String header){
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Information");
-		alert.setHeaderText("");
+		alert.setHeaderText(header);
 		alert.setContentText(message);
 		alert.show();
 	}

@@ -40,7 +40,7 @@ public class EntityView {
 				count++;
 			}
 		}else {
-			view.showAlert("Wrong npcs size");
+			view.showAlert("Wrong npcs size",null);
 		}
 		return count;
 	}
@@ -60,7 +60,7 @@ public class EntityView {
 			}
 				
 		}else {
-			view.showAlert("Wrong tiles size");
+			view.showAlert("Wrong tiles size",null);
 		}
 		return count;
 	}
@@ -82,7 +82,7 @@ public class EntityView {
 				
 			}
 		}else {
-			view.showAlert("Wrong tiles size");
+			view.showAlert("Wrong tiles size",null);
 		}
 		return count;
 	}
@@ -99,7 +99,7 @@ public class EntityView {
 			energy.setProgress((double)energyPoints/100);
 			
 		}else {
-			view.showAlert("Wrong energy value!");
+			view.showAlert("Wrong energy value!",null);
 		}
 		
 	}
@@ -112,7 +112,7 @@ public class EntityView {
 		if(coins > 0) {
 			coin.setText(""+coins);
 		}else {
-			view.showAlert("Wrong coin value!");
+			view.showAlert("Wrong coin value!",null);
 		}
 		
 	}

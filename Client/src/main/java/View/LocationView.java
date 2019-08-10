@@ -28,7 +28,7 @@ public class LocationView{
 					count++;
 			}
 		} else {
-			view.showAlert("Wrong tiles size");
+			view.showAlert("Wrong tiles size",null);
 		}
 		return count;
 	}

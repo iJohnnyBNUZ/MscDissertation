@@ -2,16 +2,20 @@ package View;
 
 import Controller.Command.Command;
 import Controller.Command.PostCommand;
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
+import javax.print.DocFlavor;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class PostView {
 
@@ -19,14 +23,63 @@ public class PostView {
 
 	private AnchorPane chatView;
 	private TextField messageWindow;
-	private AnchorPane chatScrollPane;
+	private ChoiceBox atList;
+	private Button atBtn;
+	private Button closeChatView;
+	private Button send;
+	private List<String> atUser = new LinkedList<String>();
+	private Boolean result;
+	private ScrollPane scrollPane;
+	private ListView<String> messageListView;
 
 	public PostView(View view) {
 		this.chatView = view.getChatView();
-		Button closeChatView = view.getCloseChatView();
+		this.closeChatView = view.getCloseChatView();
 		this.messageWindow = view.getMessageWindow();
-		Button send = view.getSend();
-		this.chatScrollPane = view.getChatScrolPane();
+		this.send = view.getSend();
+		this.atList = view.getAtList();
+		this.atBtn = view.getAtBtn();
+		this.scrollPane = view.getScrollPane();
+		this.messageListView = view.getMessageListView();
+	}
+
+	public void updatePost(List<String> messageList, ArrayList<String> atUserList){
+		messageListView.setItems(null);
+
+		int size = messageList.size();
+		ArrayList<String> list = new ArrayList<String>();
+		for(int i = 0 ; i < size; i++){
+			list.add("   " + messageList.get(i));
+		}
+		messageListView.setItems(FXCollections.observableArrayList(list));
+
+		atBtn.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent actionEvent) {
+				if(atUserList.isEmpty()){
+					messageWindow.setText("Sorry there are no online users, so you cannot @");
+				}
+				else{
+					atList.setVisible(true);
+					atList.setItems(FXCollections.observableArrayList(atUserList));
+					atList.show();
+				}
+			}
+		});
+
+		atList.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent actionEvent) {
+				if(atList.getValue()!=null){
+					if(!atUser.contains(atList.getValue())){
+						atUser.add(String.valueOf(atList.getValue()));
+					}
+					atList.setVisible(false);
+					messageWindow.setText(messageWindow.getText()+ "@" + atList.getValue());
+				}
+			}
+		});
+
 
 		closeChatView.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -35,33 +88,25 @@ public class PostView {
 			}
 		});
 
-		send.setOnAction(actionEvent -> {
-			if(messageWindow.getText() != null){
-				SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				postCommand.execute(messageWindow.getText(),df.format(new Date()).toString());
-				messageWindow.setText("");
+		send.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent actionEvent) {
+				if(messageWindow.getText() != null){
+					for(int i = 0; i < atUser.size(); i++){
+						result = messageWindow.getText().contains("@" + atUser.get(i));
+						if(result ==  false){
+							atUser.remove(i);
+							i--;
+						}
+					}
+					SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					postCommand.execute(messageWindow.getText(),df.format(new Date()).toString(), atUser);
+					messageWindow.setText("");
+					atList.setValue(null);
+				}
 			}
 		});
 
-
-	}
-
-	public void updatePost(List<String> messageList){
-		chatScrollPane.getChildren().clear();
-		//messageBox.getChildren().clear();
-		//add messages to chatView
-		int size = messageList.size();
-		for(int i = 0 ; i < size; i++){
-			Label messageLabel = new Label();
-			messageLabel.setPrefWidth(288);
-			messageLabel.setPrefHeight(27);
-			messageLabel.setText(messageList.get(i));
-			messageLabel.setLayoutX(20);
-			messageLabel.setLayoutY(10+30*i);
-			messageLabel.setWrapText(true);
-			//messageBox.getChildren().add(messageLabel);
-			chatScrollPane.getChildren().add(messageLabel);
-		}
 
 
 	}

@@ -117,6 +117,9 @@ public class ClientListener implements Runnable {
 	}
 
 	private void handlePostEvent(PostEvent event){
+		clientMediator.setAtFrom(event.getEntityID());
+		clientMediator.setAtUser(event.getAtUser());
+		clientMediator.setMessage(event.getPostMessage());
 		clientMediator.getPostController().addPostMessage(event.getPostMessage());
 	}
 

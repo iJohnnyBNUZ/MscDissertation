@@ -12,7 +12,7 @@ public class NPCView{
 	}
 
 	public void updateNpcView(String sentence){
-		view.showAlert(sentence);
+		view.showAlert(sentence,null);
 		closeReactToCommand.execute();
 	}
 

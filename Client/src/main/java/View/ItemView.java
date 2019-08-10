@@ -31,7 +31,7 @@ public class ItemView{
 			}
 
 		}else {
-			view.showAlert("Wrong items size");
+			view.showAlert("Wrong items size",null);
 		}
 		return count;
 	}
