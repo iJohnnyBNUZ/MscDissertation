@@ -34,23 +34,25 @@ public class TransactionCommand {
             protected void succeeded() {
                 // run in the JavaFx thread.
                 if(tranType.equals("buy")){
+                    System.out.println("with+" + clientMediator.getReactTo());
                     message = itemController.exchange(userID,tranUserID,tranList,value,userID);
                     clientMediator.getEventQueue().add(new TransactionEvent(userID,tranUserID,tranList,value,userID));
                     if(message != null){
-                        clientMediator.getView().showAlert(message);
+                        clientMediator.getView().showAlert(message,null);
                     }
                     else{
-                        clientMediator.getView().showAlert("You bought successfully");
+                        clientMediator.getView().showAlert("You bought successfully",null);
                     }
                 }
                 else if(tranType.equals("sell")){
-                    message = itemController.exchange(userID,tranUserID,tranList,value,userID);
-                    clientMediator.getEventQueue().add(new TransactionEvent(userID,tranUserID,tranList,value,userID));
+                    System.out.println("with+" + clientMediator.getReactTo());
+                    message = itemController.exchange(tranUserID,userID,tranList,value,userID);
+                    clientMediator.getEventQueue().add(new TransactionEvent(tranUserID,userID,tranList,value,userID));
                     if(message != null){
-                        clientMediator.getView().showAlert(message);
+                        clientMediator.getView().showAlert(message,null);
                     }
                     else{
-                        clientMediator.getView().showAlert("You sold successfully");
+                        clientMediator.getView().showAlert("You sold successfully",null);
                     }
                 }
             }

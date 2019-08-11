@@ -37,7 +37,7 @@ public class OpenDoorCommand implements Command {
             protected void succeeded() {
                 // run in the JavaFx thread.
                 if(message!=null){
-                    clientMediator.getView().showAlert(message);
+                    clientMediator.getView().showAlert(message,null);
                 }else{
                     clientMediator.getEventQueue().add(new OpenDoorEvent(clientMediator.getUserName()));
                 }

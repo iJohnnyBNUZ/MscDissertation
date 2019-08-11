@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 public class ClientMediator implements GameMediator {
@@ -27,6 +28,9 @@ public class ClientMediator implements GameMediator {
 	private String userName;
 	private String reactTo;
 	private String reactResult;
+	private String atFrom;
+	private List<String> atUser;
+	private String message;
 
 	private Set<Observer> observerSet = new HashSet<>();
 	private LinkedList<Event> eventQueue = new LinkedList<>(); //User actions waiting to be send to the sever.
@@ -246,6 +250,18 @@ public class ClientMediator implements GameMediator {
 	public String getReactResult() { return reactResult; }
 
 	public void setReactResult(String reactResult) { this.reactResult = reactResult; }
+
+	public String getAtFrom() { return atFrom; }
+
+	public void setAtFrom(String atFrom) { this.atFrom = atFrom; }
+
+	public List<String> getAtUser() { return atUser; }
+
+	public void setAtUser(List<String> atUser) { this.atUser = atUser; }
+
+	public String getMessage() { return message; }
+
+	public void setMessage(String message) { this.message = message; }
 
 	IndexView getIndexView() {
 		return indexView;
