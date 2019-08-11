@@ -26,7 +26,7 @@ public class PutDownCommand implements Command {
 				// run in the current thread.
 				userID = clientMediator.getUserName();
 				System.out.println("Item "+selectedItem+" is put down on this position by " + userID);
-				String message = itemController.drop(userID,selectedItem);
+				message = itemController.drop(userID,selectedItem);
 				return null;
 			}
 
