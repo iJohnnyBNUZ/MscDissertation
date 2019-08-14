@@ -204,7 +204,7 @@ Events are custom data structures used to 'talk' between the client and server. 
 ### LoginEvent(String entityID)
 This event sends the userID of the user that wants to login to the server. The server then checks if the user exists. If they do, it's location will be initialized and the world will be sent to the client.
 
-#### LogoutEvent(String entityID)
+### LogoutEvent(String entityID)
 This event sends the userID of the user that wants to logout to the server. The server then removes the user from being displayed on any locations.
 
 ### MoveEvent(String entityID, String direction)
@@ -224,9 +224,6 @@ This event sends the userID and the ID of the item that the user wants to put do
 
 ### TransactionEvent(String buyerID, String sellerID, HashMap<String,Integer> tranList, int value, String entityID)
 This event sends the IDs of buyer and seller, the item list of transaction, the value of transaction and the current userID of that client. Server will finish this transaction, and then synchronize the change of buyer and seller to all clients.
-
-### PostEvent(String entityID, String postMessage, List<String> atUser)
-This event sends the userID, the message that the user post and the list of users that the user @. Server will add the message to the game's message list, and then synchronize the message list and tell the users who are @ to all the clients.
 
 ### ReactToEvent(String reactToID, String entityID)
 This event sends the userID and the ID of the entity that the user interacts with. Server will handle the interaction, and then synchronize the interaction to all the clients.
