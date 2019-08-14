@@ -140,7 +140,7 @@ public class BagView{
 							food_item_img.setEffect(null);
 							selectedItemId = null;
 						} else {
-							cleanSelect(bagFoodVbox, gridPaneFoodList, 0);
+							cleanSelect(gridPaneFoodList, 0);
 							food_item_img.setEffect(effect);
 							//set selectedItemId
 							for (Item item : bag) {
@@ -187,7 +187,7 @@ public class BagView{
 							key_item_img.setEffect(null);
 							selectedItemId = null;
 						} else {
-							cleanSelect(bagKeysVbox, gridPaneKeyList, 1);
+							cleanSelect(gridPaneKeyList, 1);
 							key_item_img.setEffect(effect);
 							//set selectedItemId
 							for (Item item : bag) {
@@ -229,8 +229,7 @@ public class BagView{
 	}
 
 
-	private void cleanSelect(VBox vBox, List<GridPane> gridPaneList, int k){
-		int size = gridPaneList.size();
+	private void cleanSelect(List<GridPane> gridPaneList, int k){
 		for (GridPane gridPane : gridPaneList) {
 			ImageView imageView = (ImageView) gridPane.getChildren().get(k);
 			if (imageView.getEffect() != null)

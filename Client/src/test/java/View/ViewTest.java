@@ -47,7 +47,7 @@ public class ViewTest extends ApplicationTest {
     }
 
     @Test
-    public void showChatTest() {
+    public void showPostTest() {
         clickOn("#Chat");
         clickOn("#openChat");
         FxAssert.verifyThat("#chatView", NodeMatchers.isVisible());
@@ -123,6 +123,27 @@ public class ViewTest extends ApplicationTest {
 
     @Test
     public void updateCoinTest() {
+
+    }
+
+
+    @Test
+    public void updateBagViewTest(){
+
+    }
+
+    @Test
+    public void updateNPCViewTest(){
+
+    }
+
+    @Test
+    public void updatePostViewTest(){
+
+    }
+
+    @Test
+    public void updateTransactionViewTest(){
 
     }
 }

@@ -32,6 +32,7 @@ public class PutDownCommand implements Command {
 
 			@Override
 			protected void succeeded() {
+				System.out.println("JavaFx thread");
 				// run in the JavaFx thread.
 				if(message!=null){
 					clientMediator.getView().showAlert(message,null);
