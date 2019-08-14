@@ -7,7 +7,9 @@ Set test to test root.
 
 Set resources to resources root.
 
-Configure src/Main.java to main class.
+Configure Server/src/Main/java/RunServer to main class for Server.
+
+Configure Client/src/Main/java/RunClient to main class for Client.
 
 Set SDK to Java 11. Tested using OpenJDK.
 
