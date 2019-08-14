@@ -60,6 +60,9 @@ Load the image according to the filename and draw it on the item panel if it is 
 #### setWindowsCloseAction(Stage primaryStage)
 Show alert when user want to close the window.  
 
+#### showAlert(String message, String header)
+Show an Information type dialog box. "message" is the content, "header" is the header.
+
 ### LocationView
 This class is used to update the map of a location.
 
@@ -89,6 +92,33 @@ Show the energy on the user interface by setting the value to the energy bar.
 
 #### updateCoin(int coins)
 Show the coins owned by the user on the user interface by setting the value to the coin label.
+
+### BagView
+This class is used to update the view of items in user's bag.
+
+#### updateBag(List<Item> bag, int money)
+Show the items in user's bag. Iterate the list, divide the items into food items and key items. Show the food items, key items and user's money in three Tab containers.
+
+#### cleanSelect(List<GridPane> gridPaneList, int k)
+Clear the effect of the Kth children ImageView in each GridPane container. Iterate the list, for each GridPane, access its Kth children-ImageView. If there is some effect in the ImageView, clear the effect.
+  
+### NPCView
+This class is used to show a dialog box when User interacts with NPC in the game.
+
+#### updateNpcView(String sentence)
+Show a dialog box with sentence in it.
+
+### PostView
+This class is used to update the view of post window.
+
+#### updatePost(List<String> messageList, ArrayList<String> atUserList)
+Show the messages in messageList in the PostView. atUserList stores the IDs of all online users, which can be @ by user in post window.
+
+### TransactionView
+This class is used to update the view of transaction window.
+
+#### updateTransaction(List<Item> user__shop, String userShopName, List<Item> bag, int money)
+Show the current user's items and the items of the entity who trades with the current user in transaction window. user_shop represents the items of that entity and userShopName is the ID of that entity. bag is current user's bag and money is current user's money
 
 ## UserController
 This controller works when user start game. It get IP, user type and user name from view, connect to server and check if the user name and type is reasonable. If so, enter game.
