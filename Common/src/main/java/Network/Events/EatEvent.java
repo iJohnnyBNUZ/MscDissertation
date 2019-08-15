@@ -4,17 +4,17 @@ import java.io.Serializable;
 
 public class EatEvent implements Event, Serializable {
 
-    private String EntityID;
+    private String entityID;
     private String selectedItemID;
 
-    public EatEvent(String EntityID, String selectedItemID){
-        this.EntityID = EntityID;
+    public EatEvent(String entityID, String selectedItemID){
+        this.entityID = entityID;
         this.selectedItemID = selectedItemID;
     }
 
 
     public String getEntityID() {
-        return EntityID;
+        return entityID;
     }
 
     public String getSelectedItemID() {

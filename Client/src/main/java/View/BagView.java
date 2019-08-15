@@ -245,6 +245,13 @@ public class BagView{
 		this.putDownCommand = putDownCommand;
 	}
 
+	public int getGridPaneFoodListSize(){
+		return gridPaneFoodList.size();
+	}
+
+	public int getGridPaneKeyListSize(){
+		return gridPaneKeyList.size();
+	}
 
 
 }

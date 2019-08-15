@@ -114,4 +114,10 @@ public class PostView {
 	public void setPostCommand(Command command){
 		this.postCommand = (PostCommand) command;
 	}
+
+	public int getMessageListViewSize(){
+		return messageListView.getItems().size();
+	}
+
+
 }
