@@ -94,10 +94,6 @@ class LoadLocation {
 					location.addItem(new Coordinate(item.get("xCoordinate").getAsInt(),item.get("yCoordinate").getAsInt()),newCoin);
 					break;
 			}
-			//Item newItem = new Item(item.get("id").getAsString(), item.get("value").getAsInt(), item.get("type").getAsString());
-			//newItem.setCollectible(item.get("isCollectible").getAsBoolean());
-			//newItem.setEdible(item.get("isEdible").getAsBoolean());
-			//location.addItem(new Coordinate(item.get("xCoordinate").getAsInt(), item.get("yCoordinate").getAsInt()), newItem);
 		}
 	}
 

@@ -36,12 +36,12 @@ public class TransactionCommand {
                 if(tranType.equals("buy")){
                     System.out.println("with+" + clientMediator.getReactTo());
                     message = itemController.exchange(userID,tranUserID,tranList,value,userID);
-                    clientMediator.getEventQueue().add(new TransactionEvent(userID,tranUserID,tranList,value,userID));
                     if(message != null){
                         clientMediator.getView().showAlert(message,null);
                     }
                     else{
                         clientMediator.getView().showAlert("You bought successfully",null);
+                        clientMediator.getEventQueue().add(new TransactionEvent(userID,tranUserID,tranList,value,userID));
                     }
                 }
                 else if(tranType.equals("sell")){
@@ -53,6 +53,7 @@ public class TransactionCommand {
                     }
                     else{
                         clientMediator.getView().showAlert("You sold successfully",null);
+                        clientMediator.getEventQueue().add(new TransactionEvent(userID,tranUserID,tranList,value,userID));
                     }
                 }
             }

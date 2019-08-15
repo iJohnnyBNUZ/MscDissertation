@@ -16,7 +16,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import Model.Item.Food;
+
+import Model.Item.Item;
+
+import Model.Item.Key;
+
+
+import java.util.*;
 
 public class ViewTest extends ApplicationTest {
     private View view = null;
@@ -53,42 +60,42 @@ public class ViewTest extends ApplicationTest {
         FxAssert.verifyThat("#chatView", NodeMatchers.isVisible());
     }*/
 
-   @Test
-   public void drawTest(){
-       Boolean result = view.draw("water",new Coordinate(0,1));
-       assertEquals(true,result);
+    @Test
+    public void drawTest(){
+        Boolean result = view.draw("water",new Coordinate(0,1));
+        assertEquals(true,result);
 
-   }
+    }
 
-   @Test
-   public void drawInteractiveTest(){
-       Task<Void> progressTask = new Task<Void>(){
-           Map<String,Coordinate> items = new HashMap<String,Coordinate>();
-           @Override
-           protected Void call() throws Exception {
-               return null;
-           }
+    @Test
+    public void drawInteractiveTest(){
+        Task<Void> progressTask = new Task<Void>(){
+            Map<String,Coordinate> items = new HashMap<String,Coordinate>();
+            @Override
+            protected Void call() throws Exception {
+                return null;
+            }
 
-           @Override
-           protected void succeeded() {
-               int before=view.getForItem().getChildren().size();
-               view.drawInteractive("apple",new Coordinate(0,1),true);
-               int after = view.getForItem().getChildren().size();
-               assertEquals(after,before+1);
+            @Override
+            protected void succeeded() {
+                int before=view.getForItem().getChildren().size();
+                view.drawInteractive("apple",new Coordinate(0,1),true);
+                int after = view.getForItem().getChildren().size();
+                assertEquals(after,before+1);
 
-               before=view.getForEntity().getChildren().size();
-               view.drawInteractive("store",new Coordinate(0,1),false);
-               view.drawInteractive("npc",new Coordinate(1,1),false);
-               after = view.getForEntity().getChildren().size();
+                before=view.getForEntity().getChildren().size();
+                view.drawInteractive("store",new Coordinate(0,1),false);
+                view.drawInteractive("npc",new Coordinate(1,1),false);
+                after = view.getForEntity().getChildren().size();
 
-               assertEquals(after,before+2);
-           }
+                assertEquals(after,before+2);
+            }
 
-       };
+        };
 
-       new Thread(progressTask).start();
+        new Thread(progressTask).start();
 
-   }
+    }
 
     @Test
     public void updateLocation() {
@@ -250,5 +257,211 @@ public class ViewTest extends ApplicationTest {
         };
 
         new Thread(progressTask).start();
+    }
+
+    @Test
+
+    public void updateBagViewTest(){
+
+
+
+        Task<Void> progressTask = new Task<Void>(){
+
+
+
+            List<Item> bag = new LinkedList<Item>();
+
+            int money = 100;
+
+            BagView bagView = new BagView(view);
+
+
+
+            @Override
+
+            protected Void call() throws Exception{
+
+                bag.add(new Food("apple1",10,10,"food"));
+
+                bag.add(new Food("apple2",10,10,"food"));
+
+                bag.add(new Food("lemon1",10,10,"food"));
+
+                bag.add(new Food("orange1",10,10,"food"));
+
+                bag.add(new Key("key_blue1",10,"key"));
+
+                bag.add(new Key("key_red0",10,"key"));
+
+                bag.add(new Key("key_red1",10,"key"));
+
+                return null;
+
+            }
+
+
+
+            @Override
+
+            protected void succeeded() {
+
+                bagView.updateBag(bag,money);
+
+                assertEquals(3,bagView.getGridPaneFoodListSize());
+
+                assertEquals(2,bagView.getGridPaneKeyListSize());
+
+            }
+
+
+
+        };
+
+
+
+        new Thread(progressTask).start();
+
+
+
+    }
+
+
+
+
+
+    @Test
+
+    public void updatePostViewTest(){
+
+
+
+        Task<Void> progressTask = new Task<Void>(){
+
+
+
+            PostView postView = new PostView(view);
+
+            List<String> messageList = new LinkedList<String>();
+
+            ArrayList<String> list = new ArrayList<String>();
+
+
+
+            @Override
+
+            protected Void call() throws Exception{
+
+
+
+                messageList.add("hello world");
+
+                messageList.add("hello Java");
+
+                messageList.add("hello edinburgh");
+
+                list.add("user0");
+
+                list.add("user1");
+
+                return null;
+
+            }
+
+
+
+            @Override
+
+            protected void succeeded() {
+
+                postView.updatePost(messageList,list);
+
+                assertEquals(3,postView.getMessageListViewSize());
+
+            }
+
+
+
+        };
+
+
+
+        new Thread(progressTask).start();
+
+
+
+    }
+
+
+
+    @Test
+
+    public void updateTransactionViewTest(){
+
+
+
+
+
+        Task<Void> progressTask = new Task<Void>(){
+
+
+
+            TransactionView transactionView = new TransactionView(view);
+
+            List<Item> userShopBag = new LinkedList<Item>();
+
+            String userShopName = "user1";
+
+            List<Item> myBag = new LinkedList<Item>();
+
+            int money = 100;
+
+
+
+            @Override
+
+            protected Void call() throws Exception{
+
+
+
+                userShopBag.add(new Food("apple1",10,10,"food"));
+
+                userShopBag.add(new Food("apple2",10,10,"food"));
+
+                userShopBag.add(new Food("orange1",10,10,"food"));
+
+                userShopBag.add(new Food("key_blue1",10,10,"food"));
+
+                myBag.add(new Food("apple3",10,10,"food"));
+
+                myBag.add(new Food("lemon2",10,10,"food"));
+
+                return null;
+
+            }
+
+
+
+            @Override
+
+            protected void succeeded() {
+
+                transactionView.updateTransaction(userShopBag,userShopName,myBag,money);
+
+                assertEquals(3,transactionView.getUserShopVBoxSize());
+
+                assertEquals(2,transactionView.getMyBagVBoxSize());
+
+            }
+
+
+
+        };
+
+
+
+        new Thread(progressTask).start();
+
+
+
     }
 }

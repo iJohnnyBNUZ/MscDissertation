@@ -7,7 +7,9 @@ Set test to test root.
 
 Set resources to resources root.
 
-Configure src/Main.java to main class.
+Configure Server/src/Main/java/RunServer to main class for Server.
+
+Configure Client/src/Main/java/RunClient to main class for Client.
 
 Set SDK to Java 11. Tested using OpenJDK.
 
@@ -58,6 +60,9 @@ Load the image according to the filename and draw it on the item panel if it is 
 #### setWindowsCloseAction(Stage primaryStage)
 Show alert when user want to close the window.  
 
+#### showAlert(String message, String header)
+Show an Information type dialog box. "message" is the content, "header" is the header.
+
 ### LocationView
 This class is used to update the map of a location.
 
@@ -88,6 +93,48 @@ Show the energy on the user interface by setting the value to the energy bar.
 #### updateCoin(int coins)
 Show the coins owned by the user on the user interface by setting the value to the coin label.
 
+### BagView
+This class is used to update the view of items in user's bag.
+
+#### updateBag(List<Item> bag, int money)
+Show the items in user's bag. Iterate the list, divide the items into food items and key items. Show the food items, key items and user's money in three Tab containers.
+
+#### cleanSelect(List<GridPane> gridPaneList, int k)
+Clear the effect of the Kth children ImageView in each GridPane container. Iterate the list, for each GridPane, access its Kth children-ImageView. If there is some effect in the ImageView, clear the effect.
+  
+#### getGridPaneFoodListSize()
+Return the number of types of food.
+
+#### getGridPaneKeyListSize()
+Return the number of types of keys.
+  
+### NPCView
+This class is used to show a dialog box when User interacts with NPC in the game.
+
+#### updateNpcView(String sentence)
+Show a dialog box with sentence in it.
+
+### PostView
+This class is used to update the view of post window and provides a list of other online users so they can be @ by the current user in post window.
+
+#### updatePost(List<String> messageList, ArrayList<String> atUserList)
+Show the messages in messageList in the PostView. atUserList stores the IDs of all online users, which can be @ by user in post window.
+  
+#### getMessageListViewSize()
+Return the number of messages.
+
+### TransactionView
+This class is used to update the view of transaction window.
+
+#### updateTransaction(List<Item> user__shop, String userShopName, List<Item> bag, int money)
+Show the current user's items and the items of the entity who trades with the current user in transaction window. user_shop represents the items of that entity and userShopName is the ID of that entity. bag is current user's bag and money is current user's money
+  
+#### getUserShopVBoxSize()
+Return the number of the other entity's items
+
+#### getMyBagVBoxSize()
+Return the number of the current user's items
+
 ## UserController
 This controller works when user start game. It get IP, user type and user name from view, connect to server and check if the user name and type is reasonable. If so, enter game.
 
@@ -109,16 +156,34 @@ This class is used to forward the game type variable, username variable and IP a
 ### SaveGameCommand
 This class add the SaveGameEvent to the queue in the ClientMediator.
 
-##Controller
+### EatCommand
+This class is used to forward the current userID and the itemID of the food to the ItemController. If the action can be processed, add new EatEvent to the queue in the ClientMediator. 
+
+### PutDownCommand
+This class is used to forward the current userID and the itemID to the ItemController and get a returned message. If the message is not null, the user cannot put the item down and a diaglog box will be showed to tell the user; otherwise, the action can be processed, add new PutDownEvent to the queue in the ClientMediator.
+
+### PostCommand
+This class is used to forward the message that the user posts in post window to PostController. If the action can be processed, add new PostEvent to the queue in the ClientMediator.
+
+### TransactionCommand
+This class is used to forward the IDs of buyer and seller, the type of transaction, the item list of transaction, the value of transaction and the ID of current user to ItemController, and get a returned message. If the message is not null, the transaction fails and a dialog box will be showed to tell the user; otherwise the transaction succeed, a diaglog box will be showed to tell the user, and a new TransactionEvent will be added to the queue in the ClientMediator.
+
+### ReactToCommand
+This class is used to handle the interaction between the current user and other entities. If the current user is really interacting with someone, store the ID of the entity and the result of interaction in ClientMediator, which will be used when update the view. And add a new ReactToEvent to the queue in the ClientMediator.
+
+### CloseReactToCommand
+This class is used to clear the information about the interaction, then the client will know now the current user doesn't interact with anyone. 
+
+## Controller
 There is only one controller in this package, the reason is this controller will only be used in the client-side.
 
-###UserController
+### UserController
 This class is used to do the username checking and start the game only for the available username.
 
-### startGame(String type, String uName, String IP)
+#### startGame(String type, String uName, String IP)
 Use the IP to connect to the target server and record the username and game type. After the connection is set up, request the world instance from server
 
-### enterGame()
+#### enterGame()
 Checking whether the username is already exist in the record. For the new game, only when the username is not exist, the user is allowed to enter the game, then tell the client to send login request to server.
 For the continue game, only when the username is already exist, the user is allowed to enter the game, then tell the client to send login request to server. 
 
@@ -134,6 +199,16 @@ This observer will get the items' names and positions in the current location fr
 ### EntityObserver
 This observer will get the entities' names and positions in the current location from the world, then pass these parameters to the EntityView for updating.
 
+### BagObserver
+This observer will get the current user's bag and money from the world, then pass them to the BagView for updating.
+
+### PostObserver
+This observer will get a list of messages and a list of all the online users apart from the current user, then pass them to the PostView for updating. This observer will also check if the current user is @ by other users according to one variable in ClientMediator. If the current user is really @ by other users, a dialog box with the message will be showed to notify the user.
+
+### ReactToObserver
+This observer will check if the current user is interacting with someone now according to one variable in ClientMediator. If it is, the observer will check the type of the entity that the user interacts with. If the user interacts with NPC, the observer will get a message from another variable in ClientMediator and pass it to the NPCView for updating. If the user interacts with user or shop, the observer will get the entity's bag and ID, and the current user's bag and money, and then pass them to TransactionView for updating.
+
+
 ###  
 # Common
 This package contains code that both the client and server depend on. Each will run separate instances of this package.
@@ -144,7 +219,7 @@ Events are custom data structures used to 'talk' between the client and server. 
 ### LoginEvent(String entityID)
 This event sends the userID of the user that wants to login to the server. The server then checks if the user exists. If they do, it's location will be initialized and the world will be sent to the client.
 
-#### LogoutEvent(String entityID)
+### LogoutEvent(String entityID)
 This event sends the userID of the user that wants to logout to the server. The server then removes the user from being displayed on any locations.
 
 ### MoveEvent(String entityID, String direction)
@@ -155,6 +230,18 @@ This event sends the userID of the user that wants to move to the next Location.
 
 ### PostEvent(String entityID, String meaasge)
 This event sends the uerID and the message that user wants to send to others. Server then shows the message to all clients.
+
+### EatEvent(String entityID, String selectedItemID)
+This event sends the userID and the ID of food that the user wants to eat. Server will change this user's bag and energy, and then synchronize this user's action to all clients.
+
+### PutDownEvent(String entityID, String ItemID)
+This event sends the userID and the ID of the item that the user wants to put down. Server will put the item on the tile where the user is, and then synchronize this user's action to all clients.
+
+### TransactionEvent(String buyerID, String sellerID, HashMap<String,Integer> tranList, int value, String entityID)
+This event sends the IDs of buyer and seller, the item list of transaction, the value of transaction and the current userID of that client. Server will finish this transaction, and then synchronize the change of buyer and seller to all clients.
+
+### ReactToEvent(String reactToID, String entityID)
+This event sends the userID and the ID of the entity that the user interacts with. Server will handle the interaction, and then synchronize the interaction to all the clients.
 
 ## Location(String locationID)
 Each location is composed by several different kinds of tiles. Entities and Items can also exists in one location with its corresponding coordinate.
@@ -179,6 +266,15 @@ This controller solve the move and open door event. For move, it will check if u
 
 ### PostController
 This controller solve the post event. It will add messages in world as what users posted.
+
+### ReactToController
+This controller is used to handle the interaction.
+
+#### communicateWith(String userID)
+This method is used to return the ID of entity that the current user interacts with.
+
+#### reactToEntity(String id, String userID)
+This method is used to make real interaction for the current user by calling reactTo(Entity entity) method and return a result of interaction. "userID" is the ID of current user and "id" is the ID of the entity that the current user interacts with.
 
 # Server
 This package contains server-side logic. It will listen for new clients trying to connect with it and update them when any user makes a change to the server's model.

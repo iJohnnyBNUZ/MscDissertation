@@ -263,5 +263,13 @@ public class TransactionView {
 	public void setCloseReactToCommand(CloseReactToCommand closeReactToCommand){
 		this.closeReactToCommand = closeReactToCommand;
 	}
+
+	public  int getUserShopVBoxSize(){
+		return usershopVbox.getChildren().size();
+	}
+
+	public  int getMyBagVBoxSize(){
+		return myBagVbox.getChildren().size();
+	}
 }
 

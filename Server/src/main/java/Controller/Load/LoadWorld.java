@@ -18,7 +18,7 @@ public class LoadWorld {
 	}
 
 	public void loadLocations() {
-		File[] fileList = getFileList(filePath + "/Locations");
+		File[] fileList = getFileList(filePath + "Locations");
 		if(fileList != null) {
 			for (File child : fileList) {
 				serverMediator.getWorld().addLocation(loadLocation.buildLocation(child));
@@ -30,7 +30,7 @@ public class LoadWorld {
 	}
 
 	public void loadEntities() {
-		File[] fileList = getFileList(filePath + "/Entities");
+		File[] fileList = getFileList(filePath + "Entities");
 		if(fileList != null) {
 			for (File child : fileList) {
 				loadEntity.buildEntity(child);
@@ -43,6 +43,7 @@ public class LoadWorld {
 
 	private File[] getFileList(String filePath) {
 		File dir = new File(filePath);
+		System.out.println("File path is " + dir.getAbsolutePath());
 		return dir.listFiles();
 	}
 }
