@@ -294,13 +294,203 @@ The item controller is mainly responsible for the user picking up items, droppin
 # Server
 This package contains server-side logic. It will listen for new clients trying to connect with it and update them when any user makes a change to the server's model.
 
-##Server
-This class listens for clients trying to connect
+#### RunServer
 
-#### eventQueue : LinkedList<Events>
+##### main(String args[]) : void
+
+Creates server mediator and starts server
+
+## Controller
+Package contains network connectivity, loading, and saving.
+
+#### ServerMediator - implements GameMediator
+
+Encapsulates access to the world and loading/saving functionality.
+
+##### Field Summary
+
+##### world : private World
+
+World instance from Common module
+
+##### saveWorld : private SaveWorld
+
+Saves locations and entities to JSON.
+
+##### saveLocation : private SaveLocation
+
+Saves locations to JSON.
+
+##### saveEntity : private SaveEntity
+
+Saves entities to JSON.
+
+##### Method Summary
+
+##### startServer() : public void
+
+Asks if user wants to create new instance of server or load from saved data, spawns new instance of server.
+
+##### startGame(String directoryPath) : private void
+
+Loads locations and entities from given directory path.
+
+##### saveWorld() : public void
+
+Saves locations and entities to JSON.
+
+##### getLoactionSaver() : public SaveLocation
+
+Access location saver.
+
+##### getEntitySaver() : public SaveEntity
+
+Access entity saver.
+
+##### getWorld() : public World
+
+Access to world instance.
+
+### Network
+
+Package contains classes that deal with the connections to the client.
+
+#### Server - implements Runnable
+
+Listens for clients trying to connect to server and starts threads to communicate with them.
+
+##### Field Summary
+
+##### serverSocket : private ServerSocket
+
+Accepts new sockets when clients connect.
+
+##### clients : private ArrayList<ServerListener>
+
+Stores all clients connected to server.
+
+##### serverMediator : private ServerMediator
+
+Stores instance of serverMediator.
+
+##### eventQueue : private LinkedList<Events> 
+
 A queue of events sent from all active clients.
 
-#### updateOtherClients(ServerListener eventCreator) : void
+##### Method Summary
+
+##### run : public void
+
+Thread to listen for new clients.
+
+##### removeClient(ServerListener client) : void
+
+Disconnects client from server
+
+##### addEventToQueue(Event event) : void
+
+Adds event to Event queue.
+
+##### updateOtherClients(ServerListener eventCreator) : void
+
 Updates all clients except for the one that created the event.
 
+##### sendWorldTOClients() : void
 
+Sends whole world to all clients.
+
+-----------------------------------
+
+
+#### ServerUpdater - extends Thread implements Runnable
+
+Keeps client up to date with events occuring on server.
+
+##### Field Summary
+
+##### objectOutput : private ObjectOutputStream
+
+Sends objects to client.
+
+##### serverMediator : private ServerMediator
+
+Stores access to serverMediator. Used for updating server-side model.
+
+##### Method Summary
+
+
+-----------------------------------
+
+#### ServerListener - extends Thread implements Runnable
+
+##### Field Summary
+
+##### server : private Server
+
+Instance of server.
+
+##### objectInput : private ObjectInputStream
+
+Takes inputs from client.
+
+##### canRun : private boolean
+
+When this is true, thread loops continuously.
+
+##### userName : private String
+
+Stores user name of client connected to the listener.
+
+##### serverMediator : private ServerMediator
+
+Stores access to ServerMediator.
+
+##### locationController : private LocationController
+
+Stores access to LocationController.
+
+##### itemController : private ItemController
+
+Stores access to ItemController.
+
+##### postController : private PostController
+
+Stores access to PostController for chatting.
+
+##### reactToController : private ReactToController
+
+Stores access to ReactToController used to react to interactions from other entities.
+
+##### serverUpdater : private ServerUpdater
+
+Stores access to serverUpdater.
+
+##### Method Summary
+
+##### run : public void
+
+Loops thread to get input from client continuously
+
+##### getInputFromClient : private void
+
+Waits for input from client and handles it.
+
+##### sendWorld() : private void
+
+Sends world to all clients.
+
+##### updateMyClient() : void
+
+Sends world only to client being listened to.
+
+##### logout() : private void
+
+Logs out of server.
+
+##### sendMessage(Event event) : void
+
+Sends message to client using ClientUpdater.
+
+##### Client Input Handlers
+
+Series of methods to handle different types of inputs from server. Adding new events require new handlers.
