@@ -20,6 +20,14 @@ public class TransactionCommand {
         this.clientMediator = clientMediator;
     }
 
+    /**
+     * Invoke the exchange method in the itemController.
+     * Add the TransactionEvent to the queue if this action is processed, otherwise just show a dialog box to the user
+     * @param tranUserID The ID of the entity that the user trades with
+     * @param tranList A HashMap that contains the type and number of items that will be bought or sold
+     * @param value The value of this transaction
+     * @param tranType The type of this transaction for the current user
+     */
     public void execute(String tranUserID, HashMap<String,Integer> tranList, int value, String tranType) {
         Task<Void> progressTask = new Task<Void>(){
             String message = null;
@@ -34,7 +42,6 @@ public class TransactionCommand {
             protected void succeeded() {
                 // run in the JavaFx thread.
                 if(tranType.equals("buy")){
-                    System.out.println("with+" + clientMediator.getReactTo());
                     message = itemController.exchange(userID,tranUserID,tranList,value,userID);
                     if(message != null){
                         clientMediator.getView().showAlert(message,null);
@@ -45,7 +52,6 @@ public class TransactionCommand {
                     }
                 }
                 else if(tranType.equals("sell")){
-                    System.out.println("with+" + clientMediator.getReactTo());
                     message = itemController.exchange(tranUserID,userID,tranList,value,userID);
                     clientMediator.getEventQueue().add(new TransactionEvent(tranUserID,userID,tranList,value,userID));
                     if(message != null){

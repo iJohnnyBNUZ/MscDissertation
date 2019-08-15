@@ -8,6 +8,10 @@ public class PostController implements Controller{
         this.gameMediator = gameMediator;
     }
 
+    /**
+     * Add the message to the messageList of world
+     * @param postMessage Message that the user posts
+     */
     public void addPostMessage(String postMessage){
         gameMediator.getWorld().addMessage(postMessage);
     }

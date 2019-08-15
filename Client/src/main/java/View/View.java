@@ -474,7 +474,8 @@ public class View {
 
 	/**
 	 * Show the alert dialog to the user
-	 * @param message The message need to be written in the dialog.
+	 * @param message The content need to be shown in the dialog.
+	 * @param header The header need to be shown in the dialog.
 	 */
 	public void showAlert(String message, String header){
 		Alert alert = new Alert(AlertType.INFORMATION);

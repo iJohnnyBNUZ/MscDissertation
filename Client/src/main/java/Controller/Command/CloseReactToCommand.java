@@ -10,6 +10,10 @@ public class CloseReactToCommand implements Command {
         this.clientMediator = clientMediator;
     }
 
+
+    /**
+     * Assign two variables in clientMediator to null which means the user doesn't interact with anyone
+     */
     public void execute(){
         this.clientMediator.setReactTo(null);
         this.clientMediator.setReactResult(null);

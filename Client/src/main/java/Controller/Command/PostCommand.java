@@ -17,6 +17,13 @@ public class PostCommand implements Command {
         this.clientMediator = clientMediator;
     }
 
+    /**
+     * Invoke the addPostMessage method in the postController.
+     * Add the PostEvent to the queue if this action is processed
+     * @param sentence The message that the user posts
+     * @param time The time when the user posts the message
+     * @param atUser A list that contains the users who are @ by the current user
+     */
     public void execute(String sentence, String time, List<String> atUser){
         //add messages to messageList in World
         String userID = this.clientMediator.getUserName();

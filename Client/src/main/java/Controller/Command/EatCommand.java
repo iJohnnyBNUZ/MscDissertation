@@ -15,6 +15,11 @@ public class EatCommand implements Command {
         this.clientMediator = clientMediator;
     }
 
+    /**
+     * Invoke the eat method in the itemController.
+     * Add the EatEvent to the queue if this action is processed
+     * @param selectedItemId The ID of the food that will eaten by the user
+     */
     public void execute(String selectedItemId){
         String userID = clientMediator.getUserName();
         itemController.eat(userID,selectedItemId);

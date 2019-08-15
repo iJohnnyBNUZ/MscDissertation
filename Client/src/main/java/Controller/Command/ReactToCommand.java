@@ -19,6 +19,10 @@ public class ReactToCommand implements Command {
 	}
 
 
+	/**
+	 * Invoke the communicateWith method and reactToEntity method in the ReactToController.
+	 * Add the ReactToEvent to the queue if the user is really interacting with someone
+	 */
 	public void execute() {
 		String userID = clientMediator.getUserName();
 		String id = reactToController.communicateWith(userID);
