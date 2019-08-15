@@ -243,20 +243,32 @@ This event sends the IDs of buyer and seller, the item list of transaction, the 
 ### ReactToEvent(String reactToID, String entityID)
 This event sends the userID and the ID of the entity that the user interacts with. Server will handle the interaction, and then synchronize the interaction to all the clients.
 
-## Location(String locationID)
+## Model
+
+### Location(String locationID)
 Each location is composed by several different kinds of tiles. Entities and Items can also exists in one location with its corresponding coordinate.
 
-### Coordinate(int positionX, int positionY)
+#### Coordinate(int positionX, int positionY)
 Cordinate is to record the position of tiles, entities and items. These objects can in the same coordinate.
 
-### Tile(boolean isMovable, String terrain, int energyCost)
+#### Tile(boolean isMovable, String terrain, int energyCost)
 Tile is the component unit of locations. Each tile has its own attributions, user will lost energy when they move to tiles and can not move to unmovable tiles. Terrain records the type of tiles.
 
-### Door(String currentLocation, String nextLocation)
+#### Door(String currentLocation, String nextLocation)
 Door is one kind of tile that connected two locations. When user open door, they are able to move to next location.
 
-### Stone(), Water(), Grass()
+#### Stone(), Water(), Grass()
 Stone, Water, Grass are different kinds of tiles.
+
+### Item(String id,int coinValue,String type)
+Each item has a public attribute such as ID, value, and type
+
+#### Food(String id,int energy,int coinValue,String type)
+In addition to the item's public attributes, Food also has an energy attribute that represents the energy value that the food can replenish.
+
+#### Coin(String id,int coinValue,String type)
+#### Key(String id,int coinValue,String type) 
+There is also an isUsed attribute for each key, which represents whether the key has been used.
 
 ## Controllers
 Controller used by both client and server, dealing with all business logic and modify models based on its related Event. 
@@ -275,6 +287,9 @@ This method is used to return the ID of entity that the current user interacts w
 
 #### reactToEntity(String id, String userID)
 This method is used to make real interaction for the current user by calling reactTo(Entity entity) method and return a result of interaction. "userID" is the ID of current user and "id" is the ID of the entity that the current user interacts with.
+
+#### ItemController
+The item controller is mainly responsible for the user picking up items, dropping items, exchanging items, etc.
 
 # Server
 This package contains server-side logic. It will listen for new clients trying to connect with it and update them when any user makes a change to the server's model.
