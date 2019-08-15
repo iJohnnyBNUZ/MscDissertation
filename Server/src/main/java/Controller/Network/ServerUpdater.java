@@ -5,29 +5,14 @@ import Controller.ServerMediator;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
-public class ServerUpdater extends Thread implements Runnable {
+class ServerUpdater extends Thread implements Runnable {
 
 	private ObjectOutputStream objectOutput;
-	private boolean canRun = true;
 	private ServerMediator serverMediator;
 
-	ServerUpdater(ObjectOutputStream objectOutput, ServerMediator serverMediator) throws Exception{
+	ServerUpdater(ObjectOutputStream objectOutput, ServerMediator serverMediator) {
 		this.objectOutput = objectOutput;
 		this.serverMediator = serverMediator;
-	}
-
-	@Override
-	public void run() {
-		System.out.println("Running client updater");
-		while (canRun) {
-			try {
-				//Wait for input
-			}
-			catch(Exception ex) {
-				canRun = false;
-				ex.printStackTrace();
-			}
-		}
 	}
 
 	void sendMessage(Object event) {
@@ -55,9 +40,5 @@ public class ServerUpdater extends Thread implements Runnable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	void setCanRun(boolean b) {
-		canRun = b;
 	}
 }

@@ -8,19 +8,11 @@ public class User extends Entity {
     private Boolean isOnline;
     private List<String> openedDoors;
 
-    public Boolean getOnline() {
-        return isOnline;
-    }
-
-    public void setOnline(Boolean online) {
-        isOnline = online;
-    }
-
     public User(String id) {
         super(id);
         this.UserId = id;
         this.isOnline = true;
-        this.openedDoors = new ArrayList<String>();
+        this.openedDoors = new ArrayList<>();
     }
 
     public String reactTo(Entity entity) {
@@ -32,15 +24,19 @@ public class User extends Entity {
         return UserId;
     }
 
-    public void logout(){
-        isOnline = false;
-    }
-
     public void addOpenedDoors(String doorId){
         openedDoors.add(doorId);
     }
 
     public List<String> getOpenedDoors() {
         return openedDoors;
+    }
+
+    public Boolean getOnline() {
+        return isOnline;
+    }
+
+    public void setOnline(Boolean online) {
+        isOnline = online;
     }
 }

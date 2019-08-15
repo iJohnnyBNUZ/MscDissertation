@@ -148,75 +148,75 @@ public class View {
 	private PickUpCommand pickUpCommand;
 	private ReactToCommand reactToCommand;
 
-	private List<String> operations = new ArrayList<String>();
+	private List<String> operations = new ArrayList<>();
 
 
-	public AnchorPane getForItem() { return forItem; }
-	public AnchorPane getForEntity() { return forEntity; }
+	AnchorPane getForItem() { return forItem; }
+	AnchorPane getForEntity() { return forEntity; }
 
 
-	public ProgressBar getEnergy() { return energy; }
+	ProgressBar getEnergy() { return energy; }
 
 
-	public Label getCoin() { return coin; }
+	Label getCoin() { return coin; }
 
-	public AnchorPane getChatView() { return chatView; }
+	AnchorPane getChatView() { return chatView; }
 
-	public Button getCloseChatView() { return closeChatView; }
+	Button getCloseChatView() { return closeChatView; }
 
-	public TextField getMessageWindow() { return messageWindow; }
+	TextField getMessageWindow() { return messageWindow; }
 
-	public Button getSend() { return send; }
+	Button getSend() { return send; }
 
-	public TabPane getTabBagView() { return tabBagView; }
+	TabPane getTabBagView() { return tabBagView; }
 
-	public VBox getBagFoodVbox() { return bagFoodVbox; }
+	VBox getBagFoodVbox() { return bagFoodVbox; }
 
-	public VBox getBagKeysVbox() { return bagKeysVbox; }
+	VBox getBagKeysVbox() { return bagKeysVbox; }
 
-	public Button getEatFood() { return eatFood; }
+	Button getEatFood() { return eatFood; }
 
-	public Button getPutDownFood() { return putDownFood; }
+	Button getPutDownFood() { return putDownFood; }
 
-	public Button getCloseFood() { return closeFood; }
+	Button getCloseFood() { return closeFood; }
 
 	public Canvas getMapView(){return mapView;}
 
-	public Button getPutDownKey() { return putDownKey; }
+	Button getPutDownKey() { return putDownKey; }
 
-	public Button getCloseKey() { return closeKey; }
+	Button getCloseKey() { return closeKey; }
 
-	public Label getNumOfCoins() { return numOfCoins; }
+	Label getNumOfCoins() { return numOfCoins; }
 
-	public Button getCloseCoins() { return closeCoins; }
+	Button getCloseCoins() { return closeCoins; }
 
-	public TabPane getNewTransaction() { return newTransaction; }
+	TabPane getNewTransaction() { return newTransaction; }
 
-	public Tab getUser_shop() { return user_shop; }
+	Tab getUser_shop() { return user_shop; }
 
-	public VBox getUsershopVbox() { return usershopVbox; }
+	VBox getUsershopVbox() { return usershopVbox; }
 
-	public Label getTotalValue() { return totalValue; }
+	Label getTotalValue() { return totalValue; }
 
-	public Button getBuy() { return buy;}
+	Button getBuy() { return buy;}
 
-	public Button getCloseUserShop() { return closeUserShop; }
+	Button getCloseUserShop() { return closeUserShop; }
 
-	public VBox getMyBagVbox() { return myBagVbox; }
+	VBox getMyBagVbox() { return myBagVbox; }
 
-	public Label getNumOfMyCoins() { return numOfMyCoins; }
+	Label getNumOfMyCoins() { return numOfMyCoins; }
 
-	public Label getTotalSellValue() { return totalSellValue; }
+	Label getTotalSellValue() { return totalSellValue; }
 
-	public Button getSell() { return sell; }
+	Button getSell() { return sell; }
 
-	public Button getCloseMyBag() { return closeMyBag; }
+	Button getCloseMyBag() { return closeMyBag; }
 
-	public ChoiceBox getAtList() { return atList;}
+	ChoiceBox getAtList() { return atList;}
 
-	public Button getAtBtn() { return atBtn; }
+	Button getAtBtn() { return atBtn; }
 
-	public ScrollPane getScrollPane() { return scrollPane; }
+	ScrollPane getScrollPane() { return scrollPane; }
 
 	public ListView<String> getMessageListView() { return messageListView; }
 
@@ -257,17 +257,11 @@ public class View {
 
 	/**
 	 *  Add the user action to the queue.
-	 * @param scence represents the window
+	 * @param scene represents the window
 	 */
 
-	public void initialKeyAction(Scene scence){
-		scence.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent k) {
-				operations.add(k.getCode().getName());
-			}
-
-		});
+    private void initialKeyAction(Scene scene){
+		scene.setOnKeyPressed(k -> operations.add(k.getCode().getName()));
 	}
 
 	/**
@@ -328,7 +322,7 @@ public class View {
 	 * @param position the coordinate of the image need to be drawn.
 	 * @return drawed when there is images drawn on the canvas, it is true.
 	 */
-	public boolean draw(String fileName, Coordinate position) {
+    boolean draw(String fileName, Coordinate position) {
 		boolean drawed=false;
 		GraphicsContext gContext = mapView.getGraphicsContext2D();
 
@@ -340,13 +334,11 @@ public class View {
 		URL url = this.getClass().getResource("/images/" + fileName + ".png");
 		Image image = new Image(url.toString(), image_h, image_w, false, false);
 
-		if(image!= null){
-			//Draw the image on the canvas
-			gContext.drawImage(image,0, 0,image_h,image_w, position.getYCoordinate()*tileWidth,
-					position.getXCoordinate()*tileHeight,tileWidth,tileHeight);
-			drawed=true;
-		}
-		return drawed;
+        //Draw the image on the canvas
+        gContext.drawImage(image,0, 0,image_h,image_w, position.getYCoordinate()*tileWidth,
+                position.getXCoordinate()*tileHeight,tileWidth,tileHeight);
+        drawed=true;
+        return drawed;
 
 	}
 
@@ -358,7 +350,7 @@ public class View {
 	 * @param isItemTile whether the image is the item's image.
 	 * @return imgView the created ImageView instance.
 	 */
-	public ImageView drawInteractive(String fileName, Coordinate position, Boolean isItemTile) {
+    ImageView drawInteractive(String fileName, Coordinate position, Boolean isItemTile) {
 
 		// calculate the height and width of each tiles. The map is 10x10 layout.
 		tileWidth=mapView.getWidth()/10;
@@ -392,7 +384,7 @@ public class View {
 	/**
 	 * Clean the images drawn on the canvas.
 	 */
-	public void initialCanvas() {
+    void initialCanvas() {
 		GraphicsContext gContext = mapView.getGraphicsContext2D();
 
 		gContext.save();
@@ -407,7 +399,7 @@ public class View {
 	/**
 	 * Clean the image views added on the pane for items.
 	 */
-	public void initialForItem(){
+    void initialForItem(){
 		forItem.getChildren().clear();
 
 	}
@@ -415,7 +407,7 @@ public class View {
 	/**
 	 * Clean the image views added on the pane for entities.
 	 */
-	public void initialForEntity(){
+    void initialForEntity(){
 		forEntity.getChildren().clear();
 	}
 
@@ -447,31 +439,31 @@ public class View {
 	 * @param primaryStage
 	 */
 	public void setWindowsCloseAction(Stage primaryStage) {
-		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+		primaryStage.setOnCloseRequest(w -> {
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Exit game");
+            alert.setHeaderText("Are your sure to exit game");
+            ButtonType buttonSave = new ButtonType("Exit and save");
+            ButtonType buttonCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+            alert.getButtonTypes().setAll(buttonSave, buttonCancel);
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == buttonSave){
+                //save and close this game
+                saveGame();
+                logOutCommand.execute();
+                try {
+                    Thread.sleep(1500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.exit(0);
 
-			@Override
-			public void handle(WindowEvent w) {
-				Alert alert = new Alert(AlertType.CONFIRMATION);
-				alert.setTitle("Exit game");
-				alert.setHeaderText("Are your sure to exit game");
-				ButtonType buttonSave = new ButtonType("Exit and save");
-				ButtonType buttonCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
-				alert.getButtonTypes().setAll(buttonSave, buttonCancel);
-				Optional<ButtonType> result = alert.showAndWait();
-				if (result.get() == buttonSave){
-					//save and close this game
-					saveGame();
-					logOutCommand.execute();
-					System.exit(0);
-
-				}else if(result.get() == buttonCancel){
-					// continue the game.
-					alert.close();
-					w.consume();
-				}
-			}
-
-		});
+            }else if(result.get() == buttonCancel){
+                // continue the game.
+                alert.close();
+                w.consume();
+            }
+        });
 	}
 
 

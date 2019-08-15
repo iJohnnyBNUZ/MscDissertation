@@ -32,7 +32,6 @@ public class ServerListener extends Thread implements Runnable {
 		this.postController = new PostController(this.serverMediator);
 		this.reactToController = new ReactToController(this.serverMediator);
 		this.serverUpdater = new ServerUpdater(objectOutputStream, serverMediator);
-		serverUpdater.start();
 	}
 
 	@Override
@@ -44,7 +43,6 @@ public class ServerListener extends Thread implements Runnable {
 			}
 			catch(Exception ex) {
 				canRun = false;
-				serverUpdater.setCanRun(false);
 				server.removeClient(this);
 				ex.printStackTrace();
 			}
@@ -70,6 +68,7 @@ public class ServerListener extends Thread implements Runnable {
 			handleEatEvent((EatEvent) input);
 		}
 		else if (input instanceof LogoutEvent) {
+			System.out.println("Got logout event");
 			logout();
 		}
 		else if (input instanceof PostEvent){
@@ -91,6 +90,7 @@ public class ServerListener extends Thread implements Runnable {
 			handleLoginEvent((LoginEvent) input);
 		}
 		else if (input instanceof SaveGameEvent) {
+			System.out.println("Got save game event");
 			serverMediator.saveWorld();
 		}
 		else {
@@ -100,6 +100,7 @@ public class ServerListener extends Thread implements Runnable {
 
 	private void handleLoginEvent(LoginEvent input) {
 		System.out.println("New user being created " + input.getEntityID());
+		userName = input.getEntityID();
 		for(Entity entity : serverMediator.getWorld().getEntities()) {
 			if (entity.getEntityID().equals(input.getEntityID())) {
 				System.out.println("User exists");
@@ -154,7 +155,7 @@ public class ServerListener extends Thread implements Runnable {
 		server.updateOtherClients(this);
 	}
 
-	public void handleReactToEvent(ReactToEvent input){
+	private void handleReactToEvent(ReactToEvent input){
 		reactToController.reactToEntity(input.getReactToID(),input.getEntityID());
 		server.addEventToQueue(input);
 		server.updateOtherClients(this);
@@ -175,7 +176,7 @@ public class ServerListener extends Thread implements Runnable {
 		serverUpdater.sendWorld();
 	}
 
-	private void handleString(String command) throws IOException {
+	private void handleString(String command) {
 		switch (command) {
 			case "getWorld":
 				sendWorld();
@@ -206,8 +207,7 @@ public class ServerListener extends Thread implements Runnable {
 	private void logout() {
 		Entity entity =  serverMediator.getWorld().getEntity(userName);
 		System.out.println("User " + userName + " Logout!");
-		if (entity instanceof User){
-			((User) entity).logout();
+		if (entity instanceof User) {
 			((User) entity).setOnline(false);
 			server.removeClient(this);
 		}

@@ -2,20 +2,17 @@ package View;
 
 import Controller.Command.Command;
 import Controller.Command.PostCommand;
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 
-import javax.print.DocFlavor;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 public class PostView {
 
@@ -29,7 +26,6 @@ public class PostView {
 	private Button send;
 	private List<String> atUser = new LinkedList<String>();
 	private Boolean result;
-	private ScrollPane scrollPane;
 	private ListView<String> messageListView;
 
 	public PostView(View view) {
@@ -39,7 +35,7 @@ public class PostView {
 		this.send = view.getSend();
 		this.atList = view.getAtList();
 		this.atBtn = view.getAtBtn();
-		this.scrollPane = view.getScrollPane();
+		ScrollPane scrollPane = view.getScrollPane();
 		this.messageListView = view.getMessageListView();
 	}
 

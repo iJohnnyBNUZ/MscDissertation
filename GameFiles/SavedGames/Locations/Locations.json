@@ -707,25 +707,6 @@
     ],
     "items": [
       {
-        "id": "coin2",
-        "type": "coin",
-        "value": 30,
-        "isCollectible": true,
-        "isEdible": true,
-        "xCoordinate": 9,
-        "yCoordinate": 0
-      },
-      {
-        "id": "orange2",
-        "type": "food",
-        "value": 10,
-        "isCollectible": true,
-        "isEdible": true,
-        "energy": 10,
-        "xCoordinate": 6,
-        "yCoordinate": 3
-      },
-      {
         "id": "orange3",
         "type": "food",
         "value": 10,
@@ -755,14 +736,14 @@
         "yCoordinate": 1
       },
       {
-        "id": "orange0",
+        "id": "orange2",
         "type": "food",
         "value": 10,
         "isCollectible": true,
         "isEdible": true,
         "energy": 10,
-        "xCoordinate": 2,
-        "yCoordinate": 2
+        "xCoordinate": 6,
+        "yCoordinate": 5
       },
       {
         "id": "coin3",
@@ -810,18 +791,26 @@
         "isEdible": true,
         "xCoordinate": 2,
         "yCoordinate": 8
-      },
-      {
-        "id": "key_blue0",
-        "type": "key",
-        "value": 100,
-        "isCollectible": true,
-        "isEdible": true,
-        "xCoordinate": 0,
-        "yCoordinate": 9
       }
     ],
     "entities": [
+      {
+        "type": "user",
+        "id": "user",
+        "energy": 59,
+        "coin": 160,
+        "xCoordinate": 6,
+        "yCoordinate": 6,
+        "bag": [
+          {
+            "id": "key_blue0",
+            "type": "key",
+            "value": 100,
+            "isCollectible": true,
+            "isEdible": true
+          }
+        ]
+      },
       {
         "type": "npc",
         "isFriendly": false,
@@ -849,24 +838,6 @@
         ]
       },
       {
-        "type": "user",
-        "id": "user",
-        "energy": 90,
-        "coin": 130,
-        "xCoordinate": 7,
-        "yCoordinate": 6,
-        "bag": [
-          {
-            "id": "apple3",
-            "type": "food",
-            "value": 10,
-            "isCollectible": true,
-            "isEdible": true,
-            "energy": 10
-          }
-        ]
-      },
-      {
         "type": "shop",
         "id": "store0",
         "energy": 200,
@@ -890,6 +861,15 @@
             "isEdible": true
           }
         ]
+      },
+      {
+        "type": "user",
+        "id": "two",
+        "energy": 96,
+        "coin": 100,
+        "xCoordinate": 3,
+        "yCoordinate": 4,
+        "bag": []
       }
     ]
   },
@@ -2599,6 +2579,31 @@
     ],
     "entities": [
       {
+        "type": "shop",
+        "id": "store2",
+        "energy": 200,
+        "coin": 100,
+        "xCoordinate": 0,
+        "yCoordinate": 9,
+        "bag": [
+          {
+            "id": "lemon7",
+            "type": "food",
+            "value": 10,
+            "isCollectible": true,
+            "isEdible": true,
+            "energy": 10
+          },
+          {
+            "id": "key_red2",
+            "type": "key",
+            "value": 100,
+            "isCollectible": true,
+            "isEdible": true
+          }
+        ]
+      },
+      {
         "type": "npc",
         "isFriendly": true,
         "id": "npc0",
@@ -2617,31 +2622,6 @@
           },
           {
             "id": "key_green3",
-            "type": "key",
-            "value": 100,
-            "isCollectible": true,
-            "isEdible": true
-          }
-        ]
-      },
-      {
-        "type": "shop",
-        "id": "store2",
-        "energy": 200,
-        "coin": 100,
-        "xCoordinate": 0,
-        "yCoordinate": 9,
-        "bag": [
-          {
-            "id": "lemon7",
-            "type": "food",
-            "value": 10,
-            "isCollectible": true,
-            "isEdible": true,
-            "energy": 10
-          },
-          {
-            "id": "key_red2",
             "type": "key",
             "value": 100,
             "isCollectible": true,

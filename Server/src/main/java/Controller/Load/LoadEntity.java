@@ -65,6 +65,10 @@ class LoadEntity {
 		entity.setEnergy(entityObject.get("energy").getAsInt());
 		entity.setCoin(entityObject.get("coin").getAsInt());
 		createBag(entity, entityObject.get("bag").getAsJsonArray());
+		if (entity instanceof User) {
+			serverMediator.getWorld().addEntity(entity);
+			((User) entity).setOnline(false);
+		}
 		return entity;
 	}
 
