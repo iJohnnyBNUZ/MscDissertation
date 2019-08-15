@@ -102,6 +102,12 @@ Show the items in user's bag. Iterate the list, divide the items into food items
 #### cleanSelect(List<GridPane> gridPaneList, int k)
 Clear the effect of the Kth children ImageView in each GridPane container. Iterate the list, for each GridPane, access its Kth children-ImageView. If there is some effect in the ImageView, clear the effect.
   
+#### getGridPaneFoodListSize()
+Return the number of types of food.
+
+#### getGridPaneKeyListSize()
+Return the number of types of keys.
+  
 ### NPCView
 This class is used to show a dialog box when User interacts with NPC in the game.
 
@@ -113,12 +119,21 @@ This class is used to update the view of post window and provides a list of othe
 
 #### updatePost(List<String> messageList, ArrayList<String> atUserList)
 Show the messages in messageList in the PostView. atUserList stores the IDs of all online users, which can be @ by user in post window.
+  
+#### getMessageListViewSize()
+Return the number of messages.
 
 ### TransactionView
 This class is used to update the view of transaction window.
 
 #### updateTransaction(List<Item> user__shop, String userShopName, List<Item> bag, int money)
 Show the current user's items and the items of the entity who trades with the current user in transaction window. user_shop represents the items of that entity and userShopName is the ID of that entity. bag is current user's bag and money is current user's money
+  
+#### getUserShopVBoxSize()
+Return the number of the other entity's items
+
+#### getMyBagVBoxSize()
+Return the number of the current user's items
 
 ## UserController
 This controller works when user start game. It get IP, user type and user name from view, connect to server and check if the user name and type is reasonable. If so, enter game.
