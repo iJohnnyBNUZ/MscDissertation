@@ -78,9 +78,8 @@ public class ClientMediator implements GameMediator {
 	/**
 	 *  Set each values retrieved form the newWorld to the current world.
 	 *  Bind the observers to the observable object in the world.
-	 * @param newWorld the world instance received from the server.
 	 */
-	public void initWorld(World newWorld) {
+	public void initWorld() {
 		this.world.setObserverSet(observerSet);
 		for(Location location: this.world.getLocations()){
 			location.setObserverSet(observerSet);
@@ -99,7 +98,7 @@ public class ClientMediator implements GameMediator {
 	public void setWorld(World newWorld) {
 		if(newWorld.getEntityLocation(userName)!= null){
 			this.world = newWorld;
-			initWorld(newWorld);
+			initWorld();
 			this.notifyObservers();
 		} else {
 			this.world = newWorld;
@@ -201,7 +200,7 @@ public class ClientMediator implements GameMediator {
 	 * @throws IOException
 	 */
 
-	void enterGame() throws IOException {
+	public void enterGame() throws IOException {
 		URL location = View.class.getResource("/view/main.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(location);
