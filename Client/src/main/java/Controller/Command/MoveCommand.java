@@ -31,7 +31,7 @@ public class MoveCommand implements Command {
             @Override
             protected Void call() throws Exception {
                 // run in the current thread.
-                String uName = clientMediator.getClientUpdater().getUserName();
+                String uName = clientMediator.getUserName();
                 message = locationController.moveTo(uName, direction.toLowerCase());
                 return null;
             }
