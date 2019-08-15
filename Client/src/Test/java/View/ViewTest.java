@@ -7,16 +7,16 @@ import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.junit.Assert;
 import org.junit.Test;
-import org.testfx.api.FxAssert;
 import org.testfx.framework.junit.ApplicationTest;
-import org.testfx.matcher.base.NodeMatchers;
 
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class ViewTest extends ApplicationTest {
     private View view = null;
@@ -39,7 +39,7 @@ public class ViewTest extends ApplicationTest {
         primaryStage.show();
     }
 
-    @Test
+   /* @Test
     public void showBagTest() {
         clickOn("#Bag");
         clickOn("#openBag");
@@ -51,8 +51,44 @@ public class ViewTest extends ApplicationTest {
         clickOn("#Chat");
         clickOn("#openChat");
         FxAssert.verifyThat("#chatView", NodeMatchers.isVisible());
-    }
+    }*/
 
+   @Test
+   public void drawTest(){
+       Boolean result = view.draw("water",new Coordinate(0,1));
+       assertEquals(true,result);
+
+   }
+
+   @Test
+   public void drawInteractiveTest(){
+       Task<Void> progressTask = new Task<Void>(){
+           Map<String,Coordinate> items = new HashMap<String,Coordinate>();
+           @Override
+           protected Void call() throws Exception {
+               return null;
+           }
+
+           @Override
+           protected void succeeded() {
+               int before=view.getForItem().getChildren().size();
+               view.drawInteractive("apple",new Coordinate(0,1),true);
+               int after = view.getForItem().getChildren().size();
+               assertEquals(after,before+1);
+
+               before=view.getForEntity().getChildren().size();
+               view.drawInteractive("store",new Coordinate(0,1),false);
+               view.drawInteractive("npc",new Coordinate(1,1),false);
+               after = view.getForEntity().getChildren().size();
+
+               assertEquals(after,before+2);
+           }
+
+       };
+
+       new Thread(progressTask).start();
+
+   }
 
     @Test
     public void updateLocation() {
@@ -91,8 +127,8 @@ public class ViewTest extends ApplicationTest {
             protected void succeeded() {
                 super.succeeded();
                 ItemView itemView = new ItemView(view);
-                itemView.update(items);
-                assertEquals(items.size(), view.getForItem().getChildren().size() );
+                int result = itemView.update(items);
+                assertEquals(items.size(), result);
             }
 
         };
@@ -103,26 +139,116 @@ public class ViewTest extends ApplicationTest {
 
     @Test
     public void updateUserTest() {
+        Task<Void> progressTask = new Task<Void>(){
+            Map<String,Coordinate> users = new HashMap<String,Coordinate>();
+            @Override
+            protected Void call() throws Exception {
 
+                users.put("me",new Coordinate(0,1));
+                users.put("player",new Coordinate(1,1));
+                return null;
+            }
+
+            @Override
+            protected void succeeded() {
+                EntityView entityView = new EntityView(view);
+                int result = entityView.updateUser(users);
+                assertEquals(users.size(), result);
+            }
+
+        };
+
+        new Thread(progressTask).start();
     }
 
     @Test
     public void updateNPCTest() {
+        Task<Void> progressTask = new Task<Void>(){
+            Map<String,Coordinate> npcs = new HashMap<String,Coordinate>();
+            @Override
+            protected Void call() throws Exception {
 
+                npcs.put("npc0",new Coordinate(0,1));
+                npcs.put("npc1",new Coordinate(1,1));
+                return null;
+            }
+
+            @Override
+            protected void succeeded() {
+                EntityView entityView = new EntityView(view);
+                int result = entityView.updateNPC(npcs);
+                assertEquals(npcs.size(), result);
+            }
+
+        };
+
+        new Thread(progressTask).start();
     }
 
     @Test
     public void updateStoreTest() {
+        Task<Void> progressTask = new Task<Void>(){
+            Map<String,Coordinate> stores = new HashMap<String,Coordinate>();
+            @Override
+            protected Void call() throws Exception {
 
+                stores.put("store0",new Coordinate(0,1));
+                stores.put("store1",new Coordinate(1,1));
+                return null;
+            }
+
+            @Override
+            protected void succeeded() {
+                EntityView entityView = new EntityView(view);
+                int result = entityView.updateStore(stores);
+                assertEquals(stores.size(), result);
+            }
+
+        };
+
+        new Thread(progressTask).start();
     }
 
     @Test
     public void updateEnergyTest() {
+        Task<Void> progressTask = new Task<Void>(){
+            int n=90;
+            @Override
+            protected Void call() throws Exception {
 
+                return null;
+            }
+
+            @Override
+            protected void succeeded() {
+                EntityView entityView = new EntityView(view);
+                entityView.updateEnergy(n);
+                assertEquals(0.9, view.getEnergy().getProgress(),0.0);
+            }
+
+        };
+
+        new Thread(progressTask).start();
     }
 
     @Test
     public void updateCoinTest() {
+        Task<Void> progressTask = new Task<Void>(){
+            int n =120;
+            @Override
+            protected Void call() throws Exception {
+                return null;
+            }
 
+            @Override
+            protected void succeeded() {
+                EntityView entityView = new EntityView(view);
+                entityView.updateCoin(n);
+                assertEquals(120, n);
+            }
+
+        };
+
+        new Thread(progressTask).start();
     }
 }
