@@ -7,14 +7,14 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="page" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.IndexView">
+<AnchorPane fx:id="page" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.IndexView">
    <children>
-      <ImageView fitHeight="720.0" fitWidth="900.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ImageView fitHeight="400.0" fitWidth="500.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
             <Image url="@../images/background.jpg" />
          </image>
       </ImageView>
-      <AnchorPane fx:id="userInfo" layoutX="126.0" layoutY="79.0" prefHeight="220.0" prefWidth="328.0" visible="false" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="200.0">
+      <AnchorPane fx:id="userInfo" layoutX="126.0" layoutY="79.0" prefHeight="220.0" prefWidth="328.0" visible="false" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="100.0">
          <children>
             <Label layoutX="35.0" layoutY="53.0" prefHeight="26.0" prefWidth="80.0" text="Username" />
             <TextField fx:id="userName" layoutX="115.0" layoutY="53.0" text="user" />
@@ -25,11 +25,11 @@
             <Button fx:id="back" layoutX="200.0" layoutY="139.0" mnemonicParsing="false" onAction="#back" text="back" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="index" layoutX="200.0" layoutY="68.0" prefHeight="200.0" prefWidth="195.0" AnchorPane.bottomAnchor="320.0" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="200.0">
+      <AnchorPane fx:id="index" layoutX="200.0" layoutY="68.0" prefHeight="200.0" prefWidth="195.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="100.0">
          <children>
-            <Button fx:id="newGame" layoutX="43.0" layoutY="31.0" mnemonicParsing="false" onAction="#newGame" prefHeight="27.0" prefWidth="104.0" text="New Game" />
-            <Button fx:id="conTinue" layoutX="43.0" layoutY="81.0" mnemonicParsing="false" onAction="#continueGame" prefHeight="27.0" prefWidth="104.0" text="Continue" />
-            <Button fx:id="exit" layoutX="43.0" layoutY="131.0" mnemonicParsing="false" onAction="#exit" prefHeight="27.0" prefWidth="104.0" text="Exit" />
+            <Button fx:id="newGame" alignment="CENTER" layoutX="43.0" layoutY="31.0" mnemonicParsing="false" onAction="#newGame" prefHeight="27.0" prefWidth="104.0" text="New Game" />
+            <Button fx:id="conTinue" alignment="CENTER" layoutX="43.0" layoutY="81.0" mnemonicParsing="false" onAction="#continueGame" prefHeight="27.0" prefWidth="104.0" text="Continue" />
+            <Button fx:id="exit" alignment="CENTER" layoutX="43.0" layoutY="131.0" mnemonicParsing="false" onAction="#exit" prefHeight="27.0" prefWidth="104.0" text="Exit" />
          </children>
       </AnchorPane>
    </children>

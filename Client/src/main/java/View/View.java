@@ -152,6 +152,7 @@ public class View {
 
 
 	public AnchorPane getForItem() { return forItem; }
+	public AnchorPane getForEntity() { return forEntity; }
 
 
 	public ProgressBar getEnergy() { return energy; }
@@ -178,6 +179,8 @@ public class View {
 	public Button getPutDownFood() { return putDownFood; }
 
 	public Button getCloseFood() { return closeFood; }
+
+	public Canvas getMapView(){return mapView;}
 
 	public Button getPutDownKey() { return putDownKey; }
 

@@ -22,7 +22,7 @@ public class RunClient extends Application {
 		Parent root = fxmlLoader.load();
 		IndexView indexView = (IndexView) fxmlLoader.getController();
 		primaryStage.setTitle("University of Edinburgh Dissertation");
-		primaryStage.setScene(new Scene(root, 900, 720));
+		primaryStage.setScene(new Scene(root, 500, 400));
 		primaryStage.show();
 		System.out.println("Finished Loading index");
 
