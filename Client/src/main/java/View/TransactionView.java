@@ -80,6 +80,24 @@ public class TransactionView {
 
 	}
 
+
+	public void setTransactionCommand(TransactionCommand transactionCommand) {
+		this.transactionCommand = transactionCommand;
+	}
+
+	public void setCloseReactToCommand(CloseReactToCommand closeReactToCommand){
+		this.closeReactToCommand = closeReactToCommand;
+	}
+
+
+
+	/**
+	 * Show the view of transaction
+	 * @param user__shop A list that contains all the items of the entity that the user trades with
+	 * @param userShopName The name of the entity that the user trades with
+	 * @param bag A list that contains all the items of the user's bag
+	 * @param money User's money
+	 */
 	public void updateTransaction(List<Item> user__shop, String userShopName, List<Item> bag, int money){
 		Transaction.setVisible(true);
 		user_shop.setText(userShopName);
@@ -256,18 +274,19 @@ public class TransactionView {
 		});
 	}
 
-	public void setTransactionCommand(TransactionCommand transactionCommand) {
-		this.transactionCommand = transactionCommand;
-	}
 
-	public void setCloseReactToCommand(CloseReactToCommand closeReactToCommand){
-		this.closeReactToCommand = closeReactToCommand;
-	}
-
+	/**
+	 * Return the number of types of items of the entity that the user trades with
+	 * @return The number of types of items of the entity that the user trades with
+	 */
 	public  int getUserShopVBoxSize(){
 		return usershopVbox.getChildren().size();
 	}
 
+	/**
+	 * Return the number of types of items of the user
+	 * @return The number of types of items of the user
+	 */
 	public  int getMyBagVBoxSize(){
 		return myBagVbox.getChildren().size();
 	}

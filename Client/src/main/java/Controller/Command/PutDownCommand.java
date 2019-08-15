@@ -17,6 +17,12 @@ public class PutDownCommand implements Command {
 		this.clientMediator = clientMediator;
 	}
 
+
+	/**
+	 * Invoke the drop method in the itemController.
+	 * Add the PutDownEvent to the queue if this action is processed, otherwise show a dialog box to the user
+	 * @param selectedItem The ID of the item that will put down by the user
+	 */
 	public void execute(String selectedItem){
 
 		Task<Void> progressTask = new Task<Void>(){
@@ -25,7 +31,6 @@ public class PutDownCommand implements Command {
 			protected Void call() throws Exception {
 				// run in the current thread.
 				userID = clientMediator.getUserName();
-				System.out.println("Item "+selectedItem+" is put down on this position by " + userID);
 				message = itemController.drop(userID,selectedItem);
 				return null;
 			}

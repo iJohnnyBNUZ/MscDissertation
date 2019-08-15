@@ -13,6 +13,10 @@ public class BagObserver implements Observer {
         this.clientMediator = clientMediator;
     }
 
+
+    /**
+     * Get the items in user's bag and user's money to update the bagView
+     */
     public void update(){
         Task<Void> progressTask = new Task<Void>(){
 

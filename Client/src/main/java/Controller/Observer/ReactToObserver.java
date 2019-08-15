@@ -21,6 +21,12 @@ public class ReactToObserver implements Observer {
         this.clientMediator = clientMediator;
     }
 
+
+    /**
+     * If the user is interacting with someone, update the view according to the entity's type
+     * If the user is interacting with NPC, get the result of the interaction and update the npcView
+     * If the user is interacting other users or shops, get the entity's bag and name, and the user's bag and money to updater the transactionView
+     */
     public void update(){
 
         Task<Void> progressTask = new Task<Void>(){

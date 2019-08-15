@@ -19,7 +19,10 @@ public class PostObserver implements Observer {
 	}
 
 
-	//I don't know when to use that !
+	/**
+	 * Get all the messages in the game and all the online users except the user itself to update the postView
+	 * Show a dialog box to the user if the user is @ by other users
+	 */
 	@Override
 	public void update() {
 		Task<Void> progressTask = new Task<Void>(){

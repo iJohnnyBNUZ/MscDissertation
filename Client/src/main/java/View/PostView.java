@@ -43,6 +43,17 @@ public class PostView {
 		this.messageListView = view.getMessageListView();
 	}
 
+	public void setPostCommand(Command command){
+		this.postCommand = (PostCommand) command;
+	}
+
+
+
+	/**
+	 * Show the view of post window and provides a list of other online users that can be @
+	 * @param messageList A list that contains all the messages that needs to be shown
+	 * @param atUserList A list that contains other online users that can be @
+	 */
 	public void updatePost(List<String> messageList, ArrayList<String> atUserList){
 		messageListView.setItems(null);
 
@@ -111,10 +122,12 @@ public class PostView {
 
 	}
 
-	public void setPostCommand(Command command){
-		this.postCommand = (PostCommand) command;
-	}
 
+
+	/**
+	 * Return the number of messages in the post window
+	 * @return the number of messages in the post window
+	 */
 	public int getMessageListViewSize(){
 		return messageListView.getItems().size();
 	}

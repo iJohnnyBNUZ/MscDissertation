@@ -38,8 +38,6 @@ public class BagView{
 	private PutDownCommand putDownCommand;
 	private String selectedItemId;
 
-	private int row = 3;
-	private int column = 3;
 	private double image_h = 50.0;
 	private double image_w = 50.0;
 	private List<GridPane> gridPaneFoodList = new LinkedList<GridPane>();
@@ -81,7 +79,20 @@ public class BagView{
 	}
 
 
+	public void setEatCommand(EatCommand eatCommand){
+		this.eatCommand = eatCommand;
+	}
 
+	public void setPutDownCommand(PutDownCommand putDownCommand){
+		this.putDownCommand = putDownCommand;
+	}
+
+
+	/**
+	 * Show the view of user's bag to the user
+	 * @param bag A list that contains all the items in user's bag
+	 * @param money User's money
+	 */
 	public void updateBag(List<Item> bag,int money) {
 		bagFoodVbox.getChildren().clear();
 		bagKeysVbox.getChildren().clear();
@@ -229,6 +240,11 @@ public class BagView{
 	}
 
 
+	/**
+	 * Clear the effect of the Kth children ImageView in each GridPane container.
+	 * @param gridPaneList A list that contains all the GridPanes which need to be checked
+	 * @param k The Kth children in GridPane
+	 */
 	private void cleanSelect(List<GridPane> gridPaneList, int k){
 		for (GridPane gridPane : gridPaneList) {
 			ImageView imageView = (ImageView) gridPane.getChildren().get(k);
@@ -237,18 +253,19 @@ public class BagView{
 		}
 	}
 
-	public void setEatCommand(EatCommand eatCommand){
-		this.eatCommand = eatCommand;
-	}
 
-	public void setPutDownCommand(PutDownCommand putDownCommand){
-		this.putDownCommand = putDownCommand;
-	}
-
+	/**
+	 * Return the number of types of food
+	 * @return the number of types of food
+	 */
 	public int getGridPaneFoodListSize(){
 		return gridPaneFoodList.size();
 	}
 
+	/**
+	 * Return the number of types of keys
+	 * @return the number of types of keys
+	 */
 	public int getGridPaneKeyListSize(){
 		return gridPaneKeyList.size();
 	}

@@ -18,6 +18,12 @@ public class ReactToController implements Controller{
         this.gameMediator = gameMediator;
     }
 
+
+    /**
+     * Return the ID of the entity that the user interacts with
+     * @param userID The ID of the user
+     * @return the ID of the entity that the user interacts with
+     */
     public String communicateWith(String userID){
 
         //get current user's location and coordinate
@@ -42,11 +48,15 @@ public class ReactToController implements Controller{
                 }
             }
         }
-
-        System.out.println("I am communicating with " + id);
         return id;
     }
 
+    /**
+     * Return the result of interaction between the user and the entity
+     * @param id The ID of the entity that the user interacts with
+     * @param userID The ID of the user
+     * @return the result of interaction between the user and the entity
+     */
     public String reactToEntity(String id, String userID){
         String message = null;
         Location currLocation = gameMediator.getWorld().getEntityLocation(userID);
