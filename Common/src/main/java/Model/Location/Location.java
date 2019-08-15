@@ -9,9 +9,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Location extends Observable implements Serializable {
+    //ID for location
     private String locationID;
+    //save coordinate for each tile
     private HashMap<Coordinate, Tile> Tiles = new HashMap<Coordinate, Tile>();
+    //save coordinate for each item
     private HashMap<Coordinate, Item> Items = new HashMap<Coordinate, Item>();
+    //save coordinate for each entity
     private Map<Entity, Coordinate> Entities = new HashMap<Entity, Coordinate>();
 
     public HashMap<Coordinate, Tile> getTiles() {
@@ -65,8 +69,12 @@ public class Location extends Observable implements Serializable {
         return locationID;
     }
 
+    /**
+     * change user coordinate value in location and notify observers
+     * @param entity input entity object
+     * @param coordinate input new coordinate object
+     */
     public void changeUserCoordinate(Entity entity, Coordinate coordinate) {
-
         this.Entities.put(entity, coordinate);
         notifyObserver();
     }
