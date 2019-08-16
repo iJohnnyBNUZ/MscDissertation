@@ -22,17 +22,21 @@ Edit configuration and add VM options:
 Linux/Mac: --module-path /path/to/javafx-sdk-12.0.1/lib --add-modules javafx.controls,javafx.fxml
 
 Windows: --module-path "\path\to\javafx-sdk-12.0.1\lib" --add-modules javafx.controls,javafx.fxml
+
 ##Set up Game
 For this game, a server should be set up firstly, then the other clients can connect to it to enter the game.
+
 ###Set up Server
 Open the terminal or CMD window in the JAR folder.
 Run java -jar Server.jar to open the server.
 Input 'n' to load the default game data, or input 'y' to load the previous game data.
+
 ###Set up Client
 Open the terminal or CMD window in the JAR folder.
 Run java -jar Client.jar to set up the client.
 Select game type in the index page.
 Input username and IP address to connect to the server.
+
 # Client
 The client contains all code used on the a user's personal device. It will store a copy of the model and take user input from the view to manipulate the model update the server.
 ## View
