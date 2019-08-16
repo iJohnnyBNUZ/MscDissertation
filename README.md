@@ -23,15 +23,15 @@ Linux/Mac: --module-path /path/to/javafx-sdk-12.0.1/lib --add-modules javafx.con
 
 Windows: --module-path "\path\to\javafx-sdk-12.0.1\lib" --add-modules javafx.controls,javafx.fxml
 
-##Set up Game
+## Set up Game
 For this game, a server should be set up firstly, then the other clients can connect to it to enter the game.
 
-###Set up Server
+### Set up Server
 Open the terminal or CMD window in the JAR folder.
 Run java -jar Server.jar to open the server.
 Input 'n' to load the default game data, or input 'y' to load the previous game data.
 
-###Set up Client
+### Set up Client
 Open the terminal or CMD window in the JAR folder.
 Run java -jar Client.jar to set up the client.
 Select game type in the index page.
