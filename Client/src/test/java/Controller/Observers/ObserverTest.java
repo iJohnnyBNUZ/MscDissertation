@@ -1,32 +1,19 @@
 package Controller.Observers;
 
 import Controller.ClientMediator;
-import Controller.GameMediator;
-import Controller.LocationController;
+import GUI.View;
 import Model.Entity.NPC;
 import Model.Entity.Shop;
 import Model.Entity.User;
 import Model.Item.Food;
-import Model.Item.Item;
-import Model.Item.Key;
 import Model.Location.*;
 import Model.World;
-import View.View;
-import javafx.concurrent.Task;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.JavaFXBuilderFactory;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.junit.Test;
-import org.testfx.api.FxAssert;
 import org.testfx.framework.junit.ApplicationTest;
-import org.testfx.matcher.base.NodeMatchers;
 
-import java.net.URL;
-import java.util.*;
-
-import static org.junit.Assert.assertEquals;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ObserverTest extends ApplicationTest {
     private View view = null;

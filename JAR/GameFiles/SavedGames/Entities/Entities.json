@@ -1,0 +1,28 @@
+[
+  {
+    "type": "user",
+    "id": "user",
+    "energy": 90,
+    "coin": 130,
+    "xCoordinate": 6,
+    "yCoordinate": 3,
+    "bag": [
+      {
+        "id": "apple3",
+        "type": "food",
+        "value": 10,
+        "isCollectible": true,
+        "isEdible": true,
+        "energy": 10
+      },
+      {
+        "id": "orange2",
+        "type": "food",
+        "value": 10,
+        "isCollectible": true,
+        "isEdible": true,
+        "energy": 10
+      }
+    ]
+  }
+]

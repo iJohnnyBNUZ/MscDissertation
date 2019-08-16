@@ -7,19 +7,12 @@ import Model.Entity.User;
 import Model.Item.Food;
 import Model.Location.*;
 import Model.World;
-import View.View;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.JavaFXBuilderFactory;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import GUI.View;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import org.junit.Test;
-import org.testfx.api.FxAssert;
 import org.testfx.framework.junit.ApplicationTest;
-import org.testfx.matcher.base.NodeMatchers;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 

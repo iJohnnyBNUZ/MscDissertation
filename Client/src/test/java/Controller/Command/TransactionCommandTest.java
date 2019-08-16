@@ -4,13 +4,12 @@ import Controller.ClientMediator;
 import Controller.ItemController;
 import Model.Entity.User;
 import Model.Item.Food;
-import View.View;
+import GUI.View;
 import javafx.concurrent.Task;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.HashMap;
-import java.util.List;
 
 import static org.junit.Assert.*;
 

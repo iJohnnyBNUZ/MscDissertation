@@ -8,7 +8,7 @@ import Model.Entity.User;
 import Model.Location.Coordinate;
 import Model.Location.Location;
 import Utils.Observer;
-import View.EntityView;
+import GUI.EntityView;
 import javafx.concurrent.Task;
 
 import java.util.HashMap;

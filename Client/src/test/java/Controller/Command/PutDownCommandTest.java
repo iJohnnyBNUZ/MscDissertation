@@ -6,7 +6,7 @@ import Model.Entity.User;
 import Model.Item.Food;
 import Model.Location.Coordinate;
 import Model.Location.Location;
-import View.View;
+import GUI.View;
 import javafx.concurrent.Task;
 import org.junit.Before;
 import org.junit.Test;

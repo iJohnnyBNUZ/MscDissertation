@@ -8,7 +8,7 @@ import Model.Location.Location;
 import Model.World;
 import Network.Events.Event;
 import Utils.Observer;
-import View.*;
+import GUI.*;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;

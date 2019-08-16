@@ -1,5 +1,5 @@
 # MscDissertation
-#Set up Java:
+## Set up Java:
 
 Set src to sources root.
 
@@ -13,7 +13,7 @@ Configure Client/src/Main/java/RunClient to main class for Client.
 
 Set SDK to Java 11. Tested using OpenJDK.
 
-#Set up JFX:
+## Set up JFX:
 
 Download OpenJFX, can be found at: https://openjfx.io
 

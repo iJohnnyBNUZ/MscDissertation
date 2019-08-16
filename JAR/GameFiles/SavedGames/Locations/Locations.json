@@ -1,0 +1,2652 @@
+[
+  {
+    "id": "location0",
+    "tiles": [
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 2,
+        "yCoordinate": 0
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 2,
+        "yCoordinate": 1
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 2,
+        "yCoordinate": 2
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 2,
+        "yCoordinate": 3
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 2,
+        "yCoordinate": 4
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 2,
+        "yCoordinate": 5
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 2,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 2,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 2,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 2,
+        "yCoordinate": 9
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 3,
+        "yCoordinate": 0
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 3,
+        "yCoordinate": 1
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 3,
+        "yCoordinate": 2
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 3,
+        "yCoordinate": 3
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 3,
+        "yCoordinate": 4
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 3,
+        "yCoordinate": 5
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 3,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 3,
+        "xCoordinate": 3,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 3,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 3,
+        "yCoordinate": 9
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 4,
+        "yCoordinate": 0
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 4,
+        "yCoordinate": 1
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 4,
+        "yCoordinate": 2
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 4,
+        "yCoordinate": 3
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 4,
+        "yCoordinate": 4
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 4,
+        "yCoordinate": 5
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 4,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 3,
+        "xCoordinate": 4,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 4,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 4,
+        "yCoordinate": 9
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 5,
+        "yCoordinate": 0
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 5,
+        "yCoordinate": 1
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 5,
+        "yCoordinate": 2
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 5,
+        "yCoordinate": 3
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 5,
+        "yCoordinate": 4
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 5,
+        "yCoordinate": 5
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 5,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 5,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 5,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 5,
+        "yCoordinate": 9
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 6,
+        "yCoordinate": 0
+      },
+      {
+        "terrain": "stone",
+        "isMovable": false,
+        "energyCost": 2,
+        "xCoordinate": 6,
+        "yCoordinate": 1
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 6,
+        "yCoordinate": 2
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 6,
+        "yCoordinate": 3
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 6,
+        "yCoordinate": 4
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 6,
+        "yCoordinate": 5
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 6,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 6,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 6,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 6,
+        "yCoordinate": 9
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 7,
+        "yCoordinate": 0
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 7,
+        "yCoordinate": 1
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 7,
+        "yCoordinate": 2
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 7,
+        "yCoordinate": 3
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 7,
+        "yCoordinate": 4
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 7,
+        "yCoordinate": 5
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 7,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 7,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 7,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 7,
+        "yCoordinate": 9
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 8,
+        "yCoordinate": 0
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 8,
+        "yCoordinate": 1
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 8,
+        "yCoordinate": 2
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 8,
+        "yCoordinate": 3
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 8,
+        "yCoordinate": 4
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 8,
+        "yCoordinate": 5
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 8,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "stone",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 8,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 0,
+        "yCoordinate": 0
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 8,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 0,
+        "yCoordinate": 1
+      },
+      {
+        "terrain": "door",
+        "isMovable": true,
+        "energyCost": 2,
+        "xCoordinate": 8,
+        "yCoordinate": 9,
+        "currentLocationID": "location0",
+        "nextLocationID": "location1"
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 0,
+        "yCoordinate": 2
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 0,
+        "yCoordinate": 3
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 0,
+        "yCoordinate": 4
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 0,
+        "yCoordinate": 5
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 0,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 0,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "stone",
+        "isMovable": false,
+        "energyCost": 2,
+        "xCoordinate": 0,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 0,
+        "yCoordinate": 9
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 9,
+        "yCoordinate": 0
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 9,
+        "yCoordinate": 1
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 9,
+        "yCoordinate": 2
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 9,
+        "yCoordinate": 3
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 9,
+        "yCoordinate": 4
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 9,
+        "yCoordinate": 5
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 9,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "stone",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 9,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 1,
+        "yCoordinate": 0
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 2,
+        "xCoordinate": 9,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 1,
+        "yCoordinate": 1
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 9,
+        "yCoordinate": 9
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 1,
+        "yCoordinate": 2
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 1,
+        "yCoordinate": 3
+      },
+      {
+        "terrain": "stone",
+        "isMovable": false,
+        "energyCost": 2,
+        "xCoordinate": 1,
+        "yCoordinate": 4
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 1,
+        "yCoordinate": 5
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 1,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 1,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "stone",
+        "isMovable": false,
+        "energyCost": 2,
+        "xCoordinate": 1,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 1,
+        "yCoordinate": 9
+      }
+    ],
+    "items": [
+      {
+        "id": "coin2",
+        "type": "coin",
+        "value": 30,
+        "isCollectible": true,
+        "isEdible": true,
+        "xCoordinate": 9,
+        "yCoordinate": 0
+      },
+      {
+        "id": "orange3",
+        "type": "food",
+        "value": 10,
+        "isCollectible": true,
+        "isEdible": true,
+        "energy": 10,
+        "xCoordinate": 8,
+        "yCoordinate": 5
+      },
+      {
+        "id": "apple1",
+        "type": "food",
+        "value": 10,
+        "isCollectible": true,
+        "isEdible": true,
+        "energy": 10,
+        "xCoordinate": 1,
+        "yCoordinate": 0
+      },
+      {
+        "id": "coin1",
+        "type": "coin",
+        "value": 30,
+        "isCollectible": true,
+        "isEdible": true,
+        "xCoordinate": 2,
+        "yCoordinate": 1
+      },
+      {
+        "id": "orange0",
+        "type": "food",
+        "value": 10,
+        "isCollectible": true,
+        "isEdible": true,
+        "energy": 10,
+        "xCoordinate": 2,
+        "yCoordinate": 2
+      },
+      {
+        "id": "coin3",
+        "type": "coin",
+        "value": 30,
+        "isCollectible": true,
+        "isEdible": true,
+        "xCoordinate": 9,
+        "yCoordinate": 9
+      },
+      {
+        "id": "lemon1",
+        "type": "food",
+        "value": 10,
+        "isCollectible": true,
+        "isEdible": true,
+        "energy": 10,
+        "xCoordinate": 6,
+        "yCoordinate": 8
+      },
+      {
+        "id": "apple2",
+        "type": "food",
+        "value": 10,
+        "isCollectible": true,
+        "isEdible": true,
+        "energy": 10,
+        "xCoordinate": 2,
+        "yCoordinate": 7
+      },
+      {
+        "id": "coin5",
+        "type": "coin",
+        "value": 30,
+        "isCollectible": true,
+        "isEdible": true,
+        "xCoordinate": 0,
+        "yCoordinate": 5
+      },
+      {
+        "id": "coin4",
+        "type": "coin",
+        "value": 30,
+        "isCollectible": true,
+        "isEdible": true,
+        "xCoordinate": 2,
+        "yCoordinate": 8
+      },
+      {
+        "id": "key_blue0",
+        "type": "key",
+        "value": 100,
+        "isCollectible": true,
+        "isEdible": true,
+        "xCoordinate": 0,
+        "yCoordinate": 9
+      }
+    ],
+    "entities": [
+      {
+        "type": "shop",
+        "id": "store0",
+        "energy": 200,
+        "coin": 100,
+        "xCoordinate": 0,
+        "yCoordinate": 6,
+        "bag": [
+          {
+            "id": "apple11",
+            "type": "food",
+            "value": 10,
+            "isCollectible": true,
+            "isEdible": true,
+            "energy": 10
+          },
+          {
+            "id": "key_green0",
+            "type": "key",
+            "value": 100,
+            "isCollectible": true,
+            "isEdible": true
+          }
+        ]
+      },
+      {
+        "type": "user",
+        "id": "user",
+        "energy": 90,
+        "coin": 130,
+        "xCoordinate": 6,
+        "yCoordinate": 3,
+        "bag": [
+          {
+            "id": "apple3",
+            "type": "food",
+            "value": 10,
+            "isCollectible": true,
+            "isEdible": true,
+            "energy": 10
+          },
+          {
+            "id": "orange2",
+            "type": "food",
+            "value": 10,
+            "isCollectible": true,
+            "isEdible": true,
+            "energy": 10
+          }
+        ]
+      },
+      {
+        "type": "npc",
+        "isFriendly": false,
+        "id": "npc1",
+        "energy": 200,
+        "coin": 100,
+        "xCoordinate": 4,
+        "yCoordinate": 3,
+        "bag": [
+          {
+            "id": "orange00",
+            "type": "food",
+            "value": 10,
+            "isCollectible": true,
+            "isEdible": true,
+            "energy": 10
+          },
+          {
+            "id": "key_red00",
+            "type": "key",
+            "value": 100,
+            "isCollectible": true,
+            "isEdible": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "location1",
+    "tiles": [
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 2,
+        "yCoordinate": 0
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 2,
+        "yCoordinate": 1
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 2,
+        "yCoordinate": 2
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 2,
+        "yCoordinate": 3
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 2,
+        "yCoordinate": 4
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 2,
+        "yCoordinate": 5
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 2,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 2,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 2,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 2,
+        "yCoordinate": 9
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 3,
+        "yCoordinate": 0
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 3,
+        "yCoordinate": 1
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 3,
+        "yCoordinate": 2
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 3,
+        "yCoordinate": 3
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 3,
+        "yCoordinate": 4
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 3,
+        "yCoordinate": 5
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 3,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 3,
+        "xCoordinate": 3,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 3,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 3,
+        "yCoordinate": 9
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 4,
+        "yCoordinate": 0
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 4,
+        "yCoordinate": 1
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 4,
+        "yCoordinate": 2
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 4,
+        "yCoordinate": 3
+      },
+      {
+        "terrain": "stone",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 4,
+        "yCoordinate": 4
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 4,
+        "yCoordinate": 5
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 4,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 3,
+        "xCoordinate": 4,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 4,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 4,
+        "yCoordinate": 9
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 5,
+        "yCoordinate": 0
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 5,
+        "yCoordinate": 1
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 5,
+        "yCoordinate": 2
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 5,
+        "yCoordinate": 3
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 5,
+        "yCoordinate": 4
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 5,
+        "yCoordinate": 5
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 5,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 5,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 5,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 5,
+        "yCoordinate": 9
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 6,
+        "yCoordinate": 0
+      },
+      {
+        "terrain": "stone",
+        "isMovable": false,
+        "energyCost": 2,
+        "xCoordinate": 6,
+        "yCoordinate": 1
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 6,
+        "yCoordinate": 2
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 6,
+        "yCoordinate": 3
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 6,
+        "yCoordinate": 4
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 6,
+        "yCoordinate": 5
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 6,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 6,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 6,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 6,
+        "yCoordinate": 9
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 7,
+        "yCoordinate": 0
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 7,
+        "yCoordinate": 1
+      },
+      {
+        "terrain": "stone",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 7,
+        "yCoordinate": 2
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 7,
+        "yCoordinate": 3
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 7,
+        "yCoordinate": 4
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 7,
+        "yCoordinate": 5
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 7,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 7,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 7,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 7,
+        "yCoordinate": 9
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 8,
+        "yCoordinate": 0
+      },
+      {
+        "terrain": "stone",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 8,
+        "yCoordinate": 1
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 8,
+        "yCoordinate": 2
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 8,
+        "yCoordinate": 3
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 8,
+        "yCoordinate": 4
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 8,
+        "yCoordinate": 5
+      },
+      {
+        "terrain": "stone",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 8,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "stone",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 8,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "door",
+        "isMovable": true,
+        "energyCost": 2,
+        "xCoordinate": 0,
+        "yCoordinate": 0,
+        "currentLocationID": "location1",
+        "nextLocationID": "location0"
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 8,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 0,
+        "yCoordinate": 1
+      },
+      {
+        "terrain": "door",
+        "isMovable": true,
+        "energyCost": 2,
+        "xCoordinate": 8,
+        "yCoordinate": 9,
+        "currentLocationID": "location1",
+        "nextLocationID": "location2"
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 0,
+        "yCoordinate": 2
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 0,
+        "yCoordinate": 3
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 0,
+        "yCoordinate": 4
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 0,
+        "yCoordinate": 5
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 0,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 0,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "stone",
+        "isMovable": false,
+        "energyCost": 2,
+        "xCoordinate": 0,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 0,
+        "yCoordinate": 9
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 9,
+        "yCoordinate": 0
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 9,
+        "yCoordinate": 1
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 9,
+        "yCoordinate": 2
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 9,
+        "yCoordinate": 3
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 9,
+        "yCoordinate": 4
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 9,
+        "yCoordinate": 5
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 9,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "stone",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 9,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 1,
+        "yCoordinate": 0
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 2,
+        "xCoordinate": 9,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 1,
+        "yCoordinate": 1
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 9,
+        "yCoordinate": 9
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 1,
+        "yCoordinate": 2
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 1,
+        "yCoordinate": 3
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 2,
+        "xCoordinate": 1,
+        "yCoordinate": 4
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 1,
+        "yCoordinate": 5
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 1,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 1,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "stone",
+        "isMovable": false,
+        "energyCost": 2,
+        "xCoordinate": 1,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 1,
+        "yCoordinate": 9
+      }
+    ],
+    "items": [
+      {
+        "id": "coin8",
+        "type": "coin",
+        "value": 30,
+        "isCollectible": true,
+        "isEdible": true,
+        "xCoordinate": 9,
+        "yCoordinate": 0
+      },
+      {
+        "id": "lemon3",
+        "type": "food",
+        "value": 10,
+        "isCollectible": true,
+        "isEdible": true,
+        "energy": 10,
+        "xCoordinate": 7,
+        "yCoordinate": 1
+      },
+      {
+        "id": "orange5",
+        "type": "food",
+        "value": 10,
+        "isCollectible": true,
+        "isEdible": true,
+        "energy": 10,
+        "xCoordinate": 6,
+        "yCoordinate": 3
+      },
+      {
+        "id": "key_red0",
+        "type": "key",
+        "value": 100,
+        "isCollectible": true,
+        "isEdible": true,
+        "xCoordinate": 9,
+        "yCoordinate": 6
+      },
+      {
+        "id": "apple4",
+        "type": "food",
+        "value": 10,
+        "isCollectible": true,
+        "isEdible": true,
+        "energy": 10,
+        "xCoordinate": 1,
+        "yCoordinate": 0
+      },
+      {
+        "id": "apple6",
+        "type": "food",
+        "value": 10,
+        "isCollectible": true,
+        "isEdible": true,
+        "energy": 10,
+        "xCoordinate": 5,
+        "yCoordinate": 4
+      },
+      {
+        "id": "coin7",
+        "type": "coin",
+        "value": 30,
+        "isCollectible": true,
+        "isEdible": true,
+        "xCoordinate": 2,
+        "yCoordinate": 1
+      },
+      {
+        "id": "orange4",
+        "type": "food",
+        "value": 10,
+        "isCollectible": true,
+        "isEdible": true,
+        "energy": 10,
+        "xCoordinate": 2,
+        "yCoordinate": 2
+      },
+      {
+        "id": "coin9",
+        "type": "coin",
+        "value": 30,
+        "isCollectible": true,
+        "isEdible": true,
+        "xCoordinate": 9,
+        "yCoordinate": 9
+      },
+      {
+        "id": "coin12",
+        "type": "coin",
+        "value": 30,
+        "isCollectible": true,
+        "isEdible": true,
+        "xCoordinate": 5,
+        "yCoordinate": 5
+      },
+      {
+        "id": "lemon2",
+        "type": "food",
+        "value": 10,
+        "isCollectible": true,
+        "isEdible": true,
+        "energy": 10,
+        "xCoordinate": 6,
+        "yCoordinate": 8
+      },
+      {
+        "id": "apple5",
+        "type": "food",
+        "value": 10,
+        "isCollectible": true,
+        "isEdible": true,
+        "energy": 10,
+        "xCoordinate": 2,
+        "yCoordinate": 7
+      },
+      {
+        "id": "coin11",
+        "type": "coin",
+        "value": 30,
+        "isCollectible": true,
+        "isEdible": true,
+        "xCoordinate": 0,
+        "yCoordinate": 5
+      },
+      {
+        "id": "coin10",
+        "type": "coin",
+        "value": 30,
+        "isCollectible": true,
+        "isEdible": true,
+        "xCoordinate": 2,
+        "yCoordinate": 8
+      }
+    ],
+    "entities": [
+      {
+        "type": "shop",
+        "id": "store1",
+        "energy": 200,
+        "coin": 100,
+        "xCoordinate": 4,
+        "yCoordinate": 2,
+        "bag": [
+          {
+            "id": "apple12",
+            "type": "food",
+            "value": 10,
+            "isCollectible": true,
+            "isEdible": true,
+            "energy": 10
+          },
+          {
+            "id": "key_blue1",
+            "type": "key",
+            "value": 100,
+            "isCollectible": true,
+            "isEdible": true
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "location2",
+    "tiles": [
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 2,
+        "yCoordinate": 0
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 2,
+        "yCoordinate": 1
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 2,
+        "yCoordinate": 2
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 2,
+        "yCoordinate": 3
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 2,
+        "yCoordinate": 4
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 2,
+        "yCoordinate": 5
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 2,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 2,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 2,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 2,
+        "yCoordinate": 9
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 3,
+        "yCoordinate": 0
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 3,
+        "yCoordinate": 1
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 3,
+        "yCoordinate": 2
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 3,
+        "yCoordinate": 3
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 3,
+        "yCoordinate": 4
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 3,
+        "yCoordinate": 5
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 3,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 3,
+        "xCoordinate": 3,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 3,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 3,
+        "yCoordinate": 9
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 4,
+        "yCoordinate": 0
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 4,
+        "yCoordinate": 1
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 4,
+        "yCoordinate": 2
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 4,
+        "yCoordinate": 3
+      },
+      {
+        "terrain": "stone",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 4,
+        "yCoordinate": 4
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 4,
+        "yCoordinate": 5
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 4,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 3,
+        "xCoordinate": 4,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 4,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 4,
+        "yCoordinate": 9
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 5,
+        "yCoordinate": 0
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 5,
+        "yCoordinate": 1
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 5,
+        "yCoordinate": 2
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 5,
+        "yCoordinate": 3
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 5,
+        "yCoordinate": 4
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 5,
+        "yCoordinate": 5
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 5,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 5,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 5,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 5,
+        "yCoordinate": 9
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 6,
+        "yCoordinate": 0
+      },
+      {
+        "terrain": "stone",
+        "isMovable": false,
+        "energyCost": 2,
+        "xCoordinate": 6,
+        "yCoordinate": 1
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 6,
+        "yCoordinate": 2
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 6,
+        "yCoordinate": 3
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 6,
+        "yCoordinate": 4
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 6,
+        "yCoordinate": 5
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 6,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 6,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 6,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 6,
+        "yCoordinate": 9
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 7,
+        "yCoordinate": 0
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 7,
+        "yCoordinate": 1
+      },
+      {
+        "terrain": "stone",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 7,
+        "yCoordinate": 2
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 7,
+        "yCoordinate": 3
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 7,
+        "yCoordinate": 4
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 7,
+        "yCoordinate": 5
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 7,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 7,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 7,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 7,
+        "yCoordinate": 9
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 8,
+        "yCoordinate": 0
+      },
+      {
+        "terrain": "stone",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 8,
+        "yCoordinate": 1
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 8,
+        "yCoordinate": 2
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 8,
+        "yCoordinate": 3
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 8,
+        "yCoordinate": 4
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 8,
+        "yCoordinate": 5
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 8,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 8,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "door",
+        "isMovable": true,
+        "energyCost": 2,
+        "xCoordinate": 0,
+        "yCoordinate": 0,
+        "currentLocationID": "location2",
+        "nextLocationID": "location1"
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 8,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 0,
+        "yCoordinate": 1
+      },
+      {
+        "terrain": "door",
+        "isMovable": true,
+        "energyCost": 2,
+        "xCoordinate": 8,
+        "yCoordinate": 9,
+        "currentLocationID": "location2",
+        "nextLocationID": "location3"
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 0,
+        "yCoordinate": 2
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 0,
+        "yCoordinate": 3
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 0,
+        "yCoordinate": 4
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 0,
+        "yCoordinate": 5
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 0,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 0,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 2,
+        "xCoordinate": 0,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 0,
+        "yCoordinate": 9
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 9,
+        "yCoordinate": 0
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 9,
+        "yCoordinate": 1
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 9,
+        "yCoordinate": 2
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 9,
+        "yCoordinate": 3
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 9,
+        "yCoordinate": 4
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 9,
+        "yCoordinate": 5
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 9,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 9,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 1,
+        "yCoordinate": 0
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 2,
+        "xCoordinate": 9,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 1,
+        "yCoordinate": 1
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 9,
+        "yCoordinate": 9
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 1,
+        "yCoordinate": 2
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 1,
+        "xCoordinate": 1,
+        "yCoordinate": 3
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 2,
+        "xCoordinate": 1,
+        "yCoordinate": 4
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 1,
+        "yCoordinate": 5
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 1,
+        "yCoordinate": 6
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 1,
+        "yCoordinate": 7
+      },
+      {
+        "terrain": "water",
+        "isMovable": false,
+        "energyCost": 2,
+        "xCoordinate": 1,
+        "yCoordinate": 8
+      },
+      {
+        "terrain": "grass",
+        "isMovable": true,
+        "energyCost": 1,
+        "xCoordinate": 1,
+        "yCoordinate": 9
+      }
+    ],
+    "items": [
+      {
+        "id": "coin14",
+        "type": "coin",
+        "value": 30,
+        "isCollectible": true,
+        "isEdible": true,
+        "xCoordinate": 9,
+        "yCoordinate": 0
+      },
+      {
+        "id": "key_green1",
+        "type": "key",
+        "value": 100,
+        "isCollectible": true,
+        "isEdible": true,
+        "xCoordinate": 7,
+        "yCoordinate": 1
+      },
+      {
+        "id": "orange7",
+        "type": "food",
+        "value": 10,
+        "isCollectible": true,
+        "isEdible": true,
+        "energy": 10,
+        "xCoordinate": 6,
+        "yCoordinate": 3
+      },
+      {
+        "id": "apple7",
+        "type": "food",
+        "value": 10,
+        "isCollectible": true,
+        "isEdible": true,
+        "energy": 10,
+        "xCoordinate": 1,
+        "yCoordinate": 0
+      },
+      {
+        "id": "apple9",
+        "type": "food",
+        "value": 10,
+        "isCollectible": true,
+        "isEdible": true,
+        "energy": 10,
+        "xCoordinate": 5,
+        "yCoordinate": 4
+      },
+      {
+        "id": "coin13",
+        "type": "coin",
+        "value": 30,
+        "isCollectible": true,
+        "isEdible": true,
+        "xCoordinate": 2,
+        "yCoordinate": 1
+      },
+      {
+        "id": "orange6",
+        "type": "food",
+        "value": 10,
+        "isCollectible": true,
+        "isEdible": true,
+        "energy": 10,
+        "xCoordinate": 2,
+        "yCoordinate": 2
+      },
+      {
+        "id": "coin15",
+        "type": "coin",
+        "value": 30,
+        "isCollectible": true,
+        "isEdible": true,
+        "xCoordinate": 9,
+        "yCoordinate": 9
+      },
+      {
+        "id": "coin18",
+        "type": "coin",
+        "value": 30,
+        "isCollectible": true,
+        "isEdible": true,
+        "xCoordinate": 5,
+        "yCoordinate": 5
+      },
+      {
+        "id": "lemon3",
+        "type": "food",
+        "value": 10,
+        "isCollectible": true,
+        "isEdible": true,
+        "energy": 10,
+        "xCoordinate": 6,
+        "yCoordinate": 8
+      },
+      {
+        "id": "apple8",
+        "type": "food",
+        "value": 10,
+        "isCollectible": true,
+        "isEdible": true,
+        "energy": 10,
+        "xCoordinate": 2,
+        "yCoordinate": 7
+      },
+      {
+        "id": "coin17",
+        "type": "coin",
+        "value": 30,
+        "isCollectible": true,
+        "isEdible": true,
+        "xCoordinate": 0,
+        "yCoordinate": 5
+      },
+      {
+        "id": "coin16",
+        "type": "coin",
+        "value": 30,
+        "isCollectible": true,
+        "isEdible": true,
+        "xCoordinate": 2,
+        "yCoordinate": 8
+      }
+    ],
+    "entities": [
+      {
+        "type": "npc",
+        "isFriendly": true,
+        "id": "npc0",
+        "energy": 50,
+        "coin": 100,
+        "xCoordinate": 4,
+        "yCoordinate": 3,
+        "bag": [
+          {
+            "id": "lemon8",
+            "type": "food",
+            "value": 10,
+            "isCollectible": true,
+            "isEdible": true,
+            "energy": 10
+          },
+          {
+            "id": "key_green3",
+            "type": "key",
+            "value": 100,
+            "isCollectible": true,
+            "isEdible": true
+          }
+        ]
+      },
+      {
+        "type": "shop",
+        "id": "store2",
+        "energy": 200,
+        "coin": 100,
+        "xCoordinate": 0,
+        "yCoordinate": 9,
+        "bag": [
+          {
+            "id": "lemon7",
+            "type": "food",
+            "value": 10,
+            "isCollectible": true,
+            "isEdible": true,
+            "energy": 10
+          },
+          {
+            "id": "key_red2",
+            "type": "key",
+            "value": 100,
+            "isCollectible": true,
+            "isEdible": true
+          }
+        ]
+      }
+    ]
+  }
+]

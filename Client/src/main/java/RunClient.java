@@ -1,6 +1,5 @@
 import Controller.ClientMediator;
-import View.IndexView;
-import View.View;
+import GUI.IndexView;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
@@ -15,7 +14,7 @@ public class RunClient extends Application {
 
 	public void start(Stage primaryStage) throws Exception {
 		//show index page
-		URL location = View.class.getResource("/view/index.fxml");
+		URL location = getClass().getClassLoader().getResource("view/index.fxml");
 		FXMLLoader fxmlLoader = new FXMLLoader();
 		fxmlLoader.setLocation(location);
 		fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
