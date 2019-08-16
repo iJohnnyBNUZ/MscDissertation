@@ -84,6 +84,16 @@ Windows: --module-path "\path\to\javafx-sdk-11.0.1\lib" --add-modules javafx.con
 
 - if server is running on local machine, leave IP address as default value
 
+- if java -jar Client.jar results in an error, try:
+
+java --module-path /path/to/javafx-sdk-11.0.1/lib --add-modules javafx.controls,javafx.fxml -jar Client.jar
+
+---
+
+# Class Overview
+
+---
+
 # Client
 
 The client contains all code used on the a user's personal device. It will store a copy of the model and take user input from the view to manipulate the model update the server.
